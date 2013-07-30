@@ -1,0 +1,1 @@
+<li class="lesson"><?php echo $component->getName() ?></li>

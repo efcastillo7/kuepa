@@ -1,0 +1,1 @@
+<li class="resource"><?php echo $component->getName() ?></li>

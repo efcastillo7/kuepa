@@ -1,0 +1,1 @@
+<li class="chapter"><?php echo $component->getName() ?></li>
