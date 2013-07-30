@@ -1,0 +1,104 @@
+# Main user entity, sfGuardUser is only used to store basic user data and login credentials
+Profile:
+  tableName:                   profile
+  columns:
+    sf_guard_user_id:          integer 
+    nickname:                  varchar(15)
+  relations:
+    sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
+    Colleges:
+      class: College
+      refClass: ProfileCollege
+      type: many
+      local: profile_id
+      foreign: college_id
+      foreignType: many
+      foreignAlias: Profiles
+    Components:
+      class: Component
+      refClass: ProfileLearningPath
+      type: many
+      local: profile_id
+      foreign: component_id
+      foreignAlias: Profiles
+      
+ProfileLearningPath:
+  columns:
+    profile_id: {type: integer, primary: true}
+    component_id: {type: integer, primary: true}
+
+ProfileCollege:
+  columns:
+    profile_id: {type: integer, primary: true}
+    college_id: {type: integer, primary: true}
+
+College:
+  tableName: college
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    name: varchar(255)
+
+Component:
+  tableName: component
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    node_id: integer
+    name: varchar(255)
+    thumbnail: varchar(255)
+  relations:
+    Parents:
+      class: Component
+      refClass: LearningPath
+      local: child_id
+      foreign: parent_id
+      type: many
+    Children:
+      class: Component
+      refClass: LearningPath
+      local: parent_id
+      foreign: child_id
+      type: many
+    
+Resource:
+  inheritance:
+    extends:          Component
+    type: column_aggregation
+    keyField: type
+    keyValue: Resource
+  
+Course:
+  inheritance:
+    extends:          Component
+    type: column_aggregation
+    keyField: type
+    keyValue: Course
+
+Chapter:
+  inheritance:
+    extends:          Component
+    type: column_aggregation
+    keyField: type
+    keyValue: Chapter
+
+Lesson:
+  inheritance:
+    extends:          Component
+    type: column_aggregation
+    keyField: type
+    keyValue: Lesson
+    
+LearningPath:
+  columns:
+    parent_id: integer
+    child_id: integer
+  relations:
+    Parent:
+      class: Component
+      local: parent_id
+      foreign: id
+      type: one
+    Child:
+      class: Component
+      local: child_id
+      foreign: id
+      type: one

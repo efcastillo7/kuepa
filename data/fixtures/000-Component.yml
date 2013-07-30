@@ -1,0 +1,55 @@
+Resource:
+  resource_1:
+    name: Generic test resource 1
+  resource_2:
+    name: Generic test resource 2
+  resource_3:
+    name: Generic test resource 3
+  resource_4:
+    name: Generic test resource 4
+
+Lesson:
+  lesson_1:
+    name: Lección prueba 1
+    Children: [resource_1, resource_2, resource_3, resource_4]
+  lesson_2:
+    name: Lección prueba 2
+    Children: [resource_1, resource_2]
+  lesson_3:
+    name: Lección prueba 4
+    Children: [resource_3, resource_4]
+  lesson_4:
+    name: Lección prueba 5
+    Children: [resource_1]
+
+Chapter:
+  chapter_1:
+    name: Unidad 1
+    Children: [lesson_1, lesson_2]
+  chapter_2:
+    name: Unidad 2
+    Children: [lesson_3, lesson_4, resource_1, resource_2]
+
+Course:
+  biologia:
+    name: Biología
+    thumbnail: icon-chemical.png
+    Children: [lesson_1, lesson_2]
+  ciencias:
+    name: Ciencias Sociales
+    thumbnail: icon-cog.png
+    Children: [chapter_1, chapter_2]
+    
+sfGuardUser:
+  bunny:
+    username: bunny
+    password: changeme
+    first_name: Faiber
+    last_name: Bani
+    email_address:    kuepa@fiberbunny.com
+
+Profile:
+  bunny_profile:
+    nickname: Elbunny
+    sfGuardUser: bunny
+    Components: [biologia, ciencias]

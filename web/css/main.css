@@ -1,0 +1,11 @@
+.course li.lesson {
+    color: blue;
+}
+
+.course li.chapter {
+    color: gray;
+}
+
+.course li.resource {
+    color: red;
+}
