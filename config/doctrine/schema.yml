@@ -65,6 +65,16 @@ Resource:
     type: column_aggregation
     keyField: type
     keyValue: Resource
+  columns:
+    resource_data_id: integer
+  relations:
+    Data:
+      class: ResourceData
+      local: id
+      foreign: resource_id
+      type: one
+      foreignType: one
+      foreignAlias: Resource
   
 Course:
   inheritance:
@@ -102,3 +112,36 @@ LearningPath:
       local: child_id
       foreign: id
       type: one
+      
+ResourceData:
+   columns:
+     resource_id: { type: integer, primary: true }
+     content: blob
+     
+ResourceDataDocument:
+  inheritance:
+    extends: ResourceData
+    type: column_aggregation
+    keyField: type
+    keyValue: Document
+  
+ResourceDataText:
+  inheritance:
+    extends: ResourceData
+    type: column_aggregation
+    keyField: type
+    keyValue: Text
+  
+ResourceDataVideo:
+  inheritance:
+    extends: ResourceData
+    type: column_aggregation
+    keyField: type
+    keyValue: Video
+  
+ResourceDataExercise:
+  inheritance:
+    extends: ResourceData
+    type: column_aggregation
+    keyField: type
+    keyValue: Exercise
