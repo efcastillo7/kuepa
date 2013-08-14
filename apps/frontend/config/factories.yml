@@ -29,6 +29,8 @@ dev:
       delivery_strategy: none
 
 all:
+  actions:
+    class: kuepaActions
   routing:
     class: sfPatternRouting
     param:

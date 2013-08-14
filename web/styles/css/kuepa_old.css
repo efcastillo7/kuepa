@@ -1,0 +1,416 @@
+/* 
+ * Kuepa Project v2.1.0
+ *
+ * Copyright 2012 Pablo Rossi
+ *
+ * Designed and built with all the egg in the world by @pol_r 
+ * Special thanks and love to Twitter Bootstrap, @mdo and @fat. 
+ *
+ */
+ 
+/* --------------------------------------------------
+    Style Jokers
+-------------------------------------------------- */
+ 
+.fl {float:left;}
+.fr {float:right;}
+.whiteshadow {text-shadow:0 1px 0 #fff;}
+.blackshadow {text-shadow:0 1px 0 #000;}
+.box-shadow {
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+	box-shadow: 0 1px 3px rgba(0,0,0,.25); 
+}
+.margintop {margin-top:20px;}
+.margintop10 {margin-top:10px;} 
+.margintop5 {margin-top:5px;} 
+.margintop15 {margin-top:15px;} 
+.margintop50 {padding-top:60px;} 
+.paddingtop40 {padding-top:40px;} 
+
+.divisor {border-top:1px solid #DDD;}
+
+.title {margin-bottom:-5px;}
+
+/* --------------------------------------------------
+// Added Font Styles
+-------------------------------------------------- */
+
+
+@font-face {
+    font-family: AvantXLt ;
+    src: url(http://www.a220v.com/style/fonts/Avant/ITCAvantGardeStd-XLt.otf);
+}
+@font-face {
+    font-family: AvantBk ;
+    src: url(http://www.a220v.com/style/fonts/Avant/ITCAvantGardeStd-Bk.otf);
+}
+@font-face {
+    font-family: AvantMd ;
+    src: url(http://www.a220v.com/style/fonts/Avant/ITCAvantGardeStd-Md.otf);
+}
+
+body {
+	font-family: AvantBk, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1,h2,h3,h4 {line-height:1.2; font-family: AvantXLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+h5,h6 {line-height:1.6;}
+p {line-height:1.6;}
+
+.small1, .small2 {line-height:1.5;}
+h2, h3, h5, h6 {
+	font-weight:normal;
+	text-transform:none;
+}
+
+h1 {font-size:58px;line-height:1;}
+h2 {font-size:42px;}
+h3 {font-size:30px;}
+h4 {font-size:22px;}
+h5 {font-size:18px;}
+h6 {font-size:15px;}
+
+p  {font-size:14px;}
+.small1 {font-size: 12px;}
+.small2 {font-size: 11px;}
+
+
+.txtup {text-transform:uppercase;}
+.AvantXLt {font-family: AvantXLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.AvantBk {font-family: AvantBk, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.AvantMd {font-family: AvantMd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.txt-treb{font-family:"Trebuchet MS", "Lucida Grande", Arial, Helvetica, sans-serif;}
+.txt-lucg{font-family:"Lucida Grande", "Trebuchet MS", Arial, Helvetica, sans-serif;}
+.txt-arial{font-family:Arial, Helvetica, sans-serif;}
+.txt-helvetica {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+
+
+.center {text-align:center;}
+
+.fw100 {font-weight:100;}
+.fw200 {font-weight:200;}
+.fw300 {font-weight:300;}
+.fw400 {font-weight:400;}
+.fw500 {font-weight:500;}
+.fw600 {font-weight:600;}
+.fw700 {font-weight:700;}
+.fw800 {font-weight:800;}
+.fw900 {font-weight:900;}
+
+
+
+/* --------------------------------------------------
+// Accent Colors
+-------------------------------------------------- */
+
+/* Grays */
+.white {color: #FFF;}
+.gray1 {color: #F2F2F2;}
+.gray2 {color: #B3B3B3;}
+.gray3 {color: #8C8C8C;}
+.gray4 {color: #666666;}
+.gray5 {color: #3D3D3D;}
+.black {color:#000;}
+.whitebg {background-color:#fff;}
+
+/* Accent colors */
+.orange {color:#E86823;}
+
+
+/* --------------------------------------------------
+// Modals
+-------------------------------------------------- */
+.modal {
+	border:0;
+}
+.modal-large {
+	width: 650px;
+	margin:-300px 0 0 -325px;
+}
+
+.modal-large .modal-body {
+	max-height:480px;
+}
+.modal-fullheight {
+	width: 770px;
+	height: 90%;
+	margin:-50% 0 0 -385px;
+}
+.modal-fullheight .modal-body {
+	max-height:100%;
+}
+.modal-full {
+	width: 100%;
+	height: 95%;
+	margin:0px;
+	top:0;
+	left:0;	
+}
+.modal-full.fade.in {
+top:0%;
+}
+.modal-full .modal-body {
+	max-height: 88%;
+}
+.modal-gallery .modal-body {
+	padding:15px;
+}
+.modal-gallery .carousel {
+	margin-bottom:0px;
+}
+.modal-click {
+	cursor:pointer;
+}
+.modal-body {
+	padding:25px;
+}
+
+.modal-video {
+	width: 640px;
+	height: 480px;
+	overflow:hidden;
+}
+.modal-video .modal-body {
+	padding:0px;
+	max-height:none;
+}
+.modal-video .close {
+	position:absolute;
+	margin:8px 0px 0px 15px;
+}
+
+
+.carousel-control {
+	border:2px solid white;
+	top:50%;
+}
+
+/* --------------------------------------------------
+// navbar
+-------------------------------------------------- */
+.navlogin {
+	width:145px;
+	background: url("../../img/icn_user.png") no-repeat scroll 0px 12px transparent;
+	padding-left:24px;
+}
+.login {
+	padding:10px;
+}
+.login .control-group {
+	margin-bottom:0px;
+}
+.login form {
+	margin:0;
+}
+.login .btn {
+	margin-top:0px;
+}
+.logo_google {
+	float: left;
+	text-indent:-9999px;
+	width: 68px;
+	height: 26px;
+	background: url("../../img/logo_google.png") no-repeat scroll -3px -3px transparent;
+	margin:-20px 0 0 92px;
+}
+
+/* Social */
+.tw, .fb, .yt, .sk {
+	float: left;
+	text-indent:-9999px;
+	width: 27px;
+	height: 26px;
+	margin:10px 2px 0px 2px;
+	padding:0px;
+}
+.tw {background: url("../../img/icn_social.png") no-repeat scroll top left transparent;}
+.fb {background: url("../../img/icn_social.png") no-repeat scroll top center transparent;}
+.yt {background: url("../../img/icn_social.png") no-repeat scroll top right transparent;}
+.sk {background: url("../../img/icn_skype.png") no-repeat scroll top left transparent;}
+
+.tw:hover {background: url("../../img/icn_social.png") no-repeat scroll bottom left transparent;}
+.fb:hover {background: url("../../img/icn_social.png") no-repeat scroll bottom center transparent;}
+.yt:hover {background: url("../../img/icn_social.png") no-repeat scroll bottom right transparent;}
+.sk:hover {background: url("../../img/icn_skype.png") no-repeat scroll bottom left transparent;}
+
+/* --------------------------------------------------
+// Header
+-------------------------------------------------- */
+.header {
+	margin-top:70px;
+	margin-bottom:60px;
+}
+.tag_brand {
+	float:left;
+	text-indent:-9999px;
+	width: 109px;
+	height: 34px;
+	background: url("../../img/kuepa_h3.png") no-repeat scroll -2px 1px transparent;
+}
+.tagline {
+	margin:0;
+}
+
+/* --------------------------------------------------
+// homehero
+-------------------------------------------------- */
+.homehero {
+	margin-bottom:20px;
+}
+.homehero_margin {
+	padding:50px 35px 0px;
+}
+.homehero_margin.double {
+	padding:30px 35px 0px;
+}
+.homehero_margin h2 .orange,
+.modalheadhero h2 .orange {
+	position: absolute;
+	text-indent:-9999px;
+	width: 155px;
+	height: 42px;
+	background: url("../../img/kuepa_h2.png") no-repeat scroll 8px 2px transparent;
+}
+.homehero_margin h2 .closing,
+.modalheadhero h2 .closing {
+	position: absolute;
+	margin-left:160px;
+}
+.herobtnimg {
+	position: absolute;
+	text-indent:-9999px;
+	width: 100px;
+	height: 100px;
+	background: url("../../img/icn_play.png") no-repeat scroll 0px 0px transparent;
+	margin:80px 0 0 -105px;
+}
+
+/* --------------------------------------------------
+// productos
+-------------------------------------------------- */
+#productos h4 .orange {
+	float:left;
+	text-indent:-9999px;
+	width: 80px;
+	height: 25px;
+	background: url("../../img/kuepa_h4.png") no-repeat scroll 0px 0px transparent;
+}
+.prodbtnimg {
+	position: absolute;
+	text-indent:-9999px;
+	width: 54px;
+	height: 54px;
+	background: url("../../img/icn_plusmini.png") no-repeat scroll 0px 0px transparent;
+	margin:85px 0 0 125px;
+}
+
+/* --------------------------------------------------
+// contacto
+-------------------------------------------------- */
+.contacto h6 {
+	padding-left:27px;
+}
+.contacto h6.mail {background: url("../../img/icn_mail.png") no-repeat scroll 0px -2px transparent;}
+.contacto h6.phone {background: url("../../img/icn_phone.png") no-repeat scroll -1px 0px transparent;}
+.contacto h6.web {background: url("../../img/icn_world.png") no-repeat scroll 0px 0px transparent;}
+
+
+.about h2 span.AvantMd {
+	position: absolute;
+	text-indent:-9999px;
+	width: 155px;
+	height: 42px;
+	background: url("../../img/kuepa_h2gray.png") no-repeat scroll 8px 2px transparent;
+}
+
+/* --------------------------------------------------
+// footer
+-------------------------------------------------- */
+footer {
+	border-top:1px solid #E0E0E0;
+	padding:25px 0 10px;
+}
+footer span.AvantMd {
+	float:left;
+	text-indent:-9999px;
+	width: 85px;
+	height: 20px;
+	background: url("../../img/kuepa_ft.png") no-repeat scroll 0px 0px transparent;
+	margin-top: -3px;
+}
+
+
+/* --------------------------------------------------
+// diploma dual
+-------------------------------------------------- */
+
+.diplomadual {
+	padding:0px 35px;
+}
+.diplomadual .orange {
+	position: absolute;
+	text-indent:-9999px;
+	width: 155px;
+	height: 42px;
+	background: url("../../img/kuepa_h2.png") no-repeat scroll 0px 2px transparent;
+}
+.diplomadual h2 {
+	margin:0;
+}
+
+.prensa {
+	padding:0 35px;
+}
+.prensa .data {
+	padding-left:10px;
+}
+
+.diploma-dual .contacto {
+	padding:40px 35px 0px;
+}
+
+
+/* --------------------------------------------------
+// Escuela BsAs
+-------------------------------------------------- */
+
+.bsascarousel {
+	position:relative;
+}
+.bsastitle h2 {
+	position:relative;
+	z-index:10;
+	padding:16px 15px 10px;
+	margin:0px;
+}
+
+.titulo {
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+.titulo-bg {
+	background-color:#fff;
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+
+#mainSliderCarousel .carousel-control.right {
+	left: 65px;
+	right: auto;
+}
+#mainSliderCarousel .carousel-control {
+	bottom:40px;
+	top:auto;
+}
+
+.colegiopic {
+	position:absolute;
+	margin: -123px 0 0 125px;
+	border: 5px solid #fff;
+}

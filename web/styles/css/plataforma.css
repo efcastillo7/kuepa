@@ -1,0 +1,213 @@
+/* 
+ * Kuepa Project - Plataforma v2.0.0
+ *
+ * Copyright 2013 Pablo Rossi
+ *
+ * Designed and built with all the egg in the world by @pol_r 
+ * Special thanks and love to Twitter Bootstrap, @mdo and @fat. 
+ *
+ */
+ 
+ /* --------------------------------------------------
+// Added Font Styles
+-------------------------------------------------- */
+
+
+@font-face {
+    font-family: HelveticaHv;
+    src: url(../fonts/HelveticaNeueLTStd-Hv.otf);
+}
+@font-face {
+    font-family: HelveticaMd;
+    src: url(../fonts/HelveticaNeueLTStd-Md.otf);
+}
+@font-face {
+    font-family: HelveticaRoman;
+    src: url(../fonts/HelveticaNeueLTStd-Roman.otf);
+}
+@font-face {
+    font-family: HelveticaLt;
+    src: url(../fonts/HelveticaNeueLTStd-Lt.otf);
+}
+
+body {
+	font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	padding-top: 100px;
+	color: #000;
+}
+
+p {line-height:1.6;}
+h1,h2,h3,h4, .title1, .title2, .title3, .title4
+{line-height:1; font-family: HelveticaHv, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+
+.HelveticaLt {font-family: HelveticaLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.HelveticaRoman {font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.HelveticaMd {font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.HelveticaHv {font-family: HelveticaHv, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+
+
+/* --------------------------------------------------
+// navbar
+-------------------------------------------------- */
+
+.navbar .nav {
+	font-size: 18px;
+}
+.navbar .nav > li > a {
+	padding:0px;
+}
+.navbar .nav > li  {
+	padding: 18px 15px 15px;
+	border-left: 1px solid #ccc;
+}
+.navbar .brand {
+	padding: 14px 20px;
+}
+
+/* --------------------------------------------------
+// Footer
+-------------------------------------------------- */
+footer {
+  background-color: #F5F5F5;
+  border: 0 none;
+  padding: 25px 0 20px;
+  margin-top: 30px;
+}
+
+
+
+/* --------------------------------------------------
+// Subject Button Box Menu - Homepage
+-------------------------------------------------- */
+
+.subject-buttonbox {
+	height: 226px;
+  width: 246px;
+	background-color: #ccc;
+	position: relative;
+  padding-top: 20px;
+}
+.subject-buttonbox .subject-title {
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
+}
+
+
+.subject-biology {
+	background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #008A5E;
+}
+.subject-grid a:hover .subject-biology {
+		background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #009968;
+}
+
+.subject-fisics {
+	background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #DB0962;
+}
+.subject-grid a:hover .subject-fisics {
+		background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #E51783;
+}
+.subject-grammar {
+  background: url("../../img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #7AC143;
+}
+.subject-grid a:hover .subject-grammar {
+    background: url("../../img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #8ACC52;
+}
+.subject-history {
+  background: url("../../img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #B5121B;
+}
+.subject-grid a:hover .subject-history {
+    background: url("../../img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #CC1729;
+}
+.subject-live {
+  background: url("../../img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #5A4099;
+}
+.subject-grid a:hover .subject-live {
+    background: url("../../img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #654BB2;
+}
+.subject-maths {
+  background: url("../../img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #273691;
+}
+.subject-grid a:hover .subject-maths {
+    background: url("../../img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #2B4099;
+}
+.subject-reasoning {
+  background: url("../../img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00ACA1;
+}
+.subject-grid a:hover .subject-reasoning {
+    background: url("../../img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00B2A1;
+}
+.subject-simulation {
+  background: url("../../img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #F76E26;
+}
+.subject-grid a:hover .subject-simulation {
+    background: url("../../img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #FF7B36;
+}
+.subject-socialcs {
+  background: url("../../img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #11175E;
+}
+.subject-grid a:hover .subject-socialcs {
+    background: url("../../img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #18257F;
+}
+
+.pbar-circle {
+  opacity:0.6;
+  filter:alpha(opacity=60);
+}
+
+.learning-path {
+  background-color: #1F1F1F;
+  border-top: 10px solid #DB0962;
+  margin-top: 10px;
+}
+
+.path-steps {
+  background-color: #333333;
+  padding: 20px 0 10px;
+}
+.path-steps ul li {
+  padding: 9px 15px 5px;
+  border-bottom: 1px solid #1F1F1F;
+}
+.path-steps ul li:hover {
+  background-color: #fff;
+  cursor: pointer;
+  color: #DB0962;
+}
+.path-steps ul li a {
+  color: #8C8C8C;
+  text-decoration: none;
+}
+.path-steps ul li a:hover {
+  color: #DB0962;
+}
+
+.path-steps .active {
+  background-color: #1F1F1F;
+  color:#fff;
+}
+.path-content {
+  padding: 50px 0 20px 20px;
+}
+
+.notes input {
+  padding: 10px 6px;
+  font-size: 16px;
+}
+.notes ul {
+  border-top: 1px dashed #666;
+  margin-top: 10px;
+}
+.notes ul li {
+  padding: 15px 0 10px;
+  border-bottom: 1px dashed #aaa;
+}
+
+/* --------------------------------------------------
+// Circle Progress Bar
+-------------------------------------------------- */
+
+
+
+
+

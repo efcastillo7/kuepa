@@ -65,8 +65,6 @@ Resource:
     type: column_aggregation
     keyField: type
     keyValue: Resource
-  columns:
-    resource_data_id: integer
   relations:
     Data:
       class: ResourceData

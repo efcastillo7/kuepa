@@ -1,0 +1,1165 @@
+/* 
+ * Kuepa Project v2.1.0
+ *
+ * Copyright 2012 Pablo Rossi
+ *
+ * Designed and built with all the egg in the world by @pol_r 
+ * Special thanks and love to Twitter Bootstrap, @mdo and @fat. 
+ *
+ */
+ 
+/* --------------------------------------------------
+    Style Jokers
+-------------------------------------------------- */
+ 
+.fl {float:left;}
+.fr {float:right;}
+.whiteshadow {text-shadow:0 1px 0 #fff;}
+.blackshadow {text-shadow:0 1px 0 #000;}
+.box-shadow {
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+	box-shadow: 0 1px 3px rgba(0,0,0,.25); 
+}
+
+.margintop5 {margin-top:5px;}
+.margintop10 {margin-top:10px;}
+.margintop15 {margin-top:15px;} 
+.margintop {margin-top:20px;}
+.margintop30 {margin-top:30px;}
+.margintop40 {margin-top:40px;} 
+.margintop60 {margin-top:60px;} 
+.margintop100 {margin-top:100px;} 
+.margintop50 {padding-top:60px;} 
+ 
+.padding20 {padding:20px 0;}
+.padding10 {padding:10px 0;}
+
+.paddingside20 {padding:0 20px;}
+.paddingside40 {padding:0 40px;}
+.paddingside60 {padding:0 60px;}
+.paddingside80 {padding:0 80px;}
+.paddingside100 {padding:0 100px;}
+
+
+.paddingtop10 {padding-top:10px;}
+.paddingtop20 {padding-top:20px;}
+.paddingtop30 {padding-top:30px;}
+.paddingtop40 {padding-top:40px;}
+.paddingtop50 {padding-top:50px;}
+
+.marginright {padding-right:15px;}
+.marginleft {padding-left:15px;}
+.marginli {padding-left:24px;}
+
+.clearmargin {margin:0;}
+.clearpadding {padding:0;}
+
+.divisor {border-top:1px solid #DDD;}
+.divisorbot {border-bottom:1px solid #DDD;}
+
+
+.title {margin-bottom:-5px;}
+
+/* --------------------------------------------------
+// Added Font Styles
+-------------------------------------------------- */
+
+
+@font-face {
+    font-family: AvantXLt ;
+    src: url(../fonts/ITCAvantGardeStd-XLt.otf);
+}
+@font-face {
+    font-family: AvantBk ;
+    src: url(../fonts/ITCAvantGardeStd-Bk.otf);
+}
+@font-face {
+    font-family: AvantMd ;
+    src: url(../fonts/ITCAvantGardeStd-Md.otf);
+}
+
+body {
+	font-family: AvantBk, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+p {line-height:1.6;}
+h1,h2,h3,h4, .title1, .title2, .title3, .title4
+{line-height:1.2; font-family: AvantXLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+h5,h6, .title5, .title6 {line-height:1.6;}
+
+.small1, .small2 {line-height:1.5;}
+h2, h3, h5, h6 {
+	font-weight:normal;
+	text-transform:none;
+}
+
+p  {font-size:14px;}
+
+h1, .title1 {font-size:58px;line-height:1;}
+h2, .title2 {font-size:42px;}
+h3, .title3 {font-size:30px;}
+h4, .title4 {font-size:22px;}
+h5, .title5 {font-size:18px;}
+h6, .title6 {font-size:15px;}
+
+.small1 {font-size: 12px;}
+.small2 {font-size: 11px;}
+
+
+.txtup {text-transform:uppercase;}
+.AvantXLt {font-family: AvantXLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.AvantBk {font-family: AvantBk, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.AvantMd {font-family: AvantMd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.txt-treb{font-family:"Trebuchet MS", "Lucida Grande", Arial, Helvetica, sans-serif;}
+.txt-lucg{font-family:"Lucida Grande", "Trebuchet MS", Arial, Helvetica, sans-serif;}
+.txt-arial{font-family:Arial, Helvetica, sans-serif;}
+.txt-helvetica {font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+
+
+.txt-center {text-align:center;}
+.txt-right {text-align:right;}
+.txt-left {text-align:left;}
+
+
+.fw100 {font-weight:100;}
+.fw200 {font-weight:200;}
+.fw300 {font-weight:300;}
+.fw400 {font-weight:400;}
+.fw500 {font-weight:500;}
+.fw600 {font-weight:600;}
+.fw700 {font-weight:700;}
+.fw800 {font-weight:800;}
+.fw900 {font-weight:900;}
+
+
+
+/* --------------------------------------------------
+// Accent Colors
+-------------------------------------------------- */
+
+/* Grays */
+.white {color: #FFF;}
+.gray1 {color: #F2F2F2;}
+.gray2 {color: #B3B3B3;}
+.gray3 {color: #8C8C8C;}
+.gray4 {color: #666666;}
+.gray5 {color: #3D3D3D;}
+.black {color:#000;}
+.whitebg {background-color:#fff;}
+.blackbg {background-color:#000;}
+
+/* Accent colors */
+.orange {color:#E86823;}
+
+
+/* --------------------------------------------------
+// Modals
+-------------------------------------------------- */
+.modal {
+	border:0;
+}
+.modal-large {
+	width: 650px;
+	margin:-300px 0 0 -325px;
+}
+
+.modal-large .modal-body {
+	max-height:480px;
+}
+.modal-xlarge {
+	width: 850px;
+	margin:-300px 0 0 -425px;
+}
+.modal-fullheight {
+	width: 770px;
+	height: 90%;
+	margin:-50% 0 0 -385px;
+}
+.modal-fullheight .modal-body {
+	max-height:100%;
+}
+.modal-full {
+	width: 100%;
+	height: 95%;
+	margin:0px;
+	top:0;
+	left:0;	
+}
+.modal-full.fade.in {
+top:0%;
+}
+.modal-full .modal-body {
+	max-height: 88%;
+}
+.modal-gallery .modal-body {
+	padding:15px;
+}
+.modal-gallery .carousel {
+	margin-bottom:0px;
+}
+.modal-click {
+	cursor:pointer;
+}
+.modal-body {
+	padding:25px;
+}
+
+.modal-video {
+	width: 640px;
+	height: 480px;
+	overflow:hidden;
+}
+.modal-video .modal-body {
+	padding:0px;
+	max-height:none;
+}
+.modal-video .close {
+	position:absolute;
+	margin:8px 0px 0px 15px;
+}
+
+
+.carousel-control {
+	border:2px solid white;
+	top:50%;
+}
+
+
+form select {margin-top:-4px}
+
+
+.btn-xlarge {
+  padding: 12px 18px;
+  font-size: 18px;
+  line-height: normal;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+
+/* --------------------------------------------------
+// navbar
+-------------------------------------------------- */
+.navlogin {
+	background: url("../../img/icn_user.png") no-repeat scroll 0px 12px transparent;
+	padding-left:24px;
+}
+.navbar .nav.navlogin li a {
+	padding:15px 0px 15px 0px;
+}
+.navbar .nav {
+	margin:0px;
+}
+.navbar .nav > li > a {
+	padding:15px 18px 15px 0px;
+}
+.navbar .nav.pull-right {
+	margin-left:10px;
+}
+.navbar .nav.pull-right.social {
+	margin-left:0px;
+}
+.login {
+	padding:10px;
+}
+.login .control-group {
+	margin-bottom:0px;
+}
+.login form {
+	margin:0;
+}
+.login .btn {
+	margin-top:0px;
+}
+.logo_google {
+	float: left;
+	text-indent:-9999px;
+	width: 68px;
+	height: 26px;
+	background: url("../../img/logo_google.png") no-repeat scroll -3px -3px transparent;
+	margin:-20px 0 0 92px;
+}
+
+/* Social */
+.tw, .fb, .yt, .sk {
+	float: left;
+	text-indent:-9999px;
+	width: 27px;
+	height: 26px;
+	margin:10px 2px 0px 2px;
+	padding:0px;
+}
+.tw {background: url("../../img/icn_social.png") no-repeat scroll top left transparent;}
+.fb {background: url("../../img/icn_social.png") no-repeat scroll top center transparent;}
+.yt {background: url("../../img/icn_social.png") no-repeat scroll top right transparent;}
+.sk {background: url("../../img/icn_skype.png") no-repeat scroll top left transparent;}
+
+.tw:hover {background: url("../../img/icn_social.png") no-repeat scroll bottom left transparent;}
+.fb:hover {background: url("../../img/icn_social.png") no-repeat scroll bottom center transparent;}
+.yt:hover {background: url("../../img/icn_social.png") no-repeat scroll bottom right transparent;}
+.sk:hover {background: url("../../img/icn_skype.png") no-repeat scroll bottom left transparent;}
+
+.navbar .btn-group .dropdown-toggle {
+	padding:4px 6px;
+	margin-left:-1px;
+}
+
+/* --------------------------------------------------
+// Header
+-------------------------------------------------- */
+.header {
+	margin-top:70px;
+	margin-bottom:60px;
+}
+.header2 {
+	margin-top:25px;
+	margin-bottom:50px;
+}
+.tag_brand {
+	float:left;
+	text-indent:-9999px;
+	width: 109px;
+	height: 34px;
+	background: url("../../img/kuepa_h3.png") no-repeat scroll -2px 1px transparent;
+}
+.tagline {
+	margin:0;
+}
+
+.tag_brandBA {
+	float:left;
+	text-indent:-9999px;
+	width: 320px;
+	height: 120px;
+	margin-top:-46px;
+	background: url("../../img/kuepabsas.png") no-repeat scroll -2px 1px transparent;
+}
+
+/* --------------------------------------------------
+// login / form
+-------------------------------------------------- */
+
+#login, .loginform {
+	padding:15px 25px 0px;
+	background-color:#f5f5f5;
+	border:1px solid #DDD;
+}
+
+span.form-step {
+	color:#fff;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	padding: 13px 11px 9px 13px;
+	margin:0 0 0 -18px;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 4px rgba(0,0,0,.45);
+	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 4px rgba(0,0,0,.45);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 4px rgba(0,0,0,.45);
+	background-color: #BD4100;
+	background-image: -moz-linear-gradient(top, #e86823, #BD4100);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e86823), to(#BD4100));
+	background-image: -webkit-linear-gradient(top, #e86823, #BD4100);
+	background-image: -o-linear-gradient(top, #e86823, #BD4100);
+	background-image: linear-gradient(to bottom, #e86823, #BD4100);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe86823', endColorstr='#ffe8aa23', GradientType=0);
+	*background-color: #BD4100;
+	font-size: 18px;
+}
+
+
+.fog {
+	height:160px;
+	background-color:#fff;
+	margin:-150px 0 0 -30px;
+	padding:0 30px;
+	
+	/* Required for IE 5, 6, 7 */
+	/* ...or something to trigger hasLayout, like zoom: 1; */
+	width: 100%; 
+		
+	/* Theoretically for IE 8 & 9 (more valid) */	
+	/* ...but not required as filter works too */
+	/* should come BEFORE filter */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	
+	/* This works in IE 8 & 9 too */
+	/* ... but also 5, 6, 7 */
+	filter: alpha(opacity=70);
+	
+	/* Older than Firefox 0.9 */
+	-moz-opacity:0.7;
+	
+	/* Safari 1.x (pre WebKit!) */
+	-khtml-opacity: 0.7;
+    
+	/* Modern!
+	/* Firefox 0.9+, Safari 2?, Chrome any?
+	/* Opera 9+, IE 9+ */
+	opacity: 0.7;
+}
+
+/* --------------------------------------------------
+// homehero
+-------------------------------------------------- */
+.homehero {
+	margin-bottom:20px;
+}
+.homehero_margin {
+	padding:50px 35px 0px;
+}
+.homehero_margin.double {
+	padding:30px 35px 0px;
+}
+.homehero_margin.simple {
+	padding:10px 35px 0px;
+}
+.homehero_margin h2 .orange,
+.modalheadhero h2 .orange {
+	position: absolute;
+	text-indent:-9999px;
+	width: 155px;
+	height: 42px;
+	background: url("../../img/kuepa_h2.png") no-repeat scroll 8px 2px transparent;
+}
+.homehero_margin h2 .closing,
+.modalheadhero h2 .closing {
+	position: absolute;
+	margin-left:160px;
+}
+.herobtnimg {
+	position: absolute;
+	text-indent:-9999px;
+	width: 100px;
+	height: 100px;
+	background: url("../../img/icn_play.png") no-repeat scroll 0px 0px transparent;
+	margin:80px 0 0 -105px;
+}
+
+.item h3.large {font-size:36px;}
+
+/* --------------------------------------------------
+// productos
+-------------------------------------------------- */
+#productos h4 .orange,
+#KuepaEscuelaLogin h4 .orange {
+	float:left;
+	text-indent:-9999px;
+	width: 80px;
+	height: 25px;
+	background: url("../../img/kuepa_h4.png") no-repeat scroll 0px 0px transparent;
+}
+.prodbtnimg {
+	position: absolute;
+	text-indent:-9999px;
+	width: 54px;
+	height: 54px;
+	background: url("../../img/icn_plusmini.png") no-repeat scroll 0px 0px transparent;
+	margin:85px 0 0 125px;
+}
+
+/* --------------------------------------------------
+// contacto
+-------------------------------------------------- */
+.contacto h6 {
+	padding-left:27px;
+}
+.contacto h6.mail {background: url("../../img/icn_mail.png") no-repeat scroll 0px -2px transparent;}
+.contacto h6.phone {background: url("../../img/icn_phone.png") no-repeat scroll -1px 0px transparent;}
+.contacto h6.web {background: url("../../img/icn_world.png") no-repeat scroll 0px 0px transparent;}
+
+
+.about h2 span.AvantMd {
+	position: absolute;
+	text-indent:-9999px;
+	width: 155px;
+	height: 42px;
+	background: url("../../img/kuepa_h2gray.png") no-repeat scroll 8px 2px transparent;
+}
+
+/* --------------------------------------------------
+// footer
+-------------------------------------------------- */
+footer {
+	border-top:1px solid #E0E0E0;
+	padding:25px 0 10px;
+}
+footer span.AvantMd {
+	float:left;
+	text-indent:-9999px;
+	width: 85px;
+	height: 20px;
+	background: url("../../img/kuepa_ft.png") no-repeat scroll 0px 0px transparent;
+	margin-top: -3px;
+}
+
+
+/* --------------------------------------------------
+// diploma dual
+-------------------------------------------------- */
+
+.diplomadual {
+	padding:0px 35px;
+}
+.diplomadual .orange, .presaber .orange {
+	position: absolute;
+	text-indent:-9999px;
+	width: 155px;
+	height: 42px;
+	background: url("../../img/kuepa_h2.png") no-repeat scroll 0px 2px transparent;
+}
+.diplomadual h2 {
+	margin:0;
+}
+
+
+.prensa .data {
+	padding-left:10px;
+}
+
+.diploma-dual .contacto {
+	padding:40px 35px 0px;
+}
+
+.demoform h5 {
+	margin:10px 0 0;
+}
+.demoform input {
+	margin:-4px 3px 0 0 ;
+}
+.demoform input[type="checkbox"] {
+	margin:1px 5px 0px -18px;
+}
+
+
+
+/* --------------------------------------------------
+// Escuela BsAs
+-------------------------------------------------- */
+
+.bsascarousel {
+	position:relative;
+}
+.bsastitle h2 {
+	position:relative;
+	z-index:10;
+	padding:16px 15px 10px;
+	margin:0px;
+}
+
+.titulo {
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+.titulo-bg {
+	background-color:#fff;
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+	height:100%;
+	width:100%;
+	position:absolute;
+}
+
+#mainSliderCarousel .carousel-control.right {
+	left: 65px;
+	right: auto;
+}
+#mainSliderCarousel .carousel-control {
+	bottom:40px;
+	top:auto;
+}
+
+.mainBullets h6 {
+	margin:4px 0;
+}
+
+.colegiopic {
+	position:absolute;
+	margin: -123px 0 0 125px;
+	border: 5px solid #fff;
+}
+
+/*form*/
+.required {
+  color: #B94A48 !important;
+  border-color: #EE5F5B !important;
+}
+
+
+.pdf p {
+	background: url("/images/original/icn_pdf.png") no-repeat scroll left 3px transparent;
+	padding-left:38px;
+	line-height:1.4;
+	margin-top:30px;
+}
+
+.wrd p {
+	background: url("/images/original/icn_wrd.png") no-repeat scroll left 3px transparent;
+	padding-left:38px;
+	line-height:1.4;
+	margin-top:30px;
+}
+
+
+
+/* --------------------------------------------------
+// Landing ICFES
+-------------------------------------------------- */
+
+.liveclasses h3 {
+	margin:-10px 0 0;
+}
+.icfeshighlights p {
+	line-height:1.4;
+}
+
+
+.callcenter {
+	width:340px;
+	padding-left:40px;
+	margin-top:-40px;
+}
+.callcenter .box {
+	padding:6px 18px 18px 18px;
+	height:96px;
+	border:1px solid #000;
+	background: url("/img/ICFES/recepcionist.jpg") no-repeat scroll right 11px transparent;
+}
+
+.callcenter .box2 {
+	padding:11px 18px 23px 18px;
+	height:102px;
+	border:1px solid #000;
+	background: url("/img/ICFES/recepcionist.jpg") no-repeat scroll right bottom transparent;
+}
+.callcenter .box.boxsmall {
+	height:70px;
+	background:url("/img/ICFES/recepcionist.jpg") no-repeat scroll right -6px transparent;
+}
+
+.callcenter h5 {margin:0px;}
+.callcenter h6 {margin:0px;}
+
+.flag {padding:12px 0 1px 36px;}
+.co {background: url("/img/flags/co_circle.png") no-repeat scroll left 4px transparent;}
+.mx {background: url("/img/flags/mx_circle.png") no-repeat scroll left 4px transparent;}
+.us {background: url("/img/flags/us.png") no-repeat scroll left 4px transparent;}
+.skypebig {background: url("/img/icn_skype_big.png") no-repeat scroll left 4px transparent;}
+
+.ccform .title {
+	padding:14px 0 10px;
+	font-size:20px;
+	
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgb a(0, 0, 0, 0.25);
+  background-color: #363636;
+  background-image: -moz-linear-gradient(top, #444444, #222222);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#444444), to(#222222));
+  background-image: -webkit-linear-gradient(top, #444444, #222222);
+  background-image: -o-linear-gradient(top, #444444, #222222);
+  background-image: linear-gradient(to bottom, #444444, #222222);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
+  border-color: #222222 #222222 #000000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #222222;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+
+.orangeform {
+	padding:15px;
+	border:1px solid #000;
+	margin:0 0 10px;
+	
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgb a(0, 0, 0, 0.25);
+  background-color: #BD4100;
+  background-image: -moz-linear-gradient(top, #e86823, #BD4100);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e86823), to(#BD4100));
+  background-image: -webkit-linear-gradient(top, #e86823, #BD4100);
+  background-image: -o-linear-gradient(top, #e86823, #BD4100);
+  background-image: linear-gradient(to bottom, #e86823, #BD4100);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe86823', endColorstr='#ffe8aa23', GradientType=0);
+  *background-color: #BD4100;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.ccform .form-horizontal .control-label {
+	width:75px;
+	padding-top:10px;
+}
+
+.ccform .form-horizontal .controls {
+	margin-left:90px;
+}
+
+.orangeform input {
+	width:196px;
+	padding:8px 10px;
+	color:#000;
+	border:1px solid #000;
+}
+
+.callcenter .btn {
+	border:1px solid #000;
+	font-size:18px;
+	padding:12px 37px 10px 13px;
+	color: #000;
+	text-shadow:0 1px 0 #fff;
+
+  background-color: #828282;
+  background-image: -moz-linear-gradient(top, #EAEAEA, #828282);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#EAEAEA), to(#828282));
+  background-image: -webkit-linear-gradient(top, #EAEAEA, #828282);
+  background-image: -o-linear-gradient(top, #EAEAEA, #828282);
+  background-image: linear-gradient(to bottom, #EAEAEA, #828282);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffEAEAEA', endColorstr='#ffe8aa23', GradientType=0);
+  *background-color: #828282;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.callcenter .btn span {
+	background: url("/img/icn_playbtn.png") no-repeat scroll right 0px transparent;
+	width:23px;
+	height:23px;
+	position:absolute;
+	margin:-2px 0 0 4px;
+}
+.callcenter .blackbg {
+	padding:10px;
+}
+
+
+.simulacroICFES {
+	padding-left:40px;
+	margin-top:-40px;
+}
+.simulacroICFES h5 {margin:20px 0 0;}
+
+.simulacroICFES .simulacroBox {
+	border:1px solid #ccc;
+	padding:12px 20px 20px;
+	min-height:190px;
+}
+.simulacroBox h4 {
+	font-size:19px;
+}
+.simulacroBox h5 {
+	margin:0px;
+}
+.simulacroBox h5 input {
+	margin:-3px 7px 0px 0px;
+}
+.simulacroBox div {
+	padding-left:60px;
+}
+.simulacroICFES .responder {
+	background-color:#ECECEC;
+	padding:10px;
+	border:1px solid #ccc;
+	margin-top:-1px;
+}
+
+
+
+.ICFESarrowBG, .ICFESarrow {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgb a(0, 0, 0, 0.25);
+  background-color: #BD4100;
+  background-image: -moz-linear-gradient(top, #e86823, #BD4100);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e86823), to(#BD4100));
+  background-image: -webkit-linear-gradient(top, #e86823, #BD4100);
+  background-image: -o-linear-gradient(top, #e86823, #BD4100);
+  background-image: linear-gradient(to bottom, #e86823, #BD4100);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe86823', endColorstr='#ffe8aa23', GradientType=0);
+  border-color: #BD4100 #BD4100 #BD4100;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #BD4100;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.ICFESarrowBG {
+	position:absolute;
+	height:60px;
+	width:50%;
+	border-top:1px solid #000;
+	border-bottom:1px solid #000;
+	}
+.ICFESarrow {
+	height:60px;
+	border-top:1px solid #000;
+	border-bottom:1px solid #000;
+	position:absolute;
+	z-index:10;
+	font-size:32px;
+	padding-top:16px;
+	height:44px;
+	line-height:1;
+}
+
+.icfes-arrow{
+	background: url("/img/ICFES/arrow.png") no-repeat scroll right center transparent;
+	height:116px;
+	width:54px;
+	position:absolute;
+	margin:-25px 0px 0px 640px;
+	margin-top:-25px;
+}
+.icfes-container {
+	margin-top: -80px;
+}
+
+
+.icfes-func .btn span {
+	background: url("/img/icn_playbtn2.png") no-repeat scroll right 0px transparent;
+	width:35px;
+	height:35px;
+	position:absolute;
+	margin:-7px 0 0 6px;
+}
+.icfes-func .btn {
+	border:1px solid #000;
+	font-size:23px;
+	padding:16px 54px 10px 30px;
+}
+
+.icfes-func {
+	width:340px;
+	padding-left:40px;
+	margin-bottom:60px;
+}
+.icfes-insc {
+	border:1px solid #ccc;
+	padding:20px 20px 40px;
+	margin-bottom:-28px;
+}
+.icfes-func h5 {
+	margin:7px 0;
+}
+
+.testimonios {
+	background-color:#ECECEC;
+	border:1px solid #ccc;
+	padding:20px;
+}
+.avatar {
+	border:1px solid #ccc;
+	background-color:#fff;
+	padding:1px;
+}
+.testimonios .span10 h6 {
+	margin:0 0 5px;
+}
+
+
+.prices {
+	border:1px solid #ccc;
+	text-align:center;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  -webkit-box-shadow: 0px 0px 10px rgba(0,0,0,.25);
+  -moz-box-shadow: 0px 0px 10px rgba(0,0,0,.25);
+  box-shadow: 0px 0px 10px rgba(0,0,0,.25);
+  min-height:520px;
+  padding-bottom:20px;
+}
+
+.prices .title4 {
+	border-bottom:1px solid #e5e5e5;
+	padding:15px 10px 10px;
+	background-color:#f7f7f7;
+}
+.prices .holder {
+	padding:20px 10px 5px;
+	/*height:115px;*/
+}
+
+.price-detail{
+	font-size: 12px;
+}
+
+.prices .title2 {
+	margin:-5px 0 -8px;
+}
+.prices .title6 {
+	margin-left:88px;
+}
+.prices .title5 {
+	line-height:1.3;
+}
+.prices .meses6 {
+	line-height:1.3;
+}
+
+.prices .price-list {
+	border-top:1px solid #e5e5e5;
+	border-bottom:1px solid #e5e5e5;
+	background-color:#f7f7f7;
+}
+.prices ul {
+	text-align:left;
+	padding:10px 0px;
+	margin:0 0 0 40px;
+}
+.prices ul li{
+}
+.prices .price-option {
+	text-align:left;
+	margin:0 0 16px 72px;
+}
+.prices .price-option div {
+	text-indent:-9999px;
+	height:25px;
+	width:160px;
+	margin:10px;
+}
+.prices .price-option input {
+	float:left;
+}
+.prices .price-option .dineromail {
+	background: url("/img/logo_dineromail.png") no-repeat scroll left center transparent;
+}
+.prices .price-option .paypal {
+	background: url("/img/logo_paypal.png") no-repeat scroll left center transparent;
+}
+.prices .price-option .pagatodo {
+	background: url("/img/logo_pagatodo.png") no-repeat scroll left center transparent;
+	height:60px;
+}
+.prices .btn-holder{
+	margin-bottom:20px;
+}
+.prices .descuento {
+	position:absolute;
+	color:#000;
+	-webkit-border-radius: 70px;
+	-moz-border-radius: 70px;
+	border-radius: 70px;
+	height: 55px;
+	padding: 26px 4px;
+	width: 100px;
+  	transform:rotate(10deg);
+	-ms-transform: rotate(10deg); /* IE 9 */
+	-webkit-transform:rotate(10deg); /* Safari and Chrome */
+	margin:-50px 0 0 220px;
+	-webkit-box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 1px 6px rgba(0,0,0,.55);
+	-moz-box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 1px 6px rgba(0,0,0,.55);
+	box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 1px 6px rgba(0,0,0,.55);
+	background-color: #BD4100;
+	background-image: -moz-linear-gradient(top, #e86823, #BD4100);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e86823), to(#BD4100));
+	background-image: -webkit-linear-gradient(top, #e86823, #BD4100);
+	background-image: -o-linear-gradient(top, #e86823, #BD4100);
+	background-image: linear-gradient(to bottom, #e86823, #BD4100);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe86823', endColorstr='#ffe8aa23', GradientType=0);
+	border-color: #BD4100 #BD4100 #BD4100;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	*background-color: #BD4100;
+	font-size: 10px;
+	border: 1px solid #e86823;
+}
+.prices .descuento .title3 {
+	color:#fff;
+	margin-bottom:-7px;
+	font-size:40px;
+}
+
+.prices-mx {
+	height:500px;
+}
+.bienvenido {
+	padding:50px 0 100px;
+}
+	
+.imagesboard {
+	position:absolute;
+	overflow:hidden;
+	min-width:940px;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+}
+.imagesboard img.board01 {
+	position:absolute;
+	margin:90px 0 0 730px;
+	width:300px;
+	transform:rotate(10deg);
+	-ms-transform: rotate(10deg); /* IE 9 */
+	-webkit-transform:rotate(10deg); /* Safari and Chrome */
+}
+.imagesboard img.board02 {
+	position:absolute;
+	margin:180px 0 0 -63px;
+	width:300px;
+	transform:rotate(-6deg);
+	-ms-transform: rotate(-6deg); /* IE 9 */
+	-webkit-transform:rotate(-6deg); /* Safari and Chrome */
+}
+.imagesboard img.board03 {
+	position:absolute;
+	margin:410px 0 0 -100px;
+	width:280px;
+	transform:rotate(5deg);
+	-ms-transform: rotate(5deg); /* IE 9 */
+	-webkit-transform:rotate(5deg); /* Safari and Chrome */
+}
+
+.ceneval .title3 {
+	font-size:28px;
+}
+
+.CenevalTabs .tab-content {
+	border-bottom:1px solid #ddd;
+	border-left:1px solid #ddd;
+	border-right:1px solid #ddd;
+	position:relative;
+	height:400px;
+}
+
+.CenevalTabs .tab-pane {
+	position:absolute;
+	width:100%;
+}
+.CenevalTabs .nav {
+	margin-bottom:0px;
+}
+.carousel-control {
+	padding:8px 2px 0px;
+	height:36px;
+	-webkit-border-radius: 43px;
+    -moz-border-radius: 43px;
+	border-radius: 43px;
+	font-size:50px;
+}
+
+.CenevalTabs .item .txt-center {
+	padding:0px 85px;
+}
+
+.CenevalTabs .carousel, .CenevalTabs .carousel-inner  {
+	height:400px;
+	margin-bottom:0px;
+}
+.CenevalTabs .carousel-list-item {
+	padding:8px 0 5px;
+}
+
+.CenevalTabs .row-fluid [class*="span"] {
+min-height:0px;
+}
+
+.ceneval-price-btn .circle{
+	position:absolute;
+	color:#000;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	border-radius: 100px;
+	height: 110px;
+	padding:40px 10px;
+	width: 170px;
+  	transform:rotate(-10deg);
+	-ms-transform: rotate(-10deg); /* IE 9 */
+	-webkit-transform:rotate(-10deg); /* Safari and Chrome */
+	margin:230px 0 0 -20px;
+	-webkit-box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 1px 6px rgba(0,0,0,.55);
+	-moz-box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 1px 6px rgba(0,0,0,.55);
+	box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 1px 6px rgba(0,0,0,.55);
+	background-color: #BD4100;
+	background-image: -moz-linear-gradient(top, #e86823, #BD4100);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e86823), to(#BD4100));
+	background-image: -webkit-linear-gradient(top, #e86823, #BD4100);
+	background-image: -o-linear-gradient(top, #e86823, #BD4100);
+	background-image: linear-gradient(to bottom, #e86823, #BD4100);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe86823', endColorstr='#ffe8aa23', GradientType=0);
+	border-color: #BD4100 #BD4100 #BD4100;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	*background-color: #BD4100;
+	font-size: 10px;
+	border: 1px solid #e86823;
+}
+.ceneval-price-btn .price {
+	margin-left:10px;
+}
+.ceneval-price-btn .price-data {
+	line-height:1.2;
+	margin-left:7px;
+}
+.ceneval-price-btn .btn {
+	position:absolute;
+	margin:350px 0 0 -28px;
+}
+
+
+/* --------------------------------------------------
+// Simulacro
+-------------------------------------------------- */
+
+.encuesta-container {
+	border:1px solid #ccc;
+	padding:22px 30px 30px;
+	margin-bottom:100px;
+	position:relative;
+}
+
+.encuesta-container label {
+	font-size:16px;
+	margin:15px 0;
+}
+
+
+.encuesta-container input[type="submit"] {
+	position:absolute;
+	bottom:30px;
+	right:-30px;
+	padding-right:50px;
+}
+
+.encuesta-container span.arrow {
+	background: url("/img/icn_bigarrow.png") no-repeat scroll left center transparent;
+	height:25px;
+	width:32px;
+	position:absolute;
+	bottom:41px;
+	right:-22px;
+}
+.encuesta-container .control-group {
+	margin-bottom:0;
+}
+
+#encuesta .loginform {
+	position:relative;
+	padding:22px;
+}
+#encuesta .loginform input[type="text"] {
+	padding:17px 10px;
+}
+
+#encuesta .loginform input[type="submit"] {
+	position:absolute;
+	right:22px;
+}
+
+.alink{
+	cursor: hand;
+	cursor: pointer;
+}
+
