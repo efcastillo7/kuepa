@@ -143,3 +143,12 @@ ResourceDataExercise:
     type: column_aggregation
     keyField: type
     keyValue: Exercise
+    
+Note:
+  actAs:
+    Timestampable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    component_id: integer
+    profile_id: integer
+    content: string
