@@ -8,6 +8,7 @@ Resource:
   resource_4:
     name: Generic test resource 4
 
+
 Lesson:
   lesson_1:
     name: Lección prueba 1
@@ -53,3 +54,17 @@ Profile:
     nickname: Elbunny
     sfGuardUser: bunny
     Components: [biologia, ciencias]
+    
+Note:
+  note_1:
+    content: Esto es una nota
+    Component: lesson_1
+    Profile: bunny_profile
+  note_2:
+    content: Esto es otra nota
+    Component: lesson_1
+    Profile: bunny_profile
+  note_3:
+    content: Esto es una nota mas
+    Component: lesson_1
+    Profile: bunny_profile

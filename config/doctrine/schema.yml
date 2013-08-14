@@ -152,3 +152,10 @@ Note:
     component_id: integer
     profile_id: integer
     content: string
+  relations:
+    Component:
+      local: component_id
+      foreign: id
+    Profile:
+      local: profile_id
+      foreign: id
