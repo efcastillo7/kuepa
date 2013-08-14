@@ -31,6 +31,7 @@ dev:
 all:
   actions:
     class: kuepaActions
+  
   routing:
     class: sfPatternRouting
     param:
