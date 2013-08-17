@@ -23,6 +23,15 @@ class Component extends BaseComponent
     public function getThumbnailPath() {
         return sfConfig::get('app_image_path_component') . $this->getThumbnail();
     }
+
+    public function getChildren($order = 'asc'){
+        $query = self::getRepository()->createQuery('c')
+                    ->innerJoin('c.LearningPath lp')
+                    ->where('lp.parent_id = ?', $this->getId())
+                    ->orderBy("lp.position $order");
+
+        return $query->execute();
+    }
     
     public function __toString() {
         return get_called_class();

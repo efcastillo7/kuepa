@@ -99,6 +99,7 @@ LearningPath:
   columns:
     parent_id: integer
     child_id: integer
+    position: integer
   relations:
     Parent:
       class: Component

@@ -17,11 +17,11 @@ class ComponentService {
         return $courses;
     }
     
-    public function getChaptersForCourse($profile_id) {
-        $chapters = Chapter::getRepository()->getChaptersForUser($profile_id);
+    // public function getChaptersForCourse($profile_id, $course_id) {
+    //     $chapters = Chapter::getRepository()->getChaptersForUser($profile_id, $course_id);
         
-        return $chapters;
-    }
+    //     return $chapters;
+    // }
     
     public function getLessonsForUser($profile_id) {
         $lessons = Lessons::getRepository()->getChaptersForUser($profile_id);
@@ -33,5 +33,11 @@ class ComponentService {
         $lessons = Resources::getRepository()->getChaptersForUser($profile_id);
         
         return $lessons;
+    }
+
+    public function getChaptersForCourse($course_id) {
+        $chapters = Chapter::getRepository()->getChaptersForCourse($course_id);
+        
+        return $chapters;
     }
 }

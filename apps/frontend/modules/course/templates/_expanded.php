@@ -1,11 +1,3 @@
-<!-- <div class="course">
-    <ul>
-        <?php foreach ($course->getChildren() as $child): ?>
-            <?php include_partial('course_Component', Array('component' => $child)); ?>
-        <?php endforeach; ?>
-    </ul>
-</div> --->
-
 <div class="eg-expander expanded">
     <div class="eg-expander-inner">
         <div class="eg-close-container"><span class="eg-close"></span></div>
@@ -27,6 +19,7 @@
                 </li>
             </ul>
             <ul class="unstyled">
+                <?php foreach ($chapters as $chapter): ?>
                 <li>
                     <a href="">
                         <div class="lp-node">
@@ -35,106 +28,11 @@
                             <span class="lp-node-play"></span>
                             <input class="knob knob-small" value="100" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
                         </div>
-                        01.01. Lección lorem uno
+                        <?php echo $chapter->getName() ?>
                         <span class="lp-time">10'32''</span>
                     </a>
                 </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev viewed"></div>
-                            <div class="lp-bar-post"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="63" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.02. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev"></div>
-                            <div class="lp-bar-post"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="0" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.03. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev viewed"></div>
-                            <div class="lp-bar-post"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="44" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.04. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev"></div>
-                            <div class="lp-bar-post"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="0" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.05. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev viewed"></div>
-                            <div class="lp-bar-post"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="10" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.06. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev viewed"></div>
-                            <div class="lp-bar-post viewed"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="100" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.07. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev"></div>
-                            <div class="lp-bar-post"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="0" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.08. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev"></div>
-                            <div class="lp-bar-post"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="0" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        01.09. Lección lorem uno
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
+                <?php endforeach ?>
             </ul>
         </div>
     </div>

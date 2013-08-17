@@ -24,6 +24,7 @@ class courseActions extends sfActions
       $course_id = $request->getParameter('course_id');
       
       $this->course = Course::getRepository()->find($course_id);
+      $this->chapters = Chapter::getRepository()->getChaptersForCourse($course_id);
       
       if($request->isXmlHttpRequest()) {
           $response = Array(

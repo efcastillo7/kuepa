@@ -16,4 +16,13 @@ class ChapterTable extends ComponentTable
     {
         return Doctrine_Core::getTable('Chapter');
     }
+
+    public function getChaptersForCourse($course_id) {
+        $query = $this->createQuery('c')
+                    ->innerJoin('c.LearningPath lp ON c.id = lp.child_id')
+                    ->where('lp.parent_id = ?', $course_id)
+                    ->orderBy("lp.position asc");
+
+        return $query->execute();
+    }
 }
