@@ -6,6 +6,28 @@ sfGuardUser:
     first_name: Faiber
     last_name: Bani
     email_address:    kuepa@fiberbunny.com
+Resource:
+  Resource_1:
+    node_id: null
+    name: 'Recurso 1'
+    thumbnail: null
+    type: Resource
+  Resource_2:
+    node_id: null
+    name: 'Recurso 2'
+    thumbnail: null
+    type: Resource
+Lesson:
+  Lesson_1:
+    node_id: null
+    name: 'Leccion 1'
+    thumbnail: null
+    type: Lesson
+  Lesson_2:
+    node_id: null
+    name: 'Leccion 2'
+    thumbnail: null
+    type: Lesson
 Chapter:
   Chapter_1:
     node_id: null
@@ -36,6 +58,14 @@ LearningPath:
   LearningPath_2:
     Parent: Course_3
     Child: Chapter_2
+    position: '1'
+  LearningPath_3:
+    Parent: Chapter_1
+    Child: Lesson_1
+    position: '1'
+  LearningPath_4:
+    Parent: Lesson_1
+    Child: Resource_1
     position: '1'
 Profile:
   Profile_2:
