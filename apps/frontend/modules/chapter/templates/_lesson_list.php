@@ -1,7 +1,7 @@
-<div class="lesson_list">
+<div class="lesson_list" >
     <ul class="unstyled eg-back">
         <li>
-            <a href="">
+            <a href="javascript:void()" class="go-back">
                 <span>Atrás</span> Volver a la Unidad
             </a>
         </li>

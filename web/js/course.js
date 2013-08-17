@@ -26,20 +26,35 @@ $(function() {
         }
     });
 
+    $("body").delegate(".go-back", "click", function(e){
+      e.preventDefault();
+
+      var parent_container = $(this).parent().parent().parent().parent();
+      var parent = $(this).parent().parent().parent();
+      var main = $("> div", parent_container).first();
+
+      $(main).show('slide',{ direction: "left"  });
+      $(parent).hide('slide',{ direction: "right"  });      
+    });
+
+
    $("body").delegate(".remote-link", "click", function(e){
       e.preventDefault();
 
-      var parent = $(this).parent().parent().parent().parent();
-      var content = 
+      var parent_container = $(this).parent().parent().parent().parent();
+      var parent = $(this).parent().parent().parent();
 
       $.getJSON($(this).attr('href'), function(response){
               //get container
               // var container = $(this).parent().parent().parent();
-              var container = $(parent);
+              var container = $(parent_container);
 
-              var content = $(response.template);
+              var content = $(response.template).hide();
                
               $(container).append(content);
+
+              $(parent).hide('slide',{ direction: "left"  });
+              $(content, container).show('slide',{ direction: "right"  });
 
               //reload knob
               $(".knob").knob(knob_values);

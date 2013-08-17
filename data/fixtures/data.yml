@@ -67,6 +67,10 @@ LearningPath:
     Parent: Lesson_1
     Child: Resource_1
     position: '1'
+  LearningPath_5:
+    Parent: Chapter_1
+    Child: Lesson_2
+    position: '2'
 Profile:
   Profile_2:
     sfGuardUser: sfGuardUser_2

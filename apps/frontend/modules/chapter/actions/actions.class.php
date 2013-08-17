@@ -23,7 +23,8 @@ class chapterActions extends sfActions
   public function executeExpanded(sfWebRequest $request) {
       $chapter_id = $request->getParameter('chapter_id');
       
-      $this->lessons = Lesson::getRepository()->getLessonsForChapters($chapter_id);
+      $this->chapter = Chapter::getRepository()->find($chapter_id);
+      $this->lessons = $this->chapter->getChildren();
       
       if($request->isXmlHttpRequest()) {
           $response = Array(
