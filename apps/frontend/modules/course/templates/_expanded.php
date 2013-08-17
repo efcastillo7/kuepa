@@ -10,7 +10,7 @@
     <div class="eg-expander-inner">
         <div class="eg-close-container"><span class="eg-close"></span></div>
         <div class="eg-thumb">
-            <img src="img/subject-icons/subject-icn-biology.png">
+            <img src="/img/subject-icons/subject-icn-biology.png">
         </div>
         <div class="eg-details">
             <p class="title3 clearmargin"><?php echo $course->getName() ?></p>

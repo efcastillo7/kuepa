@@ -12,13 +12,17 @@ $(function(){
            });
        } else {
            $.getJSON($(this).attr('href'), function(response){
-               parent.addClass('eg-expanded');
+              parent.addClass('eg-expanded');
                
-               var content = $(response.template).hide();
+              var content = $(response.template).hide();
                
-               parent.append(content);
+              parent.append(content);
+
+              //reload knob
+              $(".knob").knob(knob_values);
                
                content.slideDown();
+
         });
        }
    });
