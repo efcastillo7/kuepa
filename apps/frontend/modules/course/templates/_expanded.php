@@ -10,30 +10,8 @@
             <p class="small1 gray4">7 Unidades  /  32 Lecciones  /  2h 40’52’’ / 5 Ejercicios  /  1 Evaluación</p>
             <p class="margintop">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
-        <div class="eg-multimenu">
-            <ul class="unstyled eg-back">
-                <li>
-                    <a href="">
-                        <span>Atrás</span> Unidad 1
-                    </a>
-                </li>
-            </ul>
-            <ul class="unstyled">
-                <?php foreach ($chapters as $chapter): ?>
-                <li>
-                    <a href="">
-                        <div class="lp-node">
-                            <div class="lp-bar-prev"></div>
-                            <div class="lp-bar-post viewed"></div>
-                            <span class="lp-node-play"></span>
-                            <input class="knob knob-small" value="100" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                        </div>
-                        <?php echo $chapter->getName() ?>
-                        <span class="lp-time">10'32''</span>
-                    </a>
-                </li>
-                <?php endforeach ?>
-            </ul>
+        <div class="eg-multimenu course-data-container">
+            <?php include_partial('chapter_list', array('chapters' => $chapters)) ?>
         </div>
     </div>
 </div>

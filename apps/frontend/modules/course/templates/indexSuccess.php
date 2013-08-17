@@ -1,5 +1,5 @@
 <?php  use_javascript('http://code.jquery.com/jquery-1.10.2.min.js') ?>
-<?php  use_javascript('/js/course.js'); ?>
+<?php  use_javascript('course.js'); ?>
 
 <ul>
 <?php foreach($courses as $course): ?>

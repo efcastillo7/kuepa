@@ -19,5 +19,22 @@ class chapterActions extends sfActions
   {
     $this->forward('default', 'module');
   }
+
+  public function executeExpanded(sfWebRequest $request) {
+      $chapter_id = $request->getParameter('chapter_id');
+      
+      $this->lessons = Lesson::getRepository()->getLessonsForChapters($chapter_id);
+      
+      if($request->isXmlHttpRequest()) {
+          $response = Array(
+              'status' => 'success',
+              'template' => $this->getPartial('lesson_list')
+          );
+                  
+          return $this->renderText( json_encode($response) );
+      }
+      
+      return $this->renderText( $this->getPartial('lesson_list') );
+  }
   
 }

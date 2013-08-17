@@ -16,4 +16,13 @@ class LessonTable extends ComponentTable
     {
         return Doctrine_Core::getTable('Lesson');
     }
+
+    public function getLessonsForChapters($chapter_id) {
+        $query = $this->createQuery('c')
+                    ->innerJoin('c.LearningPath lp ON c.id = lp.child_id')
+                    ->where('lp.parent_id = ?', $chapter_id)
+                    ->orderBy("lp.position asc");
+
+        return $query->execute();
+    }
 }
