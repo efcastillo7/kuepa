@@ -1,0 +1,57 @@
+Component: {  }
+sfGuardUser:
+  sfGuardUser_2:
+    first_name: Faiber
+    last_name: Bani
+    email_address: kuepa@fiberbunny.com
+    username: bunny
+    algorithm: sha1
+    salt: 318321eb16cd7e4fffab81bff22533f4
+    password: 70990d4a9ff7bc3a03ecb8f7418e55443c85b962
+    is_active: true
+    is_super_admin: false
+    last_login: '2013-08-17 17:06:53'
+    created_at: '2013-08-17 17:05:29'
+    updated_at: '2013-08-17 17:06:53'
+Chapter:
+  Chapter_1:
+    node_id: null
+    name: 'Unidad 1'
+    thumbnail: null
+    type: Chapter
+  Chapter_2:
+    node_id: null
+    name: 'Unidad 2'
+    thumbnail: null
+    type: Chapter
+Course:
+  Course_3:
+    node_id: null
+    name: Biología
+    thumbnail: icon-chemical.png
+    type: Course
+  Course_4:
+    node_id: null
+    name: 'Ciencias Sociales'
+    thumbnail: icon-chemical.png
+    type: Course
+LearningPath:
+  LearningPath_1:
+    Parent: Course_3
+    Child: Chapter_1
+    position: '2'
+  LearningPath_2:
+    Parent: Course_3
+    Child: Chapter_2
+    position: '1'
+Profile:
+  Profile_2:
+    sfGuardUser: sfGuardUser_2
+    nickname: Elbunny
+ProfileLearningPath:
+  ProfileLearningPath_2_3:
+    Profile: Profile_2
+    Chapter: Chapter_1
+  ProfileLearningPath_2_4:
+    Profile: Profile_2
+    Chapter: Chapter_2
