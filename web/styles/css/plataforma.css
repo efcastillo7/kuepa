@@ -31,9 +31,9 @@
 }
 
 body {
-	font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	padding-top: 100px;
-	color: #000;
+  font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-top: 100px;
+  color: #000;
 }
 
 p {line-height:1.6;}
@@ -51,17 +51,17 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 -------------------------------------------------- */
 
 .navbar .nav {
-	font-size: 18px;
+  font-size: 18px;
 }
 .navbar .nav > li > a {
-	padding:0px;
+  padding:0px;
 }
 .navbar .nav > li  {
-	padding: 18px 15px 15px;
-	border-left: 1px solid #ccc;
+  padding: 18px 15px 15px;
+  border-left: 1px solid #ccc;
 }
 .navbar .brand {
-	padding: 14px 20px;
+  padding: 14px 20px;
 }
 
 /* --------------------------------------------------
@@ -81,31 +81,31 @@ footer {
 -------------------------------------------------- */
 
 .subject-buttonbox {
-	height: 226px;
+  height: 226px;
   width: 246px;
-	background-color: #ccc;
-	position: relative;
+  background-color: #ccc;
+  position: relative;
   padding-top: 20px;
 }
 .subject-buttonbox .subject-title {
-	position: absolute;
-	bottom: 10px;
-	width: 100%;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
 }
 
 
 .subject-biology {
-	background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #008A5E;
+  background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #008A5E;
 }
 .subject-grid a:hover .subject-biology {
-		background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #009968;
+    background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #009968;
 }
 
 .subject-fisics {
-	background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #DB0962;
+  background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #DB0962;
 }
 .subject-grid a:hover .subject-fisics {
-		background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #E51783;
+    background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #E51783;
 }
 .subject-grammar {
   background: url("../../img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #7AC143;
@@ -153,6 +153,15 @@ footer {
 .pbar-circle {
   opacity:0.6;
   filter:alpha(opacity=60);
+}
+
+.pbar-circle input{
+  display: none
+}
+
+.course-data-container ul.unstyled.title{
+    padding: 20px 20px;
+  
 }
 
 .learning-path {

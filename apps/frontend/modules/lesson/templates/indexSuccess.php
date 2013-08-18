@@ -11,12 +11,22 @@
 <div id="" class="learning-path">
     <div id="" class="container">
         <div id="" class="row">
-            <?php include_partial("left_menu", array("parent" => $lesson )) ?>
+            
+            <div class="span3 path-steps">
+                <ul class="unstyled gray3">
+                    <li class="gray2">- <?php echo $lesson->getName() ?></li>
+                    <?php foreach ($lesson->getChildren() as $child): ?>
+                        <li class="<?php echo $child->getId() == $resource->getId() ? "active" : "" ?>"><a href="<?php echo url_for("lesson/index?lesson_id=".$lesson->getId()."&chapter_id=".$chapter->getId()."&course_id=".$course->getId()."&resource_id=".$child->getId()) ?>"><?php echo $child->getName() ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            
             <div class="span9">
                 <div class="path-content">
-                    <p class="title3 white">Introducción a la lección</p>
+                    <p class="title3 white"><?php echo $resource->getName() ?></p>
+                    <h4><?php echo $resource->getRawValue()->getResourceData()->getType() ?></h4>
                     <p class="gray2">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        <?php echo $resource->getRawValue()->getResourceData()->getContent() ?>
                     </p>
                     <div class="txt-right margintop">
                         <a class="btn btn-large">Comenzar</a>

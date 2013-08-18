@@ -66,7 +66,7 @@ Resource:
     keyField: type
     keyValue: Resource
   relations:
-    Data:
+    ResourceData:
       class: ResourceData
       local: id
       foreign: resource_id

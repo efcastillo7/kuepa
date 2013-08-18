@@ -24,6 +24,9 @@ class lessonActions extends sfActions {
         
         $course_id = $request->getParameter('course_id');
         $this->course = Course::getRepository()->find($course_id);
+        
+        $resource_id = $request->getParameter('resource_id');
+        $this->resource = ($resource_id == null ? $this->lesson->getChildren()->getFirst() : Resource::getRepository()->find($resource_id));
     }
 
 }

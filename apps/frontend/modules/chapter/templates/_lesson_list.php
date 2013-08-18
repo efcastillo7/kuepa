@@ -1,4 +1,7 @@
 <div class="lesson_list" >
+    <ul class="unstyled title">
+        <li><?php echo $chapter->getName() ?></li>
+    </ul>
     <ul class="unstyled eg-back">
         <li>
             <a href="javascript:void()" class="go-back">
@@ -9,7 +12,7 @@
     <ul class="unstyled">
         <?php foreach ($lessons as $lesson): ?>
         <li>
-            <a href="">
+            <a href="<?php echo url_for("lesson/index?lesson_id=".$lesson->getId()."&chapter_id=".$chapter->getId()."&course_id=".$course->getId()) ?>">
                 <div class="lp-node">
                     <div class="lp-bar-prev"></div>
                     <div class="lp-bar-post viewed"></div>

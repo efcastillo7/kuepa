@@ -1,8 +1,11 @@
 <div class="chapter_list">
+    <ul class="unstyled title">
+        <li><?php echo $course->getName() ?></li>
+    </ul>
     <ul class="unstyled">
         <?php foreach ($chapters as $chapter): ?>
         <li>
-            <a href="<?php echo url_for("chapter/expanded?chapter_id=" . $chapter->getId()) ?>" class="remote-link">
+            <a href="<?php echo url_for("chapter/expanded?chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId()) ?>" class="remote-link">
                 <div class="lp-node">
                     <div class="lp-bar-prev"></div>
                     <div class="lp-bar-post viewed"></div>
