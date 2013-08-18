@@ -86,7 +86,7 @@ Resource:
       class: ResourceData
       local: id
       foreign: resource_id
-      type: one
+      type: many
       foreignType: one
       foreignAlias: Resource
   
@@ -138,7 +138,7 @@ ResourceData:
     #   auditLog: true
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    resource_id: { type: integer, primary: true }
+    resource_id: { type: integer }
     content: blob
     enabled: { type: boolean, notnull: true, default: true }
     tags: { type: string }
@@ -153,6 +153,13 @@ ResourceData:
       foreign: id
       local: profile_id
       type: one
+    Notes:
+      class: Note
+      type: many
+      local: id
+      foreign: resource_id
+      foreignType: one
+      foreignAlias: Resource
     # CreatedFrom:
     #   class: ResourceData
     #   local: parent_id
@@ -198,13 +205,14 @@ Note:
     Timestampable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    component_id: integer
+    resource_id: integer
     profile_id: integer
     content: string
   relations:
-    Component:
-      local: component_id
+    Resource:
+      local: resource_id
       foreign: id
+      type: one
     Profile:
       local: profile_id
       foreign: id
