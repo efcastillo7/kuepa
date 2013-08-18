@@ -17,6 +17,8 @@ class NoteService {
         $note->setResourceId($resource_id);
         $note->setContent($content);
         $note->save();
+
+        return $note;
     }
     
     public function deleteNote($note_id){
@@ -24,9 +26,17 @@ class NoteService {
         $note->remove();
     }
     
-    public function getNotes($profile_id, $resource_id) {
-        $notes = Note::getRepository()->findByProfileIdAndResourceId($profile_id, $resource_id);
+    public function getNotes($profile_id, $resource_id, $query_params = null) {
+        $notes = Note::getRepository()->createQuery('n')
+                    ->select('n.content, n.created_at, p.nickname')
+                    ->innerJoin('n.Profile p')
+                    ->where('profile_id = ? and resource_id = ?', array($profile_id, $resource_id))
+                    ->orderBy('id desc');
+
+        if($query_params){
+            return $notes->execute($query_params['params'], $query_params['hydration_mode']);    
+        }
         
-        return $notes;
+        return $notes->execute();
     }
 }

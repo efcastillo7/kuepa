@@ -8,7 +8,7 @@
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class lessonActions extends sfActions {
+class lessonActions extends kuepaActions {
 
     /**
      * Executes index action
@@ -39,6 +39,8 @@ class lessonActions extends sfActions {
         }
         
         $this->has_next_resource = ($this->lesson->getNextResource($this->resource->getId()) != null);
+
+        $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
     }
 
 }
