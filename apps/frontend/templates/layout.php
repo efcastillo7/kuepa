@@ -9,6 +9,7 @@
 
         <!-- Le styles -->
         <link href="/styles/css/bootstrap.css" rel="stylesheet">
+        <link href="/styles/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="/styles/css/docs.css" rel="stylesheet">
         <link href="/styles/css/kuepa.css" rel="stylesheet">
         <link href="/styles/css/plataforma.css" rel="stylesheet">
