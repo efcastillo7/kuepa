@@ -24,10 +24,7 @@
             <div class="span9">
                 <div class="path-content">
                     <p class="title3 white"><?php echo $resource->getName() ?></p>
-                    <h4><?php echo $resource->getRawValue()->getResourceData()->getType() ?></h4>
-                    <p class="gray2">
-                        <?php echo $resource->getRawValue()->getResourceData()->getContent() ?>
-                    </p>
+                    <?php include_partial("views/resources/resource_" . $resource->getRawValue()->getResourceData()->getType(), array('resource' => $resource->getRawValue()->getResourceData())) ?>
                     <div class="txt-right margintop">
                         <a class="btn btn-large">Comenzar</a>
                     </div>

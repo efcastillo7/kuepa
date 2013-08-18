@@ -95,59 +95,59 @@ footer {
 
 
 .subject-biology {
-  background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #008A5E;
+  background: url("/img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #008A5E;
 }
 .subject-grid a:hover .subject-biology {
-    background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #009968;
+    background: url("/img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #009968;
 }
 
 .subject-fisics {
-  background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #DB0962;
+  background: url("/img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #DB0962;
 }
 .subject-grid a:hover .subject-fisics {
-    background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #E51783;
+    background: url("/img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #E51783;
 }
 .subject-grammar {
-  background: url("../../img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #7AC143;
+  background: url("/img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #7AC143;
 }
 .subject-grid a:hover .subject-grammar {
-    background: url("../../img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #8ACC52;
+    background: url("/img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #8ACC52;
 }
 .subject-history {
-  background: url("../../img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #B5121B;
+  background: url("/img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #B5121B;
 }
 .subject-grid a:hover .subject-history {
-    background: url("../../img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #CC1729;
+    background: url("/img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #CC1729;
 }
 .subject-live {
-  background: url("../../img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #5A4099;
+  background: url("/img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #5A4099;
 }
 .subject-grid a:hover .subject-live {
-    background: url("../../img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #654BB2;
+    background: url("/img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #654BB2;
 }
 .subject-maths {
-  background: url("../../img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #273691;
+  background: url("/img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #273691;
 }
 .subject-grid a:hover .subject-maths {
-    background: url("../../img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #2B4099;
+    background: url("/img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #2B4099;
 }
 .subject-reasoning {
-  background: url("../../img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00ACA1;
+  background: url("/img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00ACA1;
 }
 .subject-grid a:hover .subject-reasoning {
-    background: url("../../img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00B2A1;
+    background: url("/img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00B2A1;
 }
 .subject-simulation {
-  background: url("../../img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #F76E26;
+  background: url("/img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #F76E26;
 }
 .subject-grid a:hover .subject-simulation {
-    background: url("../../img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #FF7B36;
+    background: url("/img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #FF7B36;
 }
 .subject-socialcs {
-  background: url("../../img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #11175E;
+  background: url("/img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #11175E;
 }
 .subject-grid a:hover .subject-socialcs {
-    background: url("../../img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #18257F;
+    background: url("/img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #18257F;
 }
 
 .pbar-circle {
@@ -168,6 +168,7 @@ footer {
   background-color: #1F1F1F;
   border-top: 10px solid #DB0962;
   margin-top: 10px;
+  color: white;
 }
 
 .path-steps {

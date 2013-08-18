@@ -31,13 +31,13 @@ class chapterActions extends sfActions
       if($request->isXmlHttpRequest()) {
           $response = Array(
               'status' => 'success',
-              'template' => $this->getPartial('lesson_list')
+              'template' => $this->getPartial('views/navigator/lesson_list')
           );
                   
           return $this->renderText( json_encode($response) );
       }
       
-      return $this->renderText( $this->getPartial('lesson_list') );
+      return $this->renderText( $this->getPartial('views/navigator/lesson_list') );
   }
   
 }

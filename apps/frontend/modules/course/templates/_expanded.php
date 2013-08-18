@@ -11,7 +11,7 @@
             <p class="margintop">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
         <div class="eg-multimenu course-data-container">
-            <?php include_partial('chapter_list', array('chapters' => $chapters, 'course' => $course)) ?>
+            <?php include_partial('views/navigator/chapter_list', array('chapters' => $chapters, 'course' => $course)) ?>
         </div>
     </div>
 </div>
