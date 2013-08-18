@@ -1,5 +1,5 @@
 $(function() {
-    $('.subject-grid .subject-link').click(function(e) {
+    $('body').delegate('.subject-grid .subject-link,.eg-close', 'click', function(e) {
         e.preventDefault();
 
         $('.eg-expander').slideUp().promise().done(function() {
