@@ -24,7 +24,7 @@
             <div class="span9">
                 <div class="path-content">
                     <p class="title3 white"><?php echo $resource->getName() ?></p>
-                    <?php include_partial("views/resources/resource_" . $resource->getRawValue()->getResourceData()->getType(), array('resource' => $resource->getRawValue()->getResourceData())) ?>
+                    <?php include_partial("views/resources/resource_" . $resource->getRawValue()->getResourceData()->getFirst()->getType(), array('resource' => $resource->getRawValue()->getResourceData()->getFirst())) ?>
                     <div class="txt-right margintop">
                         <a class="btn btn-large">Comenzar</a>
                     </div>
@@ -40,40 +40,15 @@
             <div class="notes">
                 <p class="title5">Anotaciones</p>
                 <input class="span8" type="text" placeholder="Escribe un recordatorio para esta lección...">
-                <ul class="unstyled">
-                    <li>
-                        <p class="">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p class="small1 gray2">2013/07/11 11:10hs</p>
-                    </li> 
-                    <li>
-                        <p class="">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p class="small1 gray2">2013/07/11 11:10hs</p>
-                    </li> 
-                    <li>
-                        <p class="">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p class="small1 gray2">2013/07/11 11:10hs</p>
-                    </li> 
-                    <li>
-                        <p class="">
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p class="small1 gray2">2013/07/11 11:10hs</p>
-                    </li> 
-                </ul>
+                <?php //include_partial("views/resource/notes", array('notes' => $notes)) ?>
             </div>
         </div>
         <div class="span3 offset1">
             <div class="share">
                 <p class="title5">Compartir</p>
-                <a href=""><img src="img/icn_fb.jpg"></a>
-                <a href=""><img src="img/icn_tw.jpg"></a>
-                <a href=""><img src="img/icn_gp.jpg"></a>
+                <a href=""><img src="/img/icn_fb.jpg"></a>
+                <a href=""><img src="/img/icn_tw.jpg"></a>
+                <a href=""><img src="/img/icn_gp.jpg"></a>
             </div>
             <div class="credits margintop40">
                 <p class="title5 clearmargin">Créditos</p>

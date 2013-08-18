@@ -11,10 +11,10 @@ class NoteService {
         return self::$instance;
     }
     
-    public function createNote($profile_id, $component_id, $content) {
+    public function createNote($profile_id, $resource_id, $content) {
         $note = new Note;
         $note->setProfileId($profile_id);
-        $note->setComponentId($component_id);
+        $note->setResourceId($resource_id);
         $note->setContent($content);
         $note->save();
     }
@@ -24,8 +24,8 @@ class NoteService {
         $note->remove();
     }
     
-    public function getNotes($profile_id, $component_id) {
-        $notes = Note::getRepository()->findByProfileIdAndComponentId($profile_id, $component_id);
+    public function getNotes($profile_id, $resource_id) {
+        $notes = Note::getRepository()->findByProfileIdAndResourceId($profile_id, $resource_id);
         
         return $notes;
     }

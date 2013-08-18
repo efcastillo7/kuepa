@@ -27,6 +27,8 @@ class lessonActions extends sfActions {
         
         $resource_id = $request->getParameter('resource_id');
         $this->resource = ($resource_id == null ? $this->lesson->getChildren()->getFirst() : Resource::getRepository()->find($resource_id));
+
+        // $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
     }
 
 }

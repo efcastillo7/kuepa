@@ -139,6 +139,7 @@ ResourceData:
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     resource_id: { type: integer }
+    position: {type: integer, default: 1}
     content: blob
     enabled: { type: boolean, notnull: true, default: true }
     tags: { type: string }
