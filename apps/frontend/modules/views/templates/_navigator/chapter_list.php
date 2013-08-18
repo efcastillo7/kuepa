@@ -10,7 +10,7 @@
                     <div class="lp-bar-prev"></div>
                     <div class="lp-bar-post viewed"></div>
                     <span class="lp-node-play"></span>
-                    <input class="knob knob-small" value="90" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
+                    <input class="knob knob-small" value="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $chapter->getId()) ?>" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
                 </div>
                 <?php echo $chapter->getName() ?>
                 <span class="lp-time">10'32''</span>

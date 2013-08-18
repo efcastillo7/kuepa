@@ -8,7 +8,7 @@
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class courseActions extends sfActions
+class courseActions extends kuepaActions
 {
  /**
   * Executes index action
@@ -22,6 +22,8 @@ class courseActions extends sfActions
   
   public function executeExpanded(sfWebRequest $request) {
       $course_id = $request->getParameter('course_id');
+      
+      $this->profile = $this->getProfile();
       
       $this->course = Course::getRepository()->find($course_id);
       $this->chapters = $this->course->getChildren();

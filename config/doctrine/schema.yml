@@ -217,3 +217,17 @@ Note:
     Profile:
       local: profile_id
       foreign: id
+      
+ProfileComponentCompletedStatus:
+  columns:
+    profile_id: {type: integer, primary: true}
+    component_id: {type: integer, primary: true}
+    completed_status: {type: integer}
+  relations:
+    Component:
+      local: component_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id

@@ -8,7 +8,7 @@
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class lessonActions extends sfActions {
+class lessonActions extends kuepaActions {
 
     /**
      * Executes index action
@@ -39,6 +39,9 @@ class lessonActions extends sfActions {
         }
         
         $this->has_next_resource = ($this->lesson->getNextResource($this->resource->getId()) != null);
+        
+        //set ProfileComponentCompletedStatus
+        ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
     }
 
 }
