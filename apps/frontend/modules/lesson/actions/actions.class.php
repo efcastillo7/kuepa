@@ -42,6 +42,7 @@ class lessonActions extends kuepaActions {
         
         //set ProfileComponentCompletedStatus
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
+        $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
     }
 
 }

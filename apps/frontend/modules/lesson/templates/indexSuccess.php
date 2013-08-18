@@ -1,3 +1,5 @@
+<?php use_javascript('uno/lesson.js') ?>
+
 <div id="" class="container">
     <div id="leccion" class="row">
         <div class="span12">
@@ -41,8 +43,8 @@
         <div class="span8">
             <div class="notes">
                 <p class="title5">Anotaciones</p>
-                <input class="span8" type="text" placeholder="Escribe un recordatorio para esta lección...">
-                <?php //include_partial("views/resource/notes", array('notes' => $notes)) ?>
+                <input class="span8" type="text" placeholder="Escribe un recordatorio para esta lección..." id="input_add_note" resource-id="<?php echo $resource->getId() ?>">
+                <?php include_partial("views/resource/notes", array('notes' => $notes)) ?>
             </div>
         </div>
         <div class="span3 offset1">

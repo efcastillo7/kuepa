@@ -31,4 +31,43 @@ class noteActions extends kuepaActions {
         return $this->renderText(json_encode($response));
     }
 
+    public function executeAdd(sfWebRequest $request){
+        $response = array('status' => 'invalid request', 'code' => 400);
+        $values = $request->getPostParameters();
+
+        if($request->isMethod('POST') && isset($values['content']) && $values['content'] != ""){
+
+            //check values
+            $this->note = NoteService::getInstance()->createNote($this->getProfile()->getId(), $values['resource_id'], $values['content']);
+
+            $response = array('status' => 'ok', 'code' => 201);
+
+            if($request->isXmlHttpRequest()) {
+              $response['template'] = $this->getPartial('views/resource/note');
+            }
+        }
+
+        $this->getResponse()->setStatusCode($response['code']);
+        return $this->renderText(json_encode($response));
+    }
+
+    public function executeGet(sfWebRequest $request){
+        $response = array('status' => 'invalid request', 'code' => 400);
+
+        if($request->isMethod('GET')){
+            $values = $request->getGetParameters();
+
+            //check values
+            $notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $values['resource_id'], 
+                        array('params' => array(),
+                              'hydration_mode' => Doctrine_Core::HYDRATE_ARRAY));
+
+            $response = array('status' => 'ok', 'code' => 200, 'notes' => $notes);
+        }
+
+        $this->getResponse()->setStatusCode($response['code']);
+
+        return $this->renderText(json_encode($response));
+    }
+
 }
