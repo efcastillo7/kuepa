@@ -1,4 +1,4 @@
-/* 
+ /* 
  * Expanding Grid
  * Based on Codrops Tutorial "THUMBNAIL GRID WITH EXPANDING PREVIEW" by Mary Lou
  * 
@@ -65,8 +65,8 @@
 }
 
 .eg-expander.expanded {
-	transition: height 350ms ease;
-	-webkit-transition: height 350ms ease;
+	/*transition: height 350ms ease;*/
+	/*-webkit-transition: height 350ms ease;*/
 	height: 500px;
 }
 
