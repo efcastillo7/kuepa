@@ -153,11 +153,11 @@ ResourceData:
       foreign: id
       local: profile_id
       type: one
-    CreatedFrom:
-      class: ResourceData
-      local: parent_id
-      foreign: id
-      type: one
+    # CreatedFrom:
+    #   class: ResourceData
+    #   local: parent_id
+    #   foreign: id
+    #   type: one
 
 
 ResourceDataDocument:
