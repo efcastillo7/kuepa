@@ -26,7 +26,9 @@
                     <p class="title3 white"><?php echo $resource->getName() ?></p>
                     <?php include_partial("views/resources/resource_" . $resource->getRawValue()->getResourceData()->getFirst()->getType(), array('resource' => $resource->getRawValue()->getResourceData()->getFirst())) ?>
                     <div class="txt-right margintop">
-                        <a class="btn btn-large">Comenzar</a>
+                        <?php if($has_next_resource): ?>
+                            <a href="<?php echo url_for("lesson/index?lesson_id=".$lesson->getId()."&chapter_id=".$chapter->getId()."&course_id=".$course->getId()."&previous_resource_id=".$resource->getId()) ?>" class="btn btn-large">Siguiente</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

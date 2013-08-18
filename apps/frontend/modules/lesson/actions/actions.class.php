@@ -26,9 +26,19 @@ class lessonActions extends sfActions {
         $this->lesson = Lesson::getRepository()->find($lesson_id);
         
         $resource_id = $request->getParameter('resource_id');
-        $this->resource = ($resource_id == null ? $this->lesson->getChildren()->getFirst() : Resource::getRepository()->find($resource_id));
-
-        // $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
+        $previous_resource_id = $request->getParameter('previous_resource_id');
+        
+        if($resource_id != null) {
+            $this->resource = Resource::getRepository()->find($resource_id);
+        } else if($previous_resource_id != null) {
+            $this->resource = $this->lesson->getNextResource($previous_resource_id);
+            if($this->resource == null)
+                $this->resource = $this->lesson->getChildren()->getFirst();
+        } else {
+            $this->resource = $this->lesson->getChildren()->getFirst();
+        }
+        
+        $this->has_next_resource = ($this->lesson->getNextResource($this->resource->getId()) != null);
     }
 
 }
