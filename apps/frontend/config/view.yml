@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [main.css]
 
-  javascripts:    []
+  javascripts:    [uno/layout.js, uno/stash.js]
 
   has_layout:     true
   layout:         layout

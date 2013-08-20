@@ -1,0 +1,22 @@
+.course li.lesson {
+    color: blue;
+}
+
+.course li.chapter {
+    color: gray;
+}
+
+.course li.resource {
+    color: red;
+}
+
+.lesson_list, .chapter_list{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+}
+
+.course-data-container{
+	position: relative;
+}

@@ -17,12 +17,6 @@ class ComponentService {
         return $courses;
     }
     
-    public function getChaptersForCourse($profile_id) {
-        $chapters = Chapter::getRepository()->getChaptersForUser($profile_id);
-        
-        return $chapters;
-    }
-    
     public function getLessonsForUser($profile_id) {
         $lessons = Lessons::getRepository()->getChaptersForUser($profile_id);
         

@@ -39,12 +39,23 @@ College:
     name: varchar(255)
 
 Component:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+    # Versionable:
+    #   versionColumn: version
+    #   className: %CLASS%Version
+    #   auditLog: true
   tableName: component
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     node_id: integer
     name: varchar(255)
     thumbnail: varchar(255)
+    description: text
+    level: { type: enum, values: [beginner, intermediate, advance]}
+    profile_id: { type: integer }
+    duration: float
   relations:
     Parents:
       class: Component
@@ -58,6 +69,11 @@ Component:
       local: parent_id
       foreign: child_id
       type: many
+    Author:
+      class: Profile
+      foreign: id
+      local: profile_id
+      type: one
     
 Resource:
   inheritance:
@@ -66,11 +82,11 @@ Resource:
     keyField: type
     keyValue: Resource
   relations:
-    Data:
+    ResourceData:
       class: ResourceData
       local: id
       foreign: resource_id
-      type: one
+      type: many
       foreignType: one
       foreignAlias: Resource
   
@@ -94,11 +110,12 @@ Lesson:
     type: column_aggregation
     keyField: type
     keyValue: Lesson
-    
+
 LearningPath:
   columns:
     parent_id: integer
     child_id: integer
+    position: integer
   relations:
     Parent:
       class: Component
@@ -110,52 +127,107 @@ LearningPath:
       local: child_id
       foreign: id
       type: one
-      
+
 ResourceData:
-   columns:
-     resource_id: { type: integer, primary: true }
-     content: blob
-     
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+    # Versionable:
+    #   versionColumn: version
+    #   className: %CLASS%Version
+    #   auditLog: true
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    resource_id: { type: integer }
+    position: {type: integer, default: 1}
+    content: blob
+    enabled: { type: boolean, notnull: true, default: true }
+    tags: { type: string }
+    profile_id: { type: integer }
+    parent_id: { type: integer }
+    position: { type: integer }
+    duration: float
+    level: { type: enum, values: [beginner, intermediate, advance]}
+  relations:
+    Author:
+      class: Profile
+      foreign: id
+      local: profile_id
+      type: one
+    Notes:
+      class: Note
+      type: many
+      local: id
+      foreign: resource_id
+      foreignType: one
+      foreignAlias: Resource
+    # CreatedFrom:
+    #   class: ResourceData
+    #   local: parent_id
+    #   foreign: id
+    #   type: one
+
+
 ResourceDataDocument:
+  columns: 
+    type: { type: enum, values: [pdf, image] }
   inheritance:
     extends: ResourceData
     type: column_aggregation
     keyField: type
     keyValue: Document
-  
+
 ResourceDataText:
   inheritance:
     extends: ResourceData
     type: column_aggregation
     keyField: type
     keyValue: Text
-  
+
 ResourceDataVideo:
+  columns: 
+    type: { type: enum, values: [youtube, vimeo, embebed] }
+    path: { type: string }
   inheritance:
     extends: ResourceData
     type: column_aggregation
     keyField: type
     keyValue: Video
-  
+
 ResourceDataExercise:
   inheritance:
     extends: ResourceData
     type: column_aggregation
     keyField: type
     keyValue: Exercise
-    
+
 Note:
   actAs:
     Timestampable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    component_id: integer
+    resource_id: integer
     profile_id: integer
     content: string
+  relations:
+    Resource:
+      local: resource_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id
+      
+ProfileComponentCompletedStatus:
+  columns:
+    profile_id: {type: integer, primary: true}
+    component_id: {type: integer, primary: true}
+    completed_status: {type: integer}
   relations:
     Component:
       local: component_id
       foreign: id
+      type: one
     Profile:
       local: profile_id
       foreign: id

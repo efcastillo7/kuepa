@@ -1,0 +1,89 @@
+Component: {  }
+sfGuardUser:
+  sfGuardUser_2:
+    username: bunny
+    password: changeme
+    first_name: Faiber
+    last_name: Bani
+    email_address:    kuepa@fiberbunny.com
+Resource:
+  Resource_1:
+    node_id: null
+    name: 'Recurso 1'
+    thumbnail: null
+    type: Resource
+  Resource_2:
+    node_id: null
+    name: 'Recurso 2'
+    thumbnail: null
+    type: Resource
+Lesson:
+  Lesson_1:
+    node_id: null
+    name: 'Leccion 1'
+    thumbnail: null
+    type: Lesson
+  Lesson_2:
+    node_id: null
+    name: 'Leccion 2'
+    thumbnail: null
+    type: Lesson
+Chapter:
+  Chapter_1:
+    node_id: null
+    name: 'Unidad 1'
+    thumbnail: null
+    type: Chapter
+  Chapter_2:
+    node_id: null
+    name: 'Unidad 2'
+    thumbnail: null
+    type: Chapter
+Course:
+  Course_3:
+    node_id: null
+    name: Biología
+    thumbnail: icon-chemical.png
+    type: Course
+  Course_4:
+    node_id: null
+    name: 'Ciencias Sociales'
+    thumbnail: icon-chemical.png
+    type: Course
+LearningPath:
+  LearningPath_1:
+    Parent: Course_3
+    Child: Chapter_1
+    position: '2'
+  LearningPath_2:
+    Parent: Course_3
+    Child: Chapter_2
+    position: '1'
+  LearningPath_3:
+    Parent: Chapter_1
+    Child: Lesson_1
+    position: '1'
+  LearningPath_4:
+    Parent: Lesson_1
+    Child: Resource_2
+    position: '1'
+  LearningPath_5:
+    Parent: Chapter_1
+    Child: Lesson_2
+    position: '2'
+  LearningPath_6:
+    Parent: Lesson_1
+    Child: Resource_1
+    position: '2'
+    
+Profile:
+  Profile_2:
+    sfGuardUser: sfGuardUser_2
+    nickname: Elbunny
+ProfileLearningPath:
+  ProfileLearningPath_2_3:
+    Profile: Profile_2
+    Course: Course_3
+  ProfileLearningPath_2_4:
+    Profile: Profile_2
+    Course: Course_4

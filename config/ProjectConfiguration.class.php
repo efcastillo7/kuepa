@@ -10,4 +10,10 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfDoctrinePlugin');
     $this->enablePlugins('sfDoctrineGuardPlugin');
   }
+
+  public function configureDoctrine(Doctrine_Manager $manager)
+  {
+    // Enable callbacks so that softDelete behavior can be used
+    $manager->setAttribute(Doctrine_Core::ATTR_USE_DQL_CALLBACKS, true);
+  }
 }
