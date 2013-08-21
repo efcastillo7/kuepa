@@ -257,4 +257,6 @@ CalendarEvent:
     component_id: {type: integer}
     title: {type: string(255)}
     description: {type: string}
+    start: {type: timestamp}
+    end: {type: timestamp}
     
