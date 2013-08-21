@@ -231,3 +231,30 @@ ProfileComponentCompletedStatus:
     Profile:
       local: profile_id
       foreign: id
+
+Message:
+  actAs:
+    Timestampable: ~
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    author_id: {type: integer}
+    subject: {type: string(255)}
+    message: {type: string}
+
+MessageRecipient:
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    message_id: {type: integer}
+    recipient_id: {type: integer}
+    subject: {type: string(255)}
+    message: {type: string}
+    
+CalendarEvent:
+  actAs:
+    Timestampable: ~
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    component_id: {type: integer}
+    title: {type: string(255)}
+    description: {type: string}
+    
