@@ -15,6 +15,15 @@ class calendarActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {  
+    	
+    }
+
+    /**
+     * Executes getEvents action
+     *
+     * @param sfRequest $request A request object
+     */
+    public function executeGetEvents(sfWebRequest $request){
     	$events = CalendarService::getInstance()->getEvents($this->getUser()->getGuardUser()->getProfile()->getId());
 
     	// Initializes a container array for all of the calendar events
@@ -24,7 +33,7 @@ class calendarActions extends kuepaActions {
 			array_push($jsonArray, $buildjson);
     	}
 
-    	echo json_encode($jsonArray);
+   		return $this->renderText(json_encode($jsonArray));
     }
 
 
