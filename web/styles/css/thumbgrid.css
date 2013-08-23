@@ -1,4 +1,4 @@
- /* 
+/* 
  * Expanding Grid
  * Based on Codrops Tutorial "THUMBNAIL GRID WITH EXPANDING PREVIEW" by Mary Lou
  * 
@@ -65,13 +65,13 @@
 }
 
 .eg-expander.expanded {
-	/*transition: height 350ms ease;*/
-	/*-webkit-transition: height 350ms ease;*/
+	transition: height 350ms ease;
+	-webkit-transition: height 350ms ease;
 	height: 500px;
 }
 
 .eg-expander-inner {
-	width: 920px;
+	width: 940px;
 	height: 100%;
 	margin: auto;
 }
@@ -183,7 +183,7 @@
 	position: absolute;
 	z-index: 999;
 }
-.lp-bar-prev {
+.eg-multimenu .lp-bar-prev {
 	position: absolute;
 	background-color: #000;
 	width: 3px;
@@ -196,15 +196,19 @@
 .eg-multimenu ul li:last-child .lp-bar-post {
 	display: none;
 }
-.lp-bar-post {
+.eg-multimenu .lp-bar-post {
 	position: absolute;
 	background-color: #000;
 	width: 3px;
 	height: 8px;
 	margin: 23px 0 0 11px;
 }
-.lp-bar-prev.viewed, .lp-bar-post.viewed {
+.eg-multimenu .lp-bar-prev.viewed, .eg-multimenu .lp-bar-post.viewed {
 	background-color: #fff;
+}
+.lp-time {
+	float: right;
+	color: #aaa;
 }
 
 
