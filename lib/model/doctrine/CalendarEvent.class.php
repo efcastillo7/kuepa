@@ -12,4 +12,11 @@
  */
 class CalendarEvent extends BaseCalendarEvent
 {
+	 /**
+     * 
+     * @return CalendarEventTable
+     */
+    public static function getRepository() {
+        return Doctrine_Core::getTable('CalendarEvent');
+    }
 }
