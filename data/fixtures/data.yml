@@ -1,4 +1,5 @@
 Component: {  }
+
 sfGuardUser:
   sfGuardUser_2:
     username: bunny
@@ -6,6 +7,13 @@ sfGuardUser:
     first_name: Faiber
     last_name: Bani
     email_address:    kuepa@fiberbunny.com
+  sfGuardUser_3:
+    username: student
+    password: changeme
+    first_name: Student
+    last_name: Bani
+    email_address: kuepa+student@fiberbunny.com    
+    
 Resource:
   Resource_1:
     node_id: null
@@ -80,6 +88,10 @@ Profile:
   Profile_2:
     sfGuardUser: sfGuardUser_2
     nickname: Elbunny
+  Profile_3:
+    sfGuardUser: sfGuardUser_3
+    nickname: Elstudent
+    
 ProfileLearningPath:
   ProfileLearningPath_2_3:
     Profile: Profile_2

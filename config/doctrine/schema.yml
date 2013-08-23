@@ -237,17 +237,32 @@ Message:
     Timestampable: ~
   columns:
     id: {type: integer, primary: true, autoincrement: true}
-    author_id: {type: integer}
+    author_id: {type: integer, notnull: true}
     subject: {type: string(255)}
     message: {type: string}
+  relations:
+    Recipients:
+      class: MessageRecipient
+      type: many
+      local: id
+      foreign: message_id
+      foreignType: one
+      foreignAlias: Message
 
 MessageRecipient:
   columns:
     id: {type: integer, primary: true, autoincrement: true}
-    message_id: {type: integer}
-    recipient_id: {type: integer}
-    subject: {type: string(255)}
-    message: {type: string}
+    message_id: {type: integer, notnull: true}
+    recipient_id: {type: integer, notnull: true}
+    is_read: {type: boolean, notnull: true, default: false}
+  relations:
+    Recipient:
+      class: Profile
+      type: one
+      local: recipient_id
+      foreign: id
+      foreignAlias: ReceivedMessages
+      foreignType: many
     
 CalendarEvent:
   actAs:

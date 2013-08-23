@@ -12,4 +12,7 @@
  */
 class Message extends BaseMessage
 {
+    static public function getRepository() {
+        return Doctrine_Core::getTable('Message');
+    }
 }
