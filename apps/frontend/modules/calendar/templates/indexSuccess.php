@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     $('#calendar').fullCalendar({
         events: { // Render the events in the calendar
-            url: '/calendar', // Get the URL of the json feed
+            url: '/calendar/getEvents', // Get the URL of the json feed
             type: 'POST', // Send post data
             error: function() {
                 alert('There was an error while fetching events.'); // Error alert
