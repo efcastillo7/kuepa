@@ -87,3 +87,20 @@ ProfileLearningPath:
   ProfileLearningPath_2_4:
     Profile: Profile_2
     Course: Course_4
+
+CalendarEvent:
+  Calendar1:
+    title: Carrot
+    description: Eat
+    start: '2008-12-17 00:01:00'
+    end: '2008-12-17 00:02:00'
+  Calendar2:
+    title: Soft
+    description: Tail
+    start: '2013-02-07 00:01:00'
+    end: '2013-02-07 00:02:00'
+  Calendar3:
+    title: White
+    description: Puffy
+    start: '2013-02-08 00:01:00'
+    end: '2013-02-08 00:02:00'
