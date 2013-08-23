@@ -15,22 +15,16 @@ class calendarActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {  
-    	$this->events = CalendarService::getInstance()->getEvents($this->getUser()->getGuardUser()->getProfile()->getId());
+    	$events = CalendarService::getInstance()->getEvents($this->getUser()->getGuardUser()->getProfile()->getId());
 
-    	foreach ($this->events as $event) {
-    		# code...
+    	// Initializes a container array for all of the calendar events
+		$jsonArray = array();
+    	foreach ($events as $event) {
+			$buildjson = array('id' => $event->id,'title' => $event->title, 'start' => $event->start, 'end' => $event->end, 'allday' => false);
+			array_push($jsonArray, $buildjson);
     	}
-    	/*
-    	formato json
-    	[
 
-			{"title":"Varsity Cheerleading practice","start":"2011-10-13","allday":false},
-
-			{"title":"Varsity Golf Practice","start":"2011-10-26","allday":false}
-
-			]
-    	*/
-    	
+    	echo json_encode($jsonArray);
     }
 
 
