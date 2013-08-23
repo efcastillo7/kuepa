@@ -19,9 +19,9 @@ class CalendarService {
 
     }
     
-    public function getEvents($profile_id) {
-        $events =  CalendarEvent::getRepository()->findAll();
-        
+    public function getUserEvents($profile_id) {
+        $events =  CalendarEvent::getRepository()->findByProfileId($profile_id);
+
         return $events;
     }
 }
