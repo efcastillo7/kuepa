@@ -269,9 +269,13 @@ CalendarEvent:
     Timestampable: ~
   columns:
     id: {type: integer, primary: true, autoincrement: true}
+    profile_id: integer
     component_id: {type: integer}
     title: {type: string(255)}
     description: {type: string}
     start: {type: timestamp}
     end: {type: timestamp}
-    
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
