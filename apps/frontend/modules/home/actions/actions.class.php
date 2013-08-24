@@ -18,6 +18,17 @@ class homeActions extends kuepaActions {
     public function executeIndex(sfWebRequest $request) {
         $this->profile = $this->getProfile();
         $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getProfile()->getId());
+        
+        $view_type = $request->getParameter("type");
+        
+        switch ($view_type) {
+            case "list":
+                $this->setTemplate("indexlist");
+                break;
+            case "grid":
+            default:
+                $this->setTemplate("indexgrid");
+                break;
+        }
     }
-
 }
