@@ -15,6 +15,9 @@
         <link href="/styles/css/plataforma.css" rel="stylesheet">
         <link href="/styles/css/thumbgrid.css" rel="stylesheet">
 
+        <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/default.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/component.css" />
+        
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         <script src="/js/jquery.knob.js"></script>
@@ -37,7 +40,9 @@
         <?php include_component('layout', 'navigation') ?>
         <?php echo $sf_content ?>
         <?php include_partial('layout/footer') ?>
-        
+
+        <!-- Modals -->
+        <?php include_partial("views/modals/success") ?>
 
         <!-- Le javascript
         ================================================== -->
@@ -55,6 +60,10 @@
         <script src="/js/bootstrap-carousel.js"></script>
         <script src="/js/bootstrap-typeahead.js"></script>
         <script src="/js/course.js"></script>
+
+        <!-- classie.js by @desandro: https://github.com/desandro/classie -->
+        <script src="/assets/modalwindoweffect/js/classie.js"></script>
+        <script src="/assets/modalwindoweffect/js/modalEffects.js"></script>
 
         <script type="text/javascript">
             $(".knob-small").knob({

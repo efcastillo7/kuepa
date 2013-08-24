@@ -15,6 +15,7 @@ $(document).ready(function(){
 					if(data.code === 201){
 						$("#notes_list").prepend(data.template);	
 						container.val('');
+						triggerModalSuccess({id: "modal-success", title: "Ha enviado su nota", text: "Test", effect: "md-effect-10"});
 					}else{
 						alert('error al enviar el comentario');
 					}
