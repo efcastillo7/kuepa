@@ -1,4 +1,5 @@
 Component: {  }
+
 sfGuardUser:
   sfGuardUser_2:
     username: bunny
@@ -6,6 +7,13 @@ sfGuardUser:
     first_name: Faiber
     last_name: Bani
     email_address:    kuepa@fiberbunny.com
+  sfGuardUser_3:
+    username: student
+    password: changeme
+    first_name: Student
+    last_name: Bani
+    email_address: kuepa+student@fiberbunny.com    
+    
 Resource:
   Resource_1:
     node_id: null
@@ -80,6 +88,10 @@ Profile:
   Profile_2:
     sfGuardUser: sfGuardUser_2
     nickname: Elbunny
+  Profile_3:
+    sfGuardUser: sfGuardUser_3
+    nickname: Elstudent
+    
 ProfileLearningPath:
   ProfileLearningPath_2_3:
     Profile: Profile_2
@@ -87,3 +99,23 @@ ProfileLearningPath:
   ProfileLearningPath_2_4:
     Profile: Profile_2
     Course: Course_4
+
+CalendarEvent:
+  Calendar1:
+    title: Carrot
+    description: Eat
+    start: '2013-08-17 00:01:00'
+    end: '2013-08-17 00:02:00'
+    profile_id: 1
+  Calendar2:
+    title: Soft
+    description: Tail
+    start: '2013-08-07 00:01:00'
+    end: '2013-08-07 00:02:00'
+    profile_id: 1
+  Calendar3:
+    title: White
+    description: Puffy
+    start: '2013-08-08 00:01:00'
+    end: '2013-08-08 00:02:00'
+    profile_id: 1
