@@ -30,32 +30,5 @@ class homeActions extends kuepaActions {
                 $this->setTemplate("indexgrid");
                 break;
         }
-
-
-
-        //test
-        // CourseService::getInstance()->create(array(
-        //     'name' => 'pindonga2',
-        //     'description' => 'la garchanga2',
-        //     'profile_id' => $this->getProfile()->getId(),
-        //     'duration' => 144.5
-        // ));
-
-        // CourseService::getInstance()->edit(16, array(
-        //     'name' => 'pindonga2 edit',
-        //     'description' => 'la garchanga',
-        //     'profile_id' => $this->getProfile()->getId(),
-        //     'duration' => 144.5,
-        //     'thumbnail' => 'icon-chemical.png'
-        // ));
-
-        // CourseService::getInstance()->delete(15);
-
-        // CourseService::getInstance()->addTeacher(16, 1);
-        // CourseService::getInstance()->removeTeacher(16, 1);
-
-        foreach (CourseService::getInstance()->getChaptersLists(7) as $chapter) {
-            echo $chapter->getName();
-        }
     }
 }
