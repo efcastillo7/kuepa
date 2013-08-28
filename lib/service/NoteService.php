@@ -11,7 +11,7 @@ class NoteService {
         return self::$instance;
     }
     
-    public function createNote($profile_id, $resource_id, $content) {
+    public function createNote($profile_id, $resource_id, $content) {        
         $note = new Note;
         $note->setProfileId($profile_id);
         $note->setResourceId($resource_id);
@@ -21,9 +21,31 @@ class NoteService {
         return $note;
     }
     
-    public function deleteNote($note_id){
-        $note = Note::getRepository()->find($note_id);
-        $note->remove();
+    public function editNote($profile_id, $new_content, $note_id) {        
+        $note = Note::getRepository()->createQuery("n")
+                ->where("id = ?", $note_id)
+                ->andWhere("profile_id = ?", $profile_id)
+                ->fetchOne();
+        
+        if( $note ) {
+            $note->setContent($new_content);
+            $note->save();
+        }
+        
+        return $note;
+    }
+    
+    public function deleteNote($note_id, $profile_id){
+        $note = Note::getRepository()->createQuery("n")
+                ->where("id = ?", $note_id)
+                ->andWhere("profile_id = ?", $profile_id)
+                ->fetchOne();
+        
+        if( $note ) {
+            $note->delete();
+            return true;
+        }
+        return false;
     }
     
     public function getNotes($profile_id, $resource_id, $query_params = null) {

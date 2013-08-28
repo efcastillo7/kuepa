@@ -43,7 +43,7 @@
         <div class="span8">
             <div class="notes">
                 <p class="title5">Anotaciones</p>
-                <input class="span8" type="text" placeholder="Escribe un recordatorio para esta lección..." id="input_add_note" resource-id="<?php echo $resource->getId() ?>">
+                <input class="input_add_note span8" type="text" placeholder="Escribe un recordatorio para esta lección..." resource-id="<?php echo $resource->getId() ?>">
                 <?php include_partial("views/resource/notes", array('notes' => $notes)) ?>
             </div>
         </div>
