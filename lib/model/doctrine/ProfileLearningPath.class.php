@@ -12,4 +12,11 @@
  */
 class ProfileLearningPath extends BaseProfileLearningPath
 {
+	/**
+     * 
+     * @return ProfileLearningPathTable
+     */
+    public static function getRepository() {
+        return Doctrine_Core::getTable('ProfileLearningPath');
+    }
 }
