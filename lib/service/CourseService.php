@@ -56,10 +56,10 @@ class CourseService {
     }
 
     public function addChapterToCourse($course_id, $chapter_id){
-        return ComponentService::getInstance()->addChildToComponent($course_id, $child_id);
+        return ComponentService::getInstance()->addChildToComponent($course_id, $chapter_id);
     }
 
-    public function removeChapterFromCourse(){
+    public function removeChapterFromCourse($course_id, $child_id){
         return ComponentService::getInstance()->removeChildFromComponent($course_id, $child_id);
     }
 }

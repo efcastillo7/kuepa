@@ -178,10 +178,10 @@ class ComponentService {
         return null;
     }
 
-    public function removeChildToComponent($parent_id, $child_id){
+    public function removeChildFromComponent($parent_id, $child_id){
         //get position child
         $child = LearningPath::getRepository()->createQuery('lp')
-                ->where('lp.parent_id = ?', $component_id)
+                ->where('lp.parent_id = ?', $parent_id)
                 ->andWhere('lp.child_id = ?', $child_id)
                 ->limit(1)
                 ->fetchOne();
@@ -194,7 +194,8 @@ class ComponentService {
             $child->delete();
             //update next positions
             $q = LearningPath::getRepository()->createQuery('lp')
-                    ->update('position', 'position - 1')
+                    ->update()
+                    ->set('position', '(position - 1)')
                     ->where('parent_id = ?', $parent_id)
                     ->andWhere('position > ?', $position)
                     ->execute();
