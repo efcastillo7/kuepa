@@ -7,7 +7,7 @@
     </div>
 </div><!-- /container -->
 
-
+executeGetCoursesEvents
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -15,13 +15,26 @@ $(document).ready(function() {
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
-        events: { // Render the events in the calendar
-            url: '/calendar/getEvents', // Get the URL of the json feed
-            type: 'POST', // Send post data
-            error: function() {
-                alert('There was an error while fetching events.'); // Error alert
-            }
-        }
+
+    	eventSources: [
+	        // your event source
+	        {
+	            url: '/calendar/getEvents',
+	            type: 'POST',
+	            error: function() {
+	                alert('there was an error while fetching events!');
+	            }
+	        },
+	        {
+	            url: '/calendar/getCoursesEvents',
+	            type: 'POST',
+	            error: function() {
+	                alert('there was an error while fetching events!');
+	            }
+	        }
+
+	    ]
+
     })
 
 
