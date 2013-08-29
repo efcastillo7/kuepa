@@ -12,6 +12,8 @@
  */
 class Course extends BaseCourse
 {
+	const TYPE = 'Course';
+
     /**
      * 
      * @return CourseTable

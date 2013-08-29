@@ -1014,3 +1014,10 @@ All this is done for any sub-level being entered.
 .demo-5 .dl-menuwrapper ul {
 	background: #643771;
 }
+
+.md-overlay {
+	background: rgba(31, 31, 31, 0.8);
+}
+.md-content {
+	background: #437F9B;
+}

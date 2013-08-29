@@ -34,8 +34,10 @@ class lessonActions extends kuepaActions {
             $this->resource = $this->lesson->getNextResource($previous_resource_id);
             if($this->resource == null)
                 $this->resource = $this->lesson->getChildren()->getFirst();
+                $resource_id = $this->resource->getId();
         } else {
             $this->resource = $this->lesson->getChildren()->getFirst();
+            $resource_id = $this->resource->getId();
         }
         
         $this->has_next_resource = ($this->lesson->getNextResource($this->resource->getId()) != null);

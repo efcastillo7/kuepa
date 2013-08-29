@@ -12,4 +12,11 @@
  */
 class Profile extends BaseProfile
 {
+	/**
+     * 
+     * @return ProfileTable
+     */
+    public static function getRepository() {
+        return Doctrine_Core::getTable('Profile');
+    }
 }
