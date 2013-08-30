@@ -41,4 +41,6 @@ all:
     secure_action:          secure
     
     enabled_modules: [default, sfGuardAuth]
+    
+    standard_helpers: [Partial, Cache, ImprovedUrl]
   
