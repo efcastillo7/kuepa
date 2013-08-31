@@ -13,7 +13,7 @@ class LessonService {
     }
 
     public function create($values = array()) {
-        $lesson = ComponentService::getInstance()->create('Lesson', $values);
+        $lesson = ComponentService::getInstance()->create(Lesson::TYPE, $values);
 
         return $lesson;
     }

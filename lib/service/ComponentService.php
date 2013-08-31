@@ -29,9 +29,6 @@ class ComponentService {
         return $lessons;
     }
 
-
-
-
     public function create($type, $values = array()){
         //default values
         $def_values = array(
@@ -194,7 +191,7 @@ class ComponentService {
             $child->delete();
             //update next positions
             $q = LearningPath::getRepository()->createQuery('lp')
-                    ->update()
+                    ->update()  
                     ->set('position', '(position - 1)')
                     ->where('parent_id = ?', $parent_id)
                     ->andWhere('position > ?', $position)

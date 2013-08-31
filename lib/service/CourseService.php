@@ -12,7 +12,7 @@ class CourseService {
     }
     
     public function create($values = array()){
-        $course = ComponentService::getInstance()->create('Course', $values);
+        $course = ComponentService::getInstance()->create(Course::TYPE, $values);
 
         return $course;
     }

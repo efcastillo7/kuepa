@@ -13,7 +13,7 @@ class ChapterService {
     }
 
     public function create($values = array()) {
-        $chapter = ComponentService::getInstance()->create('Chapter', $values);
+        $chapter = ComponentService::getInstance()->create(Chapter::TYPE, $values);
 
         return $chapter;
     }
