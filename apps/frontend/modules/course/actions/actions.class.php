@@ -22,6 +22,7 @@ class courseActions extends kuepaActions
   
   public function executeExpanded(sfWebRequest $request) {
       $course_id = $request->getParameter('course_id');
+      $type = $request->getParameter('type', 'grid');
       
       $this->profile = $this->getProfile();
       
@@ -31,12 +32,12 @@ class courseActions extends kuepaActions
       if($request->isXmlHttpRequest()) {
           $response = Array(
               'status' => 'success',
-              'template' => $this->getPartial('expanded')
+              'template' => $this->getPartial($type)
           );
                   
           return $this->renderText( json_encode($response) );
       }
       
-      return $this->renderText( $this->getPartial('expanded') );
+      return $this->renderText( $this->getPartial($type) );
   }
 }
