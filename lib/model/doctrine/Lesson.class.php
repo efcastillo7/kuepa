@@ -36,4 +36,8 @@ class Lesson extends BaseLesson {
                 ->fetchOne();
     }
 
+    public function getResources(){
+        return LessonService::getInstance()->getResourcesList($this->getId());
+    }
+
 }

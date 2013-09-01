@@ -21,4 +21,8 @@ class Course extends BaseCourse
     public static function getRepository() {
         return Doctrine_Core::getTable('Course');
     }
+
+    public function getChapters(){
+    	return CourseService::getInstance()->getChaptersList($this->getId());
+    }
 }

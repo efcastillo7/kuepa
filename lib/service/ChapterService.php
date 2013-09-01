@@ -36,7 +36,7 @@ class ChapterService {
         return ComponentService::getInstance()->removeChildFromComponent($chapter_id, $lesson_id);
     }
 
-    public function getLessonsLists($chapter_id) {
+    public function getLessonsList($chapter_id) {
         return ComponentService::getInstance()->getChilds($chapter_id, Lesson::TYPE);
     }
 

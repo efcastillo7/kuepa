@@ -19,6 +19,13 @@ class courseActions extends kuepaActions
   {
     $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getUser()->getGuardUser()->getProfile()->getId());
   }
+
+  public function executeDetails(sfWebRequest $request){
+    $id = $request->getParameter("id");
+
+    $this->profile = $this->getProfile();
+    $this->course = Course::getRepository()->find($id);
+  }
   
   public function executeExpanded(sfWebRequest $request) {
       $course_id = $request->getParameter('course_id');

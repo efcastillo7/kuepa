@@ -36,7 +36,7 @@ class LessonService {
         return ComponentService::getInstance()->removeChildFromComponent($lesson_id, $resource_id);
     }
 
-    public function getResourcesLists($lesson_id) {
+    public function getResourcesList($lesson_id) {
         return ComponentService::getInstance()->getChilds($lesson_id, Resource::TYPE);
     }
 
