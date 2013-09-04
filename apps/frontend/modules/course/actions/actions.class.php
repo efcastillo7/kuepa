@@ -49,7 +49,7 @@ class courseActions extends kuepaActions
   }
 
   public function executeCreate(sfWebRequest $request) {
-    $form = new CourseForm($course);
+    $form = new CourseForm();
     $values = $request->getParameter($form->getName());
 
     $form->bind($values);
