@@ -19,9 +19,17 @@ class courseActions extends kuepaActions
   {
     $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getUser()->getGuardUser()->getProfile()->getId());
   }
+
+  public function executeDetails(sfWebRequest $request){
+    $id = $request->getParameter("id");
+
+    $this->profile = $this->getProfile();
+    $this->course = Course::getRepository()->find($id);
+  }
   
   public function executeExpanded(sfWebRequest $request) {
       $course_id = $request->getParameter('course_id');
+      $type = $request->getParameter('type', 'grid');
       
       $this->profile = $this->getProfile();
       
@@ -31,12 +39,31 @@ class courseActions extends kuepaActions
       if($request->isXmlHttpRequest()) {
           $response = Array(
               'status' => 'success',
-              'template' => $this->getPartial('expanded')
+              'template' => $this->getPartial($type)
           );
                   
           return $this->renderText( json_encode($response) );
       }
       
-      return $this->renderText( $this->getPartial('expanded') );
+      return $this->renderText( $this->getPartial($type) );
   }
+
+  public function executeCreate(sfWebRequest $request) {
+    $form = new CourseForm($course);
+    $values = $request->getParameter($form->getName());
+
+    $form->bind($values);
+    if($form->isValid()){
+      //create course
+      $course = $form->save();
+
+      //add to user
+      CourseService::getInstance()->addTeacher($course->getId(), $profile_id);
+
+      return $this->renderText("Ha creado el curso satisfactoriamente");
+    }
+
+    return $this->renderText( $this->getPartial("form", array('form' => $form)) );
+  }
+
 }

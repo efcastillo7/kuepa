@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-require="math math-format graphie word-problems">
     <head>
         <meta charset="utf-8">
         <title>kuepa, una nueva forma de aprender.</title>
@@ -20,6 +20,7 @@
         
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <script src="/js/jquery.form.min.js"></script>
         <script src="/js/jquery.knob.js"></script>
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

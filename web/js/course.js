@@ -1,5 +1,21 @@
 $(function() {
-    $('body').delegate('.subject-grid .subject-link,.eg-close', 'click', function(e) {
+    $(".view-mode a").click(function(e){
+      e.preventDefault();
+      var parent = $(this).parent();
+
+      //hide active
+      $("div.main > div.active").removeClass("active");
+      $(".active", parent).removeClass("active");
+
+      //set active
+      $(this).addClass("active");
+      $("div." + $(this).attr("target")).addClass("active");
+
+
+
+    });
+
+    $('body').delegate('.subject-grid .subject-link, .eg-close', 'click', function(e) {
         e.preventDefault();
 
         $('.eg-expander').slideUp().promise().done(function() {
@@ -18,7 +34,7 @@ $(function() {
                 parent.append(content);
 
                 //reload knob
-                $(".knob").knob(knob_values);
+                $(".knob", content).knob(knob_values);
 
                 content.slideDown();
 

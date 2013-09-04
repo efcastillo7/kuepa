@@ -12,6 +12,8 @@
  */
 class Resource extends BaseResource
 {
+	const TYPE = 'Resource';
+
     /**
      * 
      * @return ResourceTable

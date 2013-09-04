@@ -159,7 +159,7 @@ footer {
 }
 
 .learning-path {
-  background-color: #1F1F1F;
+  background-color: #E4E4E4;
   border-top: 10px solid #DB0962;
   margin-top: 10px;
 }
@@ -290,10 +290,12 @@ footer {
 .subject-item .lv-lvlone li:last-child .lvl-btn .lp-bar-post {
   display: none;
 }
-.lv-lvlone .lp-bar-prev, .lv-lvlone .lp-bar-post {
+.subject-item .lv-lvlone .lp-bar-prev,
+.subject-item .lv-lvlone .lp-bar-post {
   background-color: #ccc;
 }
-.lv-lvlone .lp-bar-prev.viewed, .lv-lvlone .lp-bar-post.viewed {
+.subject-item .lv-lvlone .lp-bar-prev.viewed,
+.subject-item .lv-lvlone .lp-bar-post.viewed {
   background-color: #F76E26;
 }
 
@@ -340,5 +342,49 @@ footer {
   background-color: #11175E;
 }
 
-
+/* --------------------------------------------------
+// Unit View
+-------------------------------------------------- */
+.unit-view {
+  border-top: 10px solid #008A5E;
+  margin-top: -47px;
+}
+.unit-hd {
+  position: relative;
+}
+.unit-hd .small1 {
+  margin-top: -25px;
+  position: absolute;
+  right: 0;
+}
+.unit-hd .title3 {
+  padding: 12px 0 0 55px;
+}
+.unit-container {
+  padding: 0 0 0 70px;
+}
+.unit-container .lv-container {
+  border-bottom: 1px solid #dedede;
+}
+.unit-container .subject-item {
+  border-top: 1px solid #dedede;
+  padding: 15px 0 9px;
+  margin-bottom: 0px;
+}
+.unit-time {
+  float: right;
+  margin-top: -24px;
+}
+.unit-container .lv-lvlone {
+  margin-bottom: 20px;
+}
+.unit-tooltip {
+  position: absolute;
+  padding: 5px 0px;
+  margin-top: -21px;
+}
+.unit-tooltip div {
+  height: 1px;
+  background-color: #F76E26;
+}
 

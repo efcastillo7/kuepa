@@ -21,4 +21,8 @@ class Chapter extends BaseChapter {
         return Doctrine_Core::getTable('Chapter');
     }
 
+    public function getLessons(){
+    	return ChapterService::getInstance()->getLessonsList($this->getId());
+    }
+
 }

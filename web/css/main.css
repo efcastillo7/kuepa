@@ -20,3 +20,11 @@
 .course-data-container{
 	position: relative;
 }
+
+.subject-list, .subject-grid{
+	display: none;
+}
+
+.subject-list.active, .subject-grid.active{
+	display: block;
+}

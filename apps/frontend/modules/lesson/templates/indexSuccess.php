@@ -3,7 +3,7 @@
 <div id="" class="container">
     <div id="leccion" class="row">
         <div class="span12">
-            <p class="gray3"><?php echo $course->getName() ?>  /  <?php echo $chapter->getName() ?></p>
+            <p class="gray3"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a> /  <a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>#<?php echo $chapter->getNameSlug() ?>"><?php echo $chapter->getName() ?></a></p>
             <p class="title3 clearmargin"><?php echo $lesson->getName() ?></p>
         </div>
     </div>
@@ -16,7 +16,7 @@
             
             <div class="span3 path-steps">
                 <ul class="unstyled gray3">
-                    <li class="gray2">- <?php echo $lesson->getName() ?></li>
+                    <!-- <li class="gray2">- <?php echo $lesson->getName() ?></li> -->
                     <?php foreach ($lesson->getChildren() as $child): ?>
                         <li class="<?php echo $child->getId() == $resource->getId() ? "active" : "" ?>"><a href="<?php echo url_for("lesson/index?lesson_id=".$lesson->getId()."&chapter_id=".$chapter->getId()."&course_id=".$course->getId()."&resource_id=".$child->getId()) ?>"><?php echo $child->getName() ?></a></li>
                     <?php endforeach; ?>

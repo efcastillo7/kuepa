@@ -46,7 +46,7 @@
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	border-bottom-color: #262626;
+	border-bottom-color: #3e3e3e;
 	border-width: 15px;
 	left: 50%;
 	margin: -20px 0 0 -15px;
@@ -54,7 +54,7 @@
 
 .eg-expander {
 	position: absolute;
-	background-color: #262626;
+	background-color: #3e3e3e;
 	top: auto;
 	left: 0;
 	width: 100%;
@@ -183,7 +183,7 @@
 	position: absolute;
 	z-index: 999;
 }
-.eg-multimenu .lp-bar-prev {
+.lp-bar-prev {
 	position: absolute;
 	background-color: #000;
 	width: 3px;
@@ -196,14 +196,14 @@
 .eg-multimenu ul li:last-child .lp-bar-post {
 	display: none;
 }
-.eg-multimenu .lp-bar-post {
+.lp-bar-post {
 	position: absolute;
 	background-color: #000;
 	width: 3px;
 	height: 8px;
 	margin: 23px 0 0 11px;
 }
-.eg-multimenu .lp-bar-prev.viewed, .eg-multimenu .lp-bar-post.viewed {
+.lp-bar-prev.viewed, .lp-bar-post.viewed {
 	background-color: #fff;
 }
 .lp-time {

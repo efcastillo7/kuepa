@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#"><img src="img/kuepa_navbar.png" alt="kuepa" title="kuepa"></a>
+            <a class="brand" href="<?php echo url_for("@homepage") ?>"><img src="/img/kuepa_navbar.png" alt="kuepa" title="kuepa"></a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li class="dropdown">
@@ -20,7 +20,6 @@
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
                         </ul>
                     </li>
-                    <li><a href="index.html#productos">Buscar</a></li>
                 </ul>
                 <?php if($profile): ?>
                 <ul class="nav pull-right">

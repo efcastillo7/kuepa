@@ -12,7 +12,7 @@ class CourseService {
     }
     
     public function create($values = array()){
-        $course = ComponentService::getInstance()->create('Course', $values);
+        $course = ComponentService::getInstance()->create(Course::TYPE, $values);
 
         return $course;
     }
@@ -51,7 +51,7 @@ class CourseService {
         return ComponentService::getInstance()->getUsersFromComponent($course_id);    
     }
 
-    public function getChaptersLists($course_id){
+    public function getChaptersList($course_id){
         return ComponentService::getInstance()->getChilds($course_id, Chapter::TYPE);
     }
 

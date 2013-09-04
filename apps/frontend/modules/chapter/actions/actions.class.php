@@ -41,5 +41,24 @@ class chapterActions extends kuepaActions
       
       return $this->renderText( $this->getPartial('views/navigator/lesson_list') );
   }
+
+  public function executeCreate(sfWebRequest $request) {
+    $form = new ChapterForm();
+    $values = $request->getParameter($form->getName());
+
+    $form->bind($values);
+    if($form->isValid()){
+      //create course
+      $chapter = $form->save();
+
+      //add chapter to course
+      CourseService::getInstance()->addChapterToCourse($values['course_id'], $chapter->getId());
+
+
+      return $this->renderText("Ha creado la unidad satisfactoriamente");
+    }
+
+    return $this->renderText( $this->getPartial("form", array('form' => $form)) );
+  }
   
 }
