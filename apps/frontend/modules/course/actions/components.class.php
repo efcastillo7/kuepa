@@ -9,6 +9,6 @@ class courseComponents extends sfComponents
     $profile_id = $this->getUser()->getGuardUser()->getProfile()->getId();
     $course->setProfileId($profile_id);
     
-    $this->form = new CourseForm();
+    $this->form = new CourseForm($course);
   }
 }

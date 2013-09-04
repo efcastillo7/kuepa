@@ -25,6 +25,6 @@ class CourseForm extends BaseCourseForm
 
     $this->setDefaults(array(
     	'type' => Course::TYPE
-	));
+	  ));
   }
 }
