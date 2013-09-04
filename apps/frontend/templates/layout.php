@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-require="math word-problems">
+<html lang="en" data-require="math math-format graphie word-problems">
     <head>
         <meta charset="utf-8">
         <title>kuepa, una nueva forma de aprender.</title>

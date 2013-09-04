@@ -1,3 +1,4 @@
+<?php use_javascript("jquery.form.min.js") ?>
 <div id="" class="container">
     <div id="" class="row">
         <div class="span8 offset1">
@@ -18,3 +19,4 @@
         </div>
     </div>
 </div>
+<?php include_component('course', 'Modalform') ?>

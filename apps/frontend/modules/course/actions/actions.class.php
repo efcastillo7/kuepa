@@ -47,4 +47,23 @@ class courseActions extends kuepaActions
       
       return $this->renderText( $this->getPartial($type) );
   }
+
+  public function executeCreate(sfWebRequest $request) {
+    $form = new CourseForm($course);
+    $values = $request->getParameter($form->getName());
+
+    $form->bind($values);
+    if($form->isValid()){
+      //create course
+      $course = $form->save();
+
+      //add to user
+      CourseService::getInstance()->addTeacher($course->getId(), $profile_id);
+
+      return $this->renderText("Ha creado el curso satisfactoriamente");
+    }
+
+    return $this->renderText( $this->getPartial("form", array('form' => $form)) );
+  }
+
 }

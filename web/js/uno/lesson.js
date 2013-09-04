@@ -19,7 +19,7 @@ $(document).ready(function() {
                         container.val('');
                         
                         if(edit_note_id != null && edit_note_id != "")
-                            $(".li-note-" + edit_note_id + ".edit-delete-tag").remove();
+                        $(".li-note-" + edit_note_id + ".edit-delete-tag").remove();
                     } else {
                         alert('error al enviar el comentario');
                     }

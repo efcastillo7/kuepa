@@ -9,9 +9,10 @@
  * http://www.codrops.com
  */
 
-// $(document).ready(function(){
-// 	triggerModalSuccess({id: "modal-success", title: "Ha enviado su nota", text: "probando 123", effect: "md-effect-2"});
-// });
+$(document).ready(function(){
+	// triggerModalSuccess({id: "modal-success", title: "Ha enviado su nota", text: "probando 123", effect: "md-effect-17"});
+	// triggerModalSuccess({id: "modal-form", title: "Ha enviado su nota", text: "probando 123", effect: "md-effect-17"});
+});
 
 function triggerModalSuccess(data){
 
@@ -22,26 +23,8 @@ function triggerModalSuccess(data){
 
 	el.addClass("md-show");
 	el.addClass(data.effect);
-	
-	// function removeModalHandler() {
-	// 	removeModal( classie.has( el, 'md-setperspective' ) ); 
-	// }
-
-	// function removeModal( hasPerspective ) {
-	// 	classie.remove( modal, 'md-show' );
-
-	// 	if( hasPerspective ) {
-	// 		classie.remove( document.documentElement, 'md-perspective' );
-	// 	}
-	// }
 
 	var overlay = $('.md-overlay');
-
-	// if( classie.has( el, 'md-setperspective' ) ) {
-	// 	setTimeout( function() {
-	// 		classie.add( document.documentElement, 'md-perspective' );
-	// 	}, 25 );
-	// }
 
 	$('.md-close',el).click(function(e){
 		console.log("DSAdadas");
