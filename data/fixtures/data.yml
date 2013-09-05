@@ -1,5 +1,33 @@
 Component: {  }
 
+sfGuardGroup:
+  grupo_docentes:
+    name: docentes
+    description: Docentes
+  grupo_estudiantes:
+    name: estudiantes
+    description: Estudiantes
+  grupo_padres:
+    name: padres
+    description: Padres
+  grupo_directivos:
+    name: directivos
+    description: Directivos
+    
+sfGuardPermission:
+  permiso_docente:
+    name: docente
+    Groups: [grupo_docentes]
+  permiso_estudinte:
+    name: estudinte
+    Groups: [grupo_estudiantes]
+  permiso_padre:
+    name: padre
+    Groups: [grupo_padres]
+  permiso_directivo:
+    name: directivo
+    Groups: [grupo_directivos]
+
 sfGuardUser:
   sfGuardUser_2:
     username: bunny
@@ -7,12 +35,14 @@ sfGuardUser:
     first_name: Faiber
     last_name: Bani
     email_address:    kuepa@fiberbunny.com
+    Groups: [grupo_docentes]
   sfGuardUser_3:
     username: student
     password: changeme
     first_name: Student
     last_name: Bani
     email_address: kuepa+student@fiberbunny.com    
+    Groups: [grupo_estudiantes]
     
 Resource:
   Resource_1:
@@ -20,11 +50,20 @@ Resource:
     name: 'Recurso 1'
     thumbnail: null
     type: Resource
+    ResourceData: [ResourceDataText_1]
   Resource_2:
     node_id: null
     name: 'Recurso 2'
     thumbnail: null
     type: Resource
+    ResourceData: [ResourceDataText_2]
+    
+ResourceDataText:
+  ResourceDataText_1:
+    content: Sarasa
+  ResourceDataText_2:
+    content: Sarasa 2
+    
 Lesson:
   Lesson_1:
     node_id: null
