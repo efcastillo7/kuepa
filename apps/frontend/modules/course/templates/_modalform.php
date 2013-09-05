@@ -18,15 +18,18 @@
         });
 
         //ajax form
-        var options = { 
-            target:        '#modal-create-course-form-container',   // target element(s) to be updated with server response 
-            // beforeSubmit:  showRequest,  // pre-submit callback 
-            success:       function(data){
-                $('#create-course-form').ajaxForm(options); 
-            }  // post-submit callback 
-        }; 
-     
-        // bind form using 'ajaxForm' 
+        var options = {  
+            success:       function(data, statusText, xhr, $form){
+                $("#modal-create-course-form-container").html(data.template);
+                if(data.status == "success"){
+                    location.href = "/course/details/id/" + data.course_id;
+                }else{
+                    $('#create-course-form').ajaxForm(options);
+                }
+            },
+            dataType: 'json'
+        };  
+
         $('#create-course-form').ajaxForm(options); 
     });
 </script>

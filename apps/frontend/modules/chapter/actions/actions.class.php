@@ -45,6 +45,11 @@ class chapterActions extends kuepaActions
   public function executeCreate(sfWebRequest $request) {
     $form = new ChapterForm();
     $values = $request->getParameter($form->getName());
+    $response = Array(
+        'status' => "error",
+        'template' => "",
+        'code' => 400
+    );
 
     $form->bind($values);
     if($form->isValid()){
@@ -54,11 +59,17 @@ class chapterActions extends kuepaActions
       //add chapter to course
       CourseService::getInstance()->addChapterToCourse($values['course_id'], $chapter->getId());
 
-
-      return $this->renderText("Ha creado la unidad satisfactoriamente");
+      $response['template'] = "Ha creado la unidad satisfactoriamente";
+      $response['status'] = "success";
+    }else{
+      $response['template'] = $this->getPartial("form", array('form' => $form));
     }
 
-    return $this->renderText( $this->getPartial("form", array('form' => $form)) );
+    if($request->isXmlHttpRequest()) {  
+      return $this->renderText( json_encode($response) );
+    }
+      
+    return $this->renderText( $response['template'] );
   }
   
 }

@@ -17,15 +17,18 @@
         });
 
         //ajax form
-        var options = { 
-            target:        '#modal-create-chapter-form-container',   // target element(s) to be updated with server response 
-            // beforeSubmit:  showRequest,  // pre-submit callback 
-            success:       function(data){
-                $('#create-chapter-form').ajaxForm(options); 
-            }  // post-submit callback 
-        }; 
-     
-        // bind form using 'ajaxForm' 
+        var options = {  
+            success:       function(data, statusText, xhr, $form){
+                $("#modal-create-chapter-form-container").html(data.template);
+                if(data.status == "success"){
+                    location.reload();
+                }else{
+                    $('#create-chapter-form').ajaxForm(options);
+                }
+            },
+            dataType: 'json'
+        };  
+
         $('#create-chapter-form').ajaxForm(options); 
     });
 </script>
