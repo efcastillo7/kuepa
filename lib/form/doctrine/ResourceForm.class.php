@@ -20,7 +20,7 @@ class ResourceForm extends BaseResourceForm
     unset($this['profile_id']);
 
     $this->setWidget('type', new sfWidgetFormInputHidden());
-    $this->setWidget('lesson_id', new sfWidgetFormInputText());
+    $this->setWidget('lesson_id', new sfWidgetFormInputHidden());
 
     $this->setValidator('name', new sfValidatorString(array('required' => true)));
     $this->setValidator('lesson_id', new sfValidatorInteger(array('required' => true)));
