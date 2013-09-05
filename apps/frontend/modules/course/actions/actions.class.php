@@ -58,7 +58,7 @@ class courseActions extends kuepaActions
       $course = $form->save();
 
       //add to user
-      CourseService::getInstance()->addTeacher($course->getId(), $profile_id);
+      CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
 
       return $this->renderText("Ha creado el curso satisfactoriamente");
     }

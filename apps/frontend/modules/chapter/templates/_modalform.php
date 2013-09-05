@@ -10,10 +10,9 @@
     </div>
 </div>
 <div class="md-overlay"></div><!-- the overlay element -->
-<button type="button" class="btn" id="addchapter">Crear Unidad</button>
 <script>
     $(document).ready(function(){
-        $("#addchapter").click(function(){
+        $(".addchapter-button").click(function(){
             triggerModalSuccess({id: "modal-create-chapter-form", title: "Crear Unidad", effect: "md-effect-17"});    
         });
 

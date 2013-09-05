@@ -47,5 +47,14 @@
                 </div>
             </li>
         <?php endforeach; ?>
+        <li class="subject-item addcourse-button">
+                <div class="black" type="button">
+                    <div class="lv-icon">
+                        
+                    </div>
+                    <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i>Agregar Curso</p>
+                    <p class="small1 HelveticaLt">&nbsp;</p>
+                </div>
+            </li>
     </ul>
 </div>

@@ -47,4 +47,22 @@ class lessonActions extends kuepaActions {
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
     }
 
+    public function executeCreate(sfWebRequest $request) {
+        $form = new LessonForm();
+        $values = $request->getParameter($form->getName());
+
+        $form->bind($values);
+        if($form->isValid()){
+          //create course
+          $lesson = $form->save();
+
+          //add lesson to chapter
+          ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
+
+          return $this->renderText("Ha creado la lección satisfactoriamente");
+        }
+
+        return $this->renderText( $this->getPartial("form", array('form' => $form)) );
+    }
+
 }

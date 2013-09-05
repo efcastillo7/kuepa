@@ -16,5 +16,18 @@ class ResourceForm extends BaseResourceForm
   public function configure()
   {
     parent::configure();
+
+    unset($this['profile_id']);
+
+    $this->setWidget('type', new sfWidgetFormInputHidden());
+    $this->setWidget('lesson_id', new sfWidgetFormInputText());
+
+    $this->setValidator('name', new sfValidatorString(array('required' => true)));
+    $this->setValidator('lesson_id', new sfValidatorInteger(array('required' => true)));
+
+    $this->setDefaults(array(
+    	'type' => Resource::TYPE,
+      'lesson_id' => $this->getOption("lesson_id")
+  	));
   }
 }

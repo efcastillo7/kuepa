@@ -29,6 +29,6 @@ class ChapterForm extends BaseChapterForm
     $this->setDefaults(array(
     	'type' => Chapter::TYPE,
       'course_id' => $this->getOption("course_id")
-	));
+	  ));
   }
 }

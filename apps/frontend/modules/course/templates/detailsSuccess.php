@@ -12,7 +12,7 @@
             </div>
             <div class="span12">
                 <div class="unit-container">
-                    <p class="gray4">
+                    <p class="gray4 italic">
                         <?php echo $course->getDescription() ?>
                     </p>
                 </div>
@@ -22,6 +22,22 @@
             <div class="span12 margintop">
                 <div class="unit-container">
                     <ul id="myCollapsible" class="lv-container unstyled">
+                        <!-- Add chapter if has privilege -->
+                        <li class="subject-item addchapter-button">
+                            <div id="" class="black" type="button">
+                                <p class="title5 HelveticaRoman clearmargin">+ Agrear unidad al curso</p>
+                             </div>
+                             <div>
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <p class="gray4 italic">
+                                            Agregar una nueva unidad al curso
+                                        </p>
+                                    </div>
+                                </div>
+                             </div>
+                        </li>
+                        <!-- courses list    -->
                         <?php foreach ($course->getChapters() as $chapter): ?>
                         <?php include_partial("detail_courses_chapter", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
                         <?php endforeach ?>
@@ -32,3 +48,5 @@
     </div><!-- /container -->
 </div>
 <?php include_component('chapter', 'Modalform', array('course_id' => $course->getId())) ?>
+<?php include_component('lesson', 'Modalform') ?>
+<?php include_component('resource', 'Modalform') ?>

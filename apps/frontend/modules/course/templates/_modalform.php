@@ -10,10 +10,10 @@
     </div>
 </div>
 <div class="md-overlay"></div><!-- the overlay element -->
-<button type="button" class="btn" id="addcourse">Crear Curso</button>
+
 <script>
     $(document).ready(function(){
-        $("#addcourse").click(function(){
+        $(".addcourse-button").click(function(){
             triggerModalSuccess({id: "modal-create-course-form", title: "Crear Curso", effect: "md-effect-17"});    
         });
 
