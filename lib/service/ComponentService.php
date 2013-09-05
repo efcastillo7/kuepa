@@ -201,12 +201,22 @@ class ComponentService {
         return;
     }
 
-    public function addOrderedChildrenToComponent($parent_id, $children_hash) {
+    public function reOrderComponentChildren($parent_id, $children_hash) {
         //children hash must be: key -> learning_path position, value -> existing child component
         foreach ($children_hash as $position => $child_component) {
-            $lp = new LearningPath();
-            $lp->setParentId($parent_id);
-            $lp->setChildId($child_component->getId());
+            
+            $lp = LearningPath::getRepository()->createQuery('lp')
+                ->where('lp.parent_id = ?', $parent_id)
+                ->andWhere('lp.child_id = ?', $child_component->getId())
+                ->limit(1)
+                ->fetchOne();
+            
+            if($lp == null) {
+                $lp = new LearningPath();
+                $lp->setParentId($parent_id);
+                $lp->setChildId($child_component->getId());
+            }
+            
             $lp->setPosition($position);
             $lp->save();
         }
