@@ -1,6 +1,48 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
+# course
+
+course_create:
+  url:   /course
+  class: sfRequestRoute
+  param: { module: course, action: create }
+  requirements:
+    sf_method: [post]
+    
+course_edit:
+  url:   /course/:id
+  class: sfRequestRoute
+  param: { module: course, action: edit }
+  requirements:
+    id: \d+
+    sf_method: [put]
+    
+course_get:
+  url:   /course/:id
+  class: sfRequestRoute
+  param: { module: course, action: get }
+  requirements:
+    id: \d+
+    sf_method: [get]
+
+course_delete:
+  url:   /course/:id
+  class: sfRequestRoute
+  param: { module: course, action: delete }
+  requirements:
+    id: \d+
+    sf_method: [delete]
+    
+course_list:
+  url:   /course
+  class: sfRequestRoute
+  param: { module: course, action: list }
+  requirements:
+    sf_method: [get]
+  
+
+
 # default rules
 homepage:
   url:   /
