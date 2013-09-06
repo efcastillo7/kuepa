@@ -33,3 +33,9 @@ all:
 
     # Enable the database manager
     use_database:           true
+    
+    login_module:           default
+    login_action:           unauthorized
+
+    secure_module:          default
+    secure_action:          forbidden
