@@ -17,14 +17,26 @@
             triggerModalSuccess({id: "modal-create-resource-form", title: "Crear Recurso", effect: "md-effect-17"});    
         });
 
+        tinyMCE.init({
+            selector: "#resource_description"
+        });
+
+        $('#modal-create-resource-form-container').bind('form-pre-serialize', function(e) {
+            tinyMCE.triggerSave(); 
+        });
+
         //ajax form
-        var options = { 
-            target:        '#modal-create-resource-form-container',   // target element(s) to be updated with server response 
-            // beforeSubmit:  showRequest,  // pre-submit callback 
-            success:       function(data){
-                $('#create-resource-form').ajaxForm(options); 
-            }  // post-submit callback 
-        }; 
+        var options = {  
+            success: function(data, statusText, xhr, $form){
+                $("#modal-create-resource-form-container").html(data.template);
+                $('#create-resource-form').ajaxForm(options);
+
+                tinyMCE.init({
+                    selector: "#resource_description"
+                });
+            },
+            dataType: 'json'
+        };
      
         // bind form using 'ajaxForm' 
         $('#create-resource-form').ajaxForm(options); 

@@ -1,3 +1,9 @@
+<?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
+<?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
+<?php use_javascript("https://raw.github.com/furf/jquery-ui-touch-punch/master/jquery.ui.touch-punch.min.js") ?>
+<?php use_javascript("/assets/smartspin/smartspinner.js") ?>
+<?php use_stylesheet("/assets/smartspin/smartspinner.css") ?>
+
 <div class="unit-view">
     <div id="" class="container margintop60">
         <div id="" class="row">
@@ -50,3 +56,9 @@
 <?php include_component('chapter', 'Modalform', array('course_id' => $course->getId())) ?>
 <?php include_component('lesson', 'Modalform') ?>
 <?php include_component('resource', 'Modalform') ?>
+<script>
+    $('.spinner').spinit({min:1, max:200, stepInc:1, pageInc:20, height: 22, width: 100 });
+    $( "#myCollapsible" ).sortable();
+    $( ".lv-lvlone" ).sortable();
+    $( ".lv-lvltwo" ).sortable();
+</script>

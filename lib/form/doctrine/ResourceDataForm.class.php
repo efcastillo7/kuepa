@@ -20,5 +20,12 @@ class ResourceDataForm extends BaseResourceDataForm
 		  $this['profiles_list'],
 		  $this['parent_id']
 		  );
+
+  	$this->setWidget("profile_id", new sfWidgetFormInputHidden());
+  	$this->setWidget("position", new sfWidgetFormInputHidden());
+  	$this->setWidget("type", new sfWidgetFormInputHidden());
+  	$this->setWidget("path", new sfWidgetFormInputHidden());
+  	$this->setWidget("tags", new sfWidgetFormInputText());
+  	$this->setWidget("resource_id", new sfWidgetFormInputText());
   }
 }

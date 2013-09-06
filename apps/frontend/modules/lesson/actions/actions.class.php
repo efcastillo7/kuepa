@@ -48,21 +48,32 @@ class lessonActions extends kuepaActions {
     }
 
     public function executeCreate(sfWebRequest $request) {
-        $form = new LessonForm();
-        $values = $request->getParameter($form->getName());
+      $form = new LessonForm();
+      $values = $request->getParameter($form->getName());
+      $response = Array(
+          'status' => "error",
+          'template' => "",
+          'code' => 400
+        );
 
-        $form->bind($values);
-        if($form->isValid()){
-          //create course
-          $lesson = $form->save();
+      $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+      if($form->isValid()){
+        //create lesson
+        $lesson = $form->save();
 
-          //add lesson to chapter
-          ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
+        //add lesson to chapter
+        ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
 
-          return $this->renderText("Ha creado la lección satisfactoriamente");
-        }
+        $response['template'] = "Ha creado la lección satisfactoriamente";
+        $response['status'] = "success";
+      }else{
+        $response['template'] = $this->getPartial("form", array('form' => $form));
+      }
 
-        return $this->renderText( $this->getPartial("form", array('form' => $form)) );
+      if($request->isXmlHttpRequest()) {  
+        return $this->renderText( json_encode($response) );
+      }
+        
+      return $this->renderText( $response['template'] );
     }
-
 }

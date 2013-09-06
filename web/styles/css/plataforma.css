@@ -391,3 +391,7 @@ footer {
 .italic{
   font-style: italic;
 }
+
+#progressbar{
+  display: none;
+}

@@ -16,5 +16,9 @@ class ResourceDataDocumentForm extends BaseResourceDataDocumentForm
   public function configure()
   {
     parent::configure();
+
+    $this->setDefaults(array(
+		'type' => ResourceDataDocument::TYPE
+    ));
   }
 }

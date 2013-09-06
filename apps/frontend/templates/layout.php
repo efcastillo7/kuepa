@@ -15,12 +15,20 @@
         <link href="/styles/css/plataforma.css" rel="stylesheet">
         <link href="/styles/css/thumbgrid.css" rel="stylesheet">
 
+        <!-- jquery ui -->
+        <link href="/assets/jquery-ui/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+
+        <!-- modalwindow -->
         <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/default.css" />
         <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/component.css" />
         
+        <!-- jquery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+        <!-- jquery UI -->
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <!-- jqform -->
         <script src="/js/jquery.form.min.js"></script>
+        <!-- knob -->
         <script src="/js/jquery.knob.js"></script>
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

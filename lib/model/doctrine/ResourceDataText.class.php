@@ -12,4 +12,5 @@
  */
 class ResourceDataText extends BaseResourceDataText
 {
+	const TYPE = 'Text';
 }

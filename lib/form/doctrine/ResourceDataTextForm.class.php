@@ -16,5 +16,9 @@ class ResourceDataTextForm extends BaseResourceDataTextForm
   public function configure()
   {
     parent::configure();
+
+    $this->setDefaults(array(
+		'type' => ResourceDataText::TYPE
+    ));
   }
 }

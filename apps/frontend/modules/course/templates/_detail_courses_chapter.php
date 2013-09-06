@@ -8,7 +8,7 @@
             <div class="row-fluid">
                 <div class="span6">
                     <p class="gray4 italic">
-                        <?php echo $chapter->getDescription() ?>
+                        <?php echo $chapter->getRaw('description'); ?>
                     </p>
                 </div>
                 <div class="span6">
