@@ -16,6 +16,14 @@
             triggerModalSuccess({id: "modal-create-chapter-form", title: "Crear Unidad", effect: "md-effect-17"});    
         });
 
+        tinyMCE.init({
+            selector: "#chapter_description"
+        });
+
+        $('#modal-create-chapter-form-container').bind('form-pre-serialize', function(e) {
+            tinyMCE.triggerSave(); 
+        });
+
         //ajax form
         var options = {  
             success:       function(data, statusText, xhr, $form){
@@ -24,9 +32,17 @@
                     location.reload();
                 }else{
                     $('#create-chapter-form').ajaxForm(options);
+
+                    tinyMCE.init({
+                        selector: "#chapter_description"
+                    });
                 }
             },
-            dataType: 'json'
+            dataType: 'json',
+            uploadProgress: function(event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                console.log(percentVal);
+            },
         };  
 
         $('#create-chapter-form').ajaxForm(options); 

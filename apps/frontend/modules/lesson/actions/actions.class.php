@@ -56,7 +56,7 @@ class lessonActions extends kuepaActions {
           'code' => 400
         );
 
-      $form->bind($values);
+      $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
       if($form->isValid()){
         //create lesson
         $lesson = $form->save();

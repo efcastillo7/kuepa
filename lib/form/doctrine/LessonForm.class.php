@@ -26,7 +26,6 @@ class LessonForm extends BaseLessonForm
     $this->setValidator('name', new sfValidatorString(array('required' => true)));
     $this->setValidator('chapter_id', new sfValidatorInteger(array('required' => true)));
 
-
     $this->setDefaults(array(
     	'type' => Lesson::TYPE,
       'chapter_id' => $this->getOption("chapter_id")

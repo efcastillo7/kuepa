@@ -17,6 +17,14 @@
             triggerModalSuccess({id: "modal-create-course-form", title: "Crear Curso", effect: "md-effect-17"});    
         });
 
+        tinyMCE.init({
+            selector: "#course_description"
+        });
+
+        $('#modal-create-course-form-container').bind('form-pre-serialize', function(e) {
+            tinyMCE.triggerSave(); 
+        });
+
         //ajax form
         var options = {  
             success:       function(data, statusText, xhr, $form){
@@ -25,6 +33,10 @@
                     location.href = "/course/details/id/" + data.course_id;
                 }else{
                     $('#create-course-form').ajaxForm(options);
+
+                    tinyMCE.init({
+                        selector: "#course_description"
+                    });
                 }
             },
             dataType: 'json'

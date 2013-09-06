@@ -29,7 +29,8 @@ class resourceActions extends sfActions
           'code' => 400
         );
 
-      $form->bind($values);
+      $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+      
       if($form->isValid()){
         //create lesson
         $resource = $form->save();

@@ -17,6 +17,14 @@
             triggerModalSuccess({id: "modal-create-lesson-form", title: "Crear Lección", effect: "md-effect-17"});    
         });
 
+        tinyMCE.init({
+            selector: "#lesson_description"
+        });
+
+        $('#modal-create-lesson-form-container').bind('form-pre-serialize', function(e) {
+            tinyMCE.triggerSave(); 
+        });
+
         //ajax form
         var options = {  
             success:       function(data, statusText, xhr, $form){
@@ -25,6 +33,10 @@
                     location.reload();
                 }else{
                     $('#create-lesson-form').ajaxForm(options);
+
+                    tinyMCE.init({
+                        selector: "#lesson_description"
+                    });
                 }
             },
             dataType: 'json'

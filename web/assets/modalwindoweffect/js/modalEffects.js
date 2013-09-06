@@ -20,6 +20,7 @@ function triggerModalSuccess(data){
 	el = $("#"+data.id);
 	$("#title", el).html(data.title);
 	$("#text", el).html(data.text);
+	el.show();
 
 	el.addClass("md-show");
 	el.addClass(data.effect);
