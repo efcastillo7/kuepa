@@ -17,10 +17,11 @@ class LessonForm extends BaseLessonForm
   {
     parent::configure();
 
-    unset($this['profile_id']);
+    unset($this['thumbnail']);
 
     $this->setWidget('type', new sfWidgetFormInputHidden());
     $this->setWidget('chapter_id', new sfWidgetFormInputHidden());
+    $this->setWidget('profile_id', new sfWidgetFormInputHidden());
 
     $this->setValidator('name', new sfValidatorString(array('required' => true)));
     $this->setValidator('chapter_id', new sfValidatorInteger(array('required' => true)));
