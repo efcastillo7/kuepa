@@ -29,5 +29,14 @@ class ResourceForm extends BaseResourceForm
     	'type' => Resource::TYPE,
       'lesson_id' => $this->getOption("lesson_id")
   	));
+
+    $recourse_types = array(
+      "recurse_data_text" => "Text",
+      "recurse_data_document" => "Document",
+      "recurse_data_video" => "Video",
+    );
+
+    $this->setWidget("recurse_type", new sfWidgetFormChoice(array('choices' => $recourse_types)));
+    $this->setValidator("recurse_type", new sfValidatorChoice(array('choices' => array_keys($recourse_types), 'required' => true)));
   }
 }

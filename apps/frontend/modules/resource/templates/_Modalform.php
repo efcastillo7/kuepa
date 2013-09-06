@@ -19,13 +19,9 @@
 
         //ajax form
         var options = {  
-            success:       function(data, statusText, xhr, $form){
+            success: function(data, statusText, xhr, $form){
                 $("#modal-create-resource-form-container").html(data.template);
-                if(data.status == "success"){
-                    location.reload();
-                }else{
-                    $('#create-resource-form').ajaxForm(options);
-                }
+                $('#create-resource-form').ajaxForm(options);
             },
             dataType: 'json'
         };

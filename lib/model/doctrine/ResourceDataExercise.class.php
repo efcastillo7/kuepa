@@ -12,4 +12,5 @@
  */
 class ResourceDataExercise extends BaseResourceDataExercise
 {
+	const TYPE = 'Exercise';
 }

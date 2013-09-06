@@ -35,9 +35,36 @@ class resourceActions extends sfActions
         $resource = $form->save();
 
         //add lesson to chapter
-      LessonService::getInstance()->addResourceToLesson($values['lesson_id'], $resource->getId());
+        LessonService::getInstance()->addResourceToLesson($values['lesson_id'], $resource->getId());
 
-        $response['template'] = "Ha creado el recurso satisfactoriamente";
+        //send recurse data form
+        switch ($values['recurse_type']) {
+          case 'recurse_data_text':
+            $resourceData = new ResourceDataText();
+            $resourceData->setResourceId($resource->getId());
+            $form = new ResourceDataTextForm($resourceData);
+            break;
+
+          case 'recurse_data_document':
+            $resourceData = new ResourceDataDocument();
+            $resourceData->setResourceId($resource->getId());
+            $form = new ResourceDataDocumentForm($resourceData);
+            break;
+
+          case 'recurse_data_video':
+            $resourceData = new ResourceDataVideo();
+            $resourceData->setResourceId($resource->getId());
+            $form = new ResourceDataVideoForm($resourceData);
+            break;
+          
+          default:
+            $resourceData = new ResourceDataText(); 
+            $resourceData->setResourceId($resource->getId());
+            $form = new ResourceDataTextForm($resourceData);
+            break;
+        }
+
+        $response['template'] = $this->getPartial("form_recurse", array('form' => $form, 'type' => $values['recurse_type']));
         $response['status'] = "success";
       }else{
         $response['template'] = $this->getPartial("form", array('form' => $form));
@@ -48,5 +75,51 @@ class resourceActions extends sfActions
       }
         
       return $this->renderText( $response['template'] );
-    }
+  }
+
+  public function executeCreatedata(sfWebRequest $request) {
+    $type = $request->getParameter("type");
+
+    switch ($type) {
+        case 'recurse_data_text':
+          $form = new ResourceDataTextForm();
+          break;
+
+        case 'recurse_data_document':
+          $form = new ResourceDataDocumentForm();
+          break;
+
+        case 'recurse_data_video':
+          $form = new ResourceDataVideoForm();
+          break;
+        
+        default:
+          $form = new ResourceDataTextForm();
+          break;
+      }
+
+      $values = $request->getParameter($form->getName());
+      $response = Array(
+          'status' => "error",
+          'template' => "",
+          'code' => 400
+      );
+
+      $form->bind($values);
+      if($form->isValid()){
+        //create lesson
+        $resourceData = $form->save();
+
+        $response['template'] = "Ok";
+        $response['status'] = "success";
+      }else{
+        $response['template'] = $this->getPartial("form_recurse", array('form' => $form, 'type' => $type));
+      }
+
+      if($request->isXmlHttpRequest()) {  
+        return $this->renderText( json_encode($response) );
+      }
+        
+      return $this->renderText( $response['template'] );
+  }
 }

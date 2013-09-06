@@ -16,5 +16,9 @@ class ResourceDataVideoForm extends BaseResourceDataVideoForm
   public function configure()
   {
     parent::configure();
+
+    $this->setDefaults(array(
+		'type' => ResourceDataVideo::TYPE
+    ));
   }
 }

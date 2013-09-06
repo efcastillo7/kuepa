@@ -12,4 +12,5 @@
  */
 class ResourceDataVideo extends BaseResourceDataVideo
 {
+	const TYPE = 'Video';
 }

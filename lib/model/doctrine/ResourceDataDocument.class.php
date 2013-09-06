@@ -12,4 +12,5 @@
  */
 class ResourceDataDocument extends BaseResourceDataDocument
 {
+	const TYPE = 'Document';
 }

@@ -170,7 +170,7 @@ ResourceData:
 
 ResourceDataDocument:
   columns: 
-    type: { type: enum, values: [pdf, image] }
+    document_type: { type: enum, values: [pdf, image] }
   inheritance:
     extends: ResourceData
     type: column_aggregation
@@ -186,7 +186,7 @@ ResourceDataText:
 
 ResourceDataVideo:
   columns: 
-    type: { type: enum, values: [youtube, vimeo, embebed] }
+    video_type: { type: enum, values: [youtube, vimeo, embebed] }
     path: { type: string }
   inheritance:
     extends: ResourceData
