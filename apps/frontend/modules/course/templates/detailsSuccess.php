@@ -4,8 +4,6 @@
 <?php use_javascript("/assets/smartspin/smartspinner.js") ?>
 <?php use_stylesheet("/assets/smartspin/smartspinner.css") ?>
 
-
-
 <div class="unit-view">
     <div id="" class="container margintop60">
         <div id="" class="row">
