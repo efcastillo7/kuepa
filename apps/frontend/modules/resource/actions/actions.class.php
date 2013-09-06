@@ -21,20 +21,32 @@ class resourceActions extends sfActions
   }
 
   public function executeCreate(sfWebRequest $request) {
-    $form = new ResourceForm();
-    $values = $request->getParameter($form->getName());
+      $form = new ResourceForm();
+      $values = $request->getParameter($form->getName());
+      $response = Array(
+          'status' => "error",
+          'template' => "",
+          'code' => 400
+        );
 
-    $form->bind($values);
-    if($form->isValid()){
-      //create course
-      $resource = $form->save();
+      $form->bind($values);
+      if($form->isValid()){
+        //create lesson
+        $resource = $form->save();
 
-      //add lesson to chapter
+        //add lesson to chapter
       LessonService::getInstance()->addResourceToLesson($values['lesson_id'], $resource->getId());
 
-      return $this->renderText("Ha creado el recurso satisfactoriamente");
-    }
+        $response['template'] = "Ha creado el recurso satisfactoriamente";
+        $response['status'] = "success";
+      }else{
+        $response['template'] = $this->getPartial("form", array('form' => $form));
+      }
 
-    return $this->renderText( $this->getPartial("form", array('form' => $form)) );
-}
+      if($request->isXmlHttpRequest()) {  
+        return $this->renderText( json_encode($response) );
+      }
+        
+      return $this->renderText( $response['template'] );
+    }
 }

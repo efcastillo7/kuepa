@@ -49,7 +49,7 @@ class chapterActions extends kuepaActions
         'status' => "error",
         'template' => "",
         'code' => 400
-    );
+      );
 
     $form->bind($values);
     if($form->isValid()){

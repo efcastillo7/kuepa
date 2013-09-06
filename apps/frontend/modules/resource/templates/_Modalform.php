@@ -18,13 +18,17 @@
         });
 
         //ajax form
-        var options = { 
-            target:        '#modal-create-resource-form-container',   // target element(s) to be updated with server response 
-            // beforeSubmit:  showRequest,  // pre-submit callback 
-            success:       function(data){
-                $('#create-resource-form').ajaxForm(options); 
-            }  // post-submit callback 
-        }; 
+        var options = {  
+            success:       function(data, statusText, xhr, $form){
+                $("#modal-create-resource-form-container").html(data.template);
+                if(data.status == "success"){
+                    location.reload();
+                }else{
+                    $('#create-resource-form').ajaxForm(options);
+                }
+            },
+            dataType: 'json'
+        };
      
         // bind form using 'ajaxForm' 
         $('#create-resource-form').ajaxForm(options); 
