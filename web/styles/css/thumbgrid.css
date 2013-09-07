@@ -65,8 +65,6 @@
 }
 
 .eg-expander.expanded {
-	transition: height 350ms ease;
-	-webkit-transition: height 350ms ease;
 	height: 500px;
 }
 

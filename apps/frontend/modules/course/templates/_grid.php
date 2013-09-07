@@ -5,10 +5,10 @@
             <img src="<?php echo $course->getThumbnail() ?>">
         </div>
         <div class="eg-details">
-            <p class="title3 clearmargin"><?php echo $course->getName() ?></p>
+            <p class="title3 clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a></p>
             <p class="title5 gray2"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
             <p class="small1 gray4">7 Unidades  /  32 Lecciones  /  2h 40’52’’ / 5 Ejercicios  /  1 Evaluación</p>
-            <p class="margintop"><?php echo $course->getDescription() ?></p>
+            <p class="margintop"><?php echo $course->getRaw('description'); ?></p>
         </div>
         <div class="eg-multimenu course-data-container">
             <?php include_partial('views/navigator/chapter_list', array('chapters' => $chapters, 'course' => $course, 'profile' => $profile)) ?>

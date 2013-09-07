@@ -19,7 +19,7 @@
             <div class="span12">
                 <div class="unit-container">
                     <p class="gray4 italic">
-                        <?php echo $course->getDescription() ?>
+                        <?php echo $course->getRaw('description'); ?>
                     </p>
                 </div>
             </div>

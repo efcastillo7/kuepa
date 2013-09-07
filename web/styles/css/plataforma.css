@@ -395,3 +395,5 @@ footer {
 #progressbar{
   display: none;
 }
+
+input.knob{ display: none;}
