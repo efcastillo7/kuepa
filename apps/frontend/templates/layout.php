@@ -26,6 +26,10 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
         <!-- jquery UI -->
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+        <script src="/assets/jquery-ui/js/jquery-1.9.1.js"></script>
+        <script src="/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js"></script>
+
         <!-- jqform -->
         <script src="/js/jquery.form.min.js"></script>
         <!-- knob -->

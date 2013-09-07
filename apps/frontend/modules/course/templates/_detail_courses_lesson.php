@@ -12,7 +12,7 @@
     <div id="lv-lesson-<?php echo $lesson->getId()?>" class="collapse">
         <ul class="lv-lvltwo unstyled">
             <!-- Add resource -->
-            <li lesson="<?php echo $lesson->getId() ?>" class="addresource-button">
+            <li lesson="<?php echo $lesson->getId() ?>" class="addresource-button unsortable">
                 <div class="lp-node">
                     <div class="lp-bar-prev"></div>
                     <div class="lp-bar-post"></div>

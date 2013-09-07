@@ -25,4 +25,8 @@ class Course extends BaseCourse
     public function getChapters(){
     	return CourseService::getInstance()->getChaptersList($this->getId());
     }
+
+    public function getThumbnailPath(){
+        return "/uploads/thumbnail/" . $this->getThumbnail();
+    }
 }

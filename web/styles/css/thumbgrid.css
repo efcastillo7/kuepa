@@ -54,7 +54,6 @@
 
 .eg-expander {
 	position: absolute;
-	background-color: #3e3e3e;
 	top: auto;
 	left: 0;
 	width: 100%;
@@ -82,7 +81,6 @@
 	width: 45px;
 	height: 45px;
 	padding: 7px;
-	background-color: #000;
 	margin-top: 30px;
 }
 .eg-details {

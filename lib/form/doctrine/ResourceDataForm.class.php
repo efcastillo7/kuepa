@@ -26,6 +26,6 @@ class ResourceDataForm extends BaseResourceDataForm
   	$this->setWidget("type", new sfWidgetFormInputHidden());
   	$this->setWidget("path", new sfWidgetFormInputHidden());
   	$this->setWidget("tags", new sfWidgetFormInputText());
-  	$this->setWidget("resource_id", new sfWidgetFormInputText());
+  	$this->setWidget("resource_id", new sfWidgetFormInputHidden());
   }
 }

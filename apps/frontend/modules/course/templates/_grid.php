@@ -1,8 +1,8 @@
-<div class="eg-expander expanded">
+<div class="eg-expander expanded bg-<?php echo $course->getColor() ?>-alt-2">
     <div class="eg-expander-inner">
         <div class="eg-close-container"><span class="eg-close"></span></div>
-        <div class="eg-thumb">
-            <img src="<?php echo $course->getThumbnail() ?>">
+        <div class="eg-thumb bg-<?php echo $course->getColor() ?>-alt-1">
+            <img src="<?php echo $course->getThumbnailPath() ?>">
         </div>
         <div class="eg-details">
             <p class="title3 clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a></p>

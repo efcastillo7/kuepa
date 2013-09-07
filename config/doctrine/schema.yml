@@ -55,6 +55,7 @@ Component:
     description: text
     level: { type: enum, values: [beginner, intermediate, advance]}
     profile_id: { type: integer }
+    color: { type: enum, values: [green, lightgreen, violet, red, purple, blue, lightblue, darkblue, orange]}
     duration: float
   relations:
     Parents:

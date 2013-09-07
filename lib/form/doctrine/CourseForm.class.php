@@ -17,8 +17,6 @@ class CourseForm extends BaseCourseForm
   {
     parent::configure();
 
-    unset($this['profile_id']);
-
     $this->setWidget('type', new sfWidgetFormInputHidden());
 
     $this->setValidator('name', new sfValidatorString(array('required' => true)));

@@ -14,7 +14,7 @@
                 <div class="span6">
                     <ul class="lv-lvlone unstyled">
                         <!-- add lesson if has privilege -->
-                        <li chapter="<?php echo $chapter->getId() ?>" class="addlesson-button">
+                        <li chapter="<?php echo $chapter->getId() ?>" class="addlesson-button unsortable">
                             <div class="lvl-btn" type="button">
                                 <div class="lp-node">
                                     <div class="lp-bar-prev"></div>

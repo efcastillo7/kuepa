@@ -9,8 +9,8 @@
         <div id="" class="row">
             <div class="span12">
                 <div class="unit-hd">
-                    <div class="lv-icon lvs-biology">
-                       <img src="img/subject-icons/subject-icn-biology.png">
+                    <div class="lv-icon bg-<?php echo $course->getColor() ?>-alt-1">
+                       <img src="<?php echo $course->getThumbnailPath() ?>">
                     </div>
                     <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i><?php echo $course->getName() ?></p>
                     <p class="small1 HelveticaLt"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
@@ -29,7 +29,7 @@
                 <div class="unit-container">
                     <ul id="myCollapsible" class="lv-container unstyled">
                         <!-- Add chapter if has privilege -->
-                        <li class="subject-item addchapter-button">
+                        <li class="subject-item addchapter-button unsortable">
                             <div id="" class="black" type="button">
                                 <p class="title5 HelveticaRoman clearmargin">+ Agrear unidad al curso</p>
                              </div>
@@ -58,7 +58,13 @@
 <?php include_component('resource', 'Modalform') ?>
 <script>
     $('.spinner').spinit({min:1, max:200, stepInc:1, pageInc:20, height: 22, width: 100 });
-    $( "#myCollapsible" ).sortable();
-    $( ".lv-lvlone" ).sortable();
-    $( ".lv-lvltwo" ).sortable();
+    $( "#myCollapsible" ).sortable({
+        items: "li:not(.unsortable)"
+    });
+    $( ".lv-lvlone" ).sortable({
+        items: "li:not(.unsortable)"
+    });
+    $( ".lv-lvltwo" ).sortable({
+        items: "li:not(.unsortable)"
+    });
 </script>
