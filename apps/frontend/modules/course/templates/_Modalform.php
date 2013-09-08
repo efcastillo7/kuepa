@@ -31,7 +31,7 @@
 
         //ajax form
         var options = {  
-            success:       function(data, statusText, xhr, $form){
+            success: function(data, statusText, xhr, $form){
                 $("#modal-create-course-form-container").html(data.template);
                 $("#modal-create-course-form #progressbar").hide();
                 $("#modal-create-course-form-container").show();

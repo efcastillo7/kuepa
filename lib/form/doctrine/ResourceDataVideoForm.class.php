@@ -17,8 +17,12 @@ class ResourceDataVideoForm extends BaseResourceDataVideoForm
   {
     parent::configure();
 
+    unset($this['document_type']);
+
+    $this->setWidget('content', new sfWidgetFormInputText());
+
     $this->setDefaults(array(
-		'type' => ResourceDataVideo::TYPE
+		  'type' => ResourceDataVideo::TYPE,
     ));
   }
 }
