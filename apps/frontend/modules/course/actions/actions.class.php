@@ -89,7 +89,7 @@ class courseActions extends kuepaActions {
         $new_ordered_childs = $request->getParameter('ordered_children_ids');
 
         $new_ordered_childs_array = explode(",", $new_ordered_childs);
-        $new_ordered_childs_hash = [];
+        $new_ordered_childs_hash = array();
         $order = 1;
         foreach ($new_ordered_childs_array as $child_id) {
             $new_ordered_childs_hash[$order] = Component::getRepository()->find($child_id);
