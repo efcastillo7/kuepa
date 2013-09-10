@@ -88,7 +88,7 @@ class courseActions extends kuepaActions {
         $parent_id = $request->getParameter('parent_id');
         $new_ordered_childs = $request->getParameter('ordered_children_ids');
 
-        $new_ordered_childs_array = split(",", $new_ordered_childs);
+        $new_ordered_childs_array = explode(",", $new_ordered_childs);
         $new_ordered_childs_hash = [];
         $order = 1;
         foreach ($new_ordered_childs_array as $child_id) {
