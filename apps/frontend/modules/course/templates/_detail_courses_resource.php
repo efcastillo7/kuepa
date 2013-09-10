@@ -1,4 +1,4 @@
-<li>
+<li class="a-son-li" current_id="<?php echo $resource->getId()?>">
     <div class="lp-node">
         <div class="lp-bar-prev"></div>
         <div class="lp-bar-post"></div>

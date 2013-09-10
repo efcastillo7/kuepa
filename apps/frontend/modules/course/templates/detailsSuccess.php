@@ -10,7 +10,7 @@
             <div class="span12">
                 <div class="unit-hd">
                     <div class="lv-icon bg-<?php echo $course->getColor() ?>-alt-1">
-                       <img src="<?php echo $course->getThumbnailPath() ?>">
+                        <img src="<?php echo $course->getThumbnailPath() ?>">
                     </div>
                     <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i><?php echo $course->getName() ?></p>
                     <p class="small1 HelveticaLt"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
@@ -27,13 +27,13 @@
             <!-- Lista -->
             <div class="span12 margintop">
                 <div class="unit-container">
-                    <ul id="myCollapsible" class="lv-container unstyled">
+                    <ul id="myCollapsible" class="lv-container unstyled" current_id="<?php echo $course->getId() ?>">
                         <!-- Add chapter if has privilege -->
                         <li class="subject-item addchapter-button unsortable">
                             <div id="" class="black" type="button">
                                 <p class="title5 HelveticaRoman clearmargin">+ Agrear unidad al curso</p>
-                             </div>
-                             <div>
+                            </div>
+                            <div>
                                 <div class="row-fluid">
                                     <div class="span6">
                                         <p class="gray4 italic">
@@ -41,11 +41,11 @@
                                         </p>
                                     </div>
                                 </div>
-                             </div>
+                            </div>
                         </li>
                         <!-- courses list    -->
                         <?php foreach ($course->getChapters() as $chapter): ?>
-                        <?php include_partial("detail_courses_chapter", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
+                            <?php include_partial("detail_courses_chapter", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
                         <?php endforeach ?>
                     </ul>
                 </div>
@@ -57,15 +57,45 @@
 <?php include_component('lesson', 'Modalform') ?>
 <?php include_component('resource', 'Modalform') ?>
 <script>
-    $('.spinner').spinit({min:1, max:200, stepInc:1, pageInc:20, height: 22, width: 100 });
-    
-    $( "#myCollapsible" ).sortable({
-        items: "li:not(.unsortable)"
+    $('.spinner').spinit({min: 1, max: 200, stepInc: 1, pageInc: 20, height: 22, width: 100});
+
+    //chapters
+    $("#myCollapsible").sortable({
+        items: "li:not(.unsortable)",
+        stop: sortStopped
     });
-    $( ".lv-lvlone" ).sortable({
-        items: "li:not(.unsortable)"
+
+    //lessons
+    $(".lv-lvlone").sortable({
+        items: "li:not(.unsortable)",
+        stop: sortStopped
     });
-    $( ".lv-lvltwo" ).sortable({
-        items: "li:not(.unsortable)"
+
+    //resources
+    $(".lv-lvltwo").sortable({
+        items: "li:not(.unsortable)",
+        stop: sortStopped
     });
+
+    function sortStopped(event, ui) {
+        var parent_id = $(this).attr("current_id");
+        var ordered_children_ids = new Array();
+        $(this).children(".a-son-li").each(function() {
+            ordered_children_ids.push($(this).attr("current_id"));
+        });
+
+        $.ajax('/course/reorder', {
+            data: {parent_id: parent_id, ordered_children_ids: ordered_children_ids.join(",")},
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                if (data.status === "success") {
+                    alert("ok");
+                } else {
+                    alert("error");
+                }
+            }
+        });
+    }
+
 </script>
