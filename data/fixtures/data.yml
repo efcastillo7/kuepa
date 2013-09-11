@@ -43,6 +43,13 @@ sfGuardUser:
     last_name: Bani
     email_address: kuepa+student@fiberbunny.com    
     Groups: [grupo_estudiantes]
+  sfGuardUser_3:
+    username: kuepa
+    password: kuepa
+    first_name: Kuepa
+    last_name: Kuepa
+    email_address:    kuepa@kuepa.com
+    Groups: [grupo_docentes]
     
 Resource:
   Resource_1:
