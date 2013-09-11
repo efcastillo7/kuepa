@@ -3,7 +3,10 @@
         <?php foreach ($courses as $course): ?>
             <li class="subject-item">
                 <a class="subject-link" href="<?php echo url_for('course/expanded?type=grid&course_id=' . $course->getId()) ?>">
-                    <div class="subject-buttonbox subject-biology txt-center">
+                    <div class="subject-buttonbox bg-<?php echo $course->getColor() ?> txt-center">
+                        <div class="subject-image">
+                            <img src="<?php echo $course->getThumbnailPath() ?>" alt="">
+                        </div>
                         <div class="subject-title">
                             <p class="title4 HelveticaMd clearmargin"><?php echo $course->getName() ?></p>
                             <p class="small1 HelveticaLt"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>

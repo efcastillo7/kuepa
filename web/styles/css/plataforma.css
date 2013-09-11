@@ -31,9 +31,9 @@
 }
 
 body {
-	font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	padding-top: 100px;
-	color: #000;
+  font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-top: 100px;
+  color: #000;
 }
 
 a:hover {
@@ -54,17 +54,17 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 -------------------------------------------------- */
 
 .navbar .nav {
-	font-size: 18px;
+  font-size: 18px;
 }
 .navbar .nav > li > a {
-	padding:0px;
+  padding:0px;
 }
 .navbar .nav > li  {
-	padding: 18px 15px 15px;
-	border-left: 1px solid #ccc;
+  padding: 18px 15px 15px;
+  border-left: 1px solid #ccc;
 }
 .navbar .brand {
-	padding: 14px 20px;
+  padding: 14px 20px;
 }
 
 /* --------------------------------------------------
@@ -78,84 +78,37 @@ footer {
 }
 
 
-
 /* --------------------------------------------------
 // Subject Button Box Menu - Homepage
 -------------------------------------------------- */
 
 .subject-buttonbox {
-	height: 226px;
+  height: 226px;
   width: 246px;
-	background-color: #ccc;
-	position: relative;
+  background-color: #ccc;
+  position: relative;
   padding-top: 20px;
 }
+
 .subject-buttonbox .subject-title {
-	position: absolute;
-	bottom: 10px;
-	width: 100%;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
 }
 
-
-.subject-biology {
-	background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #008A5E;
-}
-.subject-grid a:hover .subject-biology {
-		background: url("../../img/subject-icons/subject-icn-biology.png") no-repeat scroll center 48px #009968;
-}
-
-.subject-fisics {
-	background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #DB0962;
-}
-.subject-grid a:hover .subject-fisics {
-		background: url("../../img/subject-icons/subject-icn-fisics.png") no-repeat scroll center 48px #E51783;
-}
-.subject-grammar {
-  background: url("../../img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #7AC143;
-}
-.subject-grid a:hover .subject-grammar {
-    background: url("../../img/subject-icons/subject-icn-grammar.png") no-repeat scroll center 48px #8ACC52;
-}
-.subject-history {
-  background: url("../../img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #B5121B;
-}
-.subject-grid a:hover .subject-history {
-    background: url("../../img/subject-icons/subject-icn-history.png") no-repeat scroll center 48px #CC1729;
-}
-.subject-live {
-  background: url("../../img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #5A4099;
-}
-.subject-grid a:hover .subject-live {
-    background: url("../../img/subject-icons/subject-icn-live.png") no-repeat scroll center 48px #654BB2;
-}
-.subject-maths {
-  background: url("../../img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #273691;
-}
-.subject-grid a:hover .subject-maths {
-    background: url("../../img/subject-icons/subject-icn-maths.png") no-repeat scroll center 48px #2B4099;
-}
-.subject-reasoning {
-  background: url("../../img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00ACA1;
-}
-.subject-grid a:hover .subject-reasoning {
-    background: url("../../img/subject-icons/subject-icn-reasoning.png") no-repeat scroll center 48px #00B2A1;
-}
-.subject-simulation {
-  background: url("../../img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #F76E26;
-}
-.subject-grid a:hover .subject-simulation {
-    background: url("../../img/subject-icons/subject-icn-simulation.png") no-repeat scroll center 48px #FF7B36;
-}
-.subject-socialcs {
-  background: url("../../img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #11175E;
-}
-.subject-grid a:hover .subject-socialcs {
-    background: url("../../img/subject-icons/subject-icn-socialcs.png") no-repeat scroll center 48px #18257F;
+.subject-buttonbox .subject-image {
+  position: relative;
+  top: 25px;
+  width: 97px;
+  margin: 0 auto;
 }
 
-.pbar-circle {
+.subject-buttonbox .pbar-circle {
   opacity:0.6;
   filter:alpha(opacity=60);
+  position: absolute;
+  top: 20px;
+  left: 48px;
 }
 
 .learning-path {
@@ -207,6 +160,56 @@ footer {
 }
 
 /* --------------------------------------------------
+// Subject Button Box Menu - Colors
+-------------------------------------------------- */
+
+.bg-green{ background-color:  #008A5E;}
+.bg-green:hover{ background-color:  #009968;}
+.bg-green-alt-1{ background-color: #54A38A;}
+.bg-green-alt-2{ background-color:  #008A5E;}
+
+.bg-violet { background-color: #DB0962; }
+.bg-violet:hover{ background-color: #E51783; }
+.bg-violet-alt-1{ background-color:  #008A5E;}
+.bg-violet-alt-2{ background-color:  #008A5E;}
+
+.bg-lightgreen { background-color: #7AC143; }
+.bg-lightgreen:hover { background-color: #8ACC52; }
+.bg-lightgreen-alt-1{ background-color:  #008A5E;}
+.bg-lightgreen-alt-2{ background-color:  #008A5E;}
+
+.bg-red { background-color: #B5121B; }
+.bg-red:hover{ background-color: #CC1729; }
+.bg-red-alt-1{ background-color:  #008A5E;}
+.bg-red-alt-2{ background-color:  #008A5E;}
+
+.bg-purple { background-color: #5A4099; }
+.bg-purple:hover { background-color: #654BB2; }
+.bg-purple-alt-1{ background-color: #853A8B;}
+.bg-purple-alt-2{ background-color: #63008A;}
+
+.bg-blue {background-color: #273691; }
+.bg-blue:hover{ background-color: #2B4099; }
+.bg-blue-alt-1{ background-color: #00698A;}
+.bg-blue-alt-2{ background-color: #1E167A;}
+
+.bg-lightblue { background-color: #00ACA1; }
+.bg-lightblue:hover{ background-color: #00B2A1; }
+.bg-lightblue-alt-1{ background-color:  #008A5E;}
+.bg-lightblue-alt-2{ background-color:  #008A5E;}
+
+.bg-orange { background-color: #F76E26; }
+.bg-orange:hover{ background-color: #FF7B36; }
+.bg-orange-alt-1{ background-color:  #008A5E;}
+.bg-orange-alt-2{ background-color:  #008A5E;}
+
+.bg-darkblue { background-color: #11175E; }
+.bg-darkblue:hover { background-color: #18257F; }
+.bg-darkblue-alt-1{ background-color:  #008A5E;}
+.bg-darkblue-alt-2{ background-color:  #008A5E;}
+
+
+/* --------------------------------------------------
 // View Mode
 -------------------------------------------------- */
 .view-mode {
@@ -220,6 +223,10 @@ footer {
   display: inline-block;
 }
 
+
+/* --------------------------------------------------
+// View Mode: Grid View
+-------------------------------------------------- */
 
 .vm-grid {
   background: url("../../img/icn_view_mode.png") no-repeat scroll 0 0 transparent;
@@ -311,38 +318,6 @@ footer {
 }
 
 /* --------------------------------------------------
-// List View Subjects
--------------------------------------------------- */
-
-.lvs-biology {
-  background-color: #008A5E;
-}
-.lvs-fisics {
-  background-color: #DB0962;
-}
-.lvs-grammar {
-  background-color: #7AC143;
-}
-.lvs-history {
-  background-color: #B5121B;
-}
-.lvs-live {
-  background-color: #5A4099;
-}
-.lvs-maths {
-  background-color: #273691;
-}
-.lvs-reasoning {
-  background-color: #00ACA1;
-}
-.lvs-simulation {
-  background-color: #F76E26;
-}
-.lvs-socialcs {
-  background-color: #11175E;
-}
-
-/* --------------------------------------------------
 // Unit View
 -------------------------------------------------- */
 .unit-view {
@@ -370,6 +345,7 @@ footer {
   border-top: 1px solid #dedede;
   padding: 15px 0 9px;
   margin-bottom: 0px;
+  background-color: white;
 }
 .unit-time {
   float: right;
@@ -395,3 +371,7 @@ footer {
 #progressbar{
   display: none;
 }
+
+input.knob{ display: none;}
+
+

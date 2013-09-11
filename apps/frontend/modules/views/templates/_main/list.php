@@ -3,8 +3,8 @@
         <?php foreach ($courses as $course): ?>
             <li class="subject-item">
                 <div class="black" type="button" data-toggle="collapse" data-target="#lv-<?php echo $course->getId() ?>">
-                    <div class="lv-icon lvs-biology">
-                        <img src="<?php echo $course->getThumbnail() ?>">
+                    <div class="lv-icon bg-<?php echo $course->getColor() ?>-alt-1">
+                        <img src="<?php echo $course->getThumbnailPath() ?>">
                     </div>
                     <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i><?php echo $course->getName() ?></p>
                     <p class="small1 HelveticaLt"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>

@@ -17,8 +17,10 @@ class ResourceDataTextForm extends BaseResourceDataTextForm
   {
     parent::configure();
 
+    unset($this['document_type'], $this['video_type']);
+
     $this->setDefaults(array(
-		'type' => ResourceDataText::TYPE
+		  'type' => ResourceDataText::TYPE
     ));
   }
 }

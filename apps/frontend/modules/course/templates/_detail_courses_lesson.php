@@ -1,4 +1,4 @@
-<li>
+<li class="a-son-li" current_id="<?php echo $lesson->getId()?>">
     <div class="lvl-btn" type="button" data-toggle="collapse" data-target="#lv-lesson-<?php echo $lesson->getId()?>">
         <div class="lp-node">
             <div class="lp-bar-prev"></div>
@@ -10,9 +10,9 @@
         <span class="lp-time"><?php echo $lesson->getDuration() ?></span>
     </div>
     <div id="lv-lesson-<?php echo $lesson->getId()?>" class="collapse">
-        <ul class="lv-lvltwo unstyled">
+        <ul class="lv-lvltwo unstyled" current_id="<?php echo $lesson->getId()?>">
             <!-- Add resource -->
-            <li lesson="<?php echo $lesson->getId() ?>" class="addresource-button">
+            <li lesson="<?php echo $lesson->getId() ?>" class="addresource-button unsortable">
                 <div class="lp-node">
                     <div class="lp-bar-prev"></div>
                     <div class="lp-bar-post"></div>

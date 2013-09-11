@@ -24,6 +24,8 @@ class ComponentForm extends BaseComponentForm
   	$this->setWidget('description', new sfWidgetFormTextarea());
   	$this->widgetSchema['duration']->setAttribute("class","spinner");
 
+    $this->setWidget('profile_id', new sfWidgetFormInputHidden());
+
   	$this->setWidget('thumbnail', new sfWidgetFormInputFileEditable(array(
                 'label' => 'Image',
                 'file_src' => '',
