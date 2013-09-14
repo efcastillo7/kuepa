@@ -22,7 +22,7 @@ class ResourceDataVideoForm extends BaseResourceDataVideoForm
     $this->setWidget('content', new sfWidgetFormInputText());
 
     $this->setDefaults(array(
-		  'type' => ResourceDataVideo::TYPE,
-    ));
+            'type' => ResourceDataVideo::TYPE,
+        ));
   }
 }

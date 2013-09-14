@@ -194,6 +194,13 @@ ResourceDataVideo:
     type: column_aggregation
     keyField: type
     keyValue: Video
+    
+ResourceDataEmbeddedWeb:
+  inheritance:
+    extends: ResourceData
+    type: column_aggregation
+    keyField: type
+    keyValue: EmbeddedWeb
 
 ResourceDataExercise:
   inheritance:

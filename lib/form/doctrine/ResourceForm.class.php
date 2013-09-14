@@ -34,6 +34,7 @@ class ResourceForm extends BaseResourceForm
       "recurse_data_text" => "Text",
       "recurse_data_document" => "Document",
       "recurse_data_video" => "Video",
+      "recurse_data_embedded_web" => "Embedded Web",
     );
 
     $this->setWidget("recurse_type", new sfWidgetFormChoice(array('choices' => $recourse_types)));
