@@ -57,8 +57,6 @@
 <?php include_component('lesson', 'Modalform') ?>
 <?php include_component('resource', 'Modalform') ?>
 <script>
-    $('.spinner').spinit({min: 1, max: 200, stepInc: 1, pageInc: 20, height: 22, width: 100});
-
     //chapters
     $("#myCollapsible").sortable({
         items: "li:not(.unsortable)",

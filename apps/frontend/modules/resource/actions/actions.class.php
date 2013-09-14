@@ -113,6 +113,7 @@ class resourceActions extends sfActions
 
         $response['template'] = "Ok";
         $response['status'] = "success";
+        $response['refresh'] = true;
       }else{
         $response['template'] = $this->getPartial("form_recurse", array('form' => $form, 'type' => $type));
       }

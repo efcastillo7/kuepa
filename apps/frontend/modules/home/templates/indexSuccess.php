@@ -1,5 +1,3 @@
-<?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
-<?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
 <div id="" class="container">
     <div id="" class="row">
         <div class="span8 offset1">
