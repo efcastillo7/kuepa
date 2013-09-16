@@ -1,7 +1,7 @@
 <li class="subject-item a-son-li" id="<?php echo $chapter->getId() ?>" current_id="<?php echo $chapter->getId()?>">
     <a href="#" class="unit-tooltip" rel="tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $chapter->getId()) ?>% completado" style="width:<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $chapter->getId()) ?>%;"><div></div></a>
     <div id="<?php echo $chapter->getNameSlug() ?>" class="black" type="button" data-toggle="" data-target="#lv-chapter-<?php echo $chapter->getId() ?>">
-        <p class="title5 HelveticaRoman clearmargin"><?php echo $chapter->getName() ?></p>
+        <p class="title5 HelveticaRoman clearmargin"><?php echo $chapter->getName() ?> - <a class="component_edit_link" target="modal-create-chapter-form-<?php echo $chapter->getId() ?>">Editar</a></p>
         <span class="unit-time"><?php echo $chapter->getDuration() ?></span>
      </div>
      <div id="lv-chapter-<?php echo $chapter->getId() ?>" class="">
@@ -35,3 +35,4 @@
 
      </div>
 </li>
+<?php include_component('chapter', 'Modalform', array('course_id' => $course->getId(), 'id' => $chapter->getId())) ?>

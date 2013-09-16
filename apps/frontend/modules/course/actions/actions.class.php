@@ -48,7 +48,15 @@ class courseActions extends kuepaActions {
     }
 
     public function executeCreate(sfWebRequest $request) {
-        $form = new CourseForm();
+        
+        $id = $request->getParameter("id");
+        
+        if( $id ) {
+            $form = new CourseForm(Course::getRepository()->find($id));
+        } else {
+            $form = new CourseForm();
+        }
+        
         $values = $request->getParameter($form->getName());
         $response = Array(
             'status' => "error",
@@ -62,9 +70,10 @@ class courseActions extends kuepaActions {
             $course = $form->save();
 
             //add to user
-            CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
+            if(!$id)
+                CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
 
-            $response['template'] = "Ha creado el curso satisfactoriamente";
+            $response['template'] = "Ha ".($id?"editado":"creado")." el curso satisfactoriamente";
             $response['status'] = "success";
             $response['course_id'] = $course->getId();
         } else {

@@ -1,4 +1,4 @@
-<form action="<?php echo url_for("course/create") ?>" method="POST" id="create-course-form">
+<form action="<?php echo url_for("course/create").($form->isNew()?"":"?id=".$form->getObject()->getId()) ?>" method="POST" class="create-course-form">
 	<?php echo $form;?>
 	<button type="submit" class="btn">Submit</button>
 </form>
@@ -35,7 +35,7 @@
                 if(data.status == "success"){
                     location.href = "/course/details/id/" + data.course_id;
                 }else{
-                    $('#create-course-form').ajaxForm(options);
+                    $('.create-course-form').ajaxForm(options);
 
                     tinyMCE.init({
                         selector: "#course_description"
@@ -53,6 +53,6 @@
             }
         };  
 
-        $('#create-course-form').ajaxForm(options); 
+        $('.create-course-form').ajaxForm(options); 
     });
 </script>

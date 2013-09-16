@@ -1,4 +1,4 @@
-<div class="md-modal" id="modal-create-course-form">
+<div class="md-modal" id="modal-create-course-form<?php echo ($form->isNew() ? "" : "-".$form->getObject()->getId()) ?>">
     <div class="md-content">
         <h3 id="title"></h3>
         <div>
