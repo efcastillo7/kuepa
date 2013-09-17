@@ -8,6 +8,9 @@
 
         $('#modal-create-chapter-form-container<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?> .spinner').spinit({min: 1, max: 200, stepInc: 1, pageInc: 20, height: 22, width: 100});
 
+        tinyMCE.execCommand('mceRemoveEditor', false, 'chapter_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
+        tinyMCE.execCommand('mceAddEditor', false, 'chapter_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
+
         //ajax form
         var options = {
             success: function(data, statusText, xhr, $form) {
@@ -17,9 +20,8 @@
                 } else {
                     $('#create-chapter-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>').ajaxForm(options);
 
-                    //tinyMCE.init({
-                    //    selector: ".inittiny"
-                    //});
+                    tinyMCE.execCommand('mceRemoveEditor', false, 'chapter_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
+                    tinyMCE.execCommand('mceAddEditor', false, 'chapter_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
                 }
             },
             dataType: 'json',
