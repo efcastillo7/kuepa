@@ -1,36 +1,25 @@
-<form action="<?php echo url_for("chapter/create").($form->isNew()?"":"?id=".$form->getObject()->getId()) ?>" method="POST" class="create-chapter-form">
+<form action="<?php echo url_for("chapter/create") . ($form->isNew() ? "" : "?id=" . $form->getObject()->getId()) ?>" method="POST" id="create-chapter-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>">
     <?php echo $form; ?>
     <button type="submit" class="btn">Submit</button>
 </form>
 
-<script>
-    $(document).ready(function(){
-        $('.spinner').spinit({min: 1, max: 200, stepInc: 1, pageInc: 20, height: 22, width: 100});
-        
-        $(".addchapter-button").click(function(){
-            triggerModalSuccess({id: "modal-create-chapter-form", title: "Crear Unidad", effect: "md-effect-17"});    
-        });
+<script type="text/javascript">
+    $(document).ready(function() {
 
-        tinyMCE.init({
-            selector: "#chapter_description"
-        });
-
-        $('#modal-create-chapter-form-container').bind('form-pre-serialize', function(e) {
-            tinyMCE.triggerSave(); 
-        });
+        $('#modal-create-chapter-form-container<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?> .spinner').spinit({min: 1, max: 200, stepInc: 1, pageInc: 20, height: 22, width: 100});
 
         //ajax form
-        var options = {  
-            success:       function(data, statusText, xhr, $form){
-                $("#modal-create-chapter-form-container").html(data.template);
-                if(data.status == "success"){
+        var options = {
+            success: function(data, statusText, xhr, $form) {
+                $("#modal-create-chapter-form-container<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>").html(data.template);
+                if (data.status == "success") {
                     location.reload();
-                }else{
-                    $('.create-chapter-form').ajaxForm(options);
+                } else {
+                    $('#create-chapter-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>').ajaxForm(options);
 
-                    tinyMCE.init({
-                        selector: "#chapter_description"
-                    });
+                    //tinyMCE.init({
+                    //    selector: ".inittiny"
+                    //});
                 }
             },
             dataType: 'json',
@@ -38,8 +27,8 @@
                 var percentVal = percentComplete + '%';
                 console.log(percentVal);
             },
-        };  
+        };
 
-        $('.create-chapter-form').ajaxForm(options); 
+        $('#create-chapter-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>').ajaxForm(options);
     });
 </script>
