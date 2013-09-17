@@ -11,6 +11,10 @@
         tinyMCE.execCommand('mceRemoveEditor', false, 'chapter_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
         tinyMCE.execCommand('mceAddEditor', false, 'chapter_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
 
+        $('#modal-create-chapter-form-container<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>').bind('form-pre-serialize', function(e) {
+            tinyMCE.triggerSave();
+        });
+
         //ajax form
         var options = {
             success: function(data, statusText, xhr, $form) {
