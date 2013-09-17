@@ -14,7 +14,7 @@
                     <input class="knob knob-small" value="<?php echo $current_percentage ?>" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
                 </div>
                 <?php echo $chapter->getName() ?>
-                <span class="lp-time">10'32''</span>
+                <span class="lp-time"><?php echo $chapter->getDuration() ?></span>
             </a>
         </li>
             <?php $previous_percentage = $current_percentage; ?>

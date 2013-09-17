@@ -379,3 +379,7 @@ input.knob{ display: none;}
    height: 500px;
    max-width: 100%;
 }
+
+.heigth-230{
+  max-height: 230px;
+}
