@@ -5,8 +5,12 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        
+
+        //spinner
         $('#modal-create-course-form-container<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?> .spinner').spinit({min: 1, max: 200, stepInc: 1, pageInc: 20, height: 22, width: 100});
+
+        tinyMCE.execCommand('mceRemoveEditor', false, 'course_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
+        tinyMCE.execCommand('mceAddEditor', false, 'course_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
 
         //ajax form
         var options = {
@@ -20,9 +24,8 @@
                 } else {
                     $('#create-course-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>').ajaxForm(options);
 
-                    //tinyMCE.init({
-                    //    selector: "#modal-create-course-form-container<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?> #course_description"
-                    //});
+                    tinyMCE.execCommand('mceRemoveEditor', false, 'course_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
+                    tinyMCE.execCommand('mceAddEditor', false, 'course_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
                 }
             },
             dataType: 'json',

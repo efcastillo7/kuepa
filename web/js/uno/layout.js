@@ -20,7 +20,7 @@ $(function() {
     });
 
     //init tinyMCE ONCE!
-    /*tinyMCE.init({
-     mode: "textareas"
-     });*/
+    tinyMCE.init({
+        mode: "none"
+    });
 });
