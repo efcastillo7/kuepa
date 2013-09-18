@@ -15,6 +15,7 @@ class ResourceDataDocument extends BaseResourceDataDocument {
     const TYPE = 'Document';
     const PDF = 'pdf';
     const IMAGE = 'image';
+    const PPT = 'ppt';
 
     public function getFile() {
         return 'uploads/documents/' . $this->getPath();

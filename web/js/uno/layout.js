@@ -6,20 +6,33 @@ $(function() {
         triggerModalSuccess({id: target, title: "Editar", effect: "md-effect-17"});
     });
 
-    $("body").delegate(".component_remove_link", "click", function(e){
+    $("a.component_remove_link").click(function(e){
         e.preventDefault();
 
         var child_id = $(this).attr("child_id");
         var parent_id = $(this).attr("parent_id");
 
-        //ajax
+        //todo better !
+        var container = $(this).parent();
+        if(!container.hasClass("a-son-li")){
+            container = container.parent();
+        }
+        if(!container.hasClass("a-son-li")){
+            container = container.parent();
+        }
+        //end todo better
+
+        container.hide("blind");
+
+        // ajax
         $.ajax('/component/remove', {
             data: {parent_id: parent_id, child_id: child_id},
             dataType: 'json',
             type: 'POST',
             success: function(data) {
                 if (data.status === "success") {
-                    alert("ok");
+                    container.hide("blind");
+                    // alert("ok");
                 } else {
                     alert("error");
                 }
