@@ -383,3 +383,18 @@ input.knob{ display: none;}
 .heigth-230{
   max-height: 230px;
 }
+
+.ui-sortable:active{
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: move;
+}
+
+div[type*=button]{
+  cursor: hand;
+  cursor: pointer;
+}
+
+.a-son-li{
+  background-color: white;
+}
