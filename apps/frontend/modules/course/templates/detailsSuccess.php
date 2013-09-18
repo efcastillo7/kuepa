@@ -82,7 +82,7 @@
             ordered_children_ids.push($(this).attr("current_id"));
         });
 
-        $.ajax('/course/reorder', {
+        $.ajax('<?php echo url_for("component/reorder") ?>', {
             data: {parent_id: parent_id, ordered_children_ids: ordered_children_ids.join(",")},
             dataType: 'json',
             type: 'POST',

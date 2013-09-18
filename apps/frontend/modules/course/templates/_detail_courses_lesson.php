@@ -6,7 +6,9 @@
             <span class="lp-node-play"></span>
             <input class="knob knob-small" value="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $lesson->getId()) ?>" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
         </div>
-        <?php echo $lesson->getName() ?> - <a class="component_edit_link" target="modal-create-lesson-form-<?php echo $lesson->getId() ?>">Editar</a>
+        <?php echo $lesson->getName() ?> 
+        - <a class="component_edit_link" target="modal-create-lesson-form-<?php echo $lesson->getId() ?>">Editar</a>
+        - <a class="component_remove_link" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>">Remover</a>
         <span class="lp-time"><?php echo $lesson->getDuration() ?></span>
     </div>
     <div id="lv-lesson-<?php echo $lesson->getId()?>" class="collapse">

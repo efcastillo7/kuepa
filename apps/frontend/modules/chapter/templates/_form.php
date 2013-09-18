@@ -31,7 +31,7 @@
             dataType: 'json',
             uploadProgress: function(event, position, total, percentComplete) {
                 var percentVal = percentComplete + '%';
-                console.log(percentVal);
+                // console.log(percentVal);
             },
         };
 

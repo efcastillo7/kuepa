@@ -6,6 +6,28 @@ $(function() {
         triggerModalSuccess({id: target, title: "Editar", effect: "md-effect-17"});
     });
 
+    $("body").delegate(".component_remove_link", "click", function(e){
+        e.preventDefault();
+
+        var child_id = $(this).attr("child_id");
+        var parent_id = $(this).attr("parent_id");
+
+        //ajax
+        $.ajax('/component/remove', {
+            data: {parent_id: parent_id, child_id: child_id},
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                if (data.status === "success") {
+                    alert("ok");
+                } else {
+                    alert("error");
+                }
+            }
+        });
+
+    });
+
     $("body").delegate(".addcourse-button", "click", function(e) {
         triggerModalSuccess({id: "modal-create-course-form", title: "Crear Curso", effect: "md-effect-17"});
     });
