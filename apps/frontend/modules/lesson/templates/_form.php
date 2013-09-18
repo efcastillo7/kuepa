@@ -11,6 +11,10 @@
         tinyMCE.execCommand('mceRemoveEditor', false, 'lesson_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
         tinyMCE.execCommand('mceAddEditor', false, 'lesson_description<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>');
 
+        $('#modal-create-lesson-form-container<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>').bind('form-pre-serialize', function(e) {
+            tinyMCE.triggerSave();
+        });
+
         //ajax form
         var options = {
             success: function(data, statusText, xhr, $form) {
