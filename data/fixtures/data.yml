@@ -19,7 +19,7 @@ sfGuardPermission:
     name: docente
     Groups: [grupo_docentes]
   permiso_estudinte:
-    name: estudinte
+    name: estudiante
     Groups: [grupo_estudiantes]
   permiso_padre:
     name: padre
@@ -43,7 +43,7 @@ sfGuardUser:
     last_name: Bani
     email_address: kuepa+student@fiberbunny.com    
     Groups: [grupo_estudiantes]
-  sfGuardUser_3:
+  sfGuardUser_4:
     username: kuepa
     password: kuepa
     first_name: Kuepa
@@ -137,6 +137,9 @@ Profile:
   Profile_3:
     sfGuardUser: sfGuardUser_3
     nickname: Elstudent
+  Profile_4:
+    sfGuardUser: sfGuardUser_4
+    nickname: Kuepa.com
     
 ProfileLearningPath:
   ProfileLearningPath_2_3:
