@@ -18,4 +18,6 @@
         </div>
     </div>
 </div>
+<?php if ($sf_user->hasCredential("docente")): ?>
 <?php include_component('course', 'Modalform') ?>
+<?php endif; ?>

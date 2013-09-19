@@ -5,7 +5,12 @@
             <img src="<?php echo $course->getThumbnailPath() ?>">
         </div>
         <div class="eg-details">
-            <p class="title3 clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a> - <a class="component_edit_link" target="modal-create-course-form-<?php echo $course->getId() ?>">Editar</a></p>
+            <p class="title3 clearmargin">
+                <a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a>
+                <?php if ($sf_user->hasCredential("docente")): ?>
+                - <a class="component_edit_link" target="modal-create-course-form-<?php echo $course->getId() ?>">Editar</a>
+                <?php endif; ?>
+            </p>
             <p class="title5 gray2"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
             <p class="small1 gray4">7 Unidades  /  32 Lecciones  /  2h 40’52’’ / 5 Ejercicios  /  1 Evaluación</p>
             <div class="margintop heigth-230"><?php echo $course->getRaw('description'); ?></div>
@@ -15,4 +20,6 @@
         </div>
     </div>
 </div>
+<?php if ($sf_user->hasCredential("docente")): ?>
 <?php include_component('course', 'Modalform', array('id' => $course->getId())) ?>
+<?php endif; ?>
