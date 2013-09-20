@@ -1,7 +1,7 @@
 <div id="" class="container">
     <div id="" class="row">
         <div class="span8 offset1">
-            <p class="title3">¡Bienvenido, usuario.alumno!</p>
+            <p class="title3">¡Bienvenido, <?php echo $sf_user->getProfile()->getFirstName() ?>!</p>
             <p class="title3 HelveticaLt clearmargin">pregunta.principal</p>
         </div>
         <div class="span2">
