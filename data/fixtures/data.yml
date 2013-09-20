@@ -34,14 +34,14 @@ sfGuardUser:
     password: 123
     first_name: Docente
     last_name: Kuepa
-    email_address:    kuepa@kuepa.com
+    email_address:    docente@kuepa.com
     Groups: [grupo_docentes]
   sfGuardUser_3:
     username: estudiante
     password: 123
     first_name: Estudiante
     last_name: Kuepa
-    email_address: kuepa+student@kuepa.com    
+    email_address: estudiante@kuepa.com    
     Groups: [grupo_estudiantes]
   sfGuardUser_4:
     username: kuepa
