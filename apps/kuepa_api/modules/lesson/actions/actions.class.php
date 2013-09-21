@@ -1,17 +1,17 @@
 <?php
 
 /**
- * course actions.
+ * lesson actions.
  *
  * @package    kuepa
- * @subpackage course
+ * @subpackage lesson
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class lessonActions extends kuepaActions {
 
     /**
-     * POST /course
+     * POST /lesson
      *
      * @param sfRequest $request A request object
      */
@@ -37,12 +37,12 @@ class lessonActions extends kuepaActions {
                 throw new BadRequest;
             }
 
-            // create course
+            // create lesson
             // note(diego): should we move this to a service instead of using doctrine forms for the creation?
             $lesson = $form->save();
 
             //add to user
-            if(!$form->isNew()) {
+            if(!$id) {
                 ChapterService::getInstance()->addLessonToChapter($form->getValue('chapter_id'), $lesson->getId());
             }
             
@@ -74,7 +74,7 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * GET /course
+     * GET /lesson
      *
      * @param sfRequest $request A request object
      */
@@ -83,19 +83,19 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * GET /course/{id}
+     * GET /lesson/{id}
      *
      * @param sfRequest $request A request object
      */
     public function executeGet(sfWebRequest $request) {
         try {
-            $course = Course::getRepository()->find($request->getParameter('id'));
+            $lesson = Lesson::getRepository()->find($request->getParameter('id'));
 
-            if (!$course) {
+            if (!$lesson) {
                 throw new LessonNotFound;
             }
 
-            return $this->renderText(json_encode($course->toArray()));
+            return $this->renderText(json_encode($lesson->toArray()));
         } catch (ComponentNotFound $e) {
             $this->getResponse()->setStatusCode(404);
 
@@ -108,7 +108,7 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * PUT /course/{id}
+     * PUT /lesson/{id}
      *
      * @param sfRequest $request A request object
      */
@@ -117,7 +117,7 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * DELETE /course/{id}
+     * DELETE /lesson/{id}
      *
      * @param sfRequest $request A request object
      */
