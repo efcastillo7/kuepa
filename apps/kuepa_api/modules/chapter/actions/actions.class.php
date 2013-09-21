@@ -1,58 +1,80 @@
 <?php
 
 /**
- * course actions.
+ * chapter actions.
  *
  * @package    kuepa
- * @subpackage course
+ * @subpackage chapter
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class courseActions extends sfActions {
+class chapterActions extends kuepaActions {
 
     /**
-     * POST /course
+     * POST /chapter
      *
      * @param sfRequest $request A request object
      */
     public function executeCreate(sfWebRequest $request) {
-        try {
-            $form = new CourseForm;
-            $values = $request->getParameter($form->getName());
+        return $this->update($request);
+    }
 
-            $form->bind($values);
+    private function update(sfWebRequest $request) {
+        try {
+            $id = $request->getParameter("id");
+            
+            if(!$id) {
+                $form = new ChapterForm;
+            } else {
+                $form = new ChapterForm( Chapter::getRepository()->find($id) );
+            }
+            
+            $form->setValidator('_csrf_token', new sfValidatorPass);
+
+            $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
             if (!$form->isValid()) {
                 throw new BadRequest;
             }
 
-            // create course
+            // create chapter
             // note(diego): should we move this to a service instead of using doctrine forms for the creation?
-            $course = $form->save();
+            $chapter = $form->save();
 
             //add to user
-            CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
+            if(!$id) {
+                CourseService::getInstance()->addChapterToCourse($form->getValue('course_id'), $chapter->getId());
+            }
             
             $response['status'] = 'success';
-            $response['id']  = $course->getId();
-            $response['uri'] = $this->getContext()->getRouting()->generate('course_get', Array('id' => $course->getId()));
+            $response['course_id']  = $chapter->getId();
+            $response['uri'] = $this->getContext()->getRouting()->generate('chapter_get', Array('id' => $chapter->getId()));
 
             $this->getResponse()->setStatusCode(201);
             
             return $this->renderText(json_encode($response));
         } catch (BadRequest $e) {
             $this->getResponse()->setStatusCode(400);
-
-            return $this->renderText(json_encode(Array('status' => 'error')));
+            
+            $response = Array('status' => 'error');
+            
+            $response['form_errors'] = Array();
+            
+            foreach($form->getErrorSchema()->getErrors() as $field => $e) {
+                $response['form_errors'][$field] = strval($e);
+            }
+                    
+            return $this->renderText(json_encode($response));
         } catch (Exception $e) {
             $this->getResponse()->setStatusCode(500);
+            throw $e;
 
             return $this->renderText(json_encode(Array('status' => 'error')));
         }
     }
 
     /**
-     * GET /course
+     * GET /chapter
      *
      * @param sfRequest $request A request object
      */
@@ -61,19 +83,19 @@ class courseActions extends sfActions {
     }
 
     /**
-     * GET /course/{id}
+     * GET /chapter/{id}
      *
      * @param sfRequest $request A request object
      */
     public function executeGet(sfWebRequest $request) {
         try {
-            $course = Course::getRepository()->find($request->getParameter('id'));
+            $chapter = Chapter::getRepository()->find($request->getParameter('id'));
 
-            if (!$course) {
+            if (!$chapter) {
                 throw new ComponentNotFound;
             }
 
-            return $this->renderText(json_encode($course->toArray()));
+            return $this->renderText(json_encode($chapter->toArray()));
         } catch (ComponentNotFound $e) {
             $this->getResponse()->setStatusCode(404);
 
@@ -86,16 +108,16 @@ class courseActions extends sfActions {
     }
 
     /**
-     * PUT /course/{id}
+     * PUT /chapter/{id}
      *
      * @param sfRequest $request A request object
      */
     public function executeEdit(sfWebRequest $request) {
-        return $this->renderText('edit');
+        return $this->update($request);
     }
 
     /**
-     * DELETE /course/{id}
+     * DELETE /chapter/{id}
      *
      * @param sfRequest $request A request object
      */
