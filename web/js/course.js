@@ -1,15 +1,15 @@
 $(function() {
-    $(".view-mode a").click(function(e){
-      e.preventDefault();
-      var parent = $(this).parent();
+    $(".view-mode a").click(function(e) {
+        e.preventDefault();
+        var parent = $(this).parent();
 
-      //hide active
-      $("div.main > div.active").removeClass("active");
-      $(".active", parent).removeClass("active");
+        //hide active
+        $("div.main > div.active").removeClass("active");
+        $(".active", parent).removeClass("active");
 
-      //set active
-      $(this).addClass("active");
-      $("div." + $(this).attr("target")).addClass("active");
+        //set active
+        $(this).addClass("active");
+        $("div." + $(this).attr("target")).addClass("active");
 
 
 
@@ -36,44 +36,45 @@ $(function() {
                 //reload knob
                 $(".knob", content).knob(knob_values);
 
-                content.slideDown();
+                //content.slideDown();
+                content.css("display","");
 
             });
         }
     });
 
-    $("body").delegate(".go-back", "click", function(e){
-      e.preventDefault();
+    $("body").delegate(".go-back", "click", function(e) {
+        e.preventDefault();
 
-      var parent_container = $(this).parent().parent().parent().parent();
-      var parent = $(this).parent().parent().parent();
-      var main = $("> div", parent_container).first();
+        var parent_container = $(this).parent().parent().parent().parent();
+        var parent = $(this).parent().parent().parent();
+        var main = $("> div", parent_container).first();
 
-      $(main).show('slide',{ direction: "left"  });
-      $(parent).hide('slide',{ direction: "right"  });      
+        $(main).show('slide', {direction: "left"});
+        $(parent).hide('slide', {direction: "right"});
     });
 
 
-   $("body").delegate(".remote-link", "click", function(e){
-      e.preventDefault();
+    $("body").delegate(".remote-link", "click", function(e) {
+        e.preventDefault();
 
-      var parent_container = $(this).parent().parent().parent().parent();
-      var parent = $(this).parent().parent().parent();
+        var parent_container = $(this).parent().parent().parent().parent();
+        var parent = $(this).parent().parent().parent();
 
-      $.getJSON($(this).attr('href'), function(response){
-              //get container
-              // var container = $(this).parent().parent().parent();
-              var container = $(parent_container);
+        $.getJSON($(this).attr('href'), function(response) {
+            //get container
+            // var container = $(this).parent().parent().parent();
+            var container = $(parent_container);
 
-              var content = $(response.template).hide();
-               
-              $(container).append(content);
+            var content = $(response.template).hide();
 
-              $(parent).hide('slide',{ direction: "left"  });
-              $(content, container).show('slide',{ direction: "right"  });
+            $(container).append(content);
 
-              //reload knob
-              $(".knob").knob(knob_values);
+            $(parent).hide('slide', {direction: "left"});
+            $(content, container).show('slide', {direction: "right"});
+
+            //reload knob
+            $(".knob").knob(knob_values);
         });
-    });
+        });
 });

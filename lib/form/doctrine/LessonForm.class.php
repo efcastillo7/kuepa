@@ -17,7 +17,7 @@ class LessonForm extends BaseLessonForm
   {
     parent::configure();
 
-    unset($this['thumbnail'], $this['color']);
+    unset($this['thumbnail'], $this['color'], $this['description']);
 
     $this->setWidget('type', new sfWidgetFormInputHidden());
     $this->setWidget('chapter_id', new sfWidgetFormInputHidden());

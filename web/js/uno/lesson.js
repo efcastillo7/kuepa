@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $(".input_add_note").live('keyup', function(e) {
+    $("body").delegate(".input_add_note", "keyup", function(e) {
         container = $(this);
         if (e.keyCode == 13) {
             e.preventDefault();
@@ -17,9 +17,9 @@ $(document).ready(function() {
                         //new note
                         $("#notes_list").prepend(data.template);
                         container.val('');
-                        
-                        if(edit_note_id != null && edit_note_id != "")
-                        $(".li-note-" + edit_note_id + ".edit-delete-tag").remove();
+
+                        if (edit_note_id != null && edit_note_id != "")
+                            $(".li-note-" + edit_note_id + ".edit-delete-tag").remove();
                     } else {
                         alert('error al enviar el comentario');
                     }
@@ -29,7 +29,7 @@ $(document).ready(function() {
         }
     });
 
-    $(".delete-note-link").live('click', function(e) {
+    $("body").delegate(".delete-note-link", "click", function(e) {
         var note_id = $(this).attr("target");
         $.ajax('note/delete', {
             data: {note_id: note_id},
@@ -46,7 +46,7 @@ $(document).ready(function() {
         });
     });
 
-    $(".edit-note-link").live('click', function(e) {
+    $("body").delegate(".edit-note-link", "click", function(e) {
         var note_id = $(this).attr("target");
         var edit_input = $("#edit-note-input-" + note_id);
         var span_note = $("#span-note-" + note_id)
@@ -58,7 +58,7 @@ $(document).ready(function() {
             //edit
             $("#edit-note-link-" + note_id).html("Cancelar");
         }
-        
+
         $(".li-note-" + note_id).addClass("edit-delete-tag");
 
         edit_input.toggle();

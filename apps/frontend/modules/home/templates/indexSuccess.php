@@ -1,9 +1,7 @@
-<?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
-<?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
 <div id="" class="container">
     <div id="" class="row">
         <div class="span8 offset1">
-            <p class="title3">¡Bienvenido, usuario.alumno!</p>
+            <p class="title3">¡Bienvenido, <?php echo $sf_user->getProfile()->getFirstName() ?>!</p>
             <p class="title3 HelveticaLt clearmargin">pregunta.principal</p>
         </div>
         <div class="span2">
@@ -20,4 +18,6 @@
         </div>
     </div>
 </div>
+<?php if ($sf_user->hasCredential("docente")): ?>
 <?php include_component('course', 'Modalform') ?>
+<?php endif; ?>

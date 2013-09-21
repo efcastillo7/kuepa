@@ -21,7 +21,7 @@
         <!-- modalwindow -->
         <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/default.css" />
         <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/component.css" />
-        
+
         <!-- jquery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
         <!-- jquery UI -->
@@ -34,6 +34,11 @@
         <script src="/js/jquery.form.min.js"></script>
         <!-- knob -->
         <script src="/js/jquery.knob.js"></script>
+        
+        <?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
+        <?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
+        <?php use_javascript("/assets/smartspin/smartspinner.js") ?>
+        <?php use_stylesheet("/assets/smartspin/smartspinner.css") ?>
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>

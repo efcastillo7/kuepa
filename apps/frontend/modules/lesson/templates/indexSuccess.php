@@ -24,8 +24,11 @@
             </div>
             
             <div class="span9">
-                <div class="path-content">
+                <div class="path-content resource">
                     <p class="title3 white"><?php echo $resource->getName() ?></p>
+                    <?php if($resource->getDescription() != ""): ?>
+                    <p><?php echo $resource->getRaw('description') ?></p>
+                    <?php endif; ?>
                     <?php include_partial("views/resources/resource_" . $resource->getRawValue()->getResourceData()->getFirst()->getType(), array('resource' => $resource->getRawValue()->getResourceData()->getFirst())) ?>
                     <div class="txt-right margintop">
                         <?php if($has_next_resource): ?>

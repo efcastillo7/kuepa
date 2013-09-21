@@ -3,7 +3,11 @@ Profile:
   tableName:                   profile
   columns:
     sf_guard_user_id:          integer 
-    nickname:                  varchar(15)
+    nickname:                  varchar(20)
+    first_name:                varchar(20)
+    last_name:                 varchar(20)
+    birthdate:                 date
+    sex:                       { type: enum, values: [male, female] }
   relations:
     sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
@@ -171,7 +175,7 @@ ResourceData:
 
 ResourceDataDocument:
   columns: 
-    document_type: { type: enum, values: [pdf, image] }
+    document_type: { type: enum, values: [pdf, image, ppt] }
   inheritance:
     extends: ResourceData
     type: column_aggregation
@@ -194,6 +198,13 @@ ResourceDataVideo:
     type: column_aggregation
     keyField: type
     keyValue: Video
+    
+ResourceDataEmbeddedWeb:
+  inheritance:
+    extends: ResourceData
+    type: column_aggregation
+    keyField: type
+    keyValue: EmbeddedWeb
 
 ResourceDataExercise:
   inheritance:

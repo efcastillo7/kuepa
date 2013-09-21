@@ -90,9 +90,13 @@ class ComponentService {
     public function addUserToComponent($component_id, $user_id) {
         $plp = new ProfileLearningPath();
 
-        $plp->setProfileId($user_id)
-                ->setComponentId($component_id)
-                ->save();
+        try {
+            $plp->setProfileId($user_id)
+                    ->setComponentId($component_id)
+                    ->save();
+        } catch (Exception $e) {
+            
+        }
 
         //exception?
         return;
@@ -196,27 +200,29 @@ class ComponentService {
                     ->where('parent_id = ?', $parent_id)
                     ->andWhere('position > ?', $position)
                     ->execute();
+
+            return true;
         }
 
-        return;
+        return false;
     }
 
     public function reOrderComponentChildren($parent_id, $children_hash) {
         //children hash must be: key -> learning_path position, value -> existing child component
         foreach ($children_hash as $position => $child_component) {
-            
+
             $lp = LearningPath::getRepository()->createQuery('lp')
-                ->where('lp.parent_id = ?', $parent_id)
-                ->andWhere('lp.child_id = ?', $child_component->getId())
-                ->limit(1)
-                ->fetchOne();
-            
-            if($lp == null) {
+                    ->where('lp.parent_id = ?', $parent_id)
+                    ->andWhere('lp.child_id = ?', $child_component->getId())
+                    ->limit(1)
+                    ->fetchOne();
+
+            if ($lp == null) {
                 $lp = new LearningPath();
                 $lp->setParentId($parent_id);
                 $lp->setChildId($child_component->getId());
             }
-            
+
             $lp->setPosition($position);
             $lp->save();
         }

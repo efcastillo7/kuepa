@@ -1,0 +1,1 @@
+<iframe src="<?php echo $resource->getContent() ?>" frameborder="0"></iframe>

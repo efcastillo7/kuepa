@@ -48,7 +48,15 @@ class courseActions extends kuepaActions {
     }
 
     public function executeCreate(sfWebRequest $request) {
-        $form = new CourseForm();
+        
+        $id = $request->getParameter("id");
+        
+        if( $id ) {
+            $form = new CourseForm(Course::getRepository()->find($id));
+        } else {
+            $form = new CourseForm();
+        }
+        
         $values = $request->getParameter($form->getName());
         $response = Array(
             'status' => "error",
@@ -62,9 +70,10 @@ class courseActions extends kuepaActions {
             $course = $form->save();
 
             //add to user
-            CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
+            if(!$id)
+                CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
 
-            $response['template'] = "Ha creado el curso satisfactoriamente";
+            $response['template'] = "Ha ".($id?"editado":"creado")." el curso satisfactoriamente";
             $response['status'] = "success";
             $response['course_id'] = $course->getId();
         } else {
@@ -76,33 +85,6 @@ class courseActions extends kuepaActions {
         }
 
         return $this->renderText($response['template']);
-    }
-
-    public function executeReorder(sfWebRequest $request) {
-        if (!$request->isXmlHttpRequest()) {
-            $this->forward404();
-        }
-
-        //falta validar que este logueado y tenga permisos para hacer esto?
-
-        $parent_id = $request->getParameter('parent_id');
-        $new_ordered_childs = $request->getParameter('ordered_children_ids');
-
-        $new_ordered_childs_array = explode(",", $new_ordered_childs);
-        $new_ordered_childs_hash = array();
-        $order = 1;
-        foreach ($new_ordered_childs_array as $child_id) {
-            $new_ordered_childs_hash[$order] = Component::getRepository()->find($child_id);
-            $order++;
-        }
-
-        ComponentService::getInstance()->reOrderComponentChildren($parent_id, $new_ordered_childs_hash);
-
-        $response = Array(
-            'status' => 'success'
-        );
-
-        return $this->renderText(json_encode($response));
     }
 
 }

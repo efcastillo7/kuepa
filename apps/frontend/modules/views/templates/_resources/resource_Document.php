@@ -1,4 +1,1 @@
-<h4><?php echo $resource->getType() ?></h4>
-<p class="gray2">
-    <?php echo $resource->getContent() ?>
-</p>
+<?php echo include_partial("views/resources/document_" . $resource->getDocumentType(), array("resource" => $resource)) ?>

@@ -4,6 +4,8 @@
 rendering: ~
 security:  ~
 
+remember_me:
+  class: sfGuardRememberMeFilter
 # insert your own filters here
 
 cache:     ~

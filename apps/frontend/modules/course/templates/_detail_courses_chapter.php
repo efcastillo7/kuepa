@@ -1,7 +1,13 @@
 <li class="subject-item a-son-li" id="<?php echo $chapter->getId() ?>" current_id="<?php echo $chapter->getId()?>">
     <a href="#" class="unit-tooltip" rel="tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $chapter->getId()) ?>% completado" style="width:<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $chapter->getId()) ?>%;"><div></div></a>
     <div id="<?php echo $chapter->getNameSlug() ?>" class="black" type="button" data-toggle="" data-target="#lv-chapter-<?php echo $chapter->getId() ?>">
-        <p class="title5 HelveticaRoman clearmargin"><?php echo $chapter->getName() ?></p>
+        <p class="title5 HelveticaRoman clearmargin">
+            <?php echo $chapter->getName() ?> 
+            <?php if ($sf_user->hasCredential("docente")): ?>
+            - <a class="component_edit_link" target="modal-create-chapter-form-<?php echo $chapter->getId() ?>">Editar</a>
+            - <a class="component_remove_link" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>">Remover</a>
+            <?php endif; ?>
+        </p>
         <span class="unit-time"><?php echo $chapter->getDuration() ?></span>
      </div>
      <div id="lv-chapter-<?php echo $chapter->getId() ?>" class="">
@@ -13,6 +19,7 @@
                 </div>
                 <div class="span6">
                     <ul class="lv-lvlone unstyled" current_id="<?php echo $chapter->getId()?>">
+                        <?php if ($sf_user->hasCredential("docente")): ?>
                         <!-- add lesson if has privilege -->
                         <li chapter="<?php echo $chapter->getId() ?>" class="addlesson-button unsortable">
                             <div class="lvl-btn" type="button">
@@ -25,6 +32,7 @@
                                 Agregar Lección
                             </div>
                         </li>
+                        <?php endif; ?>
                         <!-- lessons list -->
                         <?php foreach ($chapter->getLessons() as $lesson): ?>
                         <?php include_partial("detail_courses_lesson", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
@@ -35,3 +43,6 @@
 
      </div>
 </li>
+<?php if ($sf_user->hasCredential("docente")): ?>
+<?php include_component('chapter', 'Modalform', array('course_id' => $course->getId(), 'id' => $chapter->getId())) ?>
+<?php endif; ?>

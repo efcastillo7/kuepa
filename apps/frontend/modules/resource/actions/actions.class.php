@@ -57,6 +57,12 @@ class resourceActions extends sfActions
             $resourceData->setResourceId($resource->getId());
             $form = new ResourceDataVideoForm($resourceData);
             break;
+        
+          case 'recurse_data_embedded_web':
+            $resourceData = new ResourceDataEmbeddedWeb();
+            $resourceData->setResourceId($resource->getId());
+            $form = new ResourceDataEmbeddedWebForm($resourceData);
+            break;
           
           default:
             $resourceData = new ResourceDataText(); 
@@ -93,6 +99,10 @@ class resourceActions extends sfActions
         case 'recurse_data_video':
           $form = new ResourceDataVideoForm();
           break;
+      
+        case 'recurse_data_embedded_web':
+          $form = new ResourceDataEmbeddedWebForm();
+          break;
         
         default:
           $form = new ResourceDataTextForm();
@@ -106,13 +116,14 @@ class resourceActions extends sfActions
           'code' => 400
       );
 
-      $form->bind($values);
+      $form->bind($values, $request->getFiles($form->getName()));
       if($form->isValid()){
         //create lesson
         $resourceData = $form->save();
 
         $response['template'] = "Ok";
         $response['status'] = "success";
+        $response['refresh'] = true;
       }else{
         $response['template'] = $this->getPartial("form_recurse", array('form' => $form, 'type' => $type));
       }

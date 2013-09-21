@@ -10,7 +10,15 @@
  * @author     fiberbunny
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
-class ResourceDataDocument extends BaseResourceDataDocument
-{
-	const TYPE = 'Document';
+class ResourceDataDocument extends BaseResourceDataDocument {
+
+    const TYPE = 'Document';
+    const PDF = 'pdf';
+    const IMAGE = 'image';
+    const PPT = 'ppt';
+
+    public function getFile() {
+        return 'uploads/documents/' . $this->getPath();
+    }
+
 }
