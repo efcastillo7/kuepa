@@ -7,6 +7,12 @@ course_api:
   options:
     module: course
     
+# lesson
+lesson_api:
+  class: RESTRouteCollection
+  options:
+    module: lesson
+    
 default:
   url:   /*
   params: { module: default, action: notImplemented }
