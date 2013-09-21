@@ -25,10 +25,9 @@ $(function() {
         container.hide("blind");
 
         // ajax
-        $.ajax('/component/remove', {
-            data: {parent_id: parent_id, child_id: child_id},
+        $.ajax('/kuepa_api_dev.php/learning_path/' + parent_id + '/' + child_id, {
             dataType: 'json',
-            type: 'POST',
+            type: 'DELETE',
             success: function(data) {
                 if (data.status === "success") {
                     container.hide("blind");

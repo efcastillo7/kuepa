@@ -122,7 +122,11 @@ class chapterActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeDelete(sfWebRequest $request) {
-        return $this->renderText('delete');
+        $id = $request->getParameter("id");
+        
+        $chapter = Chapter::getRepository()->find($id);
+        
+        $chapter->delete();
     }
 
 }

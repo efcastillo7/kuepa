@@ -6,6 +6,7 @@ course_api:
   class: RESTRouteCollection
   options:
     module: course
+    
 # chapter
 chapter_api:
   class: RESTRouteCollection
@@ -18,6 +19,16 @@ lesson_api:
   options:
     module: lesson
     
+learning_path_delete:
+  url: /learning_path/:parent_id/:child_id
+  class: sfRequestRoute
+  param: { module: learning_path, action: delete }
+  requirements:
+    parent_id: \d+
+    child_id: \d+
+    sf_method: [delete]
+    
 default:
   url:   /*
   params: { module: default, action: notImplemented }
+  
