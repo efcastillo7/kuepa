@@ -6,6 +6,11 @@ course_api:
   class: RESTRouteCollection
   options:
     module: course
+# chapter
+chapter_api:
+  class: RESTRouteCollection
+  options:
+    module: chapter
     
 # lesson
 lesson_api:
