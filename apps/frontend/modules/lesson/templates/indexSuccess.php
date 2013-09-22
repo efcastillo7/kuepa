@@ -13,26 +13,29 @@
 <div id="" class="learning-path">
     <div id="" class="container">
         <div id="" class="row">
-            
+
             <div class="span3 path-steps">
                 <ul class="unstyled gray3">
                     <!-- <li class="gray2">- <?php echo $lesson->getName() ?></li> -->
                     <?php foreach ($lesson->getChildren() as $child): ?>
-                        <li class="<?php echo $child->getId() == $resource->getId() ? "active" : "" ?>"><a href="<?php echo url_for("lesson/index?lesson_id=".$lesson->getId()."&chapter_id=".$chapter->getId()."&course_id=".$course->getId()."&resource_id=".$child->getId()) ?>"><?php echo $child->getName() ?></a></li>
+                        <li class="<?php echo $child->getId() == $resource->getId() ? "active" : "" ?>"><a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&resource_id=" . $child->getId()) ?>"><?php echo $child->getName() ?></a></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
-            
+
             <div class="span9">
                 <div class="path-content resource">
                     <p class="title3 white"><?php echo $resource->getName() ?></p>
-                    <?php if($resource->getDescription() != ""): ?>
-                    <p><?php echo $resource->getRaw('description') ?></p>
+                    <?php if ($resource->getDescription() != ""): ?>
+                        <p><?php echo $resource->getRaw('description') ?></p>
                     <?php endif; ?>
                     <?php include_partial("views/resources/resource_" . $resource->getRawValue()->getResourceData()->getFirst()->getType(), array('resource' => $resource->getRawValue()->getResourceData()->getFirst())) ?>
                     <div class="txt-right margintop">
-                        <?php if($has_next_resource): ?>
-                            <a href="<?php echo url_for("lesson/index?lesson_id=".$lesson->getId()."&chapter_id=".$chapter->getId()."&course_id=".$course->getId()."&previous_resource_id=".$resource->getId()) ?>" class="btn btn-large">Siguiente</a>
+                        <?php if ($has_previous_resource): ?>
+                            <a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&following_resource_id=" . $resource->getId()) ?>" class="btn btn-large">Anterior</a>
+                        <?php endif; ?>
+                        <?php if ($has_next_resource): ?>
+                            <a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&previous_resource_id=" . $resource->getId()) ?>" class="btn btn-large">Siguiente</a>
                         <?php endif; ?>
                     </div>
                 </div>

@@ -27,11 +27,17 @@ class lessonActions extends kuepaActions {
 
         $resource_id = $request->getParameter('resource_id');
         $previous_resource_id = $request->getParameter('previous_resource_id');
+        $following_resource_id = $request->getParameter('following_resource_id');
 
         if ($resource_id != null) {
             $this->resource = Resource::getRepository()->find($resource_id);
         } else if ($previous_resource_id != null) {
             $this->resource = $this->lesson->getNextResource($previous_resource_id);
+            if ($this->resource == null)
+                $this->resource = $this->lesson->getChildren()->getFirst();
+            $resource_id = $this->resource->getId();
+        } else if ($following_resource_id != null) {
+            $this->resource = $this->lesson->getPreviousResource($following_resource_id);
             if ($this->resource == null)
                 $this->resource = $this->lesson->getChildren()->getFirst();
             $resource_id = $this->resource->getId();
@@ -41,6 +47,7 @@ class lessonActions extends kuepaActions {
         }
 
         $this->has_next_resource = ($this->lesson->getNextResource($this->resource->getId()) != null);
+        $this->has_previous_resource = ($this->lesson->getPreviousResource($this->resource->getId()) != null);
 
         //set ProfileComponentCompletedStatus
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
@@ -69,10 +76,10 @@ class lessonActions extends kuepaActions {
             $lesson = $form->save();
 
             //add lesson to chapter
-            if(!$id)
+            if (!$id)
                 ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
 
-            $response['template'] = "Ha ".($id?"editado":"creado")." la lección satisfactoriamente";
+            $response['template'] = "Ha " . ($id ? "editado" : "creado") . " la lección satisfactoriamente";
             $response['status'] = "success";
         } else {
             $response['template'] = $this->getPartial("form", array('form' => $form));
