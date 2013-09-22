@@ -5,6 +5,14 @@
         <div class="span12">
             <p class="gray3"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a> /  <a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>#<?php echo $chapter->getNameSlug() ?>"><?php echo $chapter->getName() ?></a></p>
             <p class="title3 clearmargin"><?php echo $lesson->getName() ?></p>
+            <div class="txt-right margintop">
+                <?php if ($has_previous_lesson): ?>
+                    <a href="<?php echo url_for("lesson/index?following_lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId()) ?>" class="btn btn-large">Anterior</a>
+                <?php endif; ?>
+                <?php if ($has_next_lesson): ?>
+                    <a href="<?php echo url_for("lesson/index?previous_lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId()) ?>" class="btn btn-large">Siguiente</a>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div><!-- /container -->

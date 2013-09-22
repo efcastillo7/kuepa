@@ -22,38 +22,6 @@ class Lesson extends BaseLesson {
         return Doctrine_Core::getTable('Lesson');
     }
 
-    public function getNextResource($previous_resource_id) {
-        $previous_learning_path = LearningPath::getRepository()->createQuery("lp")
-                ->where("lp.parent_id = ?", $this->getId())
-                ->andWhere("lp.child_id = ?", $previous_resource_id)
-                ->limit(1)
-                ->fetchOne();
-
-        return Resource::getRepository()->createQuery("r")
-                        ->innerJoin("r.LearningPath lp on r.id=lp.child_id")
-                        ->where("lp.parent_id = ?", $this->getId())
-                        ->andWhere("lp.position > ?", $previous_learning_path->getPosition())
-                        ->orderBy("lp.position ASC")
-                        ->limit(1)
-                        ->fetchOne();
-    }
-
-    public function getPreviousResource($following_resource_id) {
-        $following_learning_path = LearningPath::getRepository()->createQuery("lp")
-                ->where("lp.parent_id = ?", $this->getId())
-                ->andWhere("lp.child_id = ?", $following_resource_id)
-                ->limit(1)
-                ->fetchOne();
-
-        return Resource::getRepository()->createQuery("r")
-                        ->innerJoin("r.LearningPath lp on r.id=lp.child_id")
-                        ->where("lp.parent_id = ?", $this->getId())
-                        ->andWhere("lp.position < ?", $following_learning_path->getPosition())
-                        ->orderBy("lp.position DESC")
-                        ->limit(1)
-                        ->fetchOne();
-    }
-
     public function getResources() {
         return LessonService::getInstance()->getResourcesList($this->getId());
     }
