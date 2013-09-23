@@ -291,3 +291,6 @@ CalendarEvent:
     Profile:
       local: profile_id
       foreign: id
+    Component:
+      local: component_id
+      foreign: id

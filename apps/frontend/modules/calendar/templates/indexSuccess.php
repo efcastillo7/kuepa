@@ -7,7 +7,7 @@
     </div>
 </div><!-- /container -->
 
-executeGetCoursesEvents
+<?php CalendarService::getUserEventsByDateRange(3, 7, '2013-05-17 00:01:00', '2013-10-17 00:03:00'); ?>
 <script type="text/javascript">
 
 $(document).ready(function() {

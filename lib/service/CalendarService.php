@@ -24,9 +24,29 @@ class CalendarService {
 
         return $event;
     }
-    
-    public function deleteEvent($calendar_event_id){
 
+    public function editEvent($event_id, $profile_id, $resource_id = null, $title, $description, $start, $end){
+        $event = CalendarEvent::getRepository()->find($event_id);
+        
+        if( $event && $event->getProfileId() == $profile_id) {
+            $event->setResourceId($resource_id);
+            $event->setTitle($title);
+            $event->setDescription($description);
+            $event->setStart($start);
+            $event->setEnd($end);
+            $event->save();
+        }
+        
+        return $event;
+    }
+    
+    public function deleteEvent($event_id, $profile_id){
+        $event = CalendarEvent::getRepository()->find($event_id);
+
+        if ($event_id && $event->getProfileId() == $profile_id ) {
+            $event_id->delete();
+        }
+        return;
     }
     
     public function getUserEvents($profile_id) {
@@ -43,6 +63,14 @@ class CalendarService {
             $events_course =  CalendarEvent::getRepository()->findByComponentId($course->id);
             array_push($events, $events_course);
         }
+
+        return $events;
+    }
+
+    public static function getUserEventsByDateRange($profile_id, $resource_id = null, $initial_date, $final_date){
+        $events = CalendarEvent::getRepository()->getEventsForUserByDate($profile_id, $resource_id, $initial_date, $final_date);
+
+        print_r($events->toArray());
 
         return $events;
     }
