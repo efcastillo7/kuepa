@@ -1,4 +1,4 @@
-<div id="lv-<?php echo $course->getId() ?>">
+<div id="lv-<?php echo $course->getId() ?>" class="collapse">
     <ul class="lv-lvlone unstyled">
         <?php foreach ($course->getChildren() as $chapter): ?>
             <li>

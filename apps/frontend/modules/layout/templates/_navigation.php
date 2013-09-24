@@ -1,27 +1,27 @@
 <!-- navbar -->
 <div class="plataforma-nav navbar navbar-fixed-top">
     <div class="navbar-inner">
-            <ul class="nav">
+            <!-- <ul class="nav">
                 <li class="nav-menu">
                     <a href="#myModal" role="button" class="nav-menu-icon" data-toggle="modal"><span>Menu</span></a>
                 </li>
-            </ul>
+            </ul> -->
             <a class="nav-logo" href="<?php echo url_for("@homepage") ?>"></a>
             <ul class="nav nav-mainbtn">
                 <li class="nmb-mat active"><a href=""><i></i>Materias</a></li>
-                <li class="nmb-ins"><a href=""><i></i>Instrumentos</a></li>
+                <!-- <li class="nmb-ins"><a href=""><i></i>Instrumentos</a></li> -->
             </ul>
             <?php if($profile): ?>
             <ul class="nav pull-right">
-                <li><a href="" class="nav-btn nav-btn-srch"><i></i></a></li>
-                <li class="dropdown">
+                <!-- <li><a href="" class="nav-btn nav-btn-srch"><i></i></a></li> -->
+                <!-- <li class="dropdown">
                     <a id="drop2" href="#" role="button" class="nav-btn nav-btn-ntfc dropdown-toggle" data-toggle="dropdown"><i></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="dropdown">
                     <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i> <?php echo $profile->getNickname() ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">

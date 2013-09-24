@@ -10,11 +10,41 @@ $(function() {
         //set active
         $(this).addClass("active");
         $("div." + $(this).attr("target")).addClass("active");
-
-
-
     });
 
+    //list function
+    $('.subject-list a.subject-link').click(function(e) {
+        e.preventDefault();
+
+        var parent = $(this).parent('li');
+
+        if (!parent.hasClass('eg-expanded')) {
+            $.getJSON($(this).attr('href'), function(response) {
+                parent.addClass('eg-expanded');
+                // parent.animate({height: "760px"}, 50);
+
+                var content = $(response.template).hide();
+
+                parent.append(content);
+
+                //reload knob
+                $(".knob", content).knob(knob_values);
+
+                content.slideDown();
+                // content.css("display","");
+
+            });
+        }else{
+            parent.removeClass('eg-expanded');
+            var obj = $("> div", parent);
+            // $(".knob", parent).remove();
+            obj.slideUp().promise().done(function() {
+                $(this).remove();
+            });
+        }
+    });
+
+    //grid function
     $('body').delegate('.subject-grid .subject-link, .eg-close', 'click', function(e) {
         e.preventDefault();
 
