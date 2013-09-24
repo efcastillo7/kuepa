@@ -3,6 +3,7 @@
 class ProfileComponentCompletedStatusService {
 
     private static $instance = null;
+    private $_completed_status = array();
 
     public static function getInstance() {
         if (!self::$instance) {
@@ -59,12 +60,18 @@ class ProfileComponentCompletedStatusService {
     }
 
     public function getCompletedStatus($profile_id, $component_id) {
+        if(isset($this->_completed_status[$component_id])){
+            return $this->_completed_status[$component_id];
+        }
+
         $pccs = ProfileComponentCompletedStatus::getRepository()->createQuery("pccs")
                 ->where("pccs.profile_id = ?", $profile_id)
                 ->andWhere("pccs.component_id = ?", $component_id)
                 ->fetchOne();
 
-        return ($pccs == null ? 0 : $pccs->getCompletedStatus());
+        $this->_completed_status[$component_id] = ($pccs == null ? 0 : $pccs->getCompletedStatus());
+
+        return $this->_completed_status[$component_id];
     }
 
 }
