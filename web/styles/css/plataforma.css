@@ -683,3 +683,14 @@ div[type*=button]{
 .a-son-li{
   background-color: white;
 }
+
+.text-right{
+  text-align: right;
+}
+
+.marginbottom5{margin-bottom: 5px;}
+.marginbottom10{margin-bottom: 10px;}
+.marginbottom20{margin-bottom: 20px;}
+.marginbottom40{margin-bottom: 40px;}
+.marginbottom50{margin-bottom: 50px;}
+.marginbottom100{margin-bottom: 100px;}

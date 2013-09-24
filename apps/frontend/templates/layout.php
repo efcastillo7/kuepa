@@ -7,6 +7,9 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
+        <!-- jquery ui -->
+        <link href="/assets/jquery-ui/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+
         <!-- Le styles -->
         <link href="/styles/css/bootstrap.css" rel="stylesheet">
         <link href="/styles/css/bootstrap-responsive.css" rel="stylesheet">
@@ -14,9 +17,6 @@
         <link href="/styles/css/kuepa.css" rel="stylesheet">
         <link href="/styles/css/plataforma.css" rel="stylesheet">
         <link href="/styles/css/thumbgrid.css" rel="stylesheet">
-
-        <!-- jquery ui -->
-        <link href="/assets/jquery-ui/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
 
         <!-- modalwindow -->
         <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/default.css" />

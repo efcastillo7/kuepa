@@ -64,4 +64,6 @@ $(document).ready(function() {
         edit_input.toggle();
         span_note.toggle();
     });
+
+    $( "#tabs" ).tabs();
 });
