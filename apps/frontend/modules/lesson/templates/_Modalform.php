@@ -2,7 +2,7 @@
     <div class="md-content">
         <h3 id="title"></h3>
         <div>
-            <div id="modal-create-lesson-form-container">
+            <div id="modal-create-lesson-form-container<?php echo ($form->isNew() ? "" : "-".$form->getObject()->getId()) ?>">
             	<?php echo include_partial("lesson/form", array('form' => $form)) ?>
             </div>
             <button class="md-close">Cerrar</button>

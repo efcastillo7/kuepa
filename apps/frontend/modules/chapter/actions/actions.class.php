@@ -78,5 +78,4 @@ class chapterActions extends kuepaActions {
 
         return $this->renderText($response['template']);
     }
-
 }

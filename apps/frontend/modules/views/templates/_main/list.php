@@ -21,7 +21,7 @@
                                         <input class="knob knob-small" value="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $chapter->getId()) ?>" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
                                     </div>
                                     <?php echo $chapter->getName() ?>
-                                    <span class="lp-time">10'32''</span>
+                                    <span class="lp-time"><?php echo $chapter->getDuration() ?></span>
                                 </div>
                                 <div id="lv-<?php echo $course->getId() ?>-<?php echo $chapter->getId() ?>" class="collapse">
                                     <ul class="lv-lvltwo unstyled">
@@ -35,7 +35,7 @@
                                                         <input class="knob knob-small" value="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $lesson->getId()) ?>" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
                                                     </div>
                                                     <?php echo $lesson->getName() ?>
-                                                    <span class="lp-time">10'32''</span>
+                                                    <span class="lp-time"><?php echo $lesson->getDuration() ?></span>
                                                 </a>
                                             </li>
                                         <?php endforeach; ?>
@@ -47,14 +47,16 @@
                 </div>
             </li>
         <?php endforeach; ?>
+        <?php if ($sf_user->hasCredential("docente")): ?>
         <li class="subject-item addcourse-button">
-                <div class="black" type="button">
-                    <div class="lv-icon">
-                        
-                    </div>
-                    <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i>Agregar Curso</p>
-                    <p class="small1 HelveticaLt">&nbsp;</p>
+            <div class="black" type="button">
+                <div class="lv-icon">
+                    
                 </div>
-            </li>
+                <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i>Agregar Curso</p>
+                <p class="small1 HelveticaLt">&nbsp;</p>
+            </div>
+        </li>
+        <?php endif ?>
     </ul>
 </div>

@@ -20,7 +20,7 @@ class CourseForm extends BaseCourseForm
     $this->setWidget('type', new sfWidgetFormInputHidden());
 
     $this->setValidator('name', new sfValidatorString(array('required' => true)));
-
+    
     $this->setDefaults(array(
     	'type' => Course::TYPE
 	  ));

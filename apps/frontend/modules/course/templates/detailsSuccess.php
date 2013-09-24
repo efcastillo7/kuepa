@@ -29,6 +29,7 @@
                 <div class="unit-container">
                     <ul id="myCollapsible" class="lv-container unstyled" current_id="<?php echo $course->getId() ?>">
                         <!-- Add chapter if has privilege -->
+                        <?php if ($sf_user->hasCredential("docente")): ?>
                         <li class="subject-item addchapter-button unsortable">
                             <div id="" class="black" type="button">
                                 <p class="title5 HelveticaRoman clearmargin">+ Agrear unidad al curso</p>
@@ -43,6 +44,7 @@
                                 </div>
                             </div>
                         </li>
+                        <?php endif; ?>
                         <!-- courses list    -->
                         <?php foreach ($course->getChapters() as $chapter): ?>
                             <?php include_partial("detail_courses_chapter", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
@@ -53,9 +55,12 @@
         </div>
     </div><!-- /container -->
 </div>
+
+<?php if ($sf_user->hasCredential("docente")): ?>
 <?php include_component('chapter', 'Modalform', array('course_id' => $course->getId())) ?>
 <?php include_component('lesson', 'Modalform') ?>
 <?php include_component('resource', 'Modalform') ?>
+
 <script>
     //chapters
     $("#myCollapsible").sortable({
@@ -82,7 +87,7 @@
             ordered_children_ids.push($(this).attr("current_id"));
         });
 
-        $.ajax('/course/reorder', {
+        $.ajax('<?php echo url_for("component/reorder") ?>', {
             data: {parent_id: parent_id, ordered_children_ids: ordered_children_ids.join(",")},
             dataType: 'json',
             type: 'POST',
@@ -95,5 +100,5 @@
             }
         });
     }
-
 </script>
+<?php endif; ?>

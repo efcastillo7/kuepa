@@ -659,4 +659,27 @@ footer {
 
 input.knob{ display: none;}
 
+.resource iframe, .resource embed, .resource img {
+   width: 100%; 
+   height: 500px;
+   max-width: 100%;
+}
 
+.heigth-230{
+  max-height: 230px;
+}
+
+.ui-sortable:active{
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: move;
+}
+
+div[type*=button]{
+  cursor: hand;
+  cursor: pointer;
+}
+
+.a-son-li{
+  background-color: white;
+}

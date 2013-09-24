@@ -7,6 +7,9 @@
     </div>
     <a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId()) . "&resource_id=" . $resource->getId() ?>">
     	<?php echo $resource->getName() ?>
+        <?php if ($sf_user->hasCredential("docente")): ?>
+        - <a class="component_remove_link" parent_id="<?php echo $lesson->getId() ?>" child_id="<?php echo $resource->getId() ?>">Remover</a>
+        <?php endif; ?>
 	</a>
     <span class="lp-time"><?php echo $resource->getDuration() ?></span>
 </li>

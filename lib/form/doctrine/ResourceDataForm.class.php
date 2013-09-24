@@ -28,8 +28,8 @@ class ResourceDataForm extends BaseResourceDataForm
   	$this->setWidget("tags", new sfWidgetFormInputText());
   	$this->setWidget("resource_id", new sfWidgetFormInputHidden());
         
-        $this->setWidget('content', new sfWidgetFormTextarea());
-        $this->widgetSchema['content']->setAttribute("class","settinymce");
+    $this->setWidget('content', new sfWidgetFormTextarea());
+    $this->widgetSchema['content']->setAttribute("class","settinymce");
   	$this->widgetSchema['duration']->setAttribute("class","spinner");
   }
 }

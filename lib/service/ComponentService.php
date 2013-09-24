@@ -200,9 +200,11 @@ class ComponentService {
                     ->where('parent_id = ?', $parent_id)
                     ->andWhere('position > ?', $position)
                     ->execute();
+
+            return true;
         }
 
-        return;
+        return false;
     }
 
     public function reOrderComponentChildren($parent_id, $children_hash) {
