@@ -78,10 +78,15 @@
 	height: 100%;
 	overflow: hidden;
 	position: relative;
-	width: 45px;
-	height: 45px;
-	padding: 7px;
+	width: 80px;
+	height: 80px;
 	margin-top: 30px;
+	-moz-border-radius: 40px;
+	border-radius: 40px;
+}
+.eg-thumb img {
+	max-width: none;
+	max-height: 80px;
 }
 .eg-details {
 	width: 246px;
@@ -89,6 +94,22 @@
 	overflow: hidden;
 	position: relative;
 	padding: 40px 0 0 20px;
+}
+.eg-details .title {
+	font-size: 24px;
+	font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.eg-details .title a {
+	color: #fff;
+}
+.eg-details .subtitle {
+	opacity:0.7;
+	filter:alpha(opacity=70);
+}
+.eg-details .data {
+	font-size: 12px;
+	opacity:0.5;
+	filter:alpha(opacity=50);
 }
 
 
@@ -121,7 +142,7 @@
 	width: 100%;
 	top: 50%;
 	height: 8px;
-	background: #333;
+	background: #fff;
 	-webkit-transform: rotate(45deg);
 	-moz-transform: rotate(45deg);
 	transform: rotate(45deg);
@@ -136,7 +157,7 @@
 
 .eg-close:hover::before,
 .eg-close:hover::after {
-	background: #555;
+	background: #fff;
 }
 
 
@@ -149,7 +170,7 @@
 	border-right: 1px solid #000;
 	width: 474px;
 	height: 100%;
-	margin-left: 45px;
+	margin-left: 25px;
 	float: left;
 }
 .eg-multimenu {
@@ -164,9 +185,27 @@
 }
 .eg-multimenu li a:hover {
 	text-decoration: none;
-	background-color: #1f1f1f;
 }
 
+.eg-back span {
+	background-color: #000;
+	padding: 10px 10px 6px 6px;
+	font-size: 9px;
+	text-transform: uppercase;
+	margin-right: 6px;
+	margin-left: -20px;
+}
+.eg-back a::after {
+	border-top: 12px solid transparent;
+	border-bottom: 12px solid transparent; 
+	border-right: 12px solid black; 
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	left: 10px;
+	margin-top: -2px;
+}
 
 /* --------------------------------------------------
 // Learning Path Nodes
@@ -204,9 +243,14 @@
 }
 .lp-time {
 	float: right;
-	color: #aaa;
+	color: #fff;
+	opacity:0.5;
+	filter:alpha(opacity=50);
 }
 
+.chapter_list .title {
+
+}
 
 
 

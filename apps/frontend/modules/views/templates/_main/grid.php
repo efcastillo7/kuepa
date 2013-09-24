@@ -1,7 +1,7 @@
-<div class="subject-grid active span10 offset1 margintop white">
+<div class="subject-grid active span10 offset1 ">
     <ul id="eg-grid" class="eg-grid">
         <?php foreach ($courses as $course): ?>
-            <li class="subject-item">
+            <li class="subject-item color-<?php echo $course->getColor() ?>">
                 <a class="subject-link" href="<?php echo url_for('course/expanded?type=grid&course_id=' . $course->getId()) ?>">
                     <div class="subject-buttonbox bg-<?php echo $course->getColor() ?> txt-center">
                         <div class="subject-image">

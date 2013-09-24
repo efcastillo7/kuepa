@@ -1,7 +1,7 @@
 <div class="chapter_list">
-    <ul class="unstyled title">
+    <!-- <ul class="unstyled title">
         <li><?php echo $course->getName() ?></li>
-    </ul>
+    </ul> -->
     <ul class="unstyled">
         <?php foreach ($chapters as $chapter): ?>
             <?php $current_percentage = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $chapter->getId()) ?>

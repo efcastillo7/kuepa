@@ -18,4 +18,5 @@
         </div>
     </div>
 </div>
+
 <?php include_component('course', 'Modalform') ?>

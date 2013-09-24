@@ -5,10 +5,11 @@
             <img src="<?php echo $course->getThumbnailPath() ?>">
         </div>
         <div class="eg-details">
-            <p class="title3 clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a> - <a class="component_edit_link" target="modal-create-course-form-<?php echo $course->getId() ?>">Editar</a></p>
-            <p class="title5 gray2"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
-            <p class="small1 gray4">7 Unidades  /  32 Lecciones  /  2h 40’52’’ / 5 Ejercicios  /  1 Evaluación</p>
-            <p class="margintop"><?php echo $course->getRaw('description'); ?></p>
+            <p class="title clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a></p>
+            <p class="subtitle"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
+            <p class="data">7 Unidades  /  32 Lecciones  /  2h 40’52’’ / 5 Ejercicios  /  1 Evaluación</p>
+            <p class="description margintop"><?php echo $course->getRaw('description'); ?></p>
+            <a class="component_edit_link btn" target="modal-create-course-form-<?php echo $course->getId() ?>">Editar</a>
         </div>
         <div class="eg-multimenu course-data-container">
             <?php include_partial('views/navigator/chapter_list', array('chapters' => $chapters, 'course' => $course, 'profile' => $profile)) ?>
