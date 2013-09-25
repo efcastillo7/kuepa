@@ -150,7 +150,6 @@ ResourceData:
     tags: { type: string }
     profile_id: { type: integer }
     parent_id: { type: integer }
-    position: { type: integer }
     duration: float
     level: { type: enum, values: [beginner, intermediate, advance]}
   relations:
@@ -212,6 +211,74 @@ ResourceDataExercise:
     type: column_aggregation
     keyField: type
     keyValue: Exercise
+
+Exercise:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: string(200)
+    description: text
+    type: string
+    max_attemps: integer
+    start_time: datetime
+    end_time: datetime
+    expired_time: integer
+    random: integer
+    results_disabled: boolean
+  relations:
+    Questions:
+      class: ExerciseQuestion
+      refClass: ExerciseHasExerciseQuestion
+      local: exercise_id
+      foreign: exercise_question_id
+      type: many
+
+ExerciseQuestion:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: string(200)
+    description: text
+    value: integer
+    type: string
+
+ExerciseAnswer:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: string(200)
+    comment: text
+    value: integer
+    correct: boolean
+    exercise_question_id: integer
+  relations:
+    Question:
+      class: ExerciseQuestion
+      local: exercise_question_id
+      foreignAlias: Answers
+      foreign: id
+      type: one
+
+ExerciseHasExerciseQuestion:
+  columns:
+    exercise_id: integer
+    exercise_question_id: integer
+    position: { type: integer, notnull: true, default: 1}
+  relations:
+    Exercise:
+      local: exercise_id
+      foreign: id
+      type: one
+    ExerciseQuestion:
+      local: exercise_question_id
+      foreign: id
+      type: one
 
 Note:
   actAs:
