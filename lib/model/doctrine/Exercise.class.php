@@ -19,11 +19,12 @@ class Exercise extends BaseExercise {
     public function evaluate($keyvalueanswers) {
         //recibe un array de $question_id => $answervalue
         $questions = $this->getQuestions();
+        $score = array();
         foreach ($questions as $one_question) {
-            $score = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
+            $score[$one_question->getId()] = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
         }
 
-        return $score / $questions->count();
+        return $score;
     }
 
 }
