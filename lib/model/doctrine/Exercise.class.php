@@ -10,9 +10,21 @@
  * @author     fiberbunny
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
-class Exercise extends BaseExercise
-{
-	public static function getRepository() {
+class Exercise extends BaseExercise {
+
+    public static function getRepository() {
         return Doctrine_Core::getTable('Exercise');
     }
+
+    public function evaluate($keyvalueanswers) {
+        //recibe un array de $question_id => $answervalue
+        $questions = $this->getQuestions();
+        $score = array();
+        foreach ($questions as $one_question) {
+            $score[$one_question->getId()] = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
+        }
+
+        return $score;
+    }
+
 }
