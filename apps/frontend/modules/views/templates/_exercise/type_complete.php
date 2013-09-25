@@ -5,8 +5,12 @@
 <!-- answ -->
 <?php foreach ($question->getAnswers() as $answer): ?>
   <?php 
-  	$value = preg_replace('/\[(.*?)\]/i', "<input type='text' name='question[" . $question->getId() . "][]' class='input-mini'>", $answer->getTitle()); 
-  // $value = preg_replace('/\[(.*?)\]/i', "__input__", $answer->getTitle()); 
+  	$input = new sfWidgetFormInput(array(), array('class' => 'input-mini'));
+  	//input html
+  	$input_txt = $input->render("question[" . $exercise->getId() . "][" . $question->getId() . "][]");
+  	
+  	//replace
+  	$value = preg_replace('/\[(.*?)\]/i', $input_txt, $answer->getTitle()); 
   ?>
   <!-- make select -->
   <?php echo $value ?>

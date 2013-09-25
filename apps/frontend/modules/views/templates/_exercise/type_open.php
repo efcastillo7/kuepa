@@ -3,7 +3,10 @@
     <h5><?php echo $question->getDescription() ?></h5>
 </div>
 <!-- answ -->
-<textarea name="exercise[<?php echo $exercise->getId() ?>][<?php echo $question->getId() ?>]" id="" rows="10"></textarea>
+<textarea id="exercise_<?php echo $exercise->getId() ?>_<?php echo $question->getId() ?>" name="exercise[<?php echo $exercise->getId() ?>][<?php echo $question->getId() ?>]" id="" rows="10"></textarea>
 <style>
 	textarea{ width: 100%;}
 </style>
+<script>
+    tinyMCE.execCommand('mceAddEditor', false, 'exercise_<?php echo $exercise->getId() ?>_<?php echo $question->getId() ?>');
+</script>

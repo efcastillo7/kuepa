@@ -4,8 +4,18 @@
 </div>
 <!-- answ -->
 <?php foreach ($question->getAnswers() as $answer): ?>
-<label class="checkbox">
-  <input type="checkbox" name="option" id="opti" value="<?php echo $answer->getTitle() ?>">
-  <?php echo $answer->getTitle() ?>
-</label>	
+  <?php 
+  	//get options
+  	preg_match_all("/\[(.*?)\]/",$answer->getTitle(),$m);
+  	$options = array_unique(array_merge(array('' => ''),$m[1]));
+
+  	$select = new sfWidgetFormChoice(array('choices' => array_combine($options,$options)));
+  	//html
+  	$select_txt = $select->render("question[". $exercise->getId() . "][" . $question->getId() . "][]");
+  	
+  	$value = preg_replace('/\[(.*?)\]/i', $select_txt, $answer->getTitle()); 
+
+  ?>
+  <!-- make select -->
+  <?php echo $value ?>
 <?php endforeach ?>
