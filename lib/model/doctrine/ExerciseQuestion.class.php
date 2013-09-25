@@ -10,6 +10,44 @@
  * @author     fiberbunny
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
-class ExerciseQuestion extends BaseExerciseQuestion
-{
+class ExerciseQuestion extends BaseExerciseQuestion {
+
+    public function evaluate($answer) {
+        $score = -1;
+        switch ($this->getType()) {
+            case "multiple-choice":
+                //$answer es el ID del ExerciseAnswer elegido
+                $exercise_answer = ExerciseAnswer::getRepository()->find($answer);
+                $score = ($exercise_answer->getCorrect() == true ? 100 : 0);
+                break;
+            case "multiple-choice2":
+                //$answer es un array de IDS de ExerciseAnswer
+                $total_answers_count = $this->getAnswers()->count();
+                $total_correct_answers_count = 0;
+                foreach ($answer as $exercise_answer_id) {
+                    $exercise_answer = ExerciseAnswer::getRepository()->find($exercise_answer_id);
+                    $total_correct_answers_count += ($exercise_answer->getCorrect() == true ? 1 : 0);
+                }
+                $score = $total_correct_answers_count * 100 / $total_answers_count;
+                break;
+            case "complete":
+                //$answer es un array de strings del complete
+                $total_correct_answers_count = 0;
+                if (preg_match_all('/\*(.*?)\*/', $this->getValue(), $correct_answer_strings)) {
+                    foreach ($correct_answer_strings as $position => $one_correct_answer) {
+                        $total_correct_answers_count += (strtolower(trim($one_correct_answer)) == strtolower(trim($answer[$position])) ? 1 : 0);
+                    }
+                }
+                $score = $total_correct_answers_count * 100 / count($correct_answer_strings);
+                break;
+            case "relation":
+                break;
+            case "open":
+                break;
+            default:
+                break;
+        }
+        return $score;
+    }
+
 }
