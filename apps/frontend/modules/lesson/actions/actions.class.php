@@ -112,5 +112,20 @@ class lessonActions extends kuepaActions {
 
         return $this->renderText($response['template']);
     }
+    
+    public function executeTest(sfWebRequest $request) {
+        $answers = array();
+        
+        //correcta es la 1, la 2 es incorrecta
+        $answers[1] = 1;
+        
+        //correcta son las 3 y 4 y son las unicas que hay
+        $answers[2] = array(3,4);
+        
+        //[argentina] queda en la region [sur] de [america, america del sur, continente americano]. La provincia [asdadsads] es la provincia más al [asddas] del mundo.
+        $answers[3] = array("argentina", "sur", "continente americano", "caca", "cacona");
+        
+        var_dump(Exercise::getRepository()->find(1)->evaluate($answers));
+    }
 
 }

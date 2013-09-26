@@ -29,8 +29,8 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 break;
             case "complete":
                 //$answer es un array de strings del complete
-                if (preg_match_all('/\*(.*?)\*/', $this->getValue(), $correct_answer_strings)) {
-                    foreach ($correct_answer_strings as $position => $one_correct_answer) {
+                if (preg_match_all('/\[(.*?)\]/', $this->getAnswers()->getFirst()->getTitle(), $correct_answer_strings)) {
+                    foreach ($correct_answer_strings[1] as $position => $one_correct_answer) {
                         $score[$position] = false;
                         foreach (explode(",", $one_correct_answer) as $one_correct_possible_answer) {
                             if (strtolower(trim($one_correct_possible_answer)) == strtolower(trim($answer[$position]))) {
