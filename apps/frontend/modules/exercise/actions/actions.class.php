@@ -28,16 +28,20 @@ class exerciseActions extends sfActions
   	$answers = $values['exercise'][$exercise_id];
 
   	$correct_values = Exercise::getRepository()->find($exercise_id)->evaluate($answers);
+  	$ar_response = array(
+  		'exercise' => array('id' => $exercise_id),
+  		'anwers' => $correct_values
+	);
 
     if ($request->isXmlHttpRequest()) {
         $response = Array(
             'status' => 'success',
-            'template' => $correct_values
+            'values' => $ar_response
         );
 
         return $this->renderText(json_encode($response));
     }
 
-    return $this->renderText($this->getPartial($type));
+    return $this->renderText(json_encode($ar_response));
   }
 }

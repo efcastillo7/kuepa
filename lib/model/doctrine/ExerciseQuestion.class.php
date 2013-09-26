@@ -18,14 +18,16 @@ class ExerciseQuestion extends BaseExerciseQuestion {
             case "multiple-choice":
                 //$answer es el VALUE del ExerciseAnswer elegido
                 //get answers for question
-                foreach($this->getAnswers() as $exercise_answer){
-                    //if is valid
-                    if($exercise_answer->getTitle() == $answer){
-                        $score[$exercise_answer->getId()] = array(
-                            "correct" => $exercise_answer->getCorrect(), 
-                            "score" => $exercise_answer->getValue() * $exercise_answer->getCorrect()
-                        );
-                    }
+                $posible_answers = $this->getAnswers();
+                $is_correct = false;
+
+                for($i=0; $i<count($posible_answers) && !$is_correct; $i++){
+                    $is_valid = $posible_answers[$i]->getTitle() == $answer && $posible_answers[$i]->getCorrect();
+
+                    $score[$posible_answers[$i]->getId()] = array(
+                        "correct" => $is_valid, 
+                        "score" => $posible_answers[$i]->getValue() * $is_valid
+                    );
                 }
                 
                 break;
@@ -49,13 +51,14 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 preg_match_all('/\[(.*?)\]/', $exercise_answer->getTitle(), $correct_answers);
                 foreach($correct_answers[1] as $position => $correct_answer){
                     //correct answer could get multiple correct answers (ex: "foo,bar")
-                    foreach (explode(",", $correct_answer) as $one_correct_possible_answer) {
-                        $is_correct = strtolower(trim($one_correct_possible_answer)) == strtolower(trim($answer[$position]));
+                    $is_correct = false;
+                    $posible_answers = explode(",", $correct_answer);
+                    for($i=0; $i<count($posible_answers) && !$is_correct; $i++){
+                        $is_correct = strtolower(trim($posible_answers[$i])) == strtolower(trim($answer[$position]));
                         $score[$exercise_answer->getId()][$position] = array(
                             "correct" => $is_correct, 
                             "score" => $exercise_answer->getValue() * $is_correct
                         );
-                        break;
                     }
                 }
 

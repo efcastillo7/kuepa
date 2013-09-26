@@ -15,7 +15,7 @@
 <script>
 	var options = {
         success: function(data, statusText, xhr, $form) {
-            
+            console.log(data);
         },
         dataType: 'json'
 	};
