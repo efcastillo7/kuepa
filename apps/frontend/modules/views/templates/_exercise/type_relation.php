@@ -15,6 +15,7 @@
   	$select = new sfWidgetFormChoice(array('choices' => array_combine($options,$options)));
   	//html
   	$select_txt = $select->render("exercise[". $exercise->getId() . "][" . $question->getId() . "][]");
+    $select_txt .= "<span id='answer_" . $exercise->getId() . "_" . $question->getId() . "'></span>";
   	
   	$value = preg_replace('/\[(.*?)\]/i', $select_txt, $answer->getTitle()); 
 

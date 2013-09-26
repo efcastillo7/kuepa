@@ -24,7 +24,8 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 for($i=0; $i<count($posible_answers) && !$is_correct; $i++){
                     $is_valid = $posible_answers[$i]->getTitle() == $answer && $posible_answers[$i]->getCorrect();
 
-                    $score[$posible_answers[$i]->getId()] = array(
+                    $score[] = array(
+                        "answer_id" => $posible_answers[$i]->getId(),
                         "correct" => $is_valid, 
                         "score" => $posible_answers[$i]->getValue() * $is_valid
                     );
@@ -37,7 +38,8 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 foreach($this->getAnswers() as $position => $exercise_answer){
                     //if is valid
                     $is_correct = isset($answer[$position]) == $exercise_answer->getCorrect();
-                    $score[$exercise_answer->getId()][] = array(
+                    $score[] = array(
+                        "answer_id" => $exercise_answer->getId(),
                         "correct" => $is_correct, 
                         "score" => $exercise_answer->getValue() * $is_correct
                     );
@@ -55,7 +57,8 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                     $posible_answers = explode(",", $correct_answer);
                     for($i=0; $i<count($posible_answers) && !$is_correct; $i++){
                         $is_correct = strtolower(trim($posible_answers[$i])) == strtolower(trim($answer[$position]));
-                        $score[$exercise_answer->getId()][$position] = array(
+                        $score[$position] = array(
+                            "answer_id" => $exercise_answer->getId(),
                             "correct" => $is_correct, 
                             "score" => $exercise_answer->getValue() * $is_correct
                         );

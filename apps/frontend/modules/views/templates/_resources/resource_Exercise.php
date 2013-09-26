@@ -14,8 +14,16 @@
 
 <script>
 	var options = {
-        success: function(data, statusText, xhr, $form) {
-            console.log(data);
+        success: function(response, statusText, xhr, $form) {
+            var exercise = response.data.exercise;
+            var answers = response.data.answers;
+
+            for (var key in answers){
+            	var objs = $("span#answer_" + exercise.id + "_" + key);
+            	for(var i=0;i<answers[key].length;i++){
+            		$(objs[i]).html("<img src='/images/icons/" + (answers[key][i].correct ? "ok-icon.jpg" : "error-icon.png") + "'>");
+            	}
+            }
         },
         dataType: 'json'
 	};
