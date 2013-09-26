@@ -28,6 +28,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 }
                 break;
             case "complete":
+            case "relation":
                 //$answer es un array de strings del complete
                 if (preg_match_all('/\[(.*?)\]/', $this->getAnswers()->getFirst()->getTitle(), $correct_answer_strings)) {
                     foreach ($correct_answer_strings[1] as $position => $one_correct_answer) {
@@ -40,8 +41,6 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                         }
                     }
                 }
-                break;
-            case "relation":
                 break;
             case "open":
                 break;
