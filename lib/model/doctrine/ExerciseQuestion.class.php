@@ -16,37 +16,56 @@ class ExerciseQuestion extends BaseExerciseQuestion {
         $score = array();
         switch ($this->getType()) {
             case "multiple-choice":
-                //$answer es el ID del ExerciseAnswer elegido
-                $exercise_answer = ExerciseAnswer::getRepository()->find($answer);
-                $score[$answer] = $exercise_answer->getCorrect();
+                //$answer es el VALUE del ExerciseAnswer elegido
+                //get answers for question
+                foreach($this->getAnswers() as $exercise_answer){
+                    //if is valid
+                    if($exercise_answer->getTitle() == $answer){
+                        $score[$exercise_answer->getId()] = array(
+                            "correct" => $exercise_answer->getCorrect(), 
+                            "score" => $exercise_answer->getValue() * $exercise_answer->getCorrect()
+                        );
+                    }
+                }
+                
                 break;
             case "multiple-choice2":
-                //$answer es un array de IDS de ExerciseAnswer
-                foreach ($answer as $exercise_answer_id) {
-                    $exercise_answer = ExerciseAnswer::getRepository()->find($exercise_answer_id);
-                    $score[$exercise_answer_id] = $exercise_answer->getCorrect();
+                //$answer es un array de VALUES de ExerciseAnswer
+                //get answers for question
+                foreach($this->getAnswers() as $position => $exercise_answer){
+                    //if is valid
+                    $is_correct = isset($answer[$position]) == $exercise_answer->getCorrect();
+                    $score[$exercise_answer->getId()][] = array(
+                        "correct" => $is_correct, 
+                        "score" => $exercise_answer->getValue() * $is_correct
+                    );
                 }
                 break;
             case "complete":
             case "relation":
-                //$answer es un array de strings del complete
-                if (preg_match_all('/\[(.*?)\]/', $this->getAnswers()->getFirst()->getTitle(), $correct_answer_strings)) {
-                    foreach ($correct_answer_strings[1] as $position => $one_correct_answer) {
-                        $score[$position] = false;
-                        foreach (explode(",", $one_correct_answer) as $one_correct_possible_answer) {
-                            if (strtolower(trim($one_correct_possible_answer)) == strtolower(trim($answer[$position]))) {
-                                $score[$position] = true;
-                                break;
-                            }
-                        }
+                //answer es un array de strings del complete
+                //get correct answers
+                $exercise_answer = $this->getAnswers()->getFirst();
+                preg_match_all('/\[(.*?)\]/', $exercise_answer->getTitle(), $correct_answers);
+                foreach($correct_answers[1] as $position => $correct_answer){
+                    //correct answer could get multiple correct answers (ex: "foo,bar")
+                    foreach (explode(",", $correct_answer) as $one_correct_possible_answer) {
+                        $is_correct = strtolower(trim($one_correct_possible_answer)) == strtolower(trim($answer[$position]));
+                        $score[$exercise_answer->getId()][$position] = array(
+                            "correct" => $is_correct, 
+                            "score" => $exercise_answer->getValue() * $is_correct
+                        );
+                        break;
                     }
                 }
+
                 break;
             case "open":
                 break;
             default:
                 break;
         }
+
         return $score;
     }
 

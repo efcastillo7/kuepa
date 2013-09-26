@@ -7,7 +7,7 @@
   <?php 
   	$input = new sfWidgetFormInput(array(), array('class' => 'input-mini'));
   	//input html
-  	$input_txt = $input->render("question[" . $exercise->getId() . "][" . $question->getId() . "][]");
+  	$input_txt = $input->render("exercise[" . $exercise->getId() . "][" . $question->getId() . "][]");
   	
   	//replace
   	$value = preg_replace('/\[(.*?)\]/i', $input_txt, $answer->getTitle()); 

@@ -21,8 +21,11 @@ class Exercise extends BaseExercise {
         $questions = $this->getQuestions();
         $score = array();
         foreach ($questions as $one_question) {
-            if(array_key_exists($one_question->getId(), $keyvalueanswers))
-                $score[$one_question->getId()] = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
+            if(!array_key_exists($one_question->getId(), $keyvalueanswers)){
+                $keyvalueanswers[$one_question->getId()] = null;
+            }
+
+            $score[$one_question->getId()] = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
         }
 
         return $score;

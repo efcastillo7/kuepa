@@ -7,11 +7,14 @@
   <?php 
   	//get options
   	preg_match_all("/\[(.*?)\]/",$answer->getTitle(),$m);
-  	$options = array_unique(array_merge(array('' => ''),$m[1]));
+    $values = $m[1];
+    //shuffle
+    shuffle($values);
+  	$options = array_unique(array_merge(array('' => ''), $values));
 
   	$select = new sfWidgetFormChoice(array('choices' => array_combine($options,$options)));
   	//html
-  	$select_txt = $select->render("question[". $exercise->getId() . "][" . $question->getId() . "][]");
+  	$select_txt = $select->render("exercise[". $exercise->getId() . "][" . $question->getId() . "][]");
   	
   	$value = preg_replace('/\[(.*?)\]/i', $select_txt, $answer->getTitle()); 
 
