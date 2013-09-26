@@ -659,8 +659,14 @@ footer {
 
 input.knob{ display: none;}
 
-.resource iframe, .resource embed, .resource img { 
+.resource img{
+  
+}
+
+.resource iframe, .resource embed { 
    max-width: 100%;
+   height: 500px;
+   width: 100%;
 }
 
 .heigth-230{
@@ -686,9 +692,20 @@ div[type*=button]{
   text-align: right;
 }
 
+.text-center{
+  text-align: center;
+}
+
 .marginbottom5{margin-bottom: 5px;}
 .marginbottom10{margin-bottom: 10px;}
 .marginbottom20{margin-bottom: 20px;}
 .marginbottom40{margin-bottom: 40px;}
 .marginbottom50{margin-bottom: 50px;}
 .marginbottom100{margin-bottom: 100px;}
+
+.margintop5{margin-top: 5px;}
+.margintop10{margin-top: 10px;}
+.margintop20{margin-top: 20px;}
+.margintop40{margin-top: 40px;}
+.margintop50{margin-top: 50px;}
+.margintop100{margin-top: 100px;}

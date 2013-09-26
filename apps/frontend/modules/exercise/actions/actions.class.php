@@ -27,14 +27,17 @@ class exerciseActions extends sfActions
   	$values = $request->getPostParameters();
   	$answers = $values['exercise'][$exercise_id];
 
-  	$correct_values = Exercise::getRepository()->find($exercise_id)->evaluate($answers);
+  	$exercise = Exercise::getRepository()->find($exercise_id);
+
+  	$correct_values = $exercise->evaluate($answers);
+
   	$ar_response = array(
   		'exercise' => array(
   			'id' => $exercise_id, 
-  			'questions' => array('count' => 10, 'valid' => 5),
-  			'score'  => array('count' => 10, 'value' => 5),
-  			),
-  		'answers' => $correct_values
+  			'questions' => array('count' => $exercise->getQuestions()->count()),
+  			'score'  => array('total' => $exercise->getTotalScore(), 'value' => $correct_values['score']),
+  		),
+  		'answers' => $correct_values['answers']
 	);
 
     if ($request->isXmlHttpRequest()) {

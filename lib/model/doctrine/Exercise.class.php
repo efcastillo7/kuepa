@@ -20,15 +20,32 @@ class Exercise extends BaseExercise {
         //recibe un array de $question_id => $answervalue
         $questions = $this->getQuestions();
         $score = array();
+        $total_score = 0;
+
         foreach ($questions as $one_question) {
             if(!array_key_exists($one_question->getId(), $keyvalueanswers)){
                 $keyvalueanswers[$one_question->getId()] = null;
             }
 
-            $score[$one_question->getId()] = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
+            $ans = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
+            $total_score += $ans['score'];
+
+            $score[$one_question->getId()] = $ans['answers'];
         }
 
-        return $score;
+        return array('score' => $total_score, 'answers' => $score);
+    }
+
+    public function getTotalScore(){
+        $q = self::getRepository()->createQuery('e')
+            ->innerJoin('e.ExerciseHasExerciseQuestion eheq')
+            ->innerJoin('eheq.ExerciseQuestion eq')
+            ->innerJoin('eq.Answers ans')
+            ->where('e.id = ?', $this->getId())
+            ->select("sum(ans.value) as total")
+            ->execute();
+
+        return $q->getFirst()->getTotal();
     }
 
 }
