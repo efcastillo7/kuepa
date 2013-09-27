@@ -16,7 +16,7 @@
                     <ul class="lv-lvltwo unstyled">
                         <?php foreach ($chapter->getChildren() as $lesson): ?>
                             <li>
-                                <a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId()) ?>">
+                                <a href="<?php echo url_for("lesson_view?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId()) ?>">
                                     <div class="lp-node">
                                         <div class="lp-bar-prev"></div>
                                         <div class="lp-bar-post"></div>
