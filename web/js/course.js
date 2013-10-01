@@ -27,6 +27,8 @@ $(function() {
 
                 parent.append(content);
 
+                $("body").animate({ scrollTop: parent.offset().top - 60});
+
                 //reload knob
                 $(".knob", content).knob(knob_values);
 
@@ -50,7 +52,8 @@ $(function() {
 
         var parent = $(this).parent('li');
 
-        $('.eg-expander', parent).slideUp().promise().done(function() {
+        $('.eg-expander').slideUp().promise().done(function() {
+            var parent = $(this).parent('li');
             parent.removeClass('eg-expanded');
             $(this).remove();
 
@@ -66,10 +69,13 @@ $(function() {
 
                 parent.append(content);
 
+                $("body").animate({ scrollTop: parent.offset().top + 170});
+
                 //reload knob
                 $(".knob", content).knob(knob_values);
 
                 content.slideDown().promise();
+
                 // content.css("display","");
 
             });
