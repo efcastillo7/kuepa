@@ -28,7 +28,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
 
                     $score[] = array(
                         "answer_id" => $posible_answers[$i]->getId(),
-                        "correct" => $is_valid, 
+                        "correct" => $posible_answers[$i]->getCorrect(), 
                         "score" => $posible_answers[$i]->getValue() * $is_valid
                     );
 
