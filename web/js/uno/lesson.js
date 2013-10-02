@@ -8,7 +8,7 @@ $(document).ready(function() {
             var content = $(this).val();
             var edit_note_id = $(this).attr('edit-note-id');
 
-            $.ajax('note/add', {
+            $.ajax('/note/add', {
                 data: {resource_id: resource_id, content: content, edit_note_id: edit_note_id},
                 dataType: 'json',
                 type: 'POST',
