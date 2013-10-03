@@ -1,3 +1,6 @@
+<?php use_javascript("/assets/highcharts/js/highcharts.js") ?>
+<?php use_javascript("/assets/highcharts/js/modules/exporting.js") ?>
+
 <div class="md-modal" id="modal-exercise">
     <div class="md-content">
         <h3 id="title"></h3>
@@ -9,19 +12,7 @@
             	</div>
             	<div class="span3">
             		<h4>Estadísticas</h4>
-            		<div class="row marginbottom5">
-            			<div class="span2">Cantidad de Preguntas:</div>
-            			<div class="span1" id="count_questions"></div>
-            		</div>
-            		<div class="row marginbottom5">
-            			<div class="span2">Tiempo Dedicado:</div>
-            			<div class="span1"><span id="time"></span> minutos</div>
-            		</div>
-
-            		<div class="row margintop20">
-            			<div class="span2">Total</div>
-            			<div class="span1" id="score">100%</div>
-            		</div>
+            		<div id="graph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
             		
             	</div>
         	</div>

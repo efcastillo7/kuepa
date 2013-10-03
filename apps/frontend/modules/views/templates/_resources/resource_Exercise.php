@@ -55,6 +55,43 @@
                     $('.dial').val(Math.ceil(this.value)).trigger('change');
                 }
             });
+
+            console.log(response.data.attemps);
+
+            var atts = [];
+            for(var i =0; i< response.data.attemps.length; i++){
+                atts[i] = parseFloat(response.data.attemps[i]);
+            }
+
+            $('#graph').highcharts({
+                title: {
+                    text: 'Historial de notas',
+                    x: -20 //center
+                },
+                tooltip: {
+                    valueSuffix: ''
+                },
+                yAxis: {
+                    title: {
+                        text: 'Nota '
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: 'Ejercicio',
+                    data: atts
+                }]
+            });
         },
         dataType: 'json'
 	};

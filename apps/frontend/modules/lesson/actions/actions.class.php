@@ -26,8 +26,11 @@ class lessonActions extends kuepaActions {
         $previous_lesson_id = $request->getParameter('previous_lesson_id');
         $following_lesson_id = $request->getParameter('following_lesson_id');
 
+        $resource_id = $request->getParameter('resource_id');
+
         if ($lesson_id != null) {
             $this->lesson = Lesson::getRepository()->find($lesson_id);
+            $this->lesson->setActualResource($resource_id);
         } else if ($previous_lesson_id != null) {
             $this->lesson = $this->chapter->getNextChild($previous_lesson_id);
             if ($this->lesson == null)
@@ -46,29 +49,13 @@ class lessonActions extends kuepaActions {
         $this->has_next_lesson = ($this->chapter->getNextChild($this->lesson->getId()) != null);
         $this->has_previous_lesson = ($this->chapter->getPreviousChild($this->lesson->getId()) != null);
 
-        $resource_id = $request->getParameter('resource_id');
-        $previous_resource_id = $request->getParameter('previous_resource_id');
-        $following_resource_id = $request->getParameter('following_resource_id');
+        $this->resource = Resource::getRepository()->find($this->lesson->getActualResourceId());
 
-        if ($resource_id != null) {
-            $this->resource = Resource::getRepository()->find($resource_id);
-        } else if ($previous_resource_id != null) {
-            $this->resource = $this->lesson->getNextChild($previous_resource_id);
-            if ($this->resource == null)
-                $this->resource = $this->lesson->getChildren()->getFirst();
-            $resource_id = $this->resource->getId();
-        } else if ($following_resource_id != null) {
-            $this->resource = $this->lesson->getPreviousChild($following_resource_id);
-            if ($this->resource == null)
-                $this->resource = $this->lesson->getChildren()->getFirst();
-            $resource_id = $this->resource->getId();
-        } else {
-            $this->resource = $this->lesson->getChildren()->getFirst();
-            $resource_id = $this->resource->getId();
-        }
+        $this->has_next_resource = ($this->lesson->getNextResourceId() != null);
+        $this->has_previous_resource = ($this->lesson->getPreviousResourceId() != null);
 
-        $this->has_next_resource = ($this->lesson->getNextChild($this->resource->getId()) != null);
-        $this->has_previous_resource = ($this->lesson->getPreviousChild($this->resource->getId()) != null);
+        $this->is_last_resource = $this->lesson->atLastResource();
+        $this->is_first_resource = $this->lesson->atFirstResource();
 
         //set ProfileComponentCompletedStatus
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());

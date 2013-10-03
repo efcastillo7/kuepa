@@ -27,9 +27,23 @@ class exerciseActions extends sfActions
   	$values = $request->getPostParameters();
   	$answers = $values['exercise'][$exercise_id];
 
+    //get exercise
   	$exercise = Exercise::getRepository()->find($exercise_id);
 
+    //evaluate
   	$correct_values = $exercise->evaluate($answers);
+
+    //save response
+    ExerciseService::getInstance()->saveAttemp($user_id, $exercise_id, 0, $correct_values['score'], $values);
+
+    //get attemps
+    $attemps = ExerciseService::getInstance()->getAttemps($user_id, $exercise_id);
+
+    $r_attemps = array();
+
+    foreach($attemps as $attemp){
+      $r_attemps[] = $attemp->getValue();
+    }
 
   	$ar_response = array(
   		'exercise' => array(
@@ -37,7 +51,8 @@ class exerciseActions extends sfActions
   			'questions' => array('count' => $exercise->getQuestions()->count()),
   			'score'  => array('total' => $exercise->getTotalScore(), 'value' => $correct_values['score']),
   		),
-  		'answers' => $correct_values['answers']
+  		'answers' => $correct_values['answers'],
+      'attemps' => $r_attemps
 	);
 
     if ($request->isXmlHttpRequest()) {

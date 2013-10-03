@@ -13,6 +13,54 @@
 class Lesson extends BaseLesson {
 
     const TYPE = 'Lesson';
+    private $_actual_resource_position = null;
+    private $_resource_list_id = array();
+
+    public function setActualResource($resource_id){
+        $this->_actual_resource = $resource_id;
+
+        //get resources as list id
+        $resources = $this->getResources();
+        $this->_resource_list_id = array();
+        foreach ($resources as $id => $obj) {
+            $this->_resource_list_id[] = $obj->getId();
+        }
+
+        //update position
+        if (!($this->_actual_resource_position = array_search($resource_id, $this->_resource_list_id))){
+            $this->_actual_resource_position = 0;
+        }
+
+        return;
+    }
+
+    public function getActualResourceId(){
+        return $this->_resource_list_id[$this->_actual_resource_position];
+    }
+
+    public function getPreviousResourceId(){
+        if($this->_actual_resource_position > 0){
+            return $this->_resource_list_id[$this->_actual_resource_position-1];
+        }
+
+        return null;
+    }
+
+    public function getNextResourceId(){
+        if($this->_actual_resource_position < (count($this->_resource_list_id)-1)){
+            return $this->_resource_list_id[$this->_actual_resource_position+1];
+        }
+
+        return null;
+    }
+
+    public function atLastResource(){
+        return $this->_actual_resource_position == (count($this->_resource_list_id)-1);
+    }
+
+    public function atFirstResource(){
+        return $this->_actual_resource_position == 0;
+    }
 
     /**
      * 

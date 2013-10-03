@@ -15,4 +15,22 @@ class ExerciseService {
     public function find($id){
         return Exercise::getRepository()->find($id);
     }
+
+    public function saveAttemp($profile_id, $exercise_id, $time_taken = 0, $value = 0, $data = array()){
+        $exAttemp = new ExerciseAttemp();
+        $exAttemp->setProfileId($profile_id)
+                 ->setExerciseId($exercise_id)
+                 ->setValue($value)
+                 ->setTimeTaken($time_taken)
+                 ->setContent(serialize($data))
+                 ->save();
+    }
+
+    public function getAttemps($profile_id, $exercise_id){
+        $q = Doctrine::getTable("ExerciseAttemp")->createQuery('ea')
+                ->where('profile_id = ? and exercise_id = ?', array($profile_id, $exercise_id))
+                ->orderBy('created_at asc');
+
+        return $q->execute();
+    }
 }

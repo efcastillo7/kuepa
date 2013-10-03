@@ -31,7 +31,7 @@
                 <ul class="unstyled gray3">
                     <!-- <li class="gray2">- <?php echo $lesson->getName() ?></li> -->
                     <?php foreach ($lesson->getChildren() as $child): ?>
-                        <li class="<?php echo $child->getId() == $resource->getId() ? "active" : "" ?>"><a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&resource_id=" . $child->getId()) ?>"><?php echo $child->getName() ?></a></li>
+                        <li class="<?php echo $child->getId() == $resource->getId() ? "active" : "" ?>"><a href="<?php echo url_for("@lesson_view_resource?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&resource_id=" . $child->getId()) ?>"><?php echo $child->getName() ?></a></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -49,12 +49,16 @@
         <div class="row">
             <div class="span2 offset10 text-right marginbottom20">
                 <?php if ($has_previous_resource): ?>
-                    <a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&following_resource_id=" . $resource->getId()) ?>" class="btn btn-mini">
+                    <a href="<?php echo url_for("@lesson_view_resource?course_id=" . $course->getId() . "&chapter_id=" . $chapter->getId() . "&lesson_id=" . $lesson->getId() . "&resource_id=" . $lesson->getPreviousResourceId()) ?>" class="btn btn-mini">
                         &lt; Volver</a>
                 <?php endif; ?>
                 <?php if ($has_next_resource): ?>
-                    <a href="<?php echo url_for("lesson/index?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&previous_resource_id=" . $resource->getId()) ?>" class="btn btn-mini btn-primary">
+                    <a href="<?php echo url_for("@lesson_view_resource?course_id=" . $course->getId() . "&chapter_id=" . $chapter->getId() . "&lesson_id=" . $lesson->getId() . "&resource_id=" . $lesson->getNextResourceId()) ?> " class="btn btn-mini btn-primary">
                         Seguir &gt;</a>
+                <?php endif; ?>
+                <?php if ($is_last_resource): ?>
+                    <a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>#<?php echo $chapter->getNameSlug() ?>" class="btn btn-mini btn-primary">
+                        Volver al Curso &gt;</a>
                 <?php endif; ?>
             </div>
         </div>
