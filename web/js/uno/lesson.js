@@ -31,7 +31,7 @@ $(document).ready(function() {
 
     $("body").delegate(".delete-note-link", "click", function(e) {
         var note_id = $(this).attr("target");
-        $.ajax('note/delete', {
+        $.ajax('/note/delete', {
             data: {note_id: note_id},
             dataType: 'json',
             type: 'POST',
@@ -66,4 +66,17 @@ $(document).ready(function() {
     });
 
     $( "#tabs" ).tabs();
+
+
+    //log interval
+    setInterval(function(){
+        $.ajax('/log/resource', {
+            data: {resource_id: resource_id},
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }, 26000);
 });

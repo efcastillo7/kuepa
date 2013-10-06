@@ -320,6 +320,16 @@ LogViewComponent:
       local: profile_id
       foreign: id
 
+LogAccess:
+  actAs:
+    Timestampable: ~
+  columns:
+    profile_id: integer
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+
 Note:
   actAs:
     Timestampable: ~

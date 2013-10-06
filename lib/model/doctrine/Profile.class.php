@@ -19,4 +19,20 @@ class Profile extends BaseProfile
     public static function getRepository() {
         return Doctrine_Core::getTable('Profile');
     }
+
+    public function getFirstAccess(){
+    	return LogService::getInstance()->getFirstAccess($this->getId());
+    }
+
+    public function getLastAccess(){
+    	return LogService::getInstance()->getLastAccess($this->getId());
+    }
+
+    public function getTotalTime(){
+    	return LogService::getInstance()->getTotalTime($this->getId());
+    }
+
+    public function getTotalRecourseViewed(){
+    	return LogService::getInstance()->getTotalRecourseViewed($this->getId());
+    }
 }

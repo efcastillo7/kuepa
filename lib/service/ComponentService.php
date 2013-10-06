@@ -12,6 +12,10 @@ class ComponentService {
         return self::$instance;
     }
 
+    public function find($id){
+        return Component::getRepository()->find($id);
+    }
+
     public function getCoursesForUser($profile_id) {
         $courses = Course::getRepository()->getChaptersForUser($profile_id);
 

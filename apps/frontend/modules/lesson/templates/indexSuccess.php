@@ -1,3 +1,6 @@
+<script>
+    var resource_id = <?php echo $resource->getId() ?>;
+</script>
 <?php use_javascript('uno/lesson.js') ?>
 
 <div id="" class="container">
