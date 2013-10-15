@@ -21,7 +21,7 @@ class migrationActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
 
-    $mysql_conn = mysqli_connect("127.0.0.1","root","lalala182","110k_dokeos_main");
+    $mysql_conn = mysqli_connect("127.0.0.1","root","p4ssw0rd123","110k_dokeos_main");
     mysqli_query($mysql_conn, "SET NAMES utf8;");
 
     $course_code = $request->getParameter("course");
@@ -80,7 +80,6 @@ class migrationActions extends sfActions
 					$lectura = mysqli_query($mysql_conn,$query);
 					$lectura = mysqli_fetch_array($lectura);
 
-
 					$data = array(
 						'titulo' => $this->replaceChars($lectura['NombRecu']),
 						'texto' => "",
@@ -109,7 +108,10 @@ class migrationActions extends sfActions
 
 					foreach($data['links'] as $link){
 						$pos = strrpos($link,"/");
-						$imgname = str_replace(" ","-", substr($link, $pos+1));
+						$imgname = str_replace(
+							array(" ", "%", "/", "\""),
+							array("-", "-", "-", "-"), 
+							substr($link, $pos+1));
 						$texto = str_replace($link, $base_path . $imgname, $texto);
 					}
 
@@ -231,7 +233,10 @@ class migrationActions extends sfActions
 					case 9:
 						foreach ($recurso['data']['links'] as $link) {
 							$pos = strrpos($link,"/");
-							$imgname = str_replace(" ","-", substr($link, $pos+1));
+							$imgname = str_replace(
+								array(" ", "%", "/", "\""),
+								array("-", "-", "-", "-"), 
+								substr($link, $pos+1));
 
 							if(strpos($link,"http") === false){
 								$link = "http://www.kuepa.com" . $link;
@@ -251,12 +256,15 @@ class migrationActions extends sfActions
 						break;
 					case 3:
 						foreach ($recurso['data']['links'] as $link) {
-							$imgname = str_replace(" ","-", $link);
+							$imgname = str_replace(
+								array(" ", "%", "/", "\""),
+								array("-", "-", "-", "-"), 
+								$link);
 
 							$link = "http://www.kuepa.com/escuela/video/" . $link;
 
-							// if(!file_exists($base_path . "/videos/" . $imgname))
-								// copy($link, $base_path . "/videos/" . $imgname);
+							if(!file_exists($base_path . "videos/" . $imgname))
+								copy($link, $base_path . "videos/" . $imgname);
 						}
 
 						$rec = new ResourceDataVideo();
