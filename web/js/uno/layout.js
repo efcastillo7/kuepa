@@ -60,7 +60,7 @@ $(function() {
         plugins: [
             "advlist autolink lists link image charmap anchor",
             "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste"
+            "insertdatetime media table contextmenu paste jbimages"
         ],
         relative_urls: false,
         convert_urls: false,

@@ -713,3 +713,8 @@ div[type*=button]{
 .margintop40{margin-top: 40px;}
 .margintop50{margin-top: 50px;}
 .margintop100{margin-top: 100px;}
+
+.eg-details .description > div{
+  position: relative;
+  max-height: 320px;
+}

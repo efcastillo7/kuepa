@@ -74,7 +74,7 @@ $(function() {
                 //reload knob
                 $(".knob", content).knob(knob_values);
 
-                content.slideDown().promise();
+                content.slideDown();
 
                 // content.css("display","");
 

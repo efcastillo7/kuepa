@@ -7,11 +7,18 @@
         <div class="eg-details">
             <p class="title clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a></p>
             <p class="subtitle"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
-            <p class="data">7 Unidades  /  32 Lecciones  /  2h 40’52’’ / 5 Ejercicios  /  1 Evaluación</p>
-            <p class="description margintop"><?php echo $course->getRaw('description'); ?></p>
-            <?php if ($sf_user->hasCredential("docente")): ?>
-            <a class="component_edit_link btn" target="modal-create-course-form-<?php echo $course->getId() ?>">Editar</a>
-            <?php endif; ?>
+            <p class="data">
+                <a class="btn btn-mini" href="<?php echo url_for("course/details?id=" . $course->getId()) ?>">Ver Contenidos</a>
+                <?php if ($sf_user->hasCredential("docente")): ?>
+                <a class="component_edit_link btn btn-mini" target="modal-create-course-form-<?php echo $course->getId() ?>">Editar</a>
+                <?php endif; ?>    
+            </p>
+            <p class="description margintop">
+                <div>
+                <?php echo $course->getRaw('description'); ?>
+                </div>
+            </p>
+            
         </div>
         <div class="eg-multimenu course-data-container">
             <?php include_partial('views/navigator/chapter_list', array('chapters' => $chapters, 'course' => $course, 'profile' => $profile)) ?>
