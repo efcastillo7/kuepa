@@ -4,6 +4,7 @@ class ProfileComponentCompletedStatusService {
 
     private static $instance = null;
     private $_completed_status = array();
+    private $_completed_status_cache = 999;
 
     public static function getInstance() {
         if (!self::$instance) {
@@ -60,18 +61,22 @@ class ProfileComponentCompletedStatusService {
     }
 
     public function getCompletedStatus($profile_id, $component_id) {
-        if(isset($this->_completed_status[$component_id])){
-            return $this->_completed_status[$component_id];
+        if(isset($this->_completed_status[$profile_id])){
+            return $this->_completed_status[$profile_id][$component_id];
         }
 
         $pccs = ProfileComponentCompletedStatus::getRepository()->createQuery("pccs")
                 ->where("pccs.profile_id = ?", $profile_id)
-                ->andWhere("pccs.component_id = ?", $component_id)
-                ->fetchOne();
+                //->andWhere("pccs.component_id = ?", $component_id)
+                //->fetchOne();
+                //->limit($this->_completed_status_cache)
+                ->execute();
 
-        $this->_completed_status[$component_id] = ($pccs == null ? 0 : $pccs->getCompletedStatus());
+        foreach ($pccs as $one_pccs) {
+            $this->_completed_status[$profile_id][$one_pccs->getComponentId()] = $one_pccs->getCompletedStatus();
+        }
 
-        return $this->_completed_status[$component_id];
+        return $this->_completed_status[$profile_id][$component_id];
     }
 
 }
