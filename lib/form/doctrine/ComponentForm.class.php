@@ -21,8 +21,8 @@ class ComponentForm extends BaseComponentForm {
 
         $this->setWidget('thumbnail', new sfWidgetFormInputFileEditable(array(
             'label' => 'Image',
-            'file_src' => '',
-            'is_image' => false,
+            'file_src' => 'uploads/thumbnail/' . $this->getObject()->getThumbnail(),
+            'is_image' => true,
             'edit_mode' => (!$this->isNew()),
             'with_delete' => true,
         )));
@@ -35,8 +35,8 @@ class ComponentForm extends BaseComponentForm {
             'required' => false), array(
             'max_size' => "Tamaño de imagen demasiado grande",
         )));
-        
-        $this->getWidgetSchema()->setIdFormat('%s'.($this->isNew() ? "" : "-" . $this->getObject()->getId()));
+
+        $this->getWidgetSchema()->setIdFormat('%s' . ($this->isNew() ? "" : "-" . $this->getObject()->getId()));
     }
 
 }
