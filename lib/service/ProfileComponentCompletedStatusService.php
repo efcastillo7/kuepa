@@ -3,7 +3,7 @@
 class ProfileComponentCompletedStatusService {
 
     private static $instance = null;
-    private $_completed_status = array();
+    private $_completed_status = null;
     private $_completed_status_cache = 999;
 
     public static function getInstance() {
@@ -60,23 +60,35 @@ class ProfileComponentCompletedStatusService {
         }
     }
 
-    public function getCompletedStatus($profile_id, $component_id) {
-        if(isset($this->_completed_status[$profile_id])){
-            return $this->_completed_status[$profile_id][$component_id];
-        }
-
+    private function initCache($profile_id){
         $pccs = ProfileComponentCompletedStatus::getRepository()->createQuery("pccs")
-                ->where("pccs.profile_id = ?", $profile_id)
+                ->where("pccs.profile_id = ?", $profile_id);
                 //->andWhere("pccs.component_id = ?", $component_id)
                 //->fetchOne();
                 //->limit($this->_completed_status_cache)
-                ->execute();
+                
 
-        foreach ($pccs as $one_pccs) {
+        foreach ($pccs->execute() as $one_pccs) {
             $this->_completed_status[$profile_id][$one_pccs->getComponentId()] = $one_pccs->getCompletedStatus();
         }
+    }
 
-        return $this->_completed_status[$profile_id][$component_id];
+    public function getCompletedStatus($profile_id, $component_id) {
+        if(isset($this->_completed_status[$profile_id][$component_id])){
+            return $this->_completed_status[$profile_id][$component_id];
+        }
+
+        if(!isset($this->_completed_status[$profile_id])){
+            $this->_completed_status = array();
+            $this->_completed_status[$profile_id] = array();
+            $this->initCache($profile_id);
+        }
+
+        if(isset($this->_completed_status[$profile_id][$component_id])){
+            return $this->_completed_status[$profile_id][$component_id];
+        }else{
+            return 0;
+        }
     }
 
 }
