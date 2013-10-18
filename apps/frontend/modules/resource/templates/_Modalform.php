@@ -17,9 +17,23 @@
             triggerModalSuccess({id: "modal-create-resource-form", title: "Crear Recurso", effect: "md-effect-17"});
         });
 
-        tinyMCE.init({
+        tinymce_values = {
+            mode: "none",
+            plugins: [
+                "advlist autolink lists link image charmap anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste jbimages"
+            ],
+            relative_urls: false,
+            convert_urls: false,
+            remove_script_host : false,
+            menubar: "edit insert format view table",
+            toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
+            toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
             selector: "#resource_description,.settinymce"
-        });
+        };
+
+        tinyMCE.init(tinymce_values);
 
         $('#modal-create-resource-form-container').bind('form-pre-serialize', function(e) {
             tinyMCE.triggerSave();
@@ -34,9 +48,7 @@
                     $("#modal-create-resource-form-container").html(data.template);
                     $('#create-resource-form').ajaxForm(options);
 
-                    tinyMCE.init({
-                        selector: "#resource_description,.settinymce"
-                    });
+                    tinyMCE.init(tinymce_values);
                 }
             },
             dataType: 'json'
