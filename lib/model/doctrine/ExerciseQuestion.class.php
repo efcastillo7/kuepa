@@ -23,12 +23,12 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 $posible_answers = $this->getAnswers();
                 $is_correct = false;
 
-                for($i=0; $i<count($posible_answers) && !$is_correct; $i++){
-                    $is_valid = $posible_answers[$i]->getTitle() == $answer && $posible_answers[$i]->getCorrect();
+                for($i=0; $i<count($posible_answers); $i++){
+                    $is_valid = md5($posible_answers[$i]->getTitle()) == $answer && ($posible_answers[$i]->getCorrect() == "1");
 
                     $score[] = array(
                         "answer_id" => $posible_answers[$i]->getId(),
-                        "correct" => $posible_answers[$i]->getCorrect(), 
+                        "correct" => $posible_answers[$i]->getCorrect() == "1", 
                         "score" => $posible_answers[$i]->getValue() * $is_valid
                     );
 
@@ -41,10 +41,10 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 //get answers for question
                 foreach($this->getAnswers() as $position => $exercise_answer){
                     //if is valid
-                    $is_correct = isset($answer[$position]) == $exercise_answer->getCorrect();
+                    $is_correct = isset($answer[$position]) == ($exercise_answer->getCorrect() == "1");
                     $score[] = array(
                         "answer_id" => $exercise_answer->getId(),
-                        "correct" => $is_correct, 
+                        "correct" => ($exercise_answer->getCorrect() == "1"), 
                         "score" => $exercise_answer->getValue() * $is_correct
                     );
 
@@ -76,6 +76,23 @@ class ExerciseQuestion extends BaseExerciseQuestion {
 
                 break;
             case "open":
+                break;
+            case "choose":
+                //answer es un array de options
+                foreach ($this->getAnswers() as $exercise_answer) {
+                    if($exercise_answer->getCorrect() > 0){
+                        //its not a value
+                        $is_correct = $answer[$exercise_answer->getId()] == ($exercise_answer->getCorrect()-1);
+                        $score[] = array(
+                            "answer_id" => $exercise_answer->getId(),
+                            "correct" => $is_correct, 
+                            "score" => $exercise_answer->getValue() * $is_correct
+                        );
+
+                        $total_score += $exercise_answer->getValue() * $is_correct;
+
+                    }
+                }
                 break;
             default:
                 break;

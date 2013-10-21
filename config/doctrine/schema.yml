@@ -252,10 +252,10 @@ ExerciseAnswer:
     SoftDelete: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    title: string(200)
+    title: text
     comment: text
     value: integer
-    correct: boolean
+    correct: integer
     exercise_question_id: integer
   relations:
     Question:

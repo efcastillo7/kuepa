@@ -1,7 +1,7 @@
 <?php $exercise = $resource->getExercise() ?>
 
 <h3><?php echo $exercise->getTitle() ?></h3>
-<p><?php echo $exercise->getDescription() ?></p>
+<p><?php echo $exercise->getRaw('description') ?></p>
 
 <form action="<?php echo url_for("exercise/validate") ?>" method="post" id="exercise_form">
 <?php foreach ($exercise->getQuestions() as $question): ?>

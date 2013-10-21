@@ -15,15 +15,168 @@ class migrationActions extends sfActions
 	}
 
 	public function executeExercise(sfWebRequest $request){
-		$db = $request->getParameter("course");
+		$course = strtoupper($request->getParameter("course"));
+		$quiz = $request->getParameter("quiz");
+		$lesson_id = $request->getParameter("to");
 
-		$mysql_conn = mysqli_connect("127.0.0.1","root","","z100k_$course");
+		$mysql_conn = mysqli_connect("127.0.0.1","root","lalala182","z110k_$course");
     	mysqli_query($mysql_conn, "SET NAMES utf8;");
 
-    	$exercises = mysqli_query($mysql_conn,"select * from quiz");
 
+    	$query = "select * from quiz where active = 1";
+    	if($quiz){
+    		$query .= " and id = " . $quiz;
+    	}
+
+    	$rexercises = mysqli_query($mysql_conn,$query);
+    	$exercises = array();
+
+    	while($rexcercise = mysqli_fetch_array($rexercises)){
+    		$exercise_id = $rexcercise['id'];
+
+    		//questions
+    		$questions = array();
+			$rquestions = mysqli_query($mysql_conn,"select * from quiz_question where id in (select question_id from quiz_rel_question where exercice_id = $exercise_id) order by position asc");
+
+			while($rquestion = mysqli_fetch_array($rquestions)){
+				$question_id = $rquestion['id'];
+
+				//get answers
+				$ranswers = mysqli_query($mysql_conn,"select * from quiz_answer where question_id = $question_id order by position asc");
+				$answers = array();
+
+				while($ranswer = mysqli_fetch_array($ranswers)){
+					$answers[] = array(
+						'title' => $ranswer['answer'],
+						'correct' => $ranswer['correct'],
+						'comment' => $ranswer['comment'],
+						'ponderation' => $ranswer['ponderation'],
+					);
+				}
+
+				$questions[] = array(
+					'title' => $rquestion['question'],
+					'description' => $rquestion['description'],
+					'ponderation' => $rquestion['ponderation'],
+					'position' => $rquestion['position'],
+					'type' => $rquestion['type'],
+					'numeration_label' => $rquestion['numeration_label'],
+					'answers' => $answers
+				);
+
+
+			}
+
+    		//add to array
+    		$exercises[] = array(
+    			'title' => $rexcercise['title'],
+    			'description' => $rexcercise['description'],
+    			'type' => $rexcercise['type'],
+    			'max_attempt' => $rexcercise['max_attempt'],
+    			'start_time' => $rexcercise['start_time'],
+    			'end_time' => $rexcercise['end_time'],
+    			'random' => $rexcercise['random'],
+    			'results_disabled' => $rexcercise['results_disabled'],
+    			'expired_time' => $rexcercise['expired_time'],
+    			'questions' => $questions
+			);
+    	}
+
+    	$this->exercises = $exercises;
 
     	mysqli_close($mysql_conn);
+
+    	// $data = explode("::", "[Argentina] queda en la regiÃ³n [sur] de AmÃ©rica. La provincia [Ushuaia] es la provincia mÃ¡s al [austral] del mundo. ::10,10,10,5");
+    	// echo var_dump($data);
+    	// return;
+
+    	$profile_id = $this->getUser()->getProfile()->getId();
+
+    	$lesson = Lesson::getRepository()->find($lesson_id);
+
+    	for($i=0;$i<count($exercises);$i++){
+
+    		//add exercise
+    		$nexercise = new Exercise();
+    		$nexercise->setTitle($exercises[$i]['title'])
+    				 ->setDescription($exercises[$i]['description'])
+    				 ->save();
+
+    		//questions
+    	    foreach($exercises[$i]['questions'] as $question){
+    	    	switch ($question['type']) {
+    	    		case 1:
+    	    			$type = "multiple-choice";
+    	    			break;
+    	    		case 2:
+    	    			$type = "multiple-choice2";
+    	    			break;
+    	    		case 3:
+    	    			$type = "complete";
+    	    			break;
+    	    		case 4:
+    	    			$type = "choose";
+    	    			break;
+    	    		case 5:
+    	    			$type = "open";
+    	    			break;
+    	    		default:
+    	    			$type = "multiple-choice";
+    	    			break;
+    	    	}
+
+    	    	$nquestion = new ExerciseQuestion();
+    	    	$nquestion->setTitle($question['title'])
+    	    			  ->setDescription($question['description'])
+    	    			  ->setValue($question['ponderation'])
+    	    			  ->setType($type)
+    	    			  ->save();
+
+    	    	//set posible answers
+    	        foreach($question['answers'] as $answer){
+    	        	$nanswer = new ExerciseAnswer();
+    	        	$nanswer->setComment($answer['comment'])
+    	        		    ->setCorrect($answer['correct'])
+    	        		    ->setExerciseQuestionId($nquestion->getId());
+    	        		    
+    	        	if($type == "complete"){
+    	        		$data = explode("::", $answer['title']);
+    	        		$nanswer->setValue($data[1]);
+    	        		$nanswer->setTitle($data[0]);
+    	        	}else{
+    	        		$nanswer->setTitle($answer['title']);
+						$nanswer->setValue($answer['ponderation']);
+    	        	}
+
+    	        	$nanswer->save();
+    	        }
+
+    	        //add question to exercise
+    	        $exenn = new ExerciseHasExerciseQuestion();
+    	        $exenn->setExerciseId($nexercise->getId())
+    	        	  ->setExerciseQuestionId($nquestion->getId())
+    	        	  ->setPosition(1)
+    	        	  ->save();
+			}
+
+
+    		//add resource
+	    	$resource = ResourceService::getInstance()->create(array(
+				'name' => "Ejercitación",
+				'description' => "",
+				'profile_id' => $profile_id
+			));
+
+			$rec = new ResourceDataExercise();
+			$rec->setResourceId($resource->getId())
+				->setContent($nexercise->getId())
+				->setEnabled(true)
+				->setDuration(1)
+				->save();
+
+    		LessonService::getInstance()->addResourceToLesson($lesson->getId(), $resource->getId());
+    	}
+
 	}	
 
 
