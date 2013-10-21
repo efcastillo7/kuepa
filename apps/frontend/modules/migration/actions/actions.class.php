@@ -162,7 +162,7 @@ class migrationActions extends sfActions
 
     		//add resource
 	    	$resource = ResourceService::getInstance()->create(array(
-				'name' => "Ejercitación",
+				'name' => $exercises[$i]['title'],
 				'description' => "",
 				'profile_id' => $profile_id
 			));

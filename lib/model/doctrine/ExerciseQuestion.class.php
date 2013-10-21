@@ -24,7 +24,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 $is_correct = false;
 
                 for($i=0; $i<count($posible_answers); $i++){
-                    $is_valid = md5($posible_answers[$i]->getTitle()) == $answer && ($posible_answers[$i]->getCorrect() == "1");
+                    $is_valid = $posible_answers[$i]->getId() == $answer && ($posible_answers[$i]->getCorrect() == "1");
 
                     $score[] = array(
                         "answer_id" => $posible_answers[$i]->getId(),
