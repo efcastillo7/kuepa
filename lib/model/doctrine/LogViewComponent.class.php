@@ -15,4 +15,9 @@ class LogViewComponent extends BaseLogViewComponent
 	public static function getRepository() {
         return Doctrine_Core::getTable('LogViewComponent');
     }
+
+    public function __toString(){
+    	$time = $this->getCreatedAt();
+    	return $this->getComponent()->getName() . " ($time)";
+    }
 }

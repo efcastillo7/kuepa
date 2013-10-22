@@ -1,37 +1,21 @@
-<h1><?php echo $course->getName() ?></h1>
-<div class="row-fluid">
-	<div class="span8">
-		<h3>Listado de Alumnos</h3>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Legajo</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Primer Acceso</th>
-					<th>Último Acceso</th>
-					<th>Tiempo total <br>Conectado (minutos)</th>
-					<th>Cantidad de Recursos Vistos</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($students as $student): ?>
-				<tr>
-					<td><?php echo $student->getId() ?></td>
-					<td><?php echo $student->getFirstName() ?></td>
-					<td><?php echo $student->getLastName() ?></td>
-					<td><?php echo $student->getFirstAccess() ?></td>
-					<td><?php echo $student->getLastAccess() ?></td>
-					<td><?php echo $student->getTotalTime()/60 ?></td>
-					<td><?php echo $student->getTotalRecourseViewed() ?></td>
-					<td><a href="#" class="btn btn-mini">Ver Más</a></td>
-				</tr>
-				<?php endforeach ?>
-			</tbody>
-		</table>
-	</div>
-	<div class="span4">
-		Gráfico
-	</div>
-</div>
+<h4><?php echo $course->getName() ?></h4>
+<h2>Unidades</h2>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Porcentaje de Avance</th>
+			<th>Tiempo Dedicado (horas)</th>
+			<th>Último Recurso Visto</th>
+		</tr>
+	</thead>
+	<?php foreach ($chapters as $chapter): ?>
+		<tr>
+			<td><a href="<?php echo url_for("stats/chapter?course=" . $course->getId() . "&chapter=" . $chapter->getId()) ?>"><?php echo $chapter->getName() ?></a></td>
+			<td><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $chapter->getId()) ?> %</td>
+			<td><?php echo round($chapter->getTotalTime($sf_user->getProfile()->getId())/3600) ?></td>
+			<td><?php echo $chapter->getLastResourceViewed($sf_user->getProfile()->getId())?></td>
+		</tr>
+	<?php endforeach ?>
+</table>

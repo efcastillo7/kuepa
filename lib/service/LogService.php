@@ -79,17 +79,73 @@ class LogService {
         return null;
     }
 
-    public function getTotalTime($profile_id){
+    public function getTotalTime($profile_id, $component = null){
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->select("sum(updated_at - created_at) as total")
-                ->where("profile_id = ?", $profile_id)
-                ->fetchOne();
+                ->where("profile_id = ?", $profile_id);
+
+        //check type
+        if($component instanceof Course){
+            //if course then get all chapters
+            $parent_id = $component->getId();
+            $chapters = "select child_id from learning_path lp1 where parent_id = $parent_id";
+            $lessons = "select child_id from learning_path lp2 where parent_id in ($chapters)";
+            $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
+        }else if($component instanceof Chapter){
+            $parent_id = $component->getId();
+            $lessons = "select child_id from learning_path lp2 where parent_id in ($parent_id)";
+            $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
+        }else if($component instanceof Lesson){
+            $parent_id = $component->getId();
+            $resources = "select child_id from learning_path lp3 where parent_id in ($parent_id)";
+        }else if($component instanceof Resource){
+            //nothing to do
+            $resources = $component->getId();
+        }
+
+        if($component){
+            $q->andWhere("lvc.component_id in ($resources)");
+        }
+
+        $q = $q->fetchOne();
 
         if($q){
             return $q->getTotal();
         }
 
-        return null;
+        return 0;
+    }
+
+    public function getLastResourceIdViewed($profile_id, $component = null){
+        $q = LogViewComponent::getRepository()->createQuery('lvc')
+                ->where('lvc.profile_id = ?', $profile_id)
+                ->limit(1)
+                ->orderBy('lvc.created_at desc');
+
+        //check type
+        if($component instanceof Course){
+            //if course then get all chapters
+            $parent_id = $component->getId();
+            $chapters = "select child_id from learning_path lp1 where parent_id = $parent_id";
+            $lessons = "select child_id from learning_path lp2 where parent_id in ($chapters)";
+            $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
+        }else if($component instanceof Chapter){
+            $parent_id = $component->getId();
+            $lessons = "select child_id from learning_path lp2 where parent_id in ($parent_id)";
+            $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
+        }else if($component instanceof Lesson){
+            $parent_id = $component->getId();
+            $resources = "select child_id from learning_path lp3 where parent_id in ($parent_id)";
+        }else if($component instanceof Resource){
+            //nothing to do
+            $resources = $component->getId();
+        }
+        //add more
+
+        $q->andWhere("lvc.component_id in ($resources)");
+
+        return $q->fetchOne();
+
     }
 
     public function getTotalRecourseViewed($profile_id){

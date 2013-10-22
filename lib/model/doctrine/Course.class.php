@@ -29,4 +29,12 @@ class Course extends BaseCourse
     public function getThumbnailPath(){
         return "/uploads/thumbnail/" . $this->getThumbnail();
     }
+
+    public function getLastResourceViewed($profile_id){
+        return LogService::getInstance()->getLastResourceIdViewed($profile_id, $this);
+    }
+
+    public function getTotalTime($profile_id){
+        return LogService::getInstance()->getTotalTime($profile_id, $this);
+    }
 }

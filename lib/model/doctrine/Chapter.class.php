@@ -25,4 +25,12 @@ class Chapter extends BaseChapter {
     	return ChapterService::getInstance()->getLessonsList($this->getId());
     }
 
+    public function getLastResourceViewed($profile_id){
+        return LogService::getInstance()->getLastResourceIdViewed($profile_id, $this);
+    }
+
+    public function getTotalTime($profile_id){
+        return LogService::getInstance()->getTotalTime($profile_id, $this);
+    }
+
 }

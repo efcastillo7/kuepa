@@ -28,8 +28,8 @@ class Profile extends BaseProfile
     	return LogService::getInstance()->getLastAccess($this->getId());
     }
 
-    public function getTotalTime(){
-    	return LogService::getInstance()->getTotalTime($this->getId());
+    public function getTotalTime($component = null){
+    	return LogService::getInstance()->getTotalTime($this->getId(), $component);
     }
 
     public function getTotalRecourseViewed(){
