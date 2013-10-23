@@ -6,7 +6,7 @@
 		<tr>
 			<th>Nombre</th>
 			<th>Porcentaje de Avance</th>
-			<th>Tiempo Dedicado (horas)</th>
+			<th>Tiempo Dedicado</th>
 			<th>Último Recurso Visto</th>
 		</tr>
 	</thead>
@@ -14,7 +14,7 @@
 		<tr>
 			<td><a href="<?php echo url_for("stats/lesson?course=" . $course->getId() . "&chapter=" . $chapter->getId() . "&lesson=" . $lesson->getId()) ?>"><?php echo $lesson->getName() ?></a></td>
 			<td><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $lesson->getId()) ?> %</td>
-			<td><?php echo round($lesson->getTotalTime($sf_user->getProfile()->getId())/3600) ?></td>
+			<td><?php echo gmdate("H:i:s", $lesson->getTotalTime($sf_user->getProfile()->getId())) ?></td>
 			<td><?php echo $lesson->getLastResourceViewed($sf_user->getProfile()->getId())?></td>
 		</tr>
 	<?php endforeach ?>

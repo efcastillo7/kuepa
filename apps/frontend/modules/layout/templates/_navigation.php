@@ -8,8 +8,8 @@
             </ul> -->
             <a class="nav-logo" href="<?php echo url_for("@homepage") ?>"></a>
             <ul class="nav nav-mainbtn">
-                <li class="nmb-mat active"><a href=""><i></i>Materias</a></li>
-                <!-- <li class="nmb-ins"><a href=""><i></i>Instrumentos</a></li> -->
+                <li class="nmb-ins"><a href="<?php echo url_for("stats/index") ?>"><i></i>Reportes</a></li>
+                <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
             </ul>
             <?php if($profile): ?>
             <ul class="nav pull-right">

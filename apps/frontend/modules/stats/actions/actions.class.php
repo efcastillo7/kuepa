@@ -52,4 +52,11 @@ class statsActions extends sfActions
     $this->resources = $this->lesson->getResources();
     // $this->students = CourseService::getInstance()->getStudentsList($course_id);
   }
+
+  public function executeTimeline(sfWebRequest $request){
+    $from = $request->getParameter("from", strtotime("now"));
+    $to = $request->getParameter("to", strtotime("+1 day"));
+    // $to = $from = null; 
+    $this->logs = LogService::getInstance()->getLastViewedResources($this->getUser()->getProfile()->getId(), $from, $to);
+  }
 }

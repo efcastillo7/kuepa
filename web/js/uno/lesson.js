@@ -75,7 +75,7 @@ $(document).ready(function() {
             dataType: 'json',
             type: 'POST',
             success: function(data) {
-                console.log(data);
+                // console.log(data);
             }
         });
     }, 26000);

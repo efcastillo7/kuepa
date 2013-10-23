@@ -6,4 +6,4 @@ all:
   image_path_component: /uploads/component/
 
   log:
-    window: 30
+    window: 60

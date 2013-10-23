@@ -283,6 +283,7 @@ footer {
 .subject-buttonbox .subject-image img {
   max-height: 136px;
   max-width: none;
+  margin: 0 auto;
 }
 
 .subject-buttonbox .pbar-circle {

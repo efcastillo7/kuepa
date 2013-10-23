@@ -18,6 +18,14 @@ class LogViewComponent extends BaseLogViewComponent
 
     public function __toString(){
     	$time = $this->getCreatedAt();
-    	return $this->getComponent()->getName() . " ($time)";
+    	return $this->getComponent()->getName();
+    }
+
+    public function getLapse(){
+    	return (strtotime($this->updated_at) - strtotime($this->created_at));
+    }
+
+    public function isSkim(){
+        return $this->getLapse() < 10;
     }
 }

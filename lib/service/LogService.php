@@ -160,4 +160,22 @@ class LogService {
 
         return 0;
     }
+
+    public function getLastViewedResources($profile_id, $date_from = null, $date_to = null, $count = null ){
+        $q = LogViewComponent::getRepository()->createQuery('lvc')
+                ->innerJoin("lvc.Component r")
+                ->where('lvc.profile_id = ?', $profile_id)
+                // ->andWhere("(lvc.updated_at - lvc.created_at) > 5")
+                ->orderBy('lvc.created_at desc');
+
+        if($count){
+            $q->limit($count);
+        }
+
+        if($date_from && $date_to){
+            $q->andWhere("lvc.created_at between ? and ?", array(date("Y-m-d", $date_from), date("Y-m-d", $date_to)));
+        }
+
+        return $q->execute();
+    }
 }
