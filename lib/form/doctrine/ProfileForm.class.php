@@ -12,5 +12,8 @@ class ProfileForm extends BaseProfileForm
 {
   public function configure()
   {
+  	unset($this['components_list']);
+
+  	$this->setWidget('sf_guard_user_id', new sfWidgetFormInputHidden());
   }
 }
