@@ -165,7 +165,8 @@ class LogService {
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->innerJoin("lvc.Component r")
                 ->where('lvc.profile_id = ?', $profile_id)
-                // ->andWhere("(lvc.updated_at - lvc.created_at) > 5")
+                ->andWhere("(lvc.updated_at - lvc.created_at) > 5")
+                // ->limit(20)
                 ->orderBy('lvc.created_at desc');
 
         if($count){

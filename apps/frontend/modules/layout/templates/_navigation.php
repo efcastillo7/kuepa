@@ -6,8 +6,8 @@
                     <a href="#myModal" role="button" class="nav-menu-icon" data-toggle="modal"><span>Menu</span></a>
                 </li>
             </ul> -->
-            <?php if($profile): ?>
             <a class="nav-logo" href="<?php echo url_for("@homepage") ?>"></a>
+            <?php if($profile): ?>
             <ul class="nav nav-mainbtn">
                 <li class="nmb-ins"><a href="<?php echo url_for("stats/index") ?>"><i></i>Reportes</a></li>
                 <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
