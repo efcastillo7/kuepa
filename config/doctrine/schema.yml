@@ -1,6 +1,9 @@
 # Main user entity, sfGuardUser is only used to store basic user data and login credentials
 Profile:
   tableName:                   profile
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
   columns:
     sf_guard_user_id:          integer 
     nickname:                  varchar(20)
@@ -8,6 +11,7 @@ Profile:
     last_name:                 varchar(20)
     birthdate:                 date
     sex:                       { type: enum, values: [male, female] }
+    valid_until:               date
   relations:
     sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
@@ -121,6 +125,7 @@ LearningPath:
     parent_id: integer
     child_id: integer
     position: integer
+    enabled: {type: boolean, default: true}
   relations:
     Parent:
       class: Component

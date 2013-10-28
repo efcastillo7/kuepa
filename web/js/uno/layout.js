@@ -41,6 +41,35 @@ $(function() {
 
     });
 
+    $("a.component_set_status").click(function(e){
+        e.preventDefault();
+
+        var child_id = $(this).attr("child_id");
+        var parent_id = $(this).attr("parent_id");
+        var obj = $(this);
+
+        // ajax
+        $.ajax('/component/setstatus', {
+            data: {parent_id: parent_id, child_id: child_id},
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                if (data.status === "success") {
+                    obj.toggleClass('btn-success');
+                    obj.toggleClass('btn-warning');
+                    if(obj.html() == "Activar"){
+                        obj.html("Desactivar");
+                    }else{
+                        obj.html("Activar");
+                    }
+                } else {
+                    alert("error");
+                }
+            }
+        });
+
+    });
+
     $("body").delegate(".addcourse-button", "click", function(e) {
         triggerModalSuccess({id: "modal-create-course-form", title: "Crear Curso", effect: "md-effect-17"});
     });

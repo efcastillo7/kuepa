@@ -18,6 +18,10 @@ class sfUserForm extends sfGuardUserForm
   		  $this['last_login'], $this['is_super_admin']
   	);
 
+  	$this->setWidget("password", new sfWidgetFormInputPassword());
+
+  	$this->widgetSchema['groups_list']->addOption('expanded', true);
+
   	$this->embedRelation('Profile');
   }
 }

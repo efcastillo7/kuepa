@@ -32,5 +32,4 @@ class Chapter extends BaseChapter {
     public function getTotalTime($profile_id){
         return LogService::getInstance()->getTotalTime($profile_id, $this);
     }
-
 }

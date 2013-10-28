@@ -116,6 +116,25 @@ class ComponentService {
         return;
     }
 
+    public function setComponentStatus($parent_id, $child_id) {
+        //get position child
+        $child = LearningPath::getRepository()->createQuery('lp')
+                ->where('lp.parent_id = ?', $parent_id)
+                ->andWhere('lp.child_id = ?', $child_id)
+                ->limit(1)
+                ->fetchOne();
+
+        //if exists
+        if ($child) {
+            $child->setEnabled(1 - $child->getEnabled());
+            $child->save();
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function getUsersFromComponent($component_id, $type = 1, $deep = false) {
         //type for the time beeing is dummy, will be Student, Teacher, Head, etc.
 

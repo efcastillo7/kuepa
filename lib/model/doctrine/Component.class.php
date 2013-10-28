@@ -83,4 +83,14 @@ class Component extends BaseComponent {
                         ->fetchOne();
     }
 
+    public function isEnabled(){
+        //TODO: Check because is returning first row
+        $lp = $this->getLearningPath()->getFirst();
+        if($lp){
+            return $lp->getEnabled();
+        }
+
+        return true;
+    }
+
 }

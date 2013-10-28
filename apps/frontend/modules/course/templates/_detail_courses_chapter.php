@@ -4,8 +4,9 @@
         <p class="title5 HelveticaRoman clearmargin">
             <?php echo $chapter->getName() ?> 
             <?php if ($sf_user->hasCredential("docente")): ?>
-            - <a class="component_edit_link" target="modal-create-chapter-form-<?php echo $chapter->getId() ?>">Editar</a>
-            - <a class="component_remove_link" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>">Remover</a>
+            <a class="btn btn-mini" href=""><?php echo $chapter->isEnabled() ? "Desactivar" : "Activar" ?></a>1
+            <a class="component_edit_link btn btn-mini" target="modal-create-chapter-form-<?php echo $chapter->getId() ?>">Editar</a>
+            <a class="component_remove_link btn btn-mini" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>">Remover</a>
             <?php endif; ?>
         </p>
         <span class="unit-time"><?php echo $chapter->getDuration() ?></span>

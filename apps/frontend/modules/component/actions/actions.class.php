@@ -47,6 +47,28 @@ class componentActions extends sfActions
         return $this->renderText(json_encode($response));
     }
 
+    public function executeSetstatus(sfWebRequest $request) {
+        $parent_id = $request->getParameter("parent_id");
+        $child_id = $request->getParameter("child_id");
+
+        $response = Array(
+            'status' => "error",
+            'template' => "",
+            'code' => 400
+        );
+
+        if($return = ComponentService::getInstance()->setComponentStatus($parent_id, $child_id)){
+            $response['status'] = "success";
+            $response['code'] = "200";
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
+    }
+
     public function executeRemove(sfWebRequest $request) {
         $parent_id = $request->getParameter("parent_id");
         $child_id = $request->getParameter("child_id");
