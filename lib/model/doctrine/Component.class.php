@@ -24,11 +24,15 @@ class Component extends BaseComponent {
         return sfConfig::get('app_image_path_component') . $this->getThumbnail();
     }
 
-    public function getChildren() {
+    public function getChildren($onlyEnabled = true) {
         $query = Component::getRepository()->createQuery('c')
                 ->innerJoin('c.LearningPath lp ON c.id = lp.child_id')
                 ->where('lp.parent_id = ?', $this->getId())
                 ->orderBy("lp.position asc");
+
+        if($onlyEnabled){
+            $query->andWhere("lp.enabled = true");
+        }
 
         return $query->execute();
     }
