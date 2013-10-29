@@ -17,7 +17,20 @@ class ComponentService {
     }
 
     public function getCoursesForUser($profile_id) {
-        $courses = Course::getRepository()->getChaptersForUser($profile_id);
+        //check if user has college
+        $profile = Profile::getRepository()->find($profile_id);
+        $courses = array();
+
+        if($profile){
+            $college = $profile->getColleges()->getFirst();
+
+            if($college){
+                $courses = Course::getRepository()->getCoursesForCollege($college->getId());
+            }else{
+                $courses = Course::getRepository()->getChaptersForUser($profile_id);
+            }
+
+        }
 
         return $courses;
     }
