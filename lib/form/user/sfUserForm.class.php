@@ -22,6 +22,14 @@ class sfUserForm extends sfGuardUserForm
 
   	$this->widgetSchema['groups_list']->addOption('expanded', true);
 
-  	$this->embedRelation('Profile');
+    // if($this->isNew()){
+    //   $nprof = new Profile();
+    //   $nprof->setSfGuardUserId($this->getObject()->getId());
+    //   $nform = new ProfileForm($nprof);
+    //   $this->embedForm('new', $nform);
+    // }else{
+      $this->embedRelation('Profile');  
+    // }
+  	
   }
 }
