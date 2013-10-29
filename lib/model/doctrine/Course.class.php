@@ -22,6 +22,10 @@ class Course extends BaseCourse
         return Doctrine_Core::getTable('Course');
     }
 
+    public function __toString(){
+        return $this->getId() . " - " . $this->getName();
+    }
+
     public function getChapters(){
     	return CourseService::getInstance()->getChaptersList($this->getId());
     }

@@ -20,7 +20,6 @@ Profile:
       type: many
       local: profile_id
       foreign: college_id
-      foreignType: many
       foreignAlias: Profiles
     Components:
       class: Component
@@ -29,7 +28,7 @@ Profile:
       local: profile_id
       foreign: component_id
       foreignAlias: Profiles
-      
+
 ProfileLearningPath:
   columns:
     profile_id: {type: integer, primary: true}
@@ -40,11 +39,24 @@ ProfileCollege:
     profile_id: {type: integer, primary: true}
     college_id: {type: integer, primary: true}
 
+CollegeLearningPath:
+  columns:
+    college_id: {type: integer, primary: true}
+    component_id: {type: integer, primary: true}
+
 College:
   tableName: college
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     name: varchar(255)
+  relations:
+    Components:
+      class: Component
+      refClass: CollegeLearningPath
+      type: many
+      local: college_id
+      foreign: component_id
+      foreignAlias: Colleges
 
 Component:
   actAs:
