@@ -36,7 +36,11 @@
                         <?php endif; ?>
                         <!-- lessons list -->
                         <?php foreach ($chapter->getLessons() as $lesson): ?>
-                        <?php include_partial("detail_courses_lesson", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
+                            <?php if($sf_user->hasCredential("estudiante") && !$lesson->isEnabled()): ?>
+                            <?php include_partial("detail_courses_lesson_blocked", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
+                            <?php else: ?>
+                            <?php include_partial("detail_courses_lesson", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
+                            <?php endif; ?>
                         <?php endforeach ?>
                     </ul>
                 </div>

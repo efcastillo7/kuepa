@@ -47,7 +47,11 @@
                         <?php endif; ?>
                         <!-- courses list    -->
                         <?php foreach ($course->getChapters() as $chapter): ?>
+                            <?php if($sf_user->hasCredential("estudiante") && !$chapter->isEnabled()): ?>
+                            <?php include_partial("detail_courses_chapter_blocked", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
+                            <?php else: ?>
                             <?php include_partial("detail_courses_chapter", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
+                            <?php endif; ?>
                         <?php endforeach ?>
                     </ul>
                 </div>

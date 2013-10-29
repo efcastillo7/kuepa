@@ -35,6 +35,8 @@ class usersActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
+
+    
     $this->forward404Unless($sf_guard_user = Doctrine_Core::getTable('sfGuardUser')->find(array($request->getParameter('id'))), sprintf('Object sf_guard_user does not exist (%s).', $request->getParameter('id')));
     $this->form = new sfUserForm($sf_guard_user);
   }

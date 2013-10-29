@@ -31,7 +31,11 @@
 
             <!-- resources list -->
             <?php foreach ($lesson->getResources() as $resource): ?>
-            <?php include_partial("detail_courses_resource", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>    
+                <?php if($sf_user->hasCredential("estudiante") && !$resource->isEnabled()): ?>
+                <?php include_partial("detail_courses_resource_blocked", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>    
+                <?php else: ?>
+                <?php include_partial("detail_courses_resource", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>    
+                <?php endif; ?>
             <?php endforeach ?>
         </ul>
     </div>
