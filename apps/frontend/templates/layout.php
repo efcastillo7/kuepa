@@ -7,31 +7,33 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
+        <!-- jquery ui -->
+        <link href="/assets/jquery-ui/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+
         <!-- Le styles -->
-        <?php use_stylesheet("/styles/css/bootstrap.css") ?>
-        <?php use_stylesheet("/styles/css/bootstrap-responsive.css") ?>
-        <?php use_stylesheet("/styles/css/docs.css") ?>
-        <?php use_stylesheet("/styles/css/kuepa.css") ?>
-        <?php use_stylesheet("/styles/css/plataforma.css") ?>
-        <?php use_stylesheet("/styles/css/thumbgrid.css") ?>
+        <link href="/styles/css/bootstrap.css" rel="stylesheet">
+        <link href="/styles/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="/styles/css/docs.css" rel="stylesheet">
+        <link href="/styles/css/kuepa.css" rel="stylesheet">
+        <link href="/styles/css/plataforma.css" rel="stylesheet">
+        <link href="/styles/css/thumbgrid.css" rel="stylesheet">
 
         <!-- modalwindow -->
-        <?php use_stylesheet("/assets/modalwindoweffect/css/default.css") ?>
-        <?php use_stylesheet("/assets/modalwindoweffect/css/component.css") ?>
+        <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/default.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/modalwindoweffect/css/component.css" />
 
         <!-- jquery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
         <!-- jquery UI -->
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
-        <?php use_javascript("/assets/jquery-ui/js/jquery-1.9.1.js") ?>
-        <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js") ?>
+        <script src="/assets/jquery-ui/js/jquery-1.9.1.js"></script>
+        <script src="/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js"></script>
 
         <!-- jqform -->
-        <?php use_javascript("/js/jquery.form.min.js") ?>
-
+        <script src="/js/jquery.form.min.js"></script>
         <!-- knob -->
-        <?php use_javascript("/js/jquery.knob.js") ?>
+        <script src="/js/jquery.knob.js"></script>
         
         <?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
         <?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>

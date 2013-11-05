@@ -19,7 +19,7 @@ class migrationActions extends sfActions
 		$quiz = $request->getParameter("quiz");
 		$lesson_id = $request->getParameter("to");
 
-		$mysql_conn = mysqli_connect("127.0.0.1","root","lalala182","z110k_$course");
+		$mysql_conn = mysqli_connect("127.0.0.1","root","123","z110k_$course");
     	mysqli_query($mysql_conn, "SET NAMES utf8;");
 
 
