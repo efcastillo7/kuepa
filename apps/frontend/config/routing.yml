@@ -26,6 +26,10 @@ sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
 
+account_expired:
+  url:  /account/expired
+  param: { module: public, action: accountexpired }
+
 # generic rules
 # please, remove them by adding more specific rules
 default_index:
