@@ -19,13 +19,8 @@
         <?php use_stylesheet("/assets/modalwindoweffect/css/default.css") ?>
         <?php use_stylesheet("/assets/modalwindoweffect/css/component.css") ?>
 
-        <!-- jquery -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
-        <!-- jquery UI -->
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
-        <?php use_javascript("/assets/jquery-ui/js/jquery-1.9.1.js") ?>
-        <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js") ?>
+        <?php use_javascript("/assets/jquery-ui/js/jquery-1.9.1.js", 'first') ?>
+        <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>
 
         <!-- jqform -->
         <?php use_javascript("/js/jquery.form.min.js") ?>
