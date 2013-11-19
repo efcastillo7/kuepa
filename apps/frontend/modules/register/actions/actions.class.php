@@ -29,25 +29,21 @@ class registerActions extends sfActions
 
   	$this->form->bind($params);
   	if($this->form->isValid()){
-  		$sfUser = new sfGuardUser();
-  		$sfUser->setFirstName($params['first_name'])
-  			   ->setLastName($params['last_name'])
-  			   ->setEmailAddress($params['email_address'])
-  			   ->setUsername($params['nickname'])
-  			   ->setPassword($params['password']);
-	   $sfUser->save();
+  		//check first for code
+  	   	if($params['code'] != ""){
+  	   		$code = RegisterCode::getRepository()->find($params['code']);
 
-  	    $profile = new Profile();
-  	    $profile->setSfGuardUserId($sfUser->getId())
-  	    		->setNickname($sfUser->getUsername())
-  	    		->setFirstName($sfUser->getFirstName())
-  	    		->setLastName($sfUser->getLastName())
-  	    		->setBirthdate('')
-  	    		->setSex($params['sex'])
-  	    		->save();
+  	   		if(!$code->isValidCode()){
+  	   			//code is invalid
+  	   			return;
+  	   		}
+  	   	}
+
+  	   	$profile = ProfileService::getInstance()->addNewUser($params);
 
   	    //set flash
-  	    
+  	    $this->getUser()->setFlash('notice', "Ya puedes ingresar con tu usuario y contraseña!");
+
   	    //goto homepage
   	    $this->redirect("@homepage");
 

@@ -12,4 +12,33 @@
  */
 class RegisterCode extends BaseRegisterCode
 {
+	public static function getRepository() {
+        return Doctrine_Core::getTable('RegisterCode');
+    }
+
+    public function isValidCode(){
+    	//check status
+    	if(!$this->getActive()){
+    		return false;
+    	}
+
+    	//if already in use 
+    	if($this->getInUse() > 0){
+    		return false;
+    	}
+
+    	$now = time();
+
+    	//check date range if date set
+    	if($this->getValidFrom() && (($now - strtotime($this->getValidFrom()) < 0))){
+			return false;
+    	}
+    	
+    	if($this->getValidUntil() && ((strtotime($this->getValidUntil()) - $now) < 0 )){
+    		return false;
+    	}
+    	
+    	return true;
+
+    }
 }
