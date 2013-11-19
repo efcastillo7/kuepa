@@ -425,3 +425,31 @@ CalendarEvent:
     Profile:
       local: profile_id
       foreign: id
+
+RegisterCode:
+  columns:
+    id: {type: string(50), primary: true}
+    profile_id: integer
+    valid_from: date
+    valid_until: date
+    valid_days: integer
+    college_id: integer
+    active: {type: boolean, default: false, notnull: true}
+    in_use: {type: integer, default: 0, notnull: true}
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+    College:
+      local: college_id
+      foreign: id
+    Course:
+      refClass: RegisterCodeHasCourse
+      local: register_code
+      foreign: course_id
+      type: many
+
+RegisterCodeHasCourse:
+  columns:
+    register_code: {type: string(50), primary: true}
+    course_id: {type: integer, primary: true}
