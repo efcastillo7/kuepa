@@ -30,8 +30,13 @@
         
         <?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
         <?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
+
+        <!-- spinner -->
         <?php use_javascript("/assets/smartspin/smartspinner.js") ?>
         <?php use_stylesheet("/assets/smartspin/smartspinner.css") ?>
+
+        <!-- UI TOUCH for drag & drop for ios -->
+        <?php use_javascript("/assets/jquery-ui-touch/jquery.ui.touch-punch.min.js") ?>
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -47,7 +52,6 @@
     </head>
 
     <body>
-
         <?php include_component('layout', 'navigation') ?>
         <?php echo $sf_content ?>
         <?php include_partial('layout/footer') ?>
@@ -71,10 +75,6 @@
         <script src="/js/bootstrap-carousel.js"></script>
         <script src="/js/bootstrap-typeahead.js"></script>
         <script src="/js/course.js"></script>
-
-        <!-- classie.js by @desandro: https://github.com/desandro/classie -->
-        <script src="/assets/modalwindoweffect/js/classie.js"></script>
-        <script src="/assets/modalwindoweffect/js/modalEffects.js"></script>
 
         <script type="text/javascript">
             $(".knob-small").knob({
