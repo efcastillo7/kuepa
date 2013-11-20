@@ -20,8 +20,8 @@ class sfRegisterUserForm extends sfForm
       'sex' => new sfWidgetFormChoice(array('choices' => $sex)),
       'birthdate' => new sfWidgetFormDate(),
       'nickname' => new sfWidgetFormInputText(),
-      'password' => new sfWidgetFormInputText(),
-      'repassword' => new sfWidgetFormInputText(),
+      'password' => new sfWidgetFormInputPassword(),
+      'repassword' => new sfWidgetFormInputPassword(),
       'code' =>  new sfWidgetFormInputText(),
       'program' => new sfWidgetFormInputHidden()
     ));
@@ -40,5 +40,46 @@ class sfRegisterUserForm extends sfForm
     ));
 
     $this->widgetSchema->setNameFormat('register[%s]');
+
+    // add a post validator
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorCallback(array('callback' => array($this, 'checkPassword')))
+    );
+
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorCallback(array('callback' => array($this, 'checkCode')))
+    );
+  }
+
+  public function checkPassword($validator, $values)
+  {
+    if ($values['password'] != $values['repassword'])
+    {
+      $error = new sfValidatorError($validator, 'Passwords dont match');
+ 
+      // throw an error bound to the password field
+      throw new sfValidatorErrorSchema($validator, array('password' => $error));
+      }
+ 
+    // password is correct, return the clean values
+    return $values;
+  }
+
+  public function checkCode($validator, $values)
+  {
+    if ($values['code'] != "")
+    {
+      $code = RegisterCode::getRepository()->find($values['code']);
+
+      if($code == null || !$code->isValidCode()){
+        $error = new sfValidatorError($validator, 'Invalid code');
+ 
+        // throw an error bound to the password field
+        throw new sfValidatorErrorSchema($validator, array('code' => $error));
+      }
+    }
+ 
+    // password is correct, return the clean values
+    return $values;
   }
 }
