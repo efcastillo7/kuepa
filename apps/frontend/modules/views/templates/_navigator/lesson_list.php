@@ -1,11 +1,9 @@
 <div class="lesson_list" >
-    <ul class="unstyled title">
-        <li><?php echo $chapter->getName() ?></li>
-    </ul>
+
     <ul class="unstyled eg-back">
         <li>
             <a href="javascript:void()" class="go-back">
-                <span>Atrás</span> Volver a la Unidad
+                <span>Atrás</span> <?php echo $chapter->getName() ?>
             </a>
         </li>
     </ul>

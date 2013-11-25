@@ -16,4 +16,8 @@ class ComponentTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Component');
     }
+
+    public function getCourses(){
+    	return self::getInstance()->createQuery()->where('type = ?', Course::TYPE)->orderBy('name asc')->execute();
+    }
 }

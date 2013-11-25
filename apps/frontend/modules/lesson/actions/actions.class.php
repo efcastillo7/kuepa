@@ -23,24 +23,42 @@ class lessonActions extends kuepaActions {
         $this->chapter = Chapter::getRepository()->find($chapter_id);
 
         $lesson_id = $request->getParameter('lesson_id');
-        $this->lesson = Lesson::getRepository()->find($lesson_id);
+        $previous_lesson_id = $request->getParameter('previous_lesson_id');
+        $following_lesson_id = $request->getParameter('following_lesson_id');
 
         $resource_id = $request->getParameter('resource_id');
-        $previous_resource_id = $request->getParameter('previous_resource_id');
 
-        if ($resource_id != null) {
-            $this->resource = Resource::getRepository()->find($resource_id);
-        } else if ($previous_resource_id != null) {
-            $this->resource = $this->lesson->getNextResource($previous_resource_id);
-            if ($this->resource == null)
-                $this->resource = $this->lesson->getChildren()->getFirst();
-            $resource_id = $this->resource->getId();
+        if ($lesson_id != null) {
+            $this->lesson = Lesson::getRepository()->find($lesson_id);
+            $this->lesson->setActualResource($resource_id);
+        } else if ($previous_lesson_id != null) {
+            $this->lesson = $this->chapter->getNextChild($previous_lesson_id);
+            if ($this->lesson == null)
+                $this->lesson = $this->chapter->getChildren()->getFirst();
+            $lesson_id = $this->lesson->getId();
+        } else if ($following_lesson_id != null) {
+            $this->lesson = $this->chapter->getPreviousChild($following_lesson_id);
+            if ($this->lesson == null)
+                $this->lesson = $this->chapter->getChildren()->getFirst();
+            $lesson_id = $this->lesson->getId();
         } else {
-            $this->resource = $this->lesson->getChildren()->getFirst();
-            $resource_id = $this->resource->getId();
+            $this->lesson = $this->chapter->getChildren()->getFirst();
+            $lesson_id = $this->lesson->getId();
         }
 
-        $this->has_next_resource = ($this->lesson->getNextResource($this->resource->getId()) != null);
+        $this->has_next_lesson = ($this->chapter->getNextChild($this->lesson->getId()) != null);
+        $this->has_previous_lesson = ($this->chapter->getPreviousChild($this->lesson->getId()) != null);
+
+        $this->resource = Resource::getRepository()->find($this->lesson->getActualResourceId());
+
+        $this->has_next_resource = ($this->lesson->getNextResourceId() != null);
+        $this->has_previous_resource = ($this->lesson->getPreviousResourceId() != null);
+
+        $this->is_last_resource = $this->lesson->atLastResource();
+        $this->is_first_resource = $this->lesson->atFirstResource();
+
+        //update log
+        LogService::getInstance()->viewResource(Resource::TYPE, $this->lesson->getActualResourceId(), $this->getUser()->getProfile()->getId());
 
         //set ProfileComponentCompletedStatus
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
@@ -69,10 +87,10 @@ class lessonActions extends kuepaActions {
             $lesson = $form->save();
 
             //add lesson to chapter
-            if(!$id)
+            if (!$id)
                 ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
 
-            $response['template'] = "Ha ".($id?"editado":"creado")." la lección satisfactoriamente";
+            $response['template'] = "Ha " . ($id ? "editado" : "creado") . " la lección satisfactoriamente";
             $response['status'] = "success";
         } else {
             $response['template'] = $this->getPartial("form", array('form' => $form));
@@ -83,6 +101,21 @@ class lessonActions extends kuepaActions {
         }
 
         return $this->renderText($response['template']);
+    }
+    
+    public function executeTest(sfWebRequest $request) {
+        $answers = array();
+        
+        //correcta es la 1, la 2 es incorrecta
+        $answers[1] = 1;
+        
+        //correcta son las 3 y 4 y son las unicas que hay
+        $answers[2] = array(3,4);
+        
+        //[argentina] queda en la region [sur] de [america, america del sur, continente americano]. La provincia [asdadsads] es la provincia más al [asddas] del mundo.
+        $answers[3] = array("argentina", "sur", "continente americano", "caca", "cacona");
+        
+        var_dump(Exercise::getRepository()->find(1)->evaluate($answers));
     }
 
 }

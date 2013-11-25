@@ -17,6 +17,10 @@ class CourseService {
         return $course;
     }
 
+    public function find($id){
+        return ComponentService::getInstance()->find($id);
+    }
+
     public function edit($course_id, $values = array()){
         //check if course
         return ComponentService::getInstance()->edit($course_id, $values);

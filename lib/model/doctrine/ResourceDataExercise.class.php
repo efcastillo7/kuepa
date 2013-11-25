@@ -13,4 +13,10 @@
 class ResourceDataExercise extends BaseResourceDataExercise
 {
 	const TYPE = 'Exercise';
+
+	public function getExercise(){
+		$id = $this->getContent();
+
+		return ExerciseService::getInstance()->find($id);
+	}
 }

@@ -6,6 +6,14 @@ homepage:
   url:   /
   param: { module: home, action: index }
 
+lesson_view:
+  url: /lesson/view/:course_id/:chapter_id/:lesson_id
+  param: { module: lesson, action: index}
+
+lesson_view_resource:
+  url: /lesson/view/:course_id/:chapter_id/:lesson_id/:resource_id
+  param: { module: lesson, action: index}
+
 sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }
@@ -17,6 +25,10 @@ sf_guard_signout:
 sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
+
+account_expired:
+  url:  /account/expired
+  param: { module: public, action: accountexpired }
 
 # generic rules
 # please, remove them by adding more specific rules

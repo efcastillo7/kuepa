@@ -12,8 +12,25 @@ class ComponentService {
         return self::$instance;
     }
 
+    public function find($id){
+        return Component::getRepository()->find($id);
+    }
+
     public function getCoursesForUser($profile_id) {
-        $courses = Course::getRepository()->getChaptersForUser($profile_id);
+        //check if user has college
+        $profile = Profile::getRepository()->find($profile_id);
+        $courses = array();
+
+        if($profile){
+            $college = $profile->getColleges()->getFirst();
+
+            if($college){
+                $courses = Course::getRepository()->getCoursesForCollege($college->getId());
+            }else{
+                $courses = Course::getRepository()->getChaptersForUser($profile_id);
+            }
+
+        }
 
         return $courses;
     }
@@ -110,6 +127,25 @@ class ComponentService {
         }
 
         return;
+    }
+
+    public function setComponentStatus($parent_id, $child_id) {
+        //get position child
+        $child = LearningPath::getRepository()->createQuery('lp')
+                ->where('lp.parent_id = ?', $parent_id)
+                ->andWhere('lp.child_id = ?', $child_id)
+                ->limit(1)
+                ->fetchOne();
+
+        //if exists
+        if ($child) {
+            $child->setEnabled(1 - $child->getEnabled());
+            $child->save();
+
+            return true;
+        }
+
+        return false;
     }
 
     public function getUsersFromComponent($component_id, $type = 1, $deep = false) {

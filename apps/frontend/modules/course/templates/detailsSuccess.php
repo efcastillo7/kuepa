@@ -1,8 +1,7 @@
 <?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
 <?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
-<?php use_javascript("https://raw.github.com/furf/jquery-ui-touch-punch/master/jquery.ui.touch-punch.min.js") ?>
-<?php use_javascript("/assets/smartspin/smartspinner.js") ?>
-<?php use_stylesheet("/assets/smartspin/smartspinner.css") ?>
+<!-- UI TOUCH for drag & drop for ios -->
+<?php use_javascript("/assets/jquery-ui-touch/jquery.ui.touch-punch.min.js") ?>
 
 <div class="unit-view">
     <div id="" class="container margintop60">
@@ -47,7 +46,11 @@
                         <?php endif; ?>
                         <!-- courses list    -->
                         <?php foreach ($course->getChapters() as $chapter): ?>
+                            <?php if($sf_user->hasCredential("estudiante") && !$chapter->isEnabled()): ?>
+                            <?php include_partial("detail_courses_chapter_blocked", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
+                            <?php else: ?>
                             <?php include_partial("detail_courses_chapter", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
+                            <?php endif; ?>
                         <?php endforeach ?>
                     </ul>
                 </div>

@@ -8,7 +8,7 @@ $(document).ready(function() {
             var content = $(this).val();
             var edit_note_id = $(this).attr('edit-note-id');
 
-            $.ajax('note/add', {
+            $.ajax('/note/add', {
                 data: {resource_id: resource_id, content: content, edit_note_id: edit_note_id},
                 dataType: 'json',
                 type: 'POST',
@@ -31,7 +31,7 @@ $(document).ready(function() {
 
     $("body").delegate(".delete-note-link", "click", function(e) {
         var note_id = $(this).attr("target");
-        $.ajax('note/delete', {
+        $.ajax('/note/delete', {
             data: {note_id: note_id},
             dataType: 'json',
             type: 'POST',
@@ -64,4 +64,19 @@ $(document).ready(function() {
         edit_input.toggle();
         span_note.toggle();
     });
+
+    $( "#tabs" ).tabs();
+
+
+    //log interval
+    setInterval(function(){
+        $.ajax('/log/resource', {
+            data: {resource_id: resource_id},
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                // console.log(data);
+            }
+        });
+    }, 26000);
 });

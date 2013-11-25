@@ -22,11 +22,23 @@ class Course extends BaseCourse
         return Doctrine_Core::getTable('Course');
     }
 
+    public function __toString(){
+        return $this->getId() . " - " . $this->getName();
+    }
+
     public function getChapters(){
     	return CourseService::getInstance()->getChaptersList($this->getId());
     }
 
     public function getThumbnailPath(){
         return "/uploads/thumbnail/" . $this->getThumbnail();
+    }
+
+    public function getLastResourceViewed($profile_id){
+        return LogService::getInstance()->getLastResourceIdViewed($profile_id, $this);
+    }
+
+    public function getTotalTime($profile_id){
+        return LogService::getInstance()->getTotalTime($profile_id, $this);
     }
 }

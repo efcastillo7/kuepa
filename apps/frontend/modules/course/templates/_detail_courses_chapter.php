@@ -4,8 +4,9 @@
         <p class="title5 HelveticaRoman clearmargin">
             <?php echo $chapter->getName() ?> 
             <?php if ($sf_user->hasCredential("docente")): ?>
-            - <a class="component_edit_link" target="modal-create-chapter-form-<?php echo $chapter->getId() ?>">Editar</a>
-            - <a class="component_remove_link" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>">Remover</a>
+            <a class="component_set_status btn btn-mini <?php echo $chapter->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>"><?php echo $chapter->isEnabled() ? "Desactivar" : "Activar" ?></a>
+            <a class="component_edit_link btn btn-mini" target="modal-create-chapter-form-<?php echo $chapter->getId() ?>">Editar</a>
+            <a class="component_remove_link btn btn-mini" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>">Remover</a>
             <?php endif; ?>
         </p>
         <span class="unit-time"><?php echo $chapter->getDuration() ?></span>
@@ -35,7 +36,11 @@
                         <?php endif; ?>
                         <!-- lessons list -->
                         <?php foreach ($chapter->getLessons() as $lesson): ?>
-                        <?php include_partial("detail_courses_lesson", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
+                            <?php if($sf_user->hasCredential("estudiante") && !$lesson->isEnabled()): ?>
+                            <?php include_partial("detail_courses_lesson_blocked", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
+                            <?php else: ?>
+                            <?php include_partial("detail_courses_lesson", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
+                            <?php endif; ?>
                         <?php endforeach ?>
                     </ul>
                 </div>

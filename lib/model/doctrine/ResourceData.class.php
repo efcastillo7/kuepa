@@ -12,4 +12,7 @@
  */
 class ResourceData extends BaseResourceData
 {
+	public static function getRepository() {
+        return Doctrine_Core::getTable('ResourceData');
+    }
 }

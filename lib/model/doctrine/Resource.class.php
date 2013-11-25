@@ -21,4 +21,16 @@ class Resource extends BaseResource
     public static function getRepository() {
         return Doctrine_Core::getTable('Resource');
     }
+
+    public function __toString(){
+    	return $this->getName();
+    }
+
+    public function getLastResourceViewed($profile_id){
+        return LogService::getInstance()->getLastResourceIdViewed($profile_id, $this);
+    }
+
+    public function getTotalTime($profile_id){
+        return LogService::getInstance()->getTotalTime($profile_id, $this);
+    }
 }

@@ -1,4 +1,4 @@
-<form action="<?php echo url_for("lesson/create") . ($form->isNew() ? "" : "?id=" . $form->getObject()->getId()) ?>" method="POST" id="create-lesson-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>">
+<form action="<?php echo url_for("lesson/create") . ($form->isNew() ? "" : "?id=" . $form->getObject()->getId()) ?>" method="POST" id="create-lesson-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>" enctype='multipart/form-data'>
     <?php echo $form; ?>
     <button type="submit" class="btn">Submit</button>
 </form>
