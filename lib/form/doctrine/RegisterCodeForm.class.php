@@ -12,5 +12,14 @@ class RegisterCodeForm extends BaseRegisterCodeForm
 {
   public function configure()
   {
+  	$this->setWidget("id", new sfWidgetFormInputText());
+  	$this->setWidget('profile_id', new sfWidgetFormInputHidden());
+  	$this->setWidget('in_use', new sfWidgetFormInputHidden());
+  	$this->setWidget('course_list', new sfWidgetFormInputHidden());
+
+  	$this->setValidator('id', new sfValidatorPass());
+
+  	$hash = substr(strtoupper(MD5(time())),1,10);
+  	$this->setDefault('id', $hash);
   }
 }

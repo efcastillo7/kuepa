@@ -35,4 +35,8 @@ class Profile extends BaseProfile
     public function getTotalRecourseViewed(){
     	return LogService::getInstance()->getTotalRecourseViewed($this->getId());
     }
+
+    public function getFullName(){
+        return $this->getFirstName() . " " . $this->getLastName();
+    }
 }
