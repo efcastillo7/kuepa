@@ -165,7 +165,7 @@ class LogService {
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->innerJoin("lvc.Component r")
                 ->where('lvc.profile_id = ?', $profile_id)
-                ->andWhere("(lvc.updated_at - lvc.created_at) > 5")
+                // ->andWhere("(lvc.updated_at - lvc.created_at) > 5")
                 // ->limit(20)
                 ->orderBy('lvc.created_at desc');
 
@@ -173,9 +173,13 @@ class LogService {
             $q->limit($count);
         }
 
-        if($date_from && $date_to){
-            $q->andWhere("lvc.created_at between ? and ?", array(date("Y-m-d", $date_from), date("Y-m-d", $date_to)));
+        if($date_from){
+            $q->andWhere('lvc.created_at > ?', date("Y-m-d H:i:s", $date_from));
         }
+
+        if($date_to){
+            $q->andWhere('lvc.created_at < ?', date("Y-m-d H:i:s", $date_to));
+        }        
 
         return $q->execute();
     }

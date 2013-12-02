@@ -11,7 +11,10 @@
 class ComponentForm extends BaseComponentForm {
 
     public function configure() {
-        unset($this['deleted_at'], $this['updated_at'], $this['created_at'], $this['parents_list'], $this['children_list'], $this['profiles_list'], $this['node_id']
+        unset($this['deleted_at'], $this['updated_at'], 
+            $this['created_at'], $this['parents_list'], 
+            $this['children_list'], $this['profiles_list'], 
+            $this['node_id'], $this['colleges_list']
         );
 
         $this->setWidget('description', new sfWidgetFormTextarea());

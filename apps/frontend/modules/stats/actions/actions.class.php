@@ -54,9 +54,23 @@ class statsActions extends sfActions
   }
 
   public function executeTimeline(sfWebRequest $request){
-    $from = $request->getParameter("from", strtotime("now"));
-    $to = $request->getParameter("to", strtotime("+1 day"));
+    $from = $request->getParameter("from");
+    $to = $request->getParameter("to");
+    $count = $request->getParameter("count", 10);
     // $to = $from = null; 
-    $this->logs = LogService::getInstance()->getLastViewedResources($this->getUser()->getProfile()->getId(), $from, $to);
+
+    $this->logs = array();
+    
+    if ($request->isXmlHttpRequest()) {
+        $this->logs = LogService::getInstance()->getLastViewedResources($this->getUser()->getProfile()->getId(), $from, $to, $count);
+
+        $response = Array(
+            'status' => 'success',
+            'template' => $this->getPartial('timeline_points'),
+            'last_date' => strtotime($this->logs->getLast()->created_at)
+        );
+
+        return $this->renderText(json_encode($response));
+    }
   }
 }
