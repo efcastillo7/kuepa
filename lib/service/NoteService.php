@@ -11,13 +11,13 @@ class NoteService {
         return self::$instance;
     }
     
-    public function createNote($profile_id, $resource_id, $content) {        
+    public function createNote($values = array()) {  
         $note = new Note;
-        $note->setProfileId($profile_id);
-        $note->setResourceId($resource_id);
-        $note->setContent($content);
+        $note->setProfileId( $values['profile_id'] );
+        $note->setResourceId( $values['resource_id'] );
+        $note->setContent( $values['content'] );
+        $note->setPrivacy( $values['privacy'] );
         $note->save();
-
         return $note;
     }
     
@@ -52,7 +52,25 @@ class NoteService {
         $notes = Note::getRepository()->createQuery('n')
                     ->select('n.content, n.created_at, p.nickname')
                     ->innerJoin('n.Profile p')
-                    ->where('profile_id = ? and resource_id = ?', array($profile_id, $resource_id))
+                    ->where('profile_id = ? and resource_id = ? and privacy = "private" ', array($profile_id, $resource_id))
+                    ->orderBy('id desc');
+
+        if($query_params){
+            return $notes->execute($query_params['params'], $query_params['hydration_mode']);    
+        }
+        
+        return $notes->execute();
+    }
+
+    /**
+    * getComments
+    * @resource_id
+    */
+    public function getComments($resource_id, $query_params = null) {
+        $notes = Note::getRepository()->createQuery('n')
+                    ->select('n.content, n.created_at, p.nickname')
+                    ->innerJoin('n.Profile p')
+                    ->where('resource_id = ? and privacy = "public" ', array($resource_id))
                     ->orderBy('id desc');
 
         if($query_params){

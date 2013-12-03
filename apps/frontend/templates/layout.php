@@ -14,7 +14,6 @@
         <?php use_stylesheet("/styles/css/kuepa.css") ?>
         <?php use_stylesheet("/styles/css/plataforma.css") ?>
         <?php use_stylesheet("/styles/css/thumbgrid.css") ?>
-
         <!-- modalwindow -->
         <?php use_stylesheet("/assets/modalwindoweffect/css/default.css") ?>
         <?php use_stylesheet("/assets/modalwindoweffect/css/component.css") ?>

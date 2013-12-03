@@ -355,6 +355,7 @@ Note:
     resource_id: integer
     profile_id: integer
     content: string
+    privacy: string(20)
   relations:
     Resource:
       local: resource_id
