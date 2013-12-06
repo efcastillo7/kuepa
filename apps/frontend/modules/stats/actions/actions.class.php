@@ -79,6 +79,5 @@ class statsActions extends sfActions
 
     $this->course = Course::getRepository()->find($course_id);
     $this->students = CourseService::getInstance()->getStudentsList($course_id);
-
   }
 }
