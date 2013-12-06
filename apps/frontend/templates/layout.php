@@ -18,6 +18,7 @@
         <!-- modalwindow -->
         <?php use_stylesheet("/assets/modalwindoweffect/css/default.css") ?>
         <?php use_stylesheet("/assets/modalwindoweffect/css/component.css") ?>
+        <?php use_javascript("/assets/modalwindoweffect/js/modalEffects.js") ?>
 
         <?php use_javascript("/assets/jquery-ui/js/jquery-1.9.1.js", 'first') ?>
         <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>
