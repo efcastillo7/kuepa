@@ -34,13 +34,13 @@ class noteActions extends kuepaActions {
     public function executeAdd(sfWebRequest $request) {
         $response = array('status' => 'invalid request', 'code' => 400);
         $values = $request->getPostParameters();
-
+        $values['profile_id'] = $this->getProfile()->getId();
         if ($request->isMethod('POST') && isset($values['content']) && $values['content'] != "") {
 
             if (isset($values['edit_note_id']) && $values['edit_note_id'] != "")
                 $this->note = NoteService::getInstance()->editNote($this->getProfile()->getId(), $values['content'], $values['edit_note_id']);
             else
-                $this->note = NoteService::getInstance()->createNote($this->getProfile()->getId(), $values['resource_id'], $values['content']);
+                $this->note = NoteService::getInstance()->createNote($values);
 
             if ($this->note != null)
                 $response = array('status' => 'ok', 'code' => 201);

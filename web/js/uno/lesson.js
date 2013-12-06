@@ -7,15 +7,23 @@ $(document).ready(function() {
             var resource_id = $(this).attr('resource-id');
             var content = $(this).val();
             var edit_note_id = $(this).attr('edit-note-id');
+            var privacy = $(this).attr('privacy');
+            // Define el selector para depositar el retorno de la nueva nota
+            var target =  $(this).attr('target');
 
             $.ajax('/note/add', {
-                data: {resource_id: resource_id, content: content, edit_note_id: edit_note_id},
+                data: {resource_id: resource_id, content: content, edit_note_id: edit_note_id, privacy: privacy},
                 dataType: 'json',
                 type: 'POST',
                 success: function(data) {
                     if (data.code === 201) {
                         //new note
-                        $("#notes_list").prepend(data.template);
+                        if ( typeof(target) != "undefined"){
+                            $(target).prepend(data.template);
+                        } else {
+                            $("#notes_list").prepend(data.template);
+                        }
+                        
                         container.val('');
 
                         if (edit_note_id != null && edit_note_id != "")
