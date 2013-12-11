@@ -12,10 +12,28 @@ class MessagingService {
         return self::$instance;
     }
 
+    public function replyMessage($profile_id, $message_id, $content){
+        //add new message
+        $message = new Message;
+        $message->setContent($content)
+                ->setAuthorId($profile_id)
+                ->setParentId($message_id)
+                ->save();
+
+        //update read flag as false
+        $query = MessageRecipient::getRepository()->createQuery('mr')
+                ->update()
+                ->set('is_read', 0)
+                ->where('mr.recipient_id != ?', $profile_id)
+                ->execute();
+
+        return $message;
+    }
+
     public function sendMessage($profile_id, Array $recipients, $subject, $content) {
         $message = new Message;
         $message->setSubject($subject);
-        $message->setMessage($content);
+        $message->setContent($content);
         $message->setAuthorId($profile_id);
 
         foreach ($recipients as $recipient_id) {
@@ -25,9 +43,29 @@ class MessagingService {
             $message->getRecipients()->add($recipient);
         }
 
+        //add myself as recipient
+        $recipient = new MessageRecipient;
+        $recipient->setRecipientId($profile_id);
+        $message->getRecipients()->add($recipient);
+
+        //save
         $message->save();
         
         return $message;
+    }
+
+    public function getMessagesForUser($profile_id, Array $query_params = null){
+        $query = Message::getRepository()->createQuery('m')
+                    ->innerJoin("m.Recipients mr")
+                    // ->select('subject, content, updated_at')
+                    ->where('mr.recipient_id = ?')
+                    ->orderBy('m.updated_at desc');
+
+        if($query_params){
+            return $query->execute($query_params['params'], $query_params['hydration_mode']);    
+        }
+
+        return $query->execute();
     }
 
     public function listMessageRecipients($profile_id, Array $query_params = null) {
@@ -56,5 +94,13 @@ class MessagingService {
         $message_recipient->save();
         
         return $message_recipient;
+    }
+
+    public function getThread($parent_id){
+        $q = Message::getRepository()->createQuery('m')
+                ->where("(parent_id = ?) or (id = ? and parent_id is null)", array($parent_id, $parent_id))
+                ->orderBy("created_at asc");
+
+        return $q->execute();
     }
 }
