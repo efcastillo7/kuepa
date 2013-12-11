@@ -12,6 +12,8 @@
  */
 class Profile extends BaseProfile
 {
+    private $_total_time, $_first_access, $_last_access;
+
 	/**
      * 
      * @return ProfileTable
@@ -21,18 +23,38 @@ class Profile extends BaseProfile
     }
 
     public function getFirstAccess(){
-    	return LogService::getInstance()->getFirstAccess($this->getId());
+        if(!$this->_first_access){
+            $this->_first_access = LogService::getInstance()->getFirstAccess($this->getId());;
+        }
+
+        return $this->_first_access;
     }
 
     public function getLastAccess(){
-    	return LogService::getInstance()->getLastAccess($this->getId());
+        if(!$this->_last_access){
+            $this->_last_access = LogService::getInstance()->getLastAccess($this->getId());
+        }
+
+        return $this->_last_access;
     }
 
     public function getTotalTime($component = null){
-    	return LogService::getInstance()->getTotalTime($this->getId(), $component);
+        if(!$this->_total_time){
+            $this->_total_time = LogService::getInstance()->getTotalTime($this->getId(), $component);
+        }
+
+        return $this->_total_time;
     }
 
     public function getTotalRecourseViewed(){
     	return LogService::getInstance()->getTotalRecourseViewed($this->getId());
+    }
+
+    public function getFullName(){
+        return $this->getFirstName() . " " . $this->getLastName();
+    }
+
+    public function getComponentStatus($component_id){
+        return ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getId(), $component_id);
     }
 }

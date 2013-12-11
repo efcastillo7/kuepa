@@ -101,6 +101,8 @@ class LogService {
         }else if($component instanceof Resource){
             //nothing to do
             $resources = $component->getId();
+        }else{
+            $resources = $component->getId();
         }
 
         if($component){

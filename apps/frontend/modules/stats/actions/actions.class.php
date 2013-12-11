@@ -73,4 +73,11 @@ class statsActions extends sfActions
         return $this->renderText(json_encode($response));
     }
   }
+
+  public function executeClass(sfWebRequest $request){
+    $course_id = $request->getParameter("course");
+
+    $this->course = Course::getRepository()->find($course_id);
+    $this->students = CourseService::getInstance()->getStudentsList($course_id);
+  }
 }
