@@ -11,6 +11,7 @@
                 <a class="btn btn-mini" href="<?php echo url_for("course/details?id=" . $course->getId()) ?>">Ver Contenidos</a>
                 <?php if ($sf_user->hasCredential("docente")): ?>
                 <a class="component_edit_link btn btn-mini" target="modal-create-course-form-<?php echo $course->getId() ?>">Editar</a>
+                <a class="btn btn-mini" href="<?php echo url_for("stats/class?course=" . $course->getId()) ?>">Estadísticas</a>
                 <?php endif; ?>    
             </p>
             <p class="description margintop">
