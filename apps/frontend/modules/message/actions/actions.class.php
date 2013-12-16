@@ -23,7 +23,7 @@ class messageActions extends sfActions
 
     $message = Message::getRepository()->find(3);
 
-	MessagingService::getInstance()->replyMessage($profile_id, $message->getId(), "Esta es la respuesta de 1 " . rand(1,10));
+	// MessagingService::getInstance()->replyMessage($profile_id, $message->getId(), "Esta es la respuesta de 1 " . rand(1,10));
 
     $this->messages = MessagingService::getInstance()->getThread($message->getId());
   }

@@ -54,10 +54,36 @@ class MessagingService {
         return $message;
     }
 
+    public function addRecipients($message_id, Array $recipients){
+        $message = Message::getRepository()->find($message_id);
+
+        foreach ($recipients as $recipient_id) {
+            $recipient = new MessageRecipient;
+            $recipient->setRecipientId($recipient_id);
+
+            $message->getRecipients()->add($recipient);
+        }
+
+        $message->save();
+
+        return $message;
+    }
+
+    public function removeRecipients($message_id, Array $recipients){
+        // $message = Message::getRepository()->find($message_id);
+
+        $q = MessageRecipient::getRepository()->createQuery()->delete()
+            ->where("message_id = ?", $message_id)
+            ->andWhereIn("recipient_id", $recipients);
+
+        return $q->execute();
+    }
+
     public function getMessagesForUser($profile_id, Array $query_params = null){
         $query = Message::getRepository()->createQuery('m')
                     ->innerJoin("m.Recipients mr")
-                    // ->select('subject, content, updated_at')
+                    ->innerJoin("m.Profile p")
+                    // ->select('subject, content, p.nickname, updated_at, parent_id')
                     ->where('mr.recipient_id = ?')
                     ->orderBy('m.updated_at desc');
 
@@ -65,7 +91,7 @@ class MessagingService {
             return $query->execute($query_params['params'], $query_params['hydration_mode']);    
         }
 
-        return $query->execute();
+        return $query->execute($profile_id);
     }
 
     public function listMessageRecipients($profile_id, Array $query_params = null) {
@@ -96,9 +122,9 @@ class MessagingService {
         return $message_recipient;
     }
 
-    public function getThread($parent_id){
+    public function getThread($thread_id){
         $q = Message::getRepository()->createQuery('m')
-                ->where("(parent_id = ?) or (id = ? and parent_id is null)", array($parent_id, $parent_id))
+                ->where("(parent_id = ?) or (id = ? and parent_id is null)", array($thread_id, $thread_id))
                 ->orderBy("created_at asc");
 
         return $q->execute();
