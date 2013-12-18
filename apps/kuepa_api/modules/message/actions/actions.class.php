@@ -23,9 +23,21 @@ class messageActions extends sfActions
 		$content = $request->getPostParameter("content");
 		$parent_id = $request->getPostParameter("thread_id");
 
-		$message = MessagingService::getInstance()->sendMessage($profile_id, $recipients, $subject, $content);
+        if($content != ""){
+            $message = MessagingService::getInstance()->sendMessage($profile_id, $recipients, $subject, $content);
 
-		return $this->renderText(json_encode("Success"));
+            $response = array(
+                'id' => $message->getId(),
+                'subject' => $message->getSubject(),
+                'content' => $message->getContent(),
+                'author' => $message->getProfile()->getNickname(),
+                'created_at' => strtotime($message->getCreatedAt()),
+                'updated_at' => strtotime($message->getUpdatedAt()),
+                'in' => $message->getAuthorId() == $profile_id ? false : true
+            );
+        }
+
+        return $this->renderText(json_encode($response));
 	}
 
 	/**
@@ -42,11 +54,19 @@ class messageActions extends sfActions
 
         $response = array();
         foreach($messages as $message){
+            $recipients = array();
+            foreach($message->getRecipients() as $recipient){
+                if($recipient->getRecipientId() != $profile_id){
+                    $recipients[] = $recipient->getRecipient()->getNickname();
+                }
+            }
+
         	$response[] = array(
         		'id' => $message->getId(),
         		'subject' => $message->getSubject(),
         		'content' => $message->getContent(),
         		'author' => $message->getProfile()->getNickname(),
+                'recipients' => $recipients,
         		'last_update' => strtotime($message->getUpdatedAt()),
     		);
         }
@@ -61,10 +81,12 @@ class messageActions extends sfActions
      */
     public function executeGet(sfWebRequest $request) {
         $thread_id = $request->getParameter("id");
+        $profile_id = $this->getUser()->getProfile()->getId();
+        $from_time = $request->getParameter("from_time", null);
 
         //TODO: check for valid parameters
 
-        $messages = MessagingService::getInstance()->getThread($thread_id);
+        $messages = MessagingService::getInstance()->getThread($thread_id, $from_time);
         $response = array();
 
         foreach($messages as $message){
@@ -74,7 +96,8 @@ class messageActions extends sfActions
         		'content' => $message->getContent(),
         		'author' => $message->getProfile()->getNickname(),
         		'created_at' => strtotime($message->getCreatedAt()),
-        		'updated_at' => strtotime($message->getUpdatedAt())
+        		'updated_at' => strtotime($message->getUpdatedAt()),
+                'in' => $message->getAuthorId() == $profile_id ? false : true
     		);
         }
 
@@ -93,10 +116,23 @@ class messageActions extends sfActions
 
 		$content = $request->getParameter("content");
 		$parent_id = $request->getParameter("id");
+        $response = null;
 
-        $message = MessagingService::getInstance()->replyMessage($profile_id, $parent_id, $content);
+        if($content != ""){
+            $message = MessagingService::getInstance()->replyMessage($profile_id, $parent_id, $content);
 
-        return $this->renderText(json_encode("Success"));
+            $response = array(
+                'id' => $message->getId(),
+                'subject' => $message->getSubject(),
+                'content' => $message->getContent(),
+                'author' => $message->getProfile()->getNickname(),
+                'created_at' => strtotime($message->getCreatedAt()),
+                'updated_at' => strtotime($message->getUpdatedAt()),
+                'in' => $message->getAuthorId() == $profile_id ? false : true
+            );
+        }
+
+        return $this->renderText(json_encode($response));
     }
 
     /**

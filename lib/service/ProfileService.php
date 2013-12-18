@@ -33,6 +33,40 @@ class ProfileService {
         }
     }
 
+    public function getFriends($profile_id){
+        //fetch all users that are in any course with him
+        $profile = Profile::getRepository()->find($profile_id);
+        $sql_college = "";
+
+        if($profile->getColleges()->count()){
+            $college_id = $profile->getColleges()->getFirst();
+            $sql_college = "(select profile_id from profile_college where college_id = $college_id)";
+            $subquery = "SELECT distinct(profile_id) FROM ($sql_college UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = $profile_id)) ) t1 where profile_id != $profile_id";
+        }else{
+            $subquery = "SELECT distinct(profile_id) FROM (SELECT distinct(profile_id) FROM profile_learning_path WHERE component_id IN (SELECT component_id FROM profile_learning_path WHERE profile_id = $profile_id)) t1 where profile_id != $profile_id";
+        }
+        
+        $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($subquery);
+        $ids = array();
+        foreach($rs as $r){
+            $ids[] = $r['profile_id'];
+        }
+
+        //subquery
+        $q = Profile::getRepository()->createQuery('p')
+                ->whereIn('id', $ids);
+
+        // $q = Profile::getRepository()->createQuery('p')
+        //         ->innerJoin('p.ProfileLearningPath plp')
+        //         ->innerJoin('p.sfGuardUser sgu')
+        //         ->innerJoin('sgu.sfGuardUserGroup sgug')
+        //         ->innerJoin('sgug.Group sgg')
+        //         ->where('plp.component_id = ?', $course_id)
+        //         ->andWhere('sgg.name = ?', 'estudiantes');
+
+        return $q->execute();
+    }
+
     public function addNewUser($params){
         $sfUser = new sfGuardUser();
         $sfUser->setFirstName($params['first_name'])

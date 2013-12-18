@@ -12,6 +12,11 @@ message_api:
   options:
     module: message
 
+profile_api:
+  class: RESTRouteCollection
+  options:
+    module: profile
+
 default:
   url:   /:module/:action/*
 

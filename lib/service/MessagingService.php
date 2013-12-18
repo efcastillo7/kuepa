@@ -12,6 +12,16 @@ class MessagingService {
         return self::$instance;
     }
 
+    public function getMessagesFromUsers(Array $profile_ids){
+        $query = Message::getRepository()->createQuery('m')
+                    ->innerJoin("m.Recipients mr")
+                    ->where("mr.recipient_id = ?", $profile_ids[0])
+                    ->andWhere('m.parent_id is null')
+                    ->andWhere('EXISTS (SELECT * FROM MessageRecipient mr2 WHERE mr2.message_id = m.id AND mr2.recipient_id = ?)', $profile_ids[1]);
+
+        return $query->execute();
+    }
+
     public function replyMessage($profile_id, $message_id, $content){
         //add new message
         $message = new Message;
@@ -81,10 +91,10 @@ class MessagingService {
 
     public function getMessagesForUser($profile_id, Array $query_params = null){
         $query = Message::getRepository()->createQuery('m')
-                    ->innerJoin("m.Recipients mr")
+                    // ->innerJoin("m.Recipients mr")
                     ->innerJoin("m.Profile p")
                     // ->select('subject, content, p.nickname, updated_at, parent_id')
-                    ->where('mr.recipient_id = ?')
+                    ->where('m.id in (select message_id from message_recipient where recipient_id = ?)')
                     ->orderBy('m.updated_at desc');
 
         if($query_params){
@@ -122,10 +132,14 @@ class MessagingService {
         return $message_recipient;
     }
 
-    public function getThread($thread_id){
+    public function getThread($thread_id, $from_time = null){
         $q = Message::getRepository()->createQuery('m')
                 ->where("(parent_id = ?) or (id = ? and parent_id is null)", array($thread_id, $thread_id))
                 ->orderBy("created_at asc");
+
+        if($from_time){
+            $q->andWhere("created_at > ?", Date("Y-m-d H:i:s",$from_time));
+        }
 
         return $q->execute();
     }
