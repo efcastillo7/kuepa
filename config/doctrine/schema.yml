@@ -95,7 +95,7 @@ Component:
       foreign: id
       local: profile_id
       type: one
-    
+
 Resource:
   inheritance:
     extends:          Component
@@ -110,7 +110,7 @@ Resource:
       type: many
       foreignType: one
       foreignAlias: Resource
-  
+
 Course:
   inheritance:
     extends:          Component
@@ -169,6 +169,7 @@ ResourceData:
     parent_id: { type: integer }
     duration: float
     level: { type: enum, values: [beginner, intermediate, advance]}
+    word_count: { type: integer }
   relations:
     Author:
       class: Profile
@@ -386,7 +387,8 @@ Message:
     id: {type: integer, primary: true, autoincrement: true}
     author_id: {type: integer, notnull: true}
     subject: {type: string(255)}
-    message: {type: string}
+    content: {type: string}
+    parent_id: {type: integer}
   relations:
     Recipients:
       class: MessageRecipient
@@ -395,6 +397,11 @@ Message:
       foreign: message_id
       foreignType: one
       foreignAlias: Message
+    Root:
+      class: Message
+      type: one
+      local: parent_id
+      foreign: id
 
 MessageRecipient:
   columns:

@@ -13,6 +13,10 @@
 class Resource extends BaseResource
 {
 	const TYPE = 'Resource';
+    static $time_per_word = 1.2; // Time reading each word in secs
+    static $video_multiplier = 2; // Video lenght * Multiplier
+    static $pdf_words_per_size = 400; // 400 words for each 10k of size
+    static $slideshare_time_per_slide = 10; // 10 seconds per slide
 
     /**
      * 
@@ -33,4 +37,66 @@ class Resource extends BaseResource
     public function getTotalTime($profile_id){
         return LogService::getInstance()->getTotalTime($profile_id, $this);
     }
+
+
+    /** 
+    * methods to calculate resources time (in seconds ) 
+    */
+    public function getTimePerWord(){
+        return( self::$time_per_word );
+    }
+
+    public function getVideoMultiplier(){
+        return( self::$video_multiplier );
+    }
+
+    public function getPdfWordsPerSize(){
+        return( self::$pdf_words_per_size );
+    }
+
+    public function getTimePerSlide(){
+        return( self::$slideshare_time_per_slide );
+    }
+
+    /**
+    *  Main method to calculate time
+    *  @1. Store word_count field on the ResourceData Table for text
+    *  @return time in seconds
+    */
+    public function calculateTime(){
+        $resourceData = $this -> getResourceData() -> getFirst();
+        $type = strtolower( $resourceData -> getType() );
+        $content = $resourceData -> getContent();
+        $resource_time = 0;
+        switch ($type) {
+             case 'document':
+                 # code...
+                 break;
+             case 'embeddedweb':
+                 # code...
+                 break;
+             case 'exercise':
+                 # code...
+                 break;
+             case 'text':
+                $word_count = $resourceData -> getWordCount();
+                if ( $word_count == NULL){
+                    $word_count = str_word_count( strip_tags($content ) );
+                    $resourceData -> setWordCount($word_count);
+                    $resourceData -> save();
+                }
+                $resource_time = $word_count * self::$time_per_word;
+                  break;
+             case 'Video':
+                 //duration video_lenght
+                 # code...
+                 break;
+             
+             default:
+                 # code...
+                 break;
+        }
+        return($resource_time);
+    }
+ 
 }

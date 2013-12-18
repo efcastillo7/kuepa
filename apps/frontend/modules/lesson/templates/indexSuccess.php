@@ -7,7 +7,9 @@
     <div id="leccion" class="row">
         <div class="span8">
             <p class="gray3"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a> /  <a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>#<?php echo $chapter->getNameSlug() ?>"><?php echo $chapter->getName() ?></a></p>
-            <p class="title3 clearmargin"><?php echo $lesson->getName() ?></p>
+            <p class="title3 clearmargin">
+                <?php echo $lesson->getName() ?>
+            </p>
         </div>
         <div class="span4">
             <div class="txt-right margintop">
