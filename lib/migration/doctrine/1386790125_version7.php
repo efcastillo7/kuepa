@@ -6,12 +6,12 @@ class Version7 extends Doctrine_Migration_Base
 {
     public function up()
     {
-        $this->addColumn('note', 'privacy', 'string', '20', array(
+        $this->addColumn('message', 'parent_id', 'integer', '8', array(
              ));
     }
 
     public function down()
     {
-        $this->removeColumn('note', 'privacy');
+        $this->removeColumn('message', 'parent_id');
     }
 }
