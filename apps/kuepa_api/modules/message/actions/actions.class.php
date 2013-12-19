@@ -31,8 +31,7 @@ class messageActions extends sfActions
                 'subject' => $message->getSubject(),
                 'content' => $message->getContent(),
                 'author' => $message->getProfile()->getNickname(),
-                'created_at' => strtotime($message->getCreatedAt()),
-                'updated_at' => strtotime($message->getUpdatedAt()),
+                'date' => $message->getCreatedAt(),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
             );
         }
@@ -67,7 +66,8 @@ class messageActions extends sfActions
         		'content' => $message->getContent(),
         		'author' => $message->getProfile()->getNickname(),
                 'recipients' => $recipients,
-        		'last_update' => strtotime($message->getUpdatedAt()),
+                'date' => $message->getCreatedAt(),
+        		'last_update' => $message->getUpdatedAt(),
     		);
         }
 
@@ -95,8 +95,8 @@ class messageActions extends sfActions
         		'subject' => $message->getSubject(),
         		'content' => $message->getContent(),
         		'author' => $message->getProfile()->getNickname(),
-        		'created_at' => strtotime($message->getCreatedAt()),
-        		'updated_at' => strtotime($message->getUpdatedAt()),
+        		'date' => $message->getCreatedAt(),
+                'created_at' => strtotime($message->getCreatedAt()),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
     		);
         }
@@ -126,8 +126,7 @@ class messageActions extends sfActions
                 'subject' => $message->getSubject(),
                 'content' => $message->getContent(),
                 'author' => $message->getProfile()->getNickname(),
-                'created_at' => strtotime($message->getCreatedAt()),
-                'updated_at' => strtotime($message->getUpdatedAt()),
+                'date' => $message->getCreatedAt(),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
             );
         }
