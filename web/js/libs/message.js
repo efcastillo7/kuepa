@@ -79,6 +79,9 @@ $(document).ready(function(){
     //enable input
     $(".input-send-message").prop('disabled', false);
 
+    //remove bg if has message
+    $(this).removeClass('unread');
+
     //active
     $(this).addClass("active");
     $(".inbox").not($(this)).removeClass("active");
@@ -113,9 +116,19 @@ $(document).ready(function(){
     onSuccess: addContacts,
     onError: onError
   });
+
+  //set interval for unread messages
+  setInterval(function(){
+    ms.getUnreadMessages({
+      onSuccess: function(messages){
+        for(var i=0; i<messages.length; i++){
+          setContactAsUnread(messages[i].id);
+        }
+      },
+      onError: onError
+    });
+  }, 1000);
 });
-
-
 
 //functions for window management
 function sendMessage(){
@@ -139,8 +152,6 @@ function sendMessage(){
 function replyMessage(){
   //get values
   var text = $("#send-message .input-send-message").val();
-
-  console.log(chat_id);
 
   //reply message
   ms.reply({
@@ -174,6 +185,28 @@ function addMessageToScreen(values){
   $('.cont-scroll').perfectScrollbar({wheelSpeed:30,wheelPropagation:true}).scrollTop($('.cont-scroll')[0].scrollHeight);
 }
 
+function setContactAsUnread(chat_id){
+  var elem = $("a[data-chat='" + chat_id + "']");
+  var obj = elem;
+
+  if(!elem.hasClass('unread')){
+    var obj = elem.clone().addClass('unread');
+
+    //remove
+    elem.remove();
+
+    //set as unread
+    obj.addClass('unread');
+    obj.hide();
+
+    //reapend
+    $(".cont-inboxes").prepend(obj);
+  }
+
+  //effect
+  $(obj).show("highlight", 3000 );
+}
+
 function addContacts(contacts){
   //clear inboxes
   $(".cont-inboxes").html("");
@@ -198,7 +231,12 @@ function addContact(values){
   }
   $(elem).attr("data-user", values.id);
   (elem).attr("data-name", values.nickname);
-  $(".name", elem).html(values.nickname);
+  $(".name span", elem).html(values.nickname);
+
+  //change bg for unread
+  if(values.new_messages){
+    $(elem).addClass('unread');
+  }
 
   //add to screen
   $(".cont-inboxes").append(elem);

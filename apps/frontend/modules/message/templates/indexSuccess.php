@@ -104,7 +104,7 @@
         <i class="spr ico-chat"></i>
       </span>
       <span class="cont-text">
-        <span class="name">Marcos Aurelio <i class="connected"></i> </span><br>
+        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span><br>
         <span class="abstract">Lorem ipsum dolor sit amet con...</span><br>
         <span class="time">-</span>
       </span>
@@ -115,7 +115,7 @@
         <!-- <i class="spr ico-chat"></i> -->
       </span>
       <span class="cont-text">
-        <span class="name">Marcos Aurelio <i class="connected"></i> </span><br>
+        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span><br>
         <span class="abstract">Lorem ipsum dolor sit amet con...</span><br>
         <span class="time">Argentina, Buenos Aires</span>
       </span>

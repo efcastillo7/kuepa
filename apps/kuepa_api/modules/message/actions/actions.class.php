@@ -68,6 +68,7 @@ class messageActions extends sfActions
                 'recipients' => $recipients,
                 'date' => $message->getCreatedAt(),
         		'last_update' => $message->getUpdatedAt(),
+                'read' => $message->getRecipients()->getFirst()->getIsRead()
     		);
         }
 
@@ -100,6 +101,9 @@ class messageActions extends sfActions
                 'in' => $message->getAuthorId() == $profile_id ? false : true
     		);
         }
+
+        //mark message
+        MessagingService::getInstance()->markMessageAsRead($profile_id, $thread_id);
 
         return $this->renderText(json_encode($response));
     }
@@ -141,6 +145,27 @@ class messageActions extends sfActions
      */
     public function executeEdit(sfWebRequest $request) {
         return $this->renderText('edit');
+    }
+
+    /**
+     * GET /message/unreads
+     *
+     * @param sfRequest $request A request object
+     */
+    public function executeUnreads(sfWebRequest $request) {
+        $profile_id = $this->getUser()->getProfile()->getId();
+
+        $messages = MessagingService::getInstance()->getUnreadMessages($profile_id);
+
+        $ret = array();
+
+        foreach ($messages as $message) {
+            $ret[] = array(
+                'id' => $message->getId()
+            );
+        }
+
+        return $this->renderText(json_encode($ret));
     }
 
     /**

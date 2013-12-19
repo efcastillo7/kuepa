@@ -17,7 +17,8 @@ class MessagingService {
                     ->innerJoin("m.Recipients mr")
                     ->where("mr.recipient_id = ?", $profile_ids[0])
                     ->andWhere('m.parent_id is null')
-                    ->andWhere('EXISTS (SELECT * FROM MessageRecipient mr2 WHERE mr2.message_id = m.id AND mr2.recipient_id = ?)', $profile_ids[1]);
+                    ->andWhere('EXISTS (SELECT * FROM MessageRecipient mr2 WHERE mr2.message_id = m.id AND mr2.recipient_id = ?)', $profile_ids[1])
+                    ->orderBy("mr.is_read desc, m.updated_at desc");
 
         return $query->execute();
     }
@@ -35,6 +36,7 @@ class MessagingService {
                 ->update()
                 ->set('is_read', 0)
                 ->where('mr.recipient_id != ?', $profile_id)
+                ->andWhere('mr.message_id = ?', $message_id)
                 ->execute();
 
         return $message;
@@ -132,7 +134,30 @@ class MessagingService {
         return $message_recipient;
     }
 
+    public function getUnreadMessages($profile_id){
+        $query = Message::getRepository()->createQuery('m')
+                ->innerJoin('m.Recipients mr')
+                ->where('mr.recipient_id = ?', $profile_id)
+                ->addWhere('mr.is_read = 0')
+                ->orderBy('m.created_at desc');
+
+        return $query->execute();
+    }
+
+    public function markMessageAsRead($profile_id, $message_id, $read = true){
+        //update flag
+        MessageRecipient::getRepository()->createQuery('mr')
+            ->update()
+            ->set('is_read', $read)
+            ->where('message_id = ?', $message_id)
+            ->andWhere('recipient_id = ?', $profile_id)
+            ->execute();
+
+        return;
+    }
+
     public function getThread($thread_id, $from_time = null){
+        //get messages
         $q = Message::getRepository()->createQuery('m')
                 ->where("(parent_id = ?) or (id = ? and parent_id is null)", array($thread_id, $thread_id))
                 ->orderBy("created_at asc");

@@ -14,6 +14,9 @@
   <link href="/assets/v2/styles/css/style.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/perfect-scrollbar.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  
+
   <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,6 +36,7 @@
   <script src="/assets/v2/js/jquery.knob.js"></script>
   
   <?php use_javascript("/js/jquery.form.min.js") ?>
+  <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>
 
   <?php include_http_metas() ?>
   <?php include_metas() ?>

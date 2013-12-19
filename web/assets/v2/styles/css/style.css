@@ -28,6 +28,10 @@
 .orange {
   color: #e86823; }
 
+.full-back-messages .container-messages .cont-inboxes .inbox.unread{
+  background-color: #d8e4fe;
+}
+
 .spr {
   background: url("../../img/sprite.png") no-repeat;
   display: inline-block;
@@ -943,7 +947,9 @@ div[class^="subject-"] {
         border: 0;
         box-shadow: none;
         font-size: 12px;
-        padding: 7px 0 6px 0; }
+        padding: 7px 0 6px 0; 
+        width: 250px;
+}
     .full-back-messages .container-messages .cont-inboxes {
       width: 100%;
       height: 649px;

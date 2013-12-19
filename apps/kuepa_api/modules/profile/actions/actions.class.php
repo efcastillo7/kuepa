@@ -26,15 +26,17 @@ class profileActions extends sfActions
      *
      * @param sfRequest $request A request object
      */
-	public function executeFriends(sfWebRequest $request) {
+	public function executeContacts(sfWebRequest $request) {
 		$profile_id = $this->getUser()->getProfile()->getId();
         $profile = Profile::getRepository()->find($profile_id);
 
-		$friends = array();
+		$without_messages = array();
+        $with_messages = array();
         foreach ($profile->getFriends() as $friend) {
         	$messages_q = MessagingService::getInstance()->getMessagesFromUsers(array($profile_id,$friend->getId()));
         	$i = $messages_q->count();
         	$last_message = array();
+            $new_messages = false;
 
         	if($i){
         		$last_message = array(
@@ -42,19 +44,37 @@ class profileActions extends sfActions
         			'content' => $messages_q[0]->getContent(),
         			'id' => $messages_q[0]->getId()
     			);
+
+                $new_messages = !$messages_q[0]->getRecipients()->getFirst()->getIsRead();
         	}
 
-        	$friends[] = array(
-        		'id' => $friend->getId(),
-        		'first_name' => $friend->getFirstName(),
-        		'last_name' => $friend->getLastName(),
-        		'nickname' => $friend->getNickname(),
-        		'online' => false,
-        		'last_message' => $last_message
-    		);
+            if($new_messages){
+                $with_messages[] = array(
+                    'id' => $friend->getId(),
+                    'first_name' => $friend->getFirstName(),
+                    'last_name' => $friend->getLastName(),
+                    'nickname' => $friend->getNickname(),
+                    'online' => false,
+                    'last_message' => $last_message,
+                    'new_messages' => $new_messages
+                );
+            }else{
+            	$without_messages[] = array(
+            		'id' => $friend->getId(),
+            		'first_name' => $friend->getFirstName(),
+            		'last_name' => $friend->getLastName(),
+            		'nickname' => $friend->getNickname(),
+            		'online' => false,
+            		'last_message' => $last_message,
+                    'new_messages' => $new_messages
+        		);
+            }
+
+
+
         }
 
-        return $this->renderText(json_encode($friends));
+        return $this->renderText(json_encode(array_merge($with_messages, $without_messages)));
 	}
 
 	/**

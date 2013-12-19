@@ -27,7 +27,7 @@ function MessageService(params){
 
 	this.getAll = function(values){
 		$.ajax({
-			url: '/kuepa_api.php/profile/friends',
+			url: '/kuepa_api.php/profile/contacts',
 			type: 'GET',
 			dataType: 'json',
 			success: values.onSuccess,
@@ -54,6 +54,16 @@ function MessageService(params){
 			success: values.onSuccess,
 			error: values.onError
 		});
+	}
+
+	this.getUnreadMessages = function(values){
+		$.ajax({
+			url: '/kuepa_api.php/message/unreads',
+			type: 'GET',
+			dataType: 'json',
+			success: values.onSuccess,
+			error: values.onError
+		});	
 	}
 
 	//message_id
