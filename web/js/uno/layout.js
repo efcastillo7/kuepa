@@ -84,19 +84,19 @@ $(function() {
     });
 
     //init tinyMCE ONCE!
-    tinymce.init({
-        mode: "none",
-        plugins: [
-            "advlist autolink lists link image charmap anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste jbimages"
-        ],
-        relative_urls: false,
-        convert_urls: false,
-        remove_script_host : false,
-        menubar: "edit insert format view table",
-        toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
-        toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-    });
+    // tinymce.init({
+    //     mode: "none",
+    //     plugins: [
+    //         "advlist autolink lists link image charmap anchor",
+    //         "searchreplace visualblocks code fullscreen",
+    //         "insertdatetime media table contextmenu paste jbimages"
+    //     ],
+    //     relative_urls: false,
+    //     convert_urls: false,
+    //     remove_script_host : false,
+    //     menubar: "edit insert format view table",
+    //     toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
+    //     toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+    // });
 
 });

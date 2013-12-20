@@ -36,7 +36,7 @@ class sfRegisterUserForm extends sfForm
       'password' => new sfValidatorString(array('required' => true)),
       'repassword' => new sfValidatorString(array('required' => true)),
       'program' => new sfValidatorString(array('required' => false)),
-      'code' => new sfValidatorString(array('required' => false)),
+      'code' => new sfValidatorString(array('required' => true)),
     ));
 
     $this->widgetSchema->setNameFormat('register[%s]');

@@ -6,7 +6,20 @@ course_api:
   class: RESTRouteCollection
   options:
     module: course
-    
+
+message_api:
+  class: RESTRouteCollection
+  options:
+    module: message
+
+profile_api:
+  class: RESTRouteCollection
+  options:
+    module: profile
+
 default:
-  url:   /*
-  params: { module: default, action: notImplemented }
+  url:   /:module/:action/*
+
+# default:
+#   url:   /*
+#   params: { module: default, action: notImplemented }

@@ -1,0 +1,219 @@
+/* --------------------------------------------------
+// ICONS
+-------------------------------------------------- */
+
+.spr{
+  background: url("../../img/sprite.png") no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translatez(0);
+  transform: translatez(0);
+}
+i[class$="-hover"]{
+  transition:all 0.1s ease-in-out;
+  opacity: 0;
+}
+
+.ico-menu,.ico-menu-hover{
+  width:22px;
+  height:17px;
+}
+.ico-menu{background-position: 0 0;}
+.ico-menu-hover{background-position: -58px 0;margin-top:-11px;}
+.ico-menu:hover > .ico-menu-hover{opacity: 1;}
+
+.ico-subjects,.ico-subjects-hover{
+  width:32px;
+  height:24px;
+}
+.ico-subjects{background-position: 0 -29px;}
+.ico-subjects-hover{background-position: -35px -29px;}
+.a-subjects:hover > .ico-subjects > .ico-subjects-hover{
+  opacity: 1;
+}
+
+.ico-instruments,.ico-instruments-hover{
+  width:25px;
+  height:24px;
+}
+.ico-instruments{background-position: -2px -59px;}
+.ico-instruments-hover{background-position: -30px -59px;}
+.a-instruments:hover > .ico-instruments > .ico-instruments-hover{
+  opacity: 1;
+}
+
+.ico-pin,.ico-pin-hover,.ico-search,.ico-search-hover,.ico-user,.ico-user-hover{
+  width:33px;
+  height:32px;
+}
+
+.ico-pin{background-position: -234px -86px;}
+.ico-pin-hover{background-position: -234px -119px;}
+.ico-search{background-position: -266px -86px;}
+.ico-search-hover{background-position: -266px -119px;}
+.ico-user{background-position: -301px -86px;}
+.ico-user-hover{background-position: -301px -119px;}
+
+.ico-pin:hover > .ico-pin-hover{opacity: 1;}
+.ico-search:hover > .ico-search-hover{opacity: 1;}
+
+/* --------------------------------------------------
+// MENSAJES
+-------------------------------------------------- */
+.ico-messages{
+  width:31px;
+  height:27px;
+  background-position: -201px -90px;
+}
+.ico-new-message{
+  width:18px;
+  height:17px;
+  background-position: -44px -86px;
+}
+.ico-message,.ico-message-hover{
+  width:20px;
+  height:19px;
+}
+.ico-message{background-position: 0 -86px;}
+.ico-message-hover{background-position: -21px -86px;margin-top:-4px;}
+
+.ico-arrow-down,.ico-arrow-down-hover{
+  width:13px;
+  height:7px;
+}
+.ico-arrow-down{background-position: -73px -47px;}
+.ico-arrow-down-hover{
+  background-position: -88px -47px;
+  margin-left: -18px;
+}
+.a-arrow:hover > .ico-arrow-down-hover{
+  opacity: 1;
+}
+.a-arrow:hover > .ico-user > .ico-user-hover{opacity: 1;}
+
+.btn-arrow-left{
+  width:13px;
+  height: 7px;
+  background-position: -88px -47px;
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+}
+.btn-arrow-right{
+  width:13px;
+  height: 7px;
+  background-position: -88px -47px;
+  transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+}
+
+.ico-chat{
+  width:50px;
+  height:50px;
+  background-position: 0 -119px;
+}
+.ico-add-friend,.ico-add-friend-hover{
+  width:23px;
+  height:17px;
+}
+.ico-add-friend{background-position: -142px -61px;}
+.ico-add-friend-hover{
+  background-position: -142px -82px;
+}
+.ico-add-friend:hover > .ico-add-friend-hover{
+  opacity: 1;
+}
+.ico-settings,.ico-settings-hover{
+  width:16px;
+  height:16px;
+}
+.ico-settings{background-position: -115px -62px;}
+.ico-settings-hover{
+  background-position: -115px -82px;
+}
+.ico-settings:hover > .ico-settings-hover{
+  opacity: 1;
+}
+.ico-arrow-right,.ico-arrow-left{
+  width:8px;
+  height:13px;
+}
+.ico-arrow-right{
+  background-position: -85px -62px;
+  transition: all 0.2s  ease-in-out;
+}
+.ico-arrow-right.active{
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transition: all 0.2s  ease-in;
+}
+.ico-arrow-left{
+  background-position: -74px -62px;
+}
+/* --------------------------------------------------
+// LIST VIEW
+-------------------------------------------------- */
+.vm-grid,.vm-list,.vm-grid-hover,.vm-list-hover{
+  width:24px;
+  height:24px;
+}
+.vm-grid{background-position: -115px 0;}
+.vm-grid-hover{
+  background-position: -146px 0;
+  opacity: 0;
+  transition:all 0.1s ease-in-out;
+}
+.vm-grid.active, .vm-grid.active:hover {background-position: -177px 0;}
+.vm-grid:hover > .vm-grid-hover{opacity: 1;}
+.vm-grid.active:hover > .vm-grid-hover{opacity: 0;}
+
+.vm-list{background-position: -115px -30px;}
+.vm-list-hover{
+  background-position:-146px -30px;
+  opacity: 0;
+  transition:all 0.1s ease-in-out;
+}
+.vm-list.active, .vm-list.active:hover {background-position: -177px -30px;}
+.vm-list:hover > .vm-list-hover{opacity: 1;}
+.vm-list.active:hover > .vm-list-hover{opacity: 0;}
+
+/* --------------------------------------------------
+// SOCIALS
+-------------------------------------------------- */
+.ico-facebook,.ico-twitter,.ico-googleplus,.ico-facebook-hover,.ico-twitter-hover,.ico-googleplus-hover{
+  width:42px;
+  height:42px;
+}
+.ico-facebook-hover,.ico-twitter-hover,.ico-googleplus-hover{
+  transition:all 0.1s ease-in-out;
+  opacity: 0;
+  filter:alpha(opacity=0);
+}
+.ico-facebook{background-position: -206px 0;}
+.ico-facebook-hover{background-position: -206px -43px;}
+.ico-facebook:hover > .ico-facebook-hover{opacity: 1;filter:alpha(opacity=100);}
+
+.ico-twitter{background-position: -292px 0;}
+.ico-twitter-hover{background-position: -292px -43px;}
+.ico-twitter:hover > .ico-twitter-hover{opacity: 1;filter:alpha(opacity=100);}
+
+.ico-googleplus{background-position: -249px 0;}
+.ico-googleplus-hover{background-position: -249px -43px;}
+.ico-googleplus:hover > .ico-googleplus-hover{opacity: 1;filter:alpha(opacity=100);}
+
+
+/* --------------------------------------------------
+// CALENDAR
+-------------------------------------------------- */
+.ico-calendar{
+  width:30px;
+  height:29px;
+  background-position: -67px -91px;
+}
+.ico-arrow-list{
+  width: 5px;
+  height: 6px;
+  background-position: -100px -73px;
+}
