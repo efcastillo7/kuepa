@@ -15,7 +15,7 @@ class Resource extends BaseResource
 	const TYPE = 'Resource';
     static $time_per_word = 1.2; // Time reading each word in secs
     static $video_multiplier = 2; // Video lenght * Multiplier
-    static $pdf_words_per_size = 400; // 400 words for each 10k of size
+    static $pdf_words_per_size = 40; // 40 words for each 1k of size
     static $slideshare_time_per_slide = 10; // 10 seconds per slide
 
     /**
@@ -70,10 +70,31 @@ class Resource extends BaseResource
         $resource_time = 0;
         switch ($type) {
              case 'document':
-                 # code...
+                $word_count = $resourceData -> getWordCount();
+                if ( $word_count == NULL){
+                     //uploads/documents/filename
+                    $file_path = $resourceData->getFilePath();
+                    $filesize = round(filesize($file_path)/1000); // in Kb
+                    $word_count = $filesize * self::getPdfWordsPerSize();
+                    $resourceData -> setWordCount($word_count);
+                    $resourceData -> save();
+                }
+                $resource_time = $word_count * self::getTimePerWord();
                  break;
              case 'embeddedweb':
-                 # code...
+                $word_count = $resourceData -> getWordCount();
+                if ( $word_count == NULL){
+                    $url = $resourceData->getContent();
+                    $request = curl_init($url);
+                    curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+                    $content = curl_exec ( $request );
+                    $http_status = curl_getinfo($request, CURLINFO_HTTP_CODE);
+                    curl_close($request);
+                    $word_count = str_word_count( strip_tags($content ) );
+                    $resourceData -> setWordCount($word_count);
+                    $resourceData -> save();
+                }
+                $resource_time = $word_count * self::getTimePerWord();
                  break;
              case 'exercise':
                  # code...
@@ -85,7 +106,7 @@ class Resource extends BaseResource
                     $resourceData -> setWordCount($word_count);
                     $resourceData -> save();
                 }
-                $resource_time = $word_count * self::$time_per_word;
+                $resource_time = $word_count * self::getTimePerWord();
                   break;
              case 'Video':
                  //duration video_lenght
