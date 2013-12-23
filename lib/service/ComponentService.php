@@ -307,9 +307,9 @@ class ComponentService {
 
     public function getNoteAvg($profile_id, $component_id){
         //this is the note avg of all resources, including the exercices
-        $avg_notes = ProfileComponentCompletedStatus::getCompletedStatus($profile_id, $component_id);
+        $avg_notes = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile_id, $component_id);
 
-        return  $avg;
+        return  $avg_notes/100;
     }
 
     public function getCountExerciseTryouts($profile_id, $component_id, $from_note = 0){
@@ -319,16 +319,16 @@ class ComponentService {
         if($component->getType() != "Lesson"){
             //
         }else{
-            $query = "SELECT child_id FROM LearningPath lp WHERE parent_id = $component_id";
+            $query = "SELECT lp.child_id FROM LearningPath lp WHERE lp.parent_id = $component_id";
 
             $q = ExerciseAttemp::getRepository()->createQuery('ea')
                     ->select("count(*) as total")
-                    ->innerJoin('ea.ResourceData rd ON ea.exercise_id = CAST(rd.content as UNSIGNED)')
+                ->innerJoin('ea.ResourceData rd ON ea.exercise_id = CAST(rd.content as UNSIGNED)')
                     ->where('rd.type = ?', 'Exercise')
                     ->andWhere('ea.value >= ?', $from_note)
-                    ->andWhere('rd.resource_id in ($query)');
+                    ->andWhere("rd.resource_id in ($query)");
 
-            $total = $q->execute();
+            $total = $q->fetchOne();
 
             if($total){
                 return  $total->getTotal();

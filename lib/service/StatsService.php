@@ -33,7 +33,7 @@ class StatsService {
         //IMPORTANT! childs_viewed ALWAYS must be count of resources of that component
         // FE: if that component is a Chapter must return = SUM(count_resources(chapter.lesson))
         // TODO: make it recursive!
-        $childs_viewed = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, true);
+        $childs_viewed = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, false);
 
         //one could return the percentage of the ProfileComponentCompletedStatus
         return $childs_viewed / $childs_total;
@@ -54,15 +54,25 @@ class StatsService {
     }
 
     public function getPersistenceIndex($profile_id, $component_id){
+        //total exercise tryed
+        $exercise_count = ComponentService::getInstance()->getCountExerciseTryouts($profile_id, $component_id, 0);
         //get count component childs
         $childs_total = ComponentService::getInstance()->getCountChilds($component_id);
         //total unique childs viewed
         $childs_viewed = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, true);
-        //approved exercise
-        $exercise_count_approved = ComponentService::getInstance()->getCountExerciseTryouts($profile_id, $component_id, $this->_approveBar);
-        //total exercise tryed
-        $exercise_count = ComponentService::getInstance()->getCountExerciseTryouts($profile_id, $component_id, 0);
 
+        //if there are no exercises done
+        if($exercise_count > 0){
+            //approved exercise
+            $exercise_count_approved = ComponentService::getInstance()->getCountExerciseTryouts($profile_id, $component_id, $this->_approveBar);
+        }else{
+            $exercise_count = $exercise_count_approved = 1;
+        }
+
+        if($childs_viewed == 0){
+            return 0;
+        }
+        
         return ($childs_total*$exercise_count_approved) / ($childs_viewed * $exercise_count);
 
     }

@@ -82,13 +82,21 @@ class statsActions extends kuepaActions
   }
 
   public function executeTest(sfWebRequest $request){
+    $component_id = $request->getParameter('id');
     $stats = StatsService::getInstance();
 
     $profile = $this->getProfile();
     $profile_id = $profile->getId();
-    $component_id = 692;
+    // $component_id = 692;
 
-    echo $stats->getLearningIndex($profile_id, $component_id);
-    die();
+    $this->li = $stats->getLearningIndex($profile_id, $component_id);
+    $this->efi = $stats->getEfficiencyIndex($profile_id, $component_id);
+    $this->efo = $stats->getEffortIndex($profile_id, $component_id);
+    $this->v = $stats->getVelocityIndex($profile_id, $component_id);
+    $this->sk = $stats->getSkillIndex($profile_id, $component_id);
+    $this->c = $stats->getCompletitudIndex($profile_id, $component_id);
+    $this->p = $stats->getPersistenceIndex($profile_id, $component_id);
+
+
   }
 }

@@ -317,6 +317,10 @@ ExerciseAttemp:
     value: float
     content: blob
   relations:
+    ResourceData:
+      local: exercise_id
+      foreign: content
+      type: many
     Exercise:
       local: exercise_id
       foreign: id
