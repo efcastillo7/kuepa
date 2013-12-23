@@ -5,7 +5,7 @@
  *
  * @package    kuepa
  * @subpackage form
- * @author     fiberbunny
+ * @author     kibind
  * @version    SVN: $Id: sfDoctrinePluginFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfRegisterUserForm extends sfForm
@@ -36,7 +36,7 @@ class sfRegisterUserForm extends sfForm
       'password' => new sfValidatorString(array('required' => true)),
       'repassword' => new sfValidatorString(array('required' => true)),
       'program' => new sfValidatorString(array('required' => false)),
-      'code' => new sfValidatorString(array('required' => false)),
+      'code' => new sfValidatorString(array('required' => true)),
     ));
 
     $this->widgetSchema->setNameFormat('register[%s]');

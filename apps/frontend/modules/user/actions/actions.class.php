@@ -5,7 +5,7 @@
  *
  * @package    kuepa
  * @subpackage user
- * @author     fiberbunny
+ * @author     kibind
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class userActions extends kuepaActions {
@@ -17,22 +17,12 @@ class userActions extends kuepaActions {
      */
     public function executeIndex(sfWebRequest $request) {
         $this->user = $this->getUser();
-        $this->form = new sfUserForm($this->getGuardUser());
-
-        // $user = new sfGuardUser();
-        // $user->setEmailAddress("email@sad.com");
-        // $user->setUsername("username");
-        // $user->setPassword("password");
-        // $user->setFirstName("firstname");
-        // $user->setLastName("lastname");
-        // $user->setIsActive(true);
-        // $user->setIsSuperAdmin(false);
-        // $user->save();
+        $this->form = new UserProfileForm($this->getProfile());
     }
 
     public function executeUpdate(sfWebRequest $request) {
         $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-        $this->form = new sfUserForm($this->getGuardUser());
+        $this->form = new UserProfileForm($this->getProfile());
         $this->processForm($request, $this->form);
         $this->setTemplate('index');
     }
@@ -40,7 +30,7 @@ class userActions extends kuepaActions {
     protected function processForm(sfWebRequest $request, sfForm $form) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
-            $sf_guard_user = $form->save();
+            $profile = $form->save();
 
             $this->redirect('user/index');
         }

@@ -57,4 +57,8 @@ class Profile extends BaseProfile
     public function getComponentStatus($component_id){
         return ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getId(), $component_id);
     }
+
+    public function getFriends(){
+        return ProfileService::getInstance()->getFriends($this->getId());
+    }
 }

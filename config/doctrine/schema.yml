@@ -390,6 +390,10 @@ Message:
     content: {type: string}
     parent_id: {type: integer}
   relations:
+    Profile:
+      type: one
+      local: author_id
+      foreign: id
     Recipients:
       class: MessageRecipient
       type: many

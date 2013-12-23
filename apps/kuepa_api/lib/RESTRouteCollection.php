@@ -35,5 +35,9 @@ class RESTRouteCollection extends sfRouteCollection {
         $this->routes[$this->options['module'] . '_list'] = new sfRequestRoute(
                 '/' . $this->options['module'], array('module' => $this->options['module'], 'action' => 'list'), array('sf_method' => array('get'))
         );
+
+        $this->routes[$this->options['module'] . '_add'] = new sfRequestRoute(
+                '/' . $this->options['module'] . '/:id', array('module' => $this->options['module'], 'action' => 'add'), array('sf_method' => array('post'), 'id' => '\d+')
+        );
     }
 }

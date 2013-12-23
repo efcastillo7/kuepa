@@ -1,0 +1,16 @@
+/* --------------------------------------------------
+// Buttons
+-------------------------------------------------- */
+
+.btn-gray{
+  background-color:$gray2;
+  text-align:center;
+  color:#fff;
+  border:0;
+  padding:5px 10px;
+  transition: all 0.1s  ease-in-out;
+  @include border-radius(5px);
+  &:hover{
+    background-color:$gray4;
+  }
+}

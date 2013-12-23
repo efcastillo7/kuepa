@@ -17,6 +17,11 @@ class ProfileForm extends BaseProfileForm
   	// $this->setWidget('sf_guard_user_id', new sfWidgetFormInputHidden());
 
   	$this->setWidget('components_list', new sfWidgetFormDoctrineChoice(array('multiple' => true, 'table_method' => 'getCourses', 'model' => 'Component')));
+
+  	$this->setWidget('birthdate', new sfWidgetFormDate(array(
+        'format' => '%day%/%month%/%year%'
+    )));
+
   	// $this->setWidget('birthdate', new sfWidgetFormJQueryDate());
   	// $this->setWidget('valid_until', new sfWidgetFormJQueryDate());
 
