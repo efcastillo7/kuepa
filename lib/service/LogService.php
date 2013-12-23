@@ -150,14 +150,27 @@ class LogService {
 
     }
 
-    public function getTotalRecourseViewed($profile_id){
+    public function getTotalRecourseViewed($profile_id, $component_id = null, $unique = false){
+        //query
         $q = LogViewComponent::getRepository()->createQuery('lvc')
-                ->select("distinct(component_id)")
-                ->where("profile_id = ?", $profile_id)
-                ->execute();
+                ->where("profile_id = ?", $profile_id);
 
-        if($q){
-            return $q->count();
+        if($unique){
+            $q->select("count(distinct(component_id)) as count");
+        }else{
+            $q->select("count(component_id) as count");
+        }
+
+        //if there is a component so get its childs
+        if($component_id){
+            $q->andWhere('lvc.component_id in (select child_id from learning_path lp where parent_id = ?)', $component_id);
+        }
+
+        //execute query
+        $r = $q->fetchOne();
+
+        if($r){
+            return $r->getCount();
         }
 
         return 0;

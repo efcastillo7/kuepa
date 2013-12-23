@@ -8,7 +8,7 @@
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class statsActions extends sfActions
+class statsActions extends kuepaActions
 {
  /**
   * Executes index action
@@ -79,5 +79,16 @@ class statsActions extends sfActions
 
     $this->course = Course::getRepository()->find($course_id);
     $this->students = CourseService::getInstance()->getStudentsList($course_id);
+  }
+
+  public function executeTest(sfWebRequest $request){
+    $stats = StatsService::getInstance();
+
+    $profile = $this->getProfile();
+    $profile_id = $profile->getId();
+    $component_id = 692;
+
+    echo $stats->getLearningIndex($profile_id, $component_id);
+    die();
   }
 }
