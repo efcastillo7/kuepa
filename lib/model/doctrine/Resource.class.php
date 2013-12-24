@@ -69,7 +69,7 @@ class Resource extends BaseResource
         $content = $resourceData -> getContent();
         $resource_time = 0;
         switch ($type) {
-             case 'document':
+             case 'document': // pdf ppt
                 $word_count = $resourceData -> getWordCount();
                 if ( $word_count == NULL){
                      //uploads/documents/filename
@@ -108,10 +108,11 @@ class Resource extends BaseResource
                 }
                 $resource_time = $word_count * self::getTimePerWord();
                   break;
-             case 'Video':
-                 //duration video_lenght
-                 # code...
-                 break;
+             case 'video':
+                 //duration video_length
+                 $duration = $resourceData->getVideoDuration();
+                 $resource_time = $duration * self::getVideoMultiplier();
+                break;
              
              default:
                  # code...
