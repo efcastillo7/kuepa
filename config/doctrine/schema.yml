@@ -378,6 +378,13 @@ ProfileComponentCompletedStatus:
     profile_id: {type: integer, primary: true}
     component_id: {type: integer, primary: true}
     completed_status: {type: integer}
+    velocity_index: float
+    completitud_index: float
+    skill_index: float
+    persistence_index: float
+    effort_index: float
+    efficiency_index: float
+    learning_index: float
   relations:
     Component:
       local: component_id

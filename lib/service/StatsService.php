@@ -33,7 +33,7 @@ class StatsService {
         //IMPORTANT! childs_viewed ALWAYS must be count of resources of that component
         // FE: if that component is a Chapter must return = SUM(count_resources(chapter.lesson))
         // TODO: make it recursive!
-        $childs_viewed = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, false);
+        $childs_viewed = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, true);
 
         //one could return the percentage of the ProfileComponentCompletedStatus
         return $childs_viewed / $childs_total;
@@ -72,6 +72,8 @@ class StatsService {
         if($childs_viewed == 0){
             return 0;
         }
+
+        // return $exercise_count;
         
         return ($childs_total*$exercise_count_approved) / ($childs_viewed * $exercise_count);
 
