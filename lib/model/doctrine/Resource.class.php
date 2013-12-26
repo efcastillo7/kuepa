@@ -128,8 +128,12 @@ class Resource extends BaseResource
             // Updates reading time
             $resourceData->setReadingTime($resource_time);
             $resourceData->save();
+
         }
 
+        // Updates duration on Component table for resource
+        $this->setDuration($resource_time);
+        $this->save();
         return($resource_time);
     }
  
