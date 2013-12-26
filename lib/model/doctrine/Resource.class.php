@@ -16,7 +16,7 @@ class Resource extends BaseResource
     static $time_per_word = 1.2; // Time reading each word in secs
     static $video_multiplier = 2; // Video lenght * Multiplier
     static $pdf_words_per_size = 40; // 40 words for each 1k of size
-    static $slideshare_time_per_slide = 10; // 10 seconds per slide
+    static $time_per_question = 240; // 4 mins per question
 
     /**
      * 
@@ -54,8 +54,8 @@ class Resource extends BaseResource
         return( self::$pdf_words_per_size );
     }
 
-    public function getTimePerSlide(){
-        return( self::$slideshare_time_per_slide );
+    public function getTimePerQuestion(){
+        return( self::$time_per_question );
     }
 
     /**
@@ -67,57 +67,69 @@ class Resource extends BaseResource
         $resourceData = $this -> getResourceData() -> getFirst();
         $type = strtolower( $resourceData -> getType() );
         $content = $resourceData -> getContent();
-        $resource_time = 0;
-        switch ($type) {
-             case 'document': // pdf ppt
-                $word_count = $resourceData -> getWordCount();
-                if ( $word_count == NULL){
-                     //uploads/documents/filename
-                    $file_path = $resourceData->getFilePath();
-                    $filesize = round(filesize($file_path)/1000); // in Kb
-                    $word_count = $filesize * self::getPdfWordsPerSize();
-                    $resourceData -> setWordCount($word_count);
-                    $resourceData -> save();
-                }
-                $resource_time = $word_count * self::getTimePerWord();
-                 break;
-             case 'embeddedweb':
-                $word_count = $resourceData -> getWordCount();
-                if ( $word_count == NULL){
-                    $url = $resourceData->getContent();
-                    $request = curl_init($url);
-                    curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-                    $content = curl_exec ( $request );
-                    $http_status = curl_getinfo($request, CURLINFO_HTTP_CODE);
-                    curl_close($request);
-                    $word_count = str_word_count( strip_tags($content ) );
-                    $resourceData -> setWordCount($word_count);
-                    $resourceData -> save();
-                }
-                $resource_time = $word_count * self::getTimePerWord();
-                 break;
-             case 'exercise':
-                 # code...
-                 break;
-             case 'text':
-                $word_count = $resourceData -> getWordCount();
-                if ( $word_count == NULL){
-                    $word_count = str_word_count( strip_tags($content ) );
-                    $resourceData -> setWordCount($word_count);
-                    $resourceData -> save();
-                }
-                $resource_time = $word_count * self::getTimePerWord();
-                  break;
-             case 'video':
-                 //duration video_length
-                 $duration = $resourceData->getVideoDuration();
-                 $resource_time = $duration * self::getVideoMultiplier();
-                break;
-             
-             default:
-                 # code...
-                 break;
+        $resource_time = $resourceData->getReadingTime();
+
+        // if reading time is 0, it is calculated , otherwise it is returned
+        if ( (int)$resource_time == 0 ){
+            switch ($type) {
+                 case 'document': // pdf ppt
+                    $word_count = $resourceData -> getWordCount();
+                    if ( $word_count == NULL){
+                         //uploads/documents/filename
+                        $file_path = $resourceData->getFilePath();
+                        $filesize = round(filesize($file_path)/1000); // in Kb
+                        $word_count = $filesize * self::getPdfWordsPerSize();
+                        $resourceData -> setWordCount($word_count);
+                        $resourceData -> save();
+                    }
+                    $resource_time = $word_count * self::getTimePerWord();
+                     break;
+                 case 'embeddedweb':
+                    $word_count = $resourceData -> getWordCount();
+                    if ( $word_count == NULL){
+                        $url = $resourceData->getContent();
+                        $request = curl_init($url);
+                        curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+                        $content = curl_exec ( $request );
+                        $http_status = curl_getinfo($request, CURLINFO_HTTP_CODE);
+                        curl_close($request);
+                        $word_count = str_word_count( strip_tags($content ) );
+                        $resourceData -> setWordCount($word_count);
+                        $resourceData -> save();
+                    }
+                    $resource_time = $word_count * self::getTimePerWord();
+                     break;
+                 case 'exercise':
+                    $exercise_id = $resourceData->getContent();
+                    $number_of_questions = ExerciseService::getInstance()->getCountQuestions($exercise_id);
+                    $resource_time = $number_of_questions * self::getTimePerQuestion();
+
+                     break;
+                 case 'text':
+                    $word_count = $resourceData -> getWordCount();
+                    if ( $word_count == NULL){
+                        $word_count = str_word_count( strip_tags($content ) );
+                        $resourceData -> setWordCount($word_count);
+                        $resourceData -> save();
+                    }
+                    $resource_time = $word_count * self::getTimePerWord();
+                      break;
+                 case 'video':
+                     //duration video_length
+                     $duration = $resourceData->getVideoDuration();
+                     $resource_time = $duration * self::getVideoMultiplier();
+                    break;
+                 
+                 default:
+                     # code...
+                     break;
+            }
+
+            // Updates reading time
+            $resourceData->setReadingTime($resource_time);
+            $resourceData->save();
         }
+
         return($resource_time);
     }
  

@@ -33,4 +33,12 @@ class ExerciseService {
 
         return $q->execute();
     }
+
+    public function getCountQuestions($exercise_id){
+        $q = Doctrine::getTable("ExerciseHasExerciseQuestion")->createQuery('eheq')
+             ->select('count(exercise_question_id)')
+             ->where('exercise_id = ?', array($exercise_id ) );
+        $qty = $q->execute(array(),Doctrine::HYDRATE_SINGLE_SCALAR);
+        return( $qty );
+    }
 }
