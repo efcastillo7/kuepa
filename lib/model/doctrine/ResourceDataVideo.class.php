@@ -71,8 +71,17 @@ class ResourceDataVideo extends BaseResourceDataVideo
   */
   public function getYoutubeDuration(){
     $url = $this->getContent();
+
     parse_str(parse_url($url,PHP_URL_QUERY),$arr);
-    $video_id=$arr['v'];
+    if ( array_key_exists('v', $arr)){
+      $video_id = $arr['v']; // youtube.com/v=ASDFWER442D
+    }else{
+      // youtube.com/embed/ASDFWER442D
+      // youtu.be/ASDFWER442D
+      $url = parse_url($url);
+      $path_parts = explode("/",$url['path']);
+      $video_id = array_pop( $path_parts );
+    }
 
     $data=@file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$video_id.'?v=2&alt=jsonc');
     if (false===$data) return false;
