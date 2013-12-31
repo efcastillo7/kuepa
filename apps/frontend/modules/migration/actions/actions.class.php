@@ -173,8 +173,9 @@ class migrationActions extends sfActions
 				->setEnabled(true)
 				->setDuration(1)
 				->save();
-
     		LessonService::getInstance()->addResourceToLesson($lesson->getId(), $resource->getId());
+        ComponentService::getInstance()->updateDuration($resource->getId());
+
     	}
 
 	}	
@@ -469,6 +470,8 @@ class migrationActions extends sfActions
 
 				//add reource to lesson
 				LessonService::getInstance()->addResourceToLesson($nlesson->getId(), $resource->getId());
+        ComponentService::getInstance()->updateDuration($resource->getId());
+
 			}
 		}
 	}
