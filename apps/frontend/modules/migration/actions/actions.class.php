@@ -478,4 +478,25 @@ class migrationActions extends sfActions
 	//crear lecciones
 	//crear recursos
   }
+
+  
+  /**
+  *  Proceso de Actualizar las duraciones 
+  *  de Components, Recursos,Lesson,
+  */
+  public function executeCalculateTime(sfWebRequest $request){
+      $offset = ( $request->getParameter('offset') ) ? $request->getParameter('offset') : 0;
+      // Calcular los recursos
+      $resources = Resource::getRepository()->createQuery('r')
+                ->where('r.duration >=  ? ','0')
+                ->limit(30)
+                ->offset($offset)
+                ->execute();
+      foreach($resources as $key => $resource){
+        ComponentService::getInstance()->updateDuration($resource->getId());
+      }
+      $this->resources = $resources;
+ 
+  }
+
 }

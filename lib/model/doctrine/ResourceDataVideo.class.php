@@ -29,7 +29,7 @@ class ResourceDataVideo extends BaseResourceDataVideo
   public function getVideoDuration(){
     $duration = $this->getDuration();
     $video_type = $this->getVideoType();
-    if( $duration == NULL || $duration < 15 ){
+    //if( $duration == NULL || $duration < 15 ){
       switch ($video_type) {
         case 'embebed':
           $duration = $this->getEmbebedDuration();
@@ -46,7 +46,7 @@ class ResourceDataVideo extends BaseResourceDataVideo
       }
       $this -> setDuration($duration);
       $this -> save();
-    }
+    //}
     return($duration);
   }
 
@@ -59,8 +59,13 @@ class ResourceDataVideo extends BaseResourceDataVideo
     $file_path = $this->getFilePath();
     $cmd = "ffmpeg -i $file_path 2>&1 | grep Duration | awk '{print $2}' | tr -d ,";
     $video_time = exec($cmd);
-    list($hours, $mins, $secs) = explode(":", $video_time); // 24:59:59.59
-    $duration = ($hours*3600) + ($mins*60) + round($secs);
+    $duration = 0;
+    if ( $video_time != ""){
+      list($hours, $mins, $secs) = explode(":", $video_time); // 24:59:59.59
+      $duration = ($hours*3600) + ($mins*60) + round($secs);
+    }
+    //Plugin ffmpeg or video not found
+  
     return($duration);
   }
 

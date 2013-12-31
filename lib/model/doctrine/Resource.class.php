@@ -65,6 +65,12 @@ class Resource extends BaseResource
     */
     public function calculateTime(){
         $resourceData = $this -> getResourceData() -> getFirst();
+
+        // There are some resources without ResourceData
+        if ( $resourceData == NULL ){
+            return(0);
+        }
+
         $type = strtolower( $resourceData -> getType() );
         $content = $resourceData -> getContent();
         $resource_time = $resourceData->getReadingTime();
@@ -74,19 +80,19 @@ class Resource extends BaseResource
             switch ($type) {
                  case 'document': // pdf ppt
                     $word_count = $resourceData -> getWordCount();
-                    if ( $word_count == NULL){
+                    //if ( $word_count == NULL){
                          //uploads/documents/filename
                         $file_path = $resourceData->getFilePath();
                         $filesize = round(filesize($file_path)/1000); // in Kb
                         $word_count = $filesize * self::getPdfWordsPerSize();
                         $resourceData -> setWordCount($word_count);
                         $resourceData -> save();
-                    }
+                    //}
                     $resource_time = $word_count * self::getTimePerWord();
                      break;
                  case 'embeddedweb':
                     $word_count = $resourceData -> getWordCount();
-                    if ( $word_count == NULL){
+                    //if ( $word_count == NULL){
                         $url = $resourceData->getContent();
                         $request = curl_init($url);
                         curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
@@ -96,7 +102,7 @@ class Resource extends BaseResource
                         $word_count = str_word_count( strip_tags($content ) );
                         $resourceData -> setWordCount($word_count);
                         $resourceData -> save();
-                    }
+                    //}
                     $resource_time = $word_count * self::getTimePerWord();
                      break;
                  case 'exercise':
@@ -107,11 +113,11 @@ class Resource extends BaseResource
                      break;
                  case 'text':
                     $word_count = $resourceData -> getWordCount();
-                    if ( $word_count == NULL){
+                    //if ( $word_count == NULL){
                         $word_count = str_word_count( strip_tags($content ) );
                         $resourceData -> setWordCount($word_count);
                         $resourceData -> save();
-                    }
+                    //}
                     $resource_time = $word_count * self::getTimePerWord();
                       break;
                  case 'video':
