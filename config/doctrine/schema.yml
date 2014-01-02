@@ -45,6 +45,8 @@ CollegeLearningPath:
   columns:
     college_id: {type: integer, primary: true}
     component_id: {type: integer, primary: true}
+    deadline: { type: date }
+    position: { type: integer, default: 0 }
 
 College:
   tableName: college
@@ -386,6 +388,7 @@ ProfileComponentCompletedStatus:
     effort_index: float
     efficiency_index: float
     learning_index: float
+    time_remaining: integer
   relations:
     Component:
       local: component_id
