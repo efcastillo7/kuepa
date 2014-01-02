@@ -172,7 +172,8 @@ ResourceData:
     parent_id: { type: integer }
     duration: float
     level: { type: enum, values: [beginner, intermediate, advance]}
-    word_count: { type: integer }
+    word_count: { type: integer },
+    reading_time: { type: integer, default: 0}
   relations:
     Author:
       class: Profile

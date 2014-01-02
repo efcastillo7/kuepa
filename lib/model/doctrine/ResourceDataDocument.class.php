@@ -21,4 +21,11 @@ class ResourceDataDocument extends BaseResourceDataDocument {
         return '/uploads/documents/' . $this->getPath();
     }
 
+    public function getFilePath() {
+        $file_path = $this->getPath();
+        $root_path = sFConfig::get('sf_upload_dir');
+        $full_path = $root_path.'/documents/'.$file_path;
+        return $full_path;
+    }
+
 }

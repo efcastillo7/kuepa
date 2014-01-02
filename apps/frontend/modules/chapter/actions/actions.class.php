@@ -66,6 +66,8 @@ class chapterActions extends kuepaActions {
             if(!$id)
                 CourseService::getInstance()->addChapterToCourse($values['course_id'], $chapter->getId());
 
+            ComponentService::getInstance()->updateDuration( $chapter->getId() );
+
             $response['template'] = "Ha ".($id?"editado":"creado")." la unidad satisfactoriamente";
             $response['status'] = "success";
         } else {

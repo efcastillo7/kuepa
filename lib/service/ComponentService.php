@@ -71,6 +71,9 @@ class ComponentService {
                 ->setType($type)
                 ->save();
 
+        // Update Duration when create a child $type
+        ComponentService::getInstance()->updateDuration( $component->getId() );
+
         return $component;
     }
 
@@ -87,6 +90,9 @@ class ComponentService {
                     $component->set($key, $values[$key]);
                 }
             }
+
+            // Update Duration when edit a child $type
+            ComponentService::getInstance()->updateDuration( $component->getId() );
 
             $component->save();
         }
@@ -186,6 +192,7 @@ class ComponentService {
         //TODO: check orderBy parameter SQLINJ
 
         $q = Component::getRepository()->createQuery('child')
+                ->select('child.*')
                 ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
                 ->where('lp.parent_id = ?', $component_id)
                 ->orderBy("lp.position $orderBy");
@@ -337,6 +344,56 @@ class ComponentService {
             return 0;
             
         }
+
+    }
+
+    public function getParents($component_id){
+
+        $q = Component::getRepository()->createQuery('parent')
+                ->select('parent.*')
+                ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
+                ->where('lp.child_id = ?', $component_id)
+                ->orderBy("lp.position $orderBy");
+        $parents = $q->execute();
+        return $parents;
+    }
+
+
+    public function calculateTime($component_id){
+       /* SELECT SUM(c.duration)
+        FROM  component c JOIN learningpath lp ON c.id=lp.child_id
+        WHERE lp.parent_id = ? component_id */
+
+        $q = Component::getRepository()->createQuery('child')
+                ->select('SUM(child.duration) as duration')
+                ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
+                ->where('lp.parent_id = ?', $component_id);
+        $q = $q->fetchOne();
+        return $q->getDuration();
+    }
+
+    /**
+    * update de duration recursively. Courses, chapters and lessons
+    */
+    public function updateDuration($component_id){
+
+        $component = Component::getRepository()->find($component_id);
+        if ( $component->getType() == Resource::TYPE  ){ // Resource
+            $duration = $component->calculateTime();
+        }else{
+            $duration = ComponentService::getInstance()->calculateTime($component_id);
+        }
+        $component->setDuration($duration);
+        $component->save();
+ 
+        $parents = $component->getParents();
+
+        if ( count($parents) > 0  ){
+            foreach ($parents as $key => $parent) {
+                ComponentService::getInstance()->updateDuration($parent->getId());
+            }
+            
+        } 
 
     }
 }

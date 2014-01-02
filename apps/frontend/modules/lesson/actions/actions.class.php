@@ -91,6 +91,8 @@ class lessonActions extends kuepaActions {
             if (!$id)
                 ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
 
+            ComponentService::getInstance()->updateDuration( $lesson->getId() );
+
             $response['template'] = "Ha " . ($id ? "editado" : "creado") . " la lección satisfactoriamente";
             $response['status'] = "success";
         } else {

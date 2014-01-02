@@ -120,6 +120,7 @@ class resourceActions extends sfActions
       if($form->isValid()){
         //create lesson
         $resourceData = $form->save();
+        ComponentService::getInstance()->updateDuration( $resourceData->getResourceId() );
 
         $response['template'] = "Ok";
         $response['status'] = "success";
