@@ -470,7 +470,7 @@ class migrationActions extends sfActions
 
 				//add reource to lesson
 				LessonService::getInstance()->addResourceToLesson($nlesson->getId(), $resource->getId());
-        ComponentService::getInstance()->updateDuration($resource->getId());
+        		ComponentService::getInstance()->updateDuration($resource->getId());
 
 			}
 		}
@@ -480,6 +480,30 @@ class migrationActions extends sfActions
 	//crear unidades
 	//crear lecciones
 	//crear recursos
+  }
+
+  public function executeCalculateTime2(sfWebRequest $request){
+  	$this->setDuration($request->getParameter("id"));
+  }
+
+  protected function setDuration($component_id){
+	$component = Component::getRepository()->find($component_id);
+	$duration = 0;
+
+    if ( $component->getType() == Resource::TYPE  ){ // Resource
+        $duration = $component->calculateTime();
+    }else{
+        $childs = ComponentService::getInstance()->getChilds($component->getId());
+        foreach($childs as $child){
+        	$duration += $this->setDuration($child->getId());
+        }
+    }
+
+    //update duration
+    $component->setDuration($duration);
+    $component->save();
+
+    return $duration;
   }
 
   

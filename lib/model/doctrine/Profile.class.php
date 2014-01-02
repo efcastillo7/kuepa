@@ -46,6 +46,15 @@ class Profile extends BaseProfile
         return $this->_total_time;
     }
 
+    public function getWeekTime($component = null){
+        $weeks = stdDates::weekday_diff($this->getFirstAccess(),$this->getLastAccess());
+        if($weeks > 0){
+            return $this->getTotalTime($component) / $weeks;
+        }
+
+        return 0;        
+    }
+
     public function getTotalRecourseViewed(){
     	return LogService::getInstance()->getTotalRecourseViewed($this->getId());
     }

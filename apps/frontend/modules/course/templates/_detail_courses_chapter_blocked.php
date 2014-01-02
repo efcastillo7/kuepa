@@ -4,7 +4,7 @@
         <p class="title5 HelveticaRoman clearmargin">
             <?php echo $chapter->getName() ?> 
         </p>
-        <span class="unit-time"><?php echo $chapter->getDuration() ?></span>
+        <span class="unit-time"><?php echo gmdate("Hº i'",$chapter->getDuration()) ?></span>
      </div>
      <div id="lv-chapter-<?php echo $chapter->getId() ?>" class="">
         <p class="gray4 italic">Contenido bloqueado por el docente.</p>

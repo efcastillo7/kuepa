@@ -9,7 +9,7 @@
             <a class="component_remove_link btn btn-mini" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>">Remover</a>
             <?php endif; ?>
         </p>
-        <span class="unit-time"><?php echo $chapter->getDuration() ?></span>
+        <span class="unit-time"><?php echo gmdate("Hº i'",$chapter->getDuration()) ?></span>
      </div>
      <div id="lv-chapter-<?php echo $chapter->getId() ?>" class="">
             <div class="row-fluid">

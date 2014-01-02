@@ -345,10 +345,9 @@ class ComponentService {
             
         }
 
-    }
+    }    
 
     public function getParents($component_id){
-
         $q = Component::getRepository()->createQuery('parent')
                 ->select('parent.*')
                 ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
@@ -357,7 +356,6 @@ class ComponentService {
         $parents = $q->execute();
         return $parents;
     }
-
 
     public function calculateTime($component_id){
        /* SELECT SUM(c.duration)
@@ -369,6 +367,7 @@ class ComponentService {
                 ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
                 ->where('lp.parent_id = ?', $component_id);
         $q = $q->fetchOne();
+
         return $q->getDuration();
     }
 
