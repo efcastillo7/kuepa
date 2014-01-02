@@ -34,7 +34,7 @@
 			<?php foreach ($students as $student): ?>
 			<th>
 				<?php if ($student->getTotalTime($sf_data->getRaw('course')) > 0): ?>
-					<?php echo gmdate("H:i:s",$student->getTotalTime($sf_data->getRaw('course'))) ?> ?>
+					<?php echo gmdate("H:i:s",$student->getTotalTime($sf_data->getRaw('course'))) ?>
 				<?php else: ?>
 					-
 				<?php endif ?>

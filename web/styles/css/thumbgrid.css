@@ -244,6 +244,9 @@
 	color: #fff;
 	opacity:0.5;
 	filter:alpha(opacity=50);
+	position: absolute;
+	right: 12px;
+	top: 12px;
 }
 
 .chapter_list .title {
