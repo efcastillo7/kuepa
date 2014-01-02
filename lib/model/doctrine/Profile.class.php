@@ -70,4 +70,8 @@ class Profile extends BaseProfile
     public function getFriends(){
         return ProfileService::getInstance()->getFriends($this->getId());
     }
+
+    public function getRemainingTime($component_id){
+        return ProfileService::getInstance()->getRemainingTime($this->getId(), $component_id);
+    }
 }

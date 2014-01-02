@@ -128,4 +128,13 @@ class ProfileService {
 
         return $profile;
     }
+
+    public function getRemainingTime($profile_id, $component_id){
+        $component = Component::getRepository()->find($component_id);
+
+        $time_given = $component->getDuration();
+        $time_dedicated = LogService::getInstance()->getTotalTime($profile_id, $component);
+
+        return $time_given - $time_dedicated;
+    }
 }
