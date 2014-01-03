@@ -34,7 +34,7 @@ class LogService {
                 ->fetchOne();
 
         //if exists and is at the same place
-        if($last && $last->component_id == $component_id){
+        if($last && $last->resource_id == $component_id){
             $last->setUpdatedAt(Date('Y-m-d H:i:s', $time))
                  ->save();
             return $last;
@@ -43,7 +43,7 @@ class LogService {
         //otherwise create
         $log = new LogViewComponent();
         $log->setType($type)
-            ->setComponentId($component_id)
+            ->setResourceId($component_id)
             ->setProfileId($profile_id)
             ->save();
 
@@ -57,7 +57,7 @@ class LogService {
                 ->limit(1);
 
         if($component_id){
-            $q->andWhere("component_id = ?", $component_id);
+            $q->andWhere("resource_id = ?", $component_id);
         }
 
         $var = $q->fetchOne();
@@ -118,7 +118,7 @@ class LogService {
         }
 
         if($component){
-            $q->andWhere("lvc.component_id in ($resources)");
+            $q->andWhere("lvc.resource_id in ($resources)");
         }
 
         $q = $q->fetchOne();
@@ -156,7 +156,7 @@ class LogService {
         }
         //add more
 
-        $q->andWhere("lvc.component_id in ($resources)");
+        $q->andWhere("lvc.resource_id in ($resources)");
 
         return $q->fetchOne();
 
@@ -168,14 +168,14 @@ class LogService {
                 ->where("profile_id = ?", $profile_id);
 
         if($unique){
-            $q->select("count(distinct(component_id)) as count");
+            $q->select("count(distinct(resource_id)) as count");
         }else{
-            $q->select("count(component_id) as count");
+            $q->select("count(resource_id) as count");
         }
 
         //if there is a component so get its childs
         if($component_id){
-            $q->andWhere('lvc.component_id in (select child_id from learning_path lp where parent_id = ?)', $component_id);
+            $q->andWhere('lvc.resource_id in (select child_id from learning_path lp where parent_id = ?)', $component_id);
         }
 
         //execute query
@@ -190,7 +190,7 @@ class LogService {
 
     public function getLastViewedResources($profile_id, $date_from = null, $date_to = null, $count = null ){
         $q = LogViewComponent::getRepository()->createQuery('lvc')
-                ->innerJoin("lvc.Component r")
+                ->innerJoin("lvc.Resource r")
                 ->where('lvc.profile_id = ?', $profile_id)
                 // ->andWhere("(lvc.updated_at - lvc.created_at) > 5")
                 // ->limit(20)

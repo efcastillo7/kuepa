@@ -337,11 +337,30 @@ LogViewComponent:
     Timestampable: ~
   columns:
     profile_id: integer
-    component_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    resource_id: integer
     type: string
   relations:
-    Component:
-      local: component_id
+    Course:
+      class: Component
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      class: Component
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      class: Component
+      local: lesson_id
+      foreign: id
+      type: one
+    Resource:
+      class: Component
+      local: resource_id
       foreign: id
       type: one
     Profile:
