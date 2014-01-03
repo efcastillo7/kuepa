@@ -50,11 +50,15 @@ class LogService {
         return $last;
     }
 
-    public function getFirstAccess($profile_id, $course_id = null){
+    public function getFirstAccess($profile_id, $component_id = null){
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->where("profile_id = ?", $profile_id)
                 ->orderBy('created_at asc')
                 ->limit(1);
+
+        if($component_id){
+            $q->andWhere("component_id = ?", $component_id);
+        }
 
         $var = $q->fetchOne();
 
@@ -84,25 +88,33 @@ class LogService {
                 ->select("sum(updated_at - created_at) as total")
                 ->where("profile_id = ?", $profile_id);
 
-        //check type
-        if($component instanceof Course){
-            //if course then get all chapters
-            $parent_id = $component->getId();
-            $chapters = "select child_id from learning_path lp1 where parent_id = $parent_id";
-            $lessons = "select child_id from learning_path lp2 where parent_id in ($chapters)";
-            $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
-        }else if($component instanceof Chapter){
-            $parent_id = $component->getId();
-            $lessons = "select child_id from learning_path lp2 where parent_id in ($parent_id)";
-            $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
-        }else if($component instanceof Lesson){
-            $parent_id = $component->getId();
-            $resources = "select child_id from learning_path lp3 where parent_id in ($parent_id)";
-        }else if($component instanceof Resource){
-            //nothing to do
-            $resources = $component->getId();
-        }else{
-            $resources = $component->getId();
+        $type = $component->getType();
+
+        switch ($type) {
+            case Course::TYPE:
+                $parent_id = $component->getId();
+                $chapters = "select child_id from learning_path lp1 where parent_id = $parent_id";
+                $lessons = "select child_id from learning_path lp2 where parent_id in ($chapters)";
+                $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
+                break;
+            case Chapter::TYPE:
+                $parent_id = $component->getId();
+                $lessons = "select child_id from learning_path lp2 where parent_id in ($parent_id)";
+                $resources = "select child_id from learning_path lp3 where parent_id in ($lessons)";
+                break;
+
+            case Lesson::TYPE:
+                $parent_id = $component->getId();
+                $resources = "select child_id from learning_path lp3 where parent_id in ($parent_id)";
+                break;
+
+            case Resource::TYPE:
+                $resources = $component->getId();
+                break;
+            
+            default:
+                $resources = $component->getId();
+                break;
         }
 
         if($component){

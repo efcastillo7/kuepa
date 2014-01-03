@@ -92,7 +92,55 @@ class StatsService {
                 $this->getEfficiencyIndex($profile_id, $component_id) * (1-$this->_pond);
     }
 
-    
+    public function getRemainingTime($profile_id, $component_id){
+        $component = Component::getRepository()->find($component_id);
+
+        $time_given = $component->getDuration();
+
+        $time_dedicated = LogService::getInstance()->getTotalTime($profile_id, $component);
+
+        return $time_given - $time_dedicated;
+    }
+
+    public function getRemainingPerWeek($profile_id, $component_id, $from_date = null, $to_date = null){
+        $component = Component::getRepository()->find($component_id);
+
+        $remaining = $this->getRemainingTime($profile_id, $component_id);
+
+        if($to_date == null){
+            $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $component_id);
+            //pass to seconds
+            $to_date = strtotime($to_date);
+        }
+
+        if($from_date == null){
+            $from_date = time();
+        }
+
+        $weeks = (stdDates::day_diff($from_date,$to_date) + 1) / 7;
+
+        return $remaining / $weeks;
+    }
+
+    public function getRemainingPerDay($profile_id, $component_id, $from_date = null, $to_date = null){
+        $component = Component::getRepository()->find($component_id);
+
+        $remaining = $this->getRemainingTime($profile_id, $component_id);
+
+        if($to_date == null){
+            $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $component_id);
+            //pass to seconds
+            $to_date = strtotime($to_date);
+        }
+
+        if($from_date == null){
+            $from_date = time();
+        }
+
+        $days_remaining = stdDates::day_diff($from_date,$to_date);
+
+        return $remaining / $days_remaining;
+    }
     
 
 }

@@ -26,6 +26,55 @@ class statsActions extends kuepaActions
 
     $this->course = Course::getRepository()->find($course_id);
     $this->chapters = $this->course->getChapters();
+
+    $profile_id = $this->getProfile()->getId();
+
+    //graph
+    $from_date = LogService::getInstance()->getFirstAccess($profile_id, $course_id);
+    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course_id);
+    
+    $days_remaining = stdDates::day_diff($from_date,$to_date);
+    $working_days = stdDates::weekday_diff($from_date,$to_date);
+
+    $hs_course = $this->course->getDuration() / 3600;
+
+
+    $hs_remaining = StatsService::getInstance()->getRemainingTime($profile_id, $course_id) / 3600 ;
+    $hs_per_day = $hs_course / $working_days;
+
+    $ndays = array('estimated' => array('x' => array(), 'y' => array()), 'real' => array('x' => array(), 'y' => array()));
+    $days = -1;
+    $last = $hs_remaining;
+
+    for($i=0; $i<$days_remaining+1;$i++){
+      $date = strtotime("+$i days", $from_date);
+      
+      //check if weekday
+      $weekday = date('w', $date);
+
+      if($weekday > 0 &&  $weekday < 6){
+        $days++;
+      }
+      // $days = $i;
+
+      $ndays['estimated']['x'][] = round($hs_course - $days*$hs_per_day);
+      $ndays['estimated']['y'][] = date('d/m', $date);
+
+      if($days > 10){
+        $rnd = rand(0,5);
+        $ndays['real']['x'][] = round($last - $rnd);  
+        $last-= $rnd;
+      }else{
+        $ndays['real']['x'][] = round($hs_course);
+      }
+      
+
+      
+    }
+
+    $this->days = $ndays;
+
+
     // $this->students = CourseService::getInstance()->getStudentsList($course_id);
   }
 

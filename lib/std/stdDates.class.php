@@ -30,4 +30,18 @@ class stdDates{
  
     return count($week_days);
   }
+
+  public static function day_diff($from, $to, $normalise=true){
+    $_from = is_int($from) ? $from : strtotime($from);
+    $_to   = is_int($to) ? $to : strtotime($to);
+ 
+    // normalising means partial days are counted as a complete day.
+    if ($normalise) {
+      $_from = strtotime(date('Y-m-d', $_from));
+      $_to = strtotime(date('Y-m-d', $_to));
+    }
+
+    $datediff = $_to - $_from;
+    return floor($datediff/(60*60*24));
+  }
 }
