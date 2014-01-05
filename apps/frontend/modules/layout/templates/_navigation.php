@@ -25,6 +25,7 @@
                 <li class="dropdown">
                     <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i> <?php echo $profile->getNickname() ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="requestSupport-button">Llamar a soporte</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Log out</a></li>
                     </ul>
                 </li>
@@ -33,7 +34,7 @@
     </div>
 </div><!-- /navbar -->
 
-    
+
 <!-- Modal -->
 <div id="myModal" class="nav-menu-modal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <ul class="unstyled">

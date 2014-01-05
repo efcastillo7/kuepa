@@ -1,0 +1,96 @@
+tr.warning td {
+  background: #fcf8e3 !important;
+  text-align: center; }
+
+[name='video_session[scheduled_for][month]'],
+[name='video_session[scheduled_for][day]'],
+[name='video_session[scheduled_for][hour]'],
+[name='video_session[scheduled_for][minute]'] {
+  width: 65px; }
+
+[name='video_session[scheduled_for][year]'] {
+  width: 80px; }
+
+.text-red {
+  color: #CC131F; }
+  .text-red:hover {
+    color: #E61523; }
+
+.text-orange {
+  color: #E65D18; }
+  .text-orange:hover {
+    color: #FF671B; }
+
+.text-yellow {
+  color: #E6BB0F; }
+  .text-yellow:hover {
+    color: #FFCF11; }
+
+.text-lightgreen {
+  color: #71B33E; }
+  .text-lightgreen:hover {
+    color: #81CC47; }
+
+.text-green {
+  color: #009968; }
+  .text-green:hover {
+    color: #00B379; }
+
+.text-lightblue {
+  color: #00B3A7; }
+  .text-lightblue:hover {
+    color: #00CCBE; }
+
+.text-blue {
+  color: #273691; }
+  .text-blue:hover {
+    color: #2E40AD; }
+
+.text-violet {
+  color: #5A4099; }
+  .text-violet:hover {
+    color: #694BB3; }
+
+.text-purple {
+  color: #CC085A; }
+  .text-purple:hover {
+    color: #E60965; }
+
+.text-darkblue {
+  color: #121966; }
+  .text-darkblue:hover {
+    color: #161F80; }
+
+.video_session-nav {
+  margin-bottom: 0; }
+
+.video_session-tab_container {
+  border-left: solid 1px #ddd;
+  border-right: solid 1px #ddd;
+  border-bottom: solid 1px #ddd;
+  padding: 20px; }
+
+.video_session_status {
+  width: 12px;
+  height: 12px;
+  margin: 4px 0 0 6px;
+  display: block;
+  border-radius: 50%;
+  cursor: pointer; }
+  .video_session_status.pending {
+    background-color: #F3CD89; }
+  .video_session_status.started {
+    background-color: #89CF7F; }
+  .video_session_status.ended {
+    background-color: #F38989; }
+
+#signin-button {
+  padding: 10px 10px 0;
+  border: solid 2px rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin: 10px 0; }
+
+.hangout_actions div {
+  vertical-align: middle !important; }

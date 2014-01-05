@@ -1,19 +1,20 @@
 # Main user entity, sfGuardUser is only used to store basic user data and login credentials
 Profile:
-  tableName:                   profile
+  tableName: profile
   actAs:
     Timestampable: ~
     SoftDelete: ~
   columns:
-    sf_guard_user_id:          integer 
-    nickname:                  varchar(20)
-    first_name:                varchar(20)
-    last_name:                 varchar(20)
-    birthdate:                 date
-    sex:                       { type: enum, values: [male, female] }
-    valid_until:               date
+    sf_guard_user_id: integer
+    google_id: varchar(45)
+    nickname: varchar(20)
+    first_name: varchar(20)
+    last_name: varchar(20)
+    birthdate: date
+    sex: { type: enum, values: [male, female] }
+    valid_until: date
   relations:
-    sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
+    sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
       class: College
       refClass: ProfileCollege
@@ -95,7 +96,7 @@ Component:
       foreign: id
       local: profile_id
       type: one
-    
+
 Resource:
   inheritance:
     extends:          Component
@@ -110,7 +111,7 @@ Resource:
       type: many
       foreignType: one
       foreignAlias: Resource
-  
+
 Course:
   inheritance:
     extends:          Component
@@ -190,7 +191,7 @@ ResourceData:
 
 
 ResourceDataDocument:
-  columns: 
+  columns:
     document_type: { type: enum, values: [pdf, image, ppt] }
   inheritance:
     extends: ResourceData
@@ -206,7 +207,7 @@ ResourceDataText:
     keyValue: Text
 
 ResourceDataVideo:
-  columns: 
+  columns:
     video_type: { type: enum, values: [youtube, vimeo, embebed] }
     path: { type: string }
   inheritance:
@@ -453,3 +454,26 @@ RegisterCodeHasCourse:
   columns:
     register_code: {type: string(50), primary: true}
     course_id: {type: integer, primary: true}
+
+VideoSession:
+  tableName: video_session
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    profile_id: integer
+    student_profile_id: integer
+    chapter_id: integer
+    course_id: integer
+    scheduled_for: datetime
+    title: {type: string(100)}
+    description: {type: string(255)}
+    status: { type: enum, values: [pending, started,ended], default: pending }
+    hangout_url: {type: string(200)}
+    type: { type: enum, values: [class, support] }
+  relations:
+    Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+    Student: { class: Profile, onDelete: CASCADE, local: student_profile_id, foreign: id, foreignType: one }
+    Chapter: { class: Component, onDelete: CASCADE, local: chapter_id, foreign: id, foreignType: one }
+    Course: { class: Component, onDelete: CASCADE, local: course_id, foreign: id, foreignType: one }
