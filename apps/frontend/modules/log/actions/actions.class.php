@@ -18,8 +18,12 @@ class logActions extends sfActions
   public function executeResource(sfWebRequest $request)
   {
     $resource_id = $request->getParameter("resource_id");
+    $course_id = $request->getParameter("course_id");
+    $chapter_id = $request->getParameter("chapter_id");
+    $lesson_id = $request->getParameter("lesson_id");
 
-    $time = LogService::getInstance()->viewResource(Resource::TYPE, $resource_id, $this->getUser()->getProfile()->getId());
+    $time = LogService::getInstance()->viewResource($this->getUser()->getProfile()->getId(), 
+      Resource::TYPE, $course_id, $chapter_id, $lesson_id, $resource_id);
 
     $time_lapse = strtotime($time->getUpdatedAt()) - strtotime($time->getCreatedAt());
 

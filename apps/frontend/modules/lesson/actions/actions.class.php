@@ -61,7 +61,8 @@ class lessonActions extends kuepaActions {
         ComponentService::getInstance()->updateDuration($this->resource->getId());
 
         //update log
-        LogService::getInstance()->viewResource(Resource::TYPE, $this->lesson->getActualResourceId(), $this->getUser()->getProfile()->getId());
+        LogService::getInstance()->viewResource($this->getUser()->getProfile()->getId(), 
+            Resource::TYPE, $this->course->getId(), $this->chapter->getId(), $this->lesson->getId(), $this->resource->getId());
 
         //set ProfileComponentCompletedStatus
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());

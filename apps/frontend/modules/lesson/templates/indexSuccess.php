@@ -1,4 +1,7 @@
 <script>
+    var course_id = <?php echo $course->getId() ?>;
+    var chapter_id = <?php echo $chapter->getId() ?>;
+    var lesson_id = <?php echo $lesson->getId() ?>;
     var resource_id = <?php echo $resource->getId() ?>;
 </script>
 <?php use_javascript('uno/lesson.js') ?>

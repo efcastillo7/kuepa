@@ -79,7 +79,7 @@ $(document).ready(function() {
     //log interval
     setInterval(function(){
         $.ajax('/log/resource', {
-            data: {resource_id: resource_id},
+            data: {resource_id: resource_id, course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id},
             dataType: 'json',
             type: 'POST',
             success: function(data) {

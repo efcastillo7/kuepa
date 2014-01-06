@@ -21,7 +21,7 @@ class LogService {
         return;
     }
 
-    public function viewResource($type, $component_id, $profile_id){
+    public function viewResource($profile_id, $type, $course_id, $chapter_id, $lesson_id, $resource_id){
         //search for current log for update
         $time = time();
         $time_window = Date('Y-m-d H:i:s', $time - sfConfig::get("app_log_window"));
@@ -34,7 +34,11 @@ class LogService {
                 ->fetchOne();
 
         //if exists and is at the same place
-        if($last && $last->resource_id == $component_id){
+        if($last && 
+            $last->resource_id == $resource_id && 
+            $last->lesson_id == $lesson_id &&
+            $last->chapter_id == $chapter_id && 
+            $last->course_id == $course_id){
             $last->setUpdatedAt(Date('Y-m-d H:i:s', $time))
                  ->save();
             return $last;
@@ -43,21 +47,36 @@ class LogService {
         //otherwise create
         $log = new LogViewComponent();
         $log->setType($type)
-            ->setResourceId($component_id)
+            ->setCourseId($course_id)
+            ->setChapterId($chapter_id)
+            ->setLessonId($lesson_id)
+            ->setResourceId($resource_id)
             ->setProfileId($profile_id)
             ->save();
 
         return $last;
     }
 
-    public function getFirstAccess($profile_id, $component_id = null){
+    public function getFirstAccess($profile_id, $course_id = null, $chapter_id = null, $lesson_id = null, $resource_id = null){
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->where("profile_id = ?", $profile_id)
                 ->orderBy('created_at asc')
                 ->limit(1);
 
-        if($component_id){
-            $q->andWhere("resource_id = ?", $component_id);
+        if($course_id){
+            $q->andWhere("course_id = ?", $course_id);
+        }
+
+        if($chapter_id){
+            $q->andWhere("chapter_id = ?", $chapter_id);
+        }
+
+        if($lesson_id){
+            $q->andWhere("lesson_id = ?", $lesson_id);
+        }
+
+        if($resource_id){
+            $q->andWhere("resource_id = ?", $chapter_id);
         }
 
         $var = $q->fetchOne();
@@ -83,10 +102,18 @@ class LogService {
         return null;
     }
 
-    public function getTotalTime($profile_id, $component = null){
+    public function getTotalTime($profile_id, $component = null, $from_date = null, $to_date = null){
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->select("sum(updated_at - created_at) as total")
                 ->where("profile_id = ?", $profile_id);
+
+        if($from_date){
+            $q->andWhere("created_at >= ?", date("Y-m-d", $from_date));
+        }
+
+        if($to_date){
+            $q->andWhere("created_at < ?", date("Y-m-d", $to_date));
+        }
 
         $type = $component->getType();
 

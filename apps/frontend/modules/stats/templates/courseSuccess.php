@@ -1,8 +1,5 @@
 <h4><?php echo $course->getName() ?></h4>
 
-
-<?php echo gmdate("H:i:s", StatsService::getInstance()->getRemainingPerWeek($sf_user->getProfile()->getId(), $course->getId())) ?>
-
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <div id="container" style="width:100%; height:400px;"></div>
 
@@ -43,9 +40,16 @@
             ],
             dashStyle: 'longdash'
         },{
-        	name: "Horas Restantes",
+            name: "Horas Proyección",
             data: [
-            	<?php echo implode(",",$days['real']->getRaw('x')) ?>
+                <?php echo implode(",",$days['proyect']->getRaw('x')) ?>
+            ],
+            dashStyle: 'longdash'
+        	
+        },{
+            name: "Horas Dedicadas",
+            data: [
+                <?php echo implode(",",$days['real']->getRaw('x')) ?>
             ]
         },
         ]
