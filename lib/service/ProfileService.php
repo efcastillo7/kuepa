@@ -39,7 +39,7 @@ class ProfileService {
         $sql_college = "";
 
         if($profile->getColleges()->count()){
-            $college_id = $profile->getColleges()->getFirst();
+            $college_id = $profile->getColleges()->getFirst()->getId();
             $sql_college = "(select profile_id from profile_college where college_id = $college_id)";
             $subquery = "SELECT distinct(profile_id) FROM ($sql_college UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = $profile_id)) ) t1 where profile_id != $profile_id";
         }else{
