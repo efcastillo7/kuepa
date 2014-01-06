@@ -5,10 +5,10 @@ var $hoveredEl      = {};
 $(function(){
 
     //Hangout create form init and processing
-    initAddForm();
+    initAddVideoSessionForm();
 
     //Hangout edit form init and processing
-    initEditForm();
+    initEditVideoSessionForm();
 
     //When a teacher clicks on the Add Hangout button a modal form is shown
     $(".addVideoSession-button").click( onHangoutAddClicked );
@@ -24,7 +24,7 @@ $(function(){
 
     //Detects when a Start Hangot button is pressed (Hack to detect iframe clicks)
     $(window).blur( onWindowBlured );
-    $(".catchHangoutUrl").parent().hover(
+    $(".hangout_actions").hover(
         function(){ iframeMouseOver = true; $hoveredEl = $(this); },
         function(){ iframeMouseOver = false; $hoveredEl = {}; }
     );
@@ -48,10 +48,9 @@ $(function(){
  * Add Hangout form init and processing
  * @returns void
  */
-function initAddForm(){
+function initAddVideoSessionForm(){
 
     var $container  = $("#modal-create-video_session-form-container");
-    var $form       = $("form",$container);
     var options     = {
         success: function(data) {
 
@@ -62,20 +61,21 @@ function initAddForm(){
             if (data.status === "success") {
                 location.href = "/video_session";
             } else {
-                $form.ajaxForm(options);
+                $("[name='video_session[course_id]']").bind("change", onCourseChange).trigger("change");
+                $("form",$container).ajaxForm(options);
             }
         },
         dataType: 'json'
     };
 
-    $form.ajaxForm(options);
+    $("form",$container).ajaxForm(options);
 }
 
 /**
  * Instanciates an ajax form for the hangout url submission
  * @returns void
  */
-function initEditForm(){
+function initEditVideoSessionForm(){
     $("form","#modal-update-video_session-url").ajaxForm({
         success : onHangoutFormSuccess,
         dataType: 'json'
@@ -204,10 +204,10 @@ function onHangoutFinishClicked(e){
  * @param jQuery $tr
  * @returns {void}
  */
-function onHangoutStartClicked($tr){
+function onHangoutStartClicked($el){
     var $hangoutUrlModal    = $("#modal-update-video_session-url");
     var $hidden             = $("[name=video_session_id]",$hangoutUrlModal);
-    var id                  = $tr.attr("data-id");
+    var id                  = $el.parents("tr[data-id]").attr("data-id");
 
     /*
      * TODO: Checkear si se aplicara reestriccion
@@ -232,6 +232,7 @@ function onHangoutStartClicked($tr){
  * @returns {void}
  */
 function onWindowBlured(){
+    console.log("window blured",iframeMouseOver);
     if(iframeMouseOver){
         setTimeout(function(){
             onHangoutStartClicked($hoveredEl);

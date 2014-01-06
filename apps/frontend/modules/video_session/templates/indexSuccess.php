@@ -6,7 +6,7 @@
 </script>
 <div id="" class="container">
     <a href="#" class="pull-right btn btn-default addVideoSession-button"><span class="icon-plus"></span>Crear nueva</a>
-    <p class="title3">Sesiones de video (Hangouts)</p>
+    <p class="title3">Sesiones de video</p>
     <div class="tabbable">
         <ul class="nav nav-tabs video_session-nav">
             <?php if ($sf_user->hasCredential("docente")): ?>
@@ -49,3 +49,6 @@ echo include_component('video_session', 'Modalurl');
 echo include_partial('Modalform_edit');
 echo include_partial('Modalfinish');
 echo include_partial('ModalLogin');
+?>
+
+<script src="/js/video_session.js"></script>

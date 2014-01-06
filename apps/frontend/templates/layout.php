@@ -78,8 +78,7 @@
         <script src="/js/bootstrap-carousel.js"></script>
         <script src="/js/bootstrap-typeahead.js"></script>
         <script src="/js/course.js"></script>
-        <script src="/js/video_session.js"></script>
-        <script src="/js/support.js"></script>
+        <script src="/js/support.global.js"></script>
 
         <script type="text/javascript">
             $(".knob-small").knob({

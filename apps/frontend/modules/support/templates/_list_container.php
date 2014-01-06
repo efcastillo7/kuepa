@@ -11,10 +11,10 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="pane-own_video_sessions_next">
-                <?php include_partial('list', array('type' => 'pending', 'video_sessions' => $pending, 'pid' => $pid)); ?>
+                <?php include_partial('list', array('type' => 'pending', 'video_sessions' => $pending)); ?>
             </div>
             <div class="tab-pane" id="pane-own_video_sessions_prev">
-                <?php include_partial('list', array('type' => 'historic', 'video_sessions' => $historic, 'pid' => $pid)); ?>
+                <?php include_partial('list', array('type' => 'historic', 'video_sessions' => $historic)); ?>
             </div>
 
         </div>

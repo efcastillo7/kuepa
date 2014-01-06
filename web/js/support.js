@@ -3,13 +3,8 @@ var $hoveredElSupport      = {};
 
 $(function(){
 
-    initEditForm();
-
     //When a support agent access to a support request
     $(".accessSupport-button").click( onAccessSupportClicked );
-
-    //When a student clicks on the start support button
-    $(".requestSupport-button").click( onSupportClicked );
 
     //When a teacher clicks on the Finish Hangout button a modal form is shown
     $(".finishSupport-trigger").click( onSupportFinishTriggered );
@@ -28,17 +23,6 @@ $(function(){
 
 });
 
-/**
- * Instanciates an ajax form for the hangout url submission
- * @returns void
- */
-function initEditForm(){
-    $("form","#modal-update-support-url").ajaxForm({
-        success : onSupportFormSuccess,
-        dataType: 'json'
-    });
-}
-
 function onAccessSupportClicked(e){
     var $this = $(this);
     var $tr = $this.parents("tr[data-id]");
@@ -53,24 +37,6 @@ function onAccessSupportClicked(e){
         }
     });
 
-}
-
-/**
- * Callback to the form submit success
- *
- * @param string data
- * @returns {void}
- */
-function onSupportFormSuccess(data){
-    var $hangoutUrlModal = $("#modal-update-support-url");
-
-    $hangoutUrlModal
-        .html(data.template)
-        .show();
-
-    if (data.status === "success") {
-
-    }
 }
 
 /**
@@ -115,41 +81,6 @@ function onSupportFinishClicked(e){
         }
 
     },"json");
-}
-
-/**
- * Callback triggered when a Start Hangout button is pressd
- *
- * @param jQuery $tr
- * @returns {void}
- */
-function onSupportClicked(){
-    var $hangoutUrlModal    = $("#modal-update-support-url");
-    var $hidden             = $("[name=support_id]",$hangoutUrlModal);
-    var $_creating          = $(".creating",$hangoutUrlModal);
-    var $_form              = $(".urlForm",$hangoutUrlModal);
-
-    triggerModalSuccess({
-        id      : "modal-update-support-url",
-        title   : "Iniciando sesión con soporte...",
-        effect  : "md-effect-17"
-    });
-
-    $_creating.show(0);
-    $_form.hide(0);
-
-    window.open(defaultUrl, "Sesión de soporte","width=900,height=700");
-
-    $.getJSON("/support/create",function(data){
-        if(data.status == "success"){
-            $hidden.val(data.id);
-            $_creating.slideUp(500);
-            $_form.slideDown(500);
-        }else{
-
-        }
-    });
-
 }
 
 /**

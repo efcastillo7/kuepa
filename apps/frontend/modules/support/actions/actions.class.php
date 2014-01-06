@@ -17,7 +17,6 @@ class supportActions extends sfActions {
     public function executeIndex(sfWebRequest $request) {
 
         $this->profile_id               = $this->getUser()->getGuardUser()->getProfile()->getId();
-        $this->google_id                = $this->getUser()->getGuardUser()->getProfile()->getGoogleId();
         $this->pending_video_sessions   = VideoSessionService::getInstance()->getPendingSupportSessions();
         $this->historic_video_sessions  = VideoSessionService::getInstance()->getHistoricSupportSessions();
 
@@ -100,7 +99,7 @@ class supportActions extends sfActions {
 
         if($video_session){
             $video_session
-                ->setHangoutUrl($url.$appId)
+                ->setHangoutUrl($url.$appId.$dataPa)
                 ->save();
 
             $response['template']   = "Ha grabado la url de la sesión soporte satisfactoriamente";

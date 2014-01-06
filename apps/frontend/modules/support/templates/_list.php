@@ -17,7 +17,6 @@
 
                 //If the hangout has already been created it's joined, otherwise it's created
                 $storedUrl      = $video_session->getHangoutUrl();
-                $isOwner        = $video_session->getProfileId() == $pid;
                 $supportName    = trim($video_session->getProfile()->getLastName()." ".$video_session->getProfile()->getFirstName());
 
                 ?>
@@ -29,9 +28,7 @@
                     <?php if($type==="pending"): ?>
                     <td>
                         <div class="btn-group hangout_actions">
-                        <?php if($isOwner): ?>
-                            <a class="btn btn-mini btn-warning <?php echo $video_session->getStatus() != "started" ? "disabled" : "finishSupport-trigger" ?>">Finalizar</a>
-                        <?php endif; ?>
+                        <a class="btn btn-mini btn-warning <?php echo $video_session->getStatus() != "started" ? "disabled" : "finishSupport-trigger" ?>">Finalizar</a>
                         <a target="_blank" class="btn btn-mini btn-success accessSupport-button <?php echo empty($storedUrl) ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>" data-toggle="tooltip" title="<?php echo empty($storedUrl) ? "El usuario aún debe cargar la URL del hangout" : "Acceder ahora" ; ?>">Acceder</a>
                         </div>
                     </td>
