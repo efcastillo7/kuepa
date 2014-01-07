@@ -381,12 +381,14 @@ class ComponentService {
 
     }    
 
-    public function getParents($component_id){
+    public function getParents($component_id, $orderBy = 'asc'){
+
         $q = Component::getRepository()->createQuery('parent')
                 ->select('parent.*')
                 ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
                 ->where('lp.child_id = ?', $component_id)
                 ->orderBy("lp.position $orderBy");
+
         $parents = $q->execute();
         return $parents;
     }
