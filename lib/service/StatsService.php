@@ -102,6 +102,30 @@ class StatsService {
         return $time_given - $time_dedicated;
     }
 
+    public function getAvgAdvancePerDay($profile_id, $component_id, $from_date = null, $to_date = null){
+        $component = Component::getRepository()->find($component_id);
+
+        if($from_date == null){
+            //first access
+            $from_date = strtotime(LogService::getInstance()->getFirstAccess($profile_id, $course_id));
+        }
+
+        if($to_date == null){
+            //now
+            $to_date = time();
+        }
+
+        $time_dedicated = LogService::getInstance()->getTotalTime($profile_id, $component, $from_date, $to_date) / 3600;
+        $days_between = stdDates::day_diff($from_date, $to_date);
+
+        return $time_dedicated / $days_between;
+    }
+
+    public function getAvgAdvancePerWeek($profile_id, $component_id, $from_date = null, $to_date = null){
+        //avg per day * 7 days
+        return $this->getAdvancePerDay($profile_id, $component_id, $from_date, $to_date) * 7;
+    }
+
     public function getRemainingPerWeek($profile_id, $component_id, $from_date = null, $to_date = null){
         $component = Component::getRepository()->find($component_id);
 

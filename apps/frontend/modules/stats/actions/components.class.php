@@ -18,7 +18,7 @@ class statsComponents extends sfComponents
       $this->seted_deadline = true;
 
       //graph
-      $from_date = strtotime($first_access) - 24*3600;
+      $from_date = strtotime($first_access);
       $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course_id);
       
       $days_remaining = stdDates::day_diff($from_date,$to_date);
@@ -91,13 +91,12 @@ class statsComponents extends sfComponents
       $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course_id);
       
       $weeks_remaining = stdDates::day_diff($from_date,$to_date) / 7;
-      $working_weeks = stdDates::weekday_diff($from_date,$to_date) / 7;
       $weeks_from_started = stdDates::day_diff($from_date,time()) / 7;
 
       $hs_course = $course->getDuration() / 3600;
 
       $hs_remaining = StatsService::getInstance()->getRemainingTime($profile_id, $course_id) / 3600 ;
-      $hs_per_week = $hs_course / ($count_weekends ? $working_days : $days_remaining) / 7;
+      $hs_per_week = $hs_course / $weeks_remaining;
 
       $hs_per_week_dedicated = ($hs_course - $hs_remaining) / $weeks_from_started;
 
@@ -107,21 +106,20 @@ class statsComponents extends sfComponents
 
       $today = time();
 
-      for($i=0; $i<$weeks_remaining;$i++){ //add today
+      $to_date = strtotime($to_date);
+
+      for($i=0; $i<$weeks_remaining + 1;$i++){ //add today
         $date = strtotime("+$i weeks", $from_date);
-        $date_tomorrow = strtotime("+" . $i+1 . " weeks", $from_date);
+        $date_tomorrow = MIN(strtotime("+" . $i+1 . " weeks", $from_date), $to_date);
         
-        $ndays['estimated']['x'][] = round($hs_course - $i*$hs_per_week);
-        $ndays['estimated']['y'][] = date('d/m', $date);
+        $ndays['estimated']['x'][] = MAX(round($hs_course - $i*$hs_per_week,1),0);
+        $ndays['estimated']['y'][] = date('d/m', $date) . " a " . date('d/m', $date_tomorrow);
 
         if($date < $today){
           $hs_dedicated = round(LogService::getInstance()->getTotalTime($profile_id, $course, $date, $date_tomorrow)/3600);
           $ndays['real']['x'][] = $last - $hs_dedicated;
-        }else{
-          $hs_dedicated = $hs_per_week_dedicated;
         }
 
-        $ndays['proyect']['x'][] = round($last - $hs_dedicated);
         $last -= $hs_dedicated;
 
       }

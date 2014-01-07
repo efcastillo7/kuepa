@@ -16,10 +16,8 @@ class profileActions extends sfActions
      * @param sfRequest $request A request object
      */
 	public function executeCreate(sfWebRequest $request) {
-		
-
 		return $this->renderText(json_encode("Success"));
-	}
+	} 
 
 	/**
      * GET /profile/friends
