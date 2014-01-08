@@ -40,4 +40,40 @@ class LessonService {
         return ComponentService::getInstance()->getChilds($lesson_id, Resource::TYPE);
     }
 
+    public function getDependencyPathList($course_id, $chapter_id, $lesson_id){
+        $q = DependencyPath::getRepository()->createQuery("dp");
+        $q->where("course_id = ?", $course_id)
+          ->andWhere("chapter_id = ?", $chapter_id)
+          ->andWhere("lesson_id = ?", $lesson_id);
+        return($q->execute());
+    }
+
+    public function checkLessonOnDependencyPath($course_id, $chapter_id, $lesson_id, $depends_lesson_id){
+        $q = DependencyPath::getRepository()->createQuery("dp");
+        $q->where("depends_lesson_id = ?", $depends_lesson_id)
+          ->andWhere("course_id = ?", $course_id)
+          ->andWhere("chapter_id = ?", $chapter_id)
+          ->andWhere("lesson_id = ?", $lesson_id);
+        return($q->execute());
+    }
+
+    public function addDependencyToLesson($form_values){
+        $dp = new DependencyPath();
+        $dp ->setCourseId( $form_values['course_id'] )
+            ->setChapterId( $form_values['chapter_id'] )
+            ->setLessonId( $form_values['lesson_id'] )
+            ->setDependsCourseId( $form_values['depends_course_id'] )
+            ->setDependsChapterId( $form_values['depends_chapter_id'] )
+            ->setDependsLessonId( $form_values['depends_lesson_id'] )
+            ->save();
+        return($dp);
+     }
+
+    public function removeDependencyForLesson($dependency_path_id){
+        $dp = DependencyPath::getRepository()->find($dependency_path_id);
+        if ($dp) {
+            $dp->delete();
+        }
+     }
+
 }

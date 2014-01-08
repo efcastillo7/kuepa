@@ -150,6 +150,15 @@ LearningPath:
       foreign: id
       type: one
 
+DependencyPath:
+  columns:
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    depends_course_id: integer
+    depends_chapter_id: integer
+    depends_lesson_id: integer
+
 ResourceData:
   actAs:
     Timestampable: ~

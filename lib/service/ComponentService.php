@@ -278,7 +278,7 @@ class ComponentService {
                 ->select('parent.*')
                 ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
                 ->where('lp.child_id = ?', $component_id)
-                ->orderBy("lp.position $orderBy");
+                ->orderBy("lp.position");
         $parents = $q->execute();
         return $parents;
     }
