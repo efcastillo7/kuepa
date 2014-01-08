@@ -69,6 +69,9 @@ $(function() {
 
                 parent.append(content);
 
+                //tooltips
+                $("[rel='tooltip']", content).tooltip();
+
                 $("body").animate({ scrollTop: parent.offset().top + 170});
 
                 //reload knob
