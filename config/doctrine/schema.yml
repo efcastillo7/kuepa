@@ -177,14 +177,17 @@ DependencyPath:
       foreign: id
       type: one
     DependsCourse:
+      class: Course
       local: depends_course_id
       foreign: id
       type: one
     DependsChapter:
+      class: Chapter
       local: depends_chapter_id
       foreign: id
       type: one
     DependsLesson:
+      class: Lesson
       local: depends_lesson_id
       foreign: id
       type: one
