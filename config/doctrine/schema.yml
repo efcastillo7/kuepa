@@ -163,6 +163,31 @@ DependencyPath:
     depends_course_id: integer
     depends_chapter_id: integer
     depends_lesson_id: integer
+  relations:
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+    DependsCourse:
+      local: depends_course_id
+      foreign: id
+      type: one
+    DependsChapter:
+      local: depends_chapter_id
+      foreign: id
+      type: one
+    DependsLesson:
+      local: depends_lesson_id
+      foreign: id
+      type: one
 
 ResourceData:
   actAs:
