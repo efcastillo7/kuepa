@@ -40,6 +40,12 @@ class ComponentForm extends BaseComponentForm {
             'max_size' => "Tamaño de imagen demasiado grande",
         )));
 
+        $years = range(date("Y"), date("Y")+1);
+        $this->setWidget('deadline', new sfWidgetFormDate(array(
+            'format' => '%day%/%month%/%year%',
+            'years' => array_combine($years, $years)
+        )));
+
         $this->getWidgetSchema()->setIdFormat('%s' . ($this->isNew() ? "" : "-" . $this->getObject()->getId()));
     }
 

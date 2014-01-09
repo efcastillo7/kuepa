@@ -63,7 +63,7 @@ class Resource extends BaseResource
     *  @1. Store word_count field on the ResourceData Table for text
     *  @return time in seconds
     */
-    public function calculateTime(){
+    public function calculateTime($force = false){
         $resourceData = $this -> getResourceData() -> getFirst();
 
         // There are some resources without ResourceData
@@ -76,7 +76,7 @@ class Resource extends BaseResource
         $resource_time = $resourceData->getReadingTime();
 
         // if reading time is 0, it is calculated , otherwise it is returned
-        if ( (int)$resource_time == 0 ){
+        if ( (int)$resource_time == 0 || $force ){
             switch ($type) {
                  case 'document': // pdf ppt
                     $word_count = $resourceData -> getWordCount();

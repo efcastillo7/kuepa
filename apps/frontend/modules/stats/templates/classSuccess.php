@@ -45,7 +45,7 @@
 			<td colspan="2">Promedio de Horas por Semana</td>
 			<?php foreach ($students as $student): ?>
 			<th> 
-				<?php echo gmdate("H:i", $student->getTotalTime($sf_data->getRaw('course')) / stdDates::weekday_diff($student->getFirstAccess(),$student->getLastAccess())) ?> hs 
+				<?php echo gmdate("H:i", $student->getWeekTime($sf_data->getRaw('course'))) ?> hs 
 			</th>
 			<?php endforeach ?>
 		</tr>

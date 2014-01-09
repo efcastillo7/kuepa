@@ -57,6 +57,9 @@ class lessonActions extends kuepaActions {
         $this->is_last_resource = $this->lesson->atLastResource();
         $this->is_first_resource = $this->lesson->atFirstResource();
 
+        //test
+        ComponentService::getInstance()->updateDuration($this->resource->getId());
+
         //update log
         LogService::getInstance()->viewResource(Resource::TYPE, $this->lesson->getActualResourceId(), $this->getUser()->getProfile()->getId());
 
@@ -104,21 +107,6 @@ class lessonActions extends kuepaActions {
         }
 
         return $this->renderText($response['template']);
-    }
-    
-    public function executeTest(sfWebRequest $request) {
-        $answers = array();
-        
-        //correcta es la 1, la 2 es incorrecta
-        $answers[1] = 1;
-        
-        //correcta son las 3 y 4 y son las unicas que hay
-        $answers[2] = array(3,4);
-        
-        //[argentina] queda en la region [sur] de [america, america del sur, continente americano]. La provincia [asdadsads] es la provincia más al [asddas] del mundo.
-        $answers[3] = array("argentina", "sur", "continente americano", "caca", "cacona");
-        
-        var_dump(Exercise::getRepository()->find(1)->evaluate($answers));
     }
 
 

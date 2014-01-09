@@ -33,6 +33,8 @@ ProfileLearningPath:
   columns:
     profile_id: {type: integer, primary: true}
     component_id: {type: integer, primary: true}
+    deadline: { type: date }
+    position: { type: integer, default: 0 }
 
 ProfileCollege:
   columns:
@@ -77,6 +79,7 @@ Component:
     profile_id: { type: integer }
     color: { type: enum, values: [green, lightgreen, violet, red, purple, blue, lightblue, darkblue, orange]}
     duration: float
+    deadline: { type: date }
   relations:
     Parents:
       class: Component
@@ -324,6 +327,10 @@ ExerciseAttemp:
     value: float
     content: blob
   relations:
+    ResourceData:
+      local: exercise_id
+      foreign: content
+      type: many
     Exercise:
       local: exercise_id
       foreign: id
@@ -381,6 +388,13 @@ ProfileComponentCompletedStatus:
     profile_id: {type: integer, primary: true}
     component_id: {type: integer, primary: true}
     completed_status: {type: integer}
+    velocity_index: float
+    completitud_index: float
+    skill_index: float
+    persistence_index: float
+    effort_index: float
+    efficiency_index: float
+    learning_index: float
   relations:
     Component:
       local: component_id

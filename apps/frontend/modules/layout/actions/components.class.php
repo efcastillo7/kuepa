@@ -10,4 +10,12 @@ class layoutComponents extends kuepaComponents {
         }
     }
 
+    public function executeNavigationV2() {
+        $this->profile = null;
+        
+        if($this->getUser()->isAuthenticated()) {
+            $this->profile = $this->getProfile();
+        }
+    }
+
 }

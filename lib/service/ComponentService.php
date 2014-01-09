@@ -166,6 +166,28 @@ class ComponentService {
         return $q->execute();
     }
 
+    public function getCountChilds($component_id, $type = null) {
+        //TODO: check orderBy parameter SQLINJ
+
+        $q = Component::getRepository()->createQuery('child')
+                ->select('count(child.id) as total')
+                ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
+                ->where('lp.parent_id = ?', $component_id);
+
+        if ($type) {
+            $q->andWhere('child.type = ? ', $type);
+        }
+
+        //execute query
+        $r = $q->fetchOne();
+
+        if($q){
+            return $r->getTotal();;
+        }        
+
+        return 0;
+    }
+
     public function getChilds($component_id, $type = null, $orderBy = 'asc') {
         //TODO: check orderBy parameter SQLINJ
 
@@ -188,6 +210,7 @@ class ComponentService {
                 ->orderBy('lp.position desc')
                 ->limit(1)
                 ->fetchOne();
+
         if ($q) {
             return $q->getPosition();
         }
@@ -271,9 +294,60 @@ class ComponentService {
         }
     }
 
+    public function setDeadline($component_id, $date){
+        $q = Component::getRepository()->createQuery('c')
+                ->update()
+                ->where('component_id = ?', $component_id)
+                ->set('deadline', $date);
+
+        return $q->execute();
+    }
+
+    public function setDeadlineForUser($profile_id, $component_id, $date){
+        $plp = ProfileLearningPath::getRepository()->createQuery('plp')
+                ->update()
+                ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
+                ->set('deadline', date('Y-m-d', $date));
+
+        return $q->execute();
+    }
+
+    public function getNoteAvg($profile_id, $component_id){
+        //this is the note avg of all resources, including the exercices
+        $avg_notes = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile_id, $component_id);
+
+        return  $avg_notes/100;
+    }
+
+    public function getCountExerciseTryouts($profile_id, $component_id, $from_note = 0){
+        //
+        $component = Component::getRepository()->find($component_id);
+
+        if($component->getType() != "Lesson"){
+            //
+        }else{
+            $query = "SELECT lp.child_id FROM LearningPath lp WHERE lp.parent_id = $component_id";
+
+            $q = ExerciseAttemp::getRepository()->createQuery('ea')
+                    ->select("count(*) as total")
+                ->innerJoin('ea.ResourceData rd ON ea.exercise_id = CAST(rd.content as UNSIGNED)')
+                    ->where('rd.type = ?', 'Exercise')
+                    ->andWhere('ea.value >= ?', $from_note)
+                    ->andWhere("rd.resource_id in ($query)");
+
+            $total = $q->fetchOne();
+
+            if($total){
+                return  $total->getTotal();
+            }
+
+            return 0;
+            
+        }
+
+    }    
 
     public function getParents($component_id){
-
         $q = Component::getRepository()->createQuery('parent')
                 ->select('parent.*')
                 ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
@@ -282,7 +356,6 @@ class ComponentService {
         $parents = $q->execute();
         return $parents;
     }
-
 
     public function calculateTime($component_id){
        /* SELECT SUM(c.duration)
@@ -294,6 +367,7 @@ class ComponentService {
                 ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
                 ->where('lp.parent_id = ?', $component_id);
         $q = $q->fetchOne();
+
         return $q->getDuration();
     }
 
@@ -321,6 +395,4 @@ class ComponentService {
         } 
 
     }
-
-
 }

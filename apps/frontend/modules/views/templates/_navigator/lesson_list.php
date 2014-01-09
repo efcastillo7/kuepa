@@ -19,7 +19,10 @@
                     <input class="knob knob-small" value="<?php echo $current_percentage ?>" data-fgColor="#fff" data-bgColor="#000" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
                 </div>
                 <?php echo $lesson->getName() ?>
-                <span class="lp-time"><?php echo $lesson->getDuration() ?></span>
+                <span class="lp-time">
+                    <?php echo gmdate( $lesson->getDuration() > 3600 ? "Hº i' s''" : "i' s''" ,$lesson->getDuration()) ?>
+                </span>
+
             </a>
         </li>
             <?php $previous_percentage = $current_percentage; ?>

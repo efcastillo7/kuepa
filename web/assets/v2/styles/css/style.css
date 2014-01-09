@@ -32,6 +32,10 @@
   background-color: #d8e4fe;
 }
 
+.container.messages{
+  width: 100%;
+}
+
 .spr {
   background: url("../../img/sprite.png") no-repeat;
   display: inline-block;

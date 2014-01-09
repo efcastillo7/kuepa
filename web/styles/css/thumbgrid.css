@@ -76,26 +76,25 @@
 	height: 100%;
 	overflow: hidden;
 	position: relative;
-	width: 80px;
-	height: 80px;
-	margin-top: 30px;
+	width: 60px;
+	height: 60px;
 	-moz-border-radius: 40px;
-	border-radius: 40px;
+	border-radius: 10px;
+	margin: 25px 0 0 -75px;
 }
 .eg-thumb img {
 	max-width: none;
-	max-height: 80px;
+	max-height: 60px;
 }
 .eg-details {
-	width: 246px;
+	width: 300px;
 	float: left;
-	overflow: hidden;
 	position: relative;
-	padding: 40px 0 0 20px;
+	padding: 30px 0 0 1px;
 }
 .eg-details .title {
 	font-size: 24px;
-	font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .eg-details .title a {
 	color: #fff;
@@ -103,11 +102,44 @@
 .eg-details .subtitle {
 	opacity:0.7;
 	filter:alpha(opacity=70);
+	font-size: 12px;
+	line-height: 1;
+	margin-bottom: 8px;
 }
-.eg-details .data {
+
+
+.eg-expander .data {
+	position: absolute;
+	margin: 96px 0 0 -63px;
 	font-size: 12px;
 	/*opacity:0.5;*/
 	/*filter:alpha(opacity=50);*/
+}
+.eg-expander .data a {
+	height: 36px;
+	width: 36px;
+	display: block;
+	margin-bottom: 4px;
+	border-radius: 6px;
+	-moz-border-radius:6px;
+}
+.eg-expander .data a:hover {
+	background-color: rgba(0,0,0,0.3);
+}
+
+.eg-expander .data i {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+.eg-expander .data a.eg-btn-see i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -177px -207px transparent;
+}
+.eg-expander .data a.eg-btn-edt i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -227px -207px transparent;
+}
+.eg-expander .data a.eg-btn-sts i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -277px -207px transparent;
 }
 
 
@@ -166,9 +198,9 @@
 .eg-multimenu {
 	border-left: 1px solid #000;
 	border-right: 1px solid #000;
-	width: 474px;
+	width: 504px;
 	height: 100%;
-	margin-left: 25px;
+	margin-left: 39px;
 	float: left;
 }
 .eg-multimenu {
@@ -180,6 +212,7 @@
 	padding: 12px 10px 8px 42px;
 	border-bottom: 1px solid #000;
 	font-size: 15px;
+	font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .eg-multimenu li a:hover {
 	text-decoration: none;
@@ -244,6 +277,9 @@
 	color: #fff;
 	opacity:0.5;
 	filter:alpha(opacity=50);
+	position: absolute;
+	right: 12px;
+	top: 12px;
 }
 
 .chapter_list .title {
