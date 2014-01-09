@@ -388,7 +388,6 @@ class ComponentService {
                 ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
                 ->where('lp.child_id = ?', $component_id)
                 ->orderBy("lp.position $orderBy");
-
         $parents = $q->execute();
         return $parents;
     }

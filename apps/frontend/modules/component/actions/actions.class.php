@@ -89,4 +89,21 @@ class componentActions extends sfActions
 
         return $this->renderText($response['template']);
     }
+
+    public function executeGetChilds(sfWebRequest $request){
+ 
+        $component_id = $request->getParameter("component_id");
+        $childs = ComponentService::getInstance()->getChilds($component_id);
+        $response = array();
+        $item = array();
+        foreach ($childs as $key => $child) {
+            $item['id'] = $child->getId();
+            $item['name'] = $child->getName();
+            array_push($response, $item);
+        }
+
+        return $this->renderText(json_encode($response));
+
+    }
+
 }
