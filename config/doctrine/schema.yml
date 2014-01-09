@@ -155,6 +155,34 @@ LearningPath:
       foreign: id
       type: one
 
+PredictiveLearningPath:
+  actAs:
+    Timestampable: ~
+  columns:
+    profile_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    position: integer
+    protected: boolean
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+
 DependencyPath:
   columns:
     course_id: integer
@@ -539,31 +567,3 @@ RegisterCodeHasCourse:
   columns:
     register_code: {type: string(50), primary: true}
     course_id: {type: integer, primary: true}
-
-PredictiveLearningPath:
-  actAs:
-    Timestampable: ~
-  columns:
-    profile_id: integer
-    course_id: integer
-    chapter_id: integer
-    lesson_id: integer
-    position: integer
-    protected: boolean
-  relations:
-    Profile:
-      local: profile_id
-      foreign: id
-      type: one
-    Course:
-      local: course_id
-      foreign: id
-      type: one
-    Chapter:
-      local: chapter_id
-      foreign: id
-      type: one
-    Lesson:
-      local: lesson_id
-      foreign: id
-      type: one
