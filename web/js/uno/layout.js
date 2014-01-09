@@ -1,5 +1,8 @@
 $(function() {
     $(".knob").knob(knob_values);
+    $(".knob-small").knob({
+        height: 24
+    });
 
     $("body").delegate(".component_edit_link", "click", function(e) {
         var target = $(this).attr("target");
@@ -82,6 +85,43 @@ $(function() {
         $("#modal-create-lesson-form #lesson_chapter_id").val($(this).attr("chapter"));
         triggerModalSuccess({id: "modal-create-lesson-form", title: "Crear Lección", effect: "md-effect-17"});
     });
+
+    //left menu
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showLeft = document.getElementById( 'showLeft' ),
+        body = document.body;
+
+    showLeft.onclick = function() {
+        if(classie.hasClass(menuLeft, 'cbp-spmenu-open')){
+            clearTimeout(menuTimeout);
+            menuTimeout = -1;
+        }
+        classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+
+    $("#showLeft").mouseenter(function(event) {
+        classie.addClass( menuLeft, 'cbp-spmenu-open' );
+    });
+
+    var menuTimeout = -1;
+
+    $("#cbp-spmenu-s1, #showLeft").mouseleave(function(){
+        if(menuTimeout < 0){
+            menuTimeout = setTimeout(function(){
+                classie.removeClass( menuLeft, 'cbp-spmenu-open' );
+            }, 1000);
+        }
+    });
+
+    $("#cbp-spmenu-s1, #showLeft").mouseenter(function(){
+        clearTimeout(menuTimeout);
+        menuTimeout = -1;
+    });
+
+    
+
+    // tooltip
+    $('[rel="tooltip"]').tooltip();
 
     //init tinyMCE ONCE!
     // tinymce.init({

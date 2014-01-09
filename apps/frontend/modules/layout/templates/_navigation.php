@@ -1,11 +1,26 @@
+<!-- MENU -->
+<?php if($profile): ?>
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+    <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
+    <!-- <a href="#" class="cbp-cal"><i></i>Calendario</a> -->
+    <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
+    <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
+    <!-- <a href="" class="cbp-set"><i></i>Ajustes</a> -->
+    <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
+</nav>
+<?php endif; ?>
+
 <!-- navbar -->
 <div class="plataforma-nav navbar navbar-fixed-top">
     <div class="navbar-inner">
+            <?php if($profile): ?>
             <ul class="nav">
                 <li class="nav-menu">
                     <a id="showLeft" role="button" class="nav-menu-icon"><span>Menu</span></a>
                 </li>
             </ul>
+            <?php endif; ?>
             <a class="nav-logo" href="<?php echo url_for("@homepage") ?>"></a>
             <?php if($profile): ?>
             <ul class="nav nav-mainbtn">
