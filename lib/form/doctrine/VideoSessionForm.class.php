@@ -21,6 +21,8 @@ class VideoSessionForm extends BaseVideoSessionForm {
 
         $this->setWidgets(array(
             'profile_id'    => new sfWidgetFormInputHidden(),
+            'platform'      => new sfWidgetFormInputHidden(),
+            'type'          => new sfWidgetFormInputHidden(),
             'course_id'     => new sfWidgetFormChoice(array(
                 "choices"   => $this->getCoursesForChoiceWidget() )
             ),
@@ -48,13 +50,17 @@ class VideoSessionForm extends BaseVideoSessionForm {
 
         $this->setDefaults(array(
             "scheduled_for" => date("c", time() ),
-            'profile_id'    => $this->getObject()->getProfileId()
+            'profile_id'    => $this->getObject()->getProfileId(),
+            'type'          => VideoSessionService::TYPE_CLASS,
+            'platform'      => VideoSessionService::PLATFORM_HANGOUTS
         ));
 
         $this->setValidators(array(
             'title'         => new sfValidatorString(   array('required' => true),  array('required' => 'Ingrese un título.')),
             'description'   => new sfValidatorString(   array('required' => true),  array('required' => 'Ingrese una descripción.')),
             'profile_id'    => new sfValidatorPass(),
+            'type'          => new sfValidatorPass(),
+            'platform'      => new sfValidatorPass(),
             'course_id'     => new sfValidatorInteger(  array('required' => true),  array('required' => 'Seleccione un curso relacionado.')),
             'chapter_id'    => new sfValidatorPass(),
             'scheduled_for' => new sfValidatorDateTime(
@@ -72,9 +78,9 @@ class VideoSessionForm extends BaseVideoSessionForm {
 
         //Url is shown only for modification
         if(!$this->isNew()){
-            $this->setWidget('hangout_url', new sfWidgetFormInputText() );
-            $this->setValidator('hangout_url', new sfValidatorPass() );
-            $this->widgetSchema->setLabel('hangout_url', 'Url');
+            $this->setWidget('url', new sfWidgetFormInputText() );
+            $this->setValidator('url', new sfValidatorPass() );
+            $this->widgetSchema->setLabel('url', 'Url');
         }
 
         $this->getWidgetSchema()->setIdFormat('%s' . ($this->isNew() ? "" : "-" . $this->getObject()->getId()));

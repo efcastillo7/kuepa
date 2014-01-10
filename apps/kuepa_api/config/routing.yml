@@ -6,7 +6,13 @@ course_api:
   class: RESTRouteCollection
   options:
     module: course
-    
+
+video_session_api:
+    class: RESTRouteCollection
+    options:
+        module: video_session
+
+
 default:
   url:   /*
   params: { module: default, action: notImplemented }

@@ -11,16 +11,16 @@ $(function(){
     initEditVideoSessionForm();
 
     //When a teacher clicks on the Add Hangout button a modal form is shown
-    $(".addVideoSession-button").click( onHangoutAddClicked );
+    $(".addVideoSession-button").click( onVideoSessionAddClicked );
 
     //When a teacher clicks on the Edit Hangout button a modal form is shown
-    $(".editVideoSession-button").click( onHangoutEditClicked );
+    $(".editVideoSession-button").click( onVideoSessionEditClicked );
 
     //When a teacher clicks on the Finish Hangout button a modal form is shown
-    $(".finishVideoSession-trigger").click( onHangoutFinishTriggered );
+    $(".finishVideoSession-trigger").click( onVideoSessionFinishTriggered );
 
     //When a teacher confirms to finish a video session
-    $(".finishVideoSession-button").click( onHangoutFinishClicked );
+    $(".finishVideoSession-button").click( onVideoSessionFinishClicked );
 
     //Detects when a Start Hangot button is pressed (Hack to detect iframe clicks)
     $(window).blur( onWindowBlured );
@@ -106,9 +106,12 @@ function onHangoutFormSuccess(data){
  * @param Event e
  * @returns {void}
  */
-function onHangoutAddClicked(e){
+function onVideoSessionAddClicked(e){
 
-    if(googleID === ""){
+    var $this = $(this);
+    var platform = $this.attr("data-platform");
+
+    if(googleID === "" && platform === "hangouts"){
         triggerModalSuccess({
             id:     "modal-google_login",
             title:  "Asociar cuenta de Google",
@@ -117,9 +120,12 @@ function onHangoutAddClicked(e){
         return true;
     }
 
+    $("#video_session_type").val("class");
+    $("#video_session_platform").val(platform);
+
     triggerModalSuccess({
         id:     "modal-create-video_session-form",
-        title:  "Crear Sesión de Video",
+        title:  "Crear sesión de video",
         effect: "md-effect-17"
     });
 }
@@ -129,7 +135,7 @@ function onHangoutAddClicked(e){
  * @param {type} $tr
  * @returns {void}
  */
-function onHangoutEditClicked(e){
+function onVideoSessionEditClicked(e){
     var $this   = $(this);
     var $cont   = $("#modal-edit-video_session-form-container");
     var href    = $this.attr("href");
@@ -159,7 +165,7 @@ function onHangoutEditClicked(e){
  * @param {type} $tr
  * @returns {void}
  */
-function onHangoutFinishTriggered(e){
+function onVideoSessionFinishTriggered(e){
     var $this       = $(this);
     var id          = $this.closest("tr").attr("data-id");
     var modal_id    = "modal-finish-video_session";
@@ -178,7 +184,7 @@ function onHangoutFinishTriggered(e){
  * @param {type} $tr
  * @returns {void}
  */
-function onHangoutFinishClicked(e){
+function onVideoSessionFinishClicked(e){
     var $modal  = $("#modal-finish-video_session");
     var $cont   = $("#modal-finish-video_session-container");
     var id      = $modal.attr("data-video_session_id");

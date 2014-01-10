@@ -5,7 +5,7 @@
     var googleID = "<?php echo $google_id; ?>";
 </script>
 <div id="" class="container">
-    <a href="#" class="pull-right btn btn-default addVideoSession-button"><span class="icon-plus"></span>Crear nueva</a>
+    <a href="#" class="pull-right btn btn-default addVideoSession-button" data-platform="hangouts"><img src="img/hangout.png" alt="H" />Crear Hangout</a>
     <p class="title3">Sesiones de video</p>
     <div class="tabbable">
         <ul class="nav nav-tabs video_session-nav">

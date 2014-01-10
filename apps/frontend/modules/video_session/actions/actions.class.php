@@ -100,11 +100,11 @@ class video_sessionActions extends sfActions {
         $video_session  = VideoSession::getRepository()->find($id);
 
         if($video_session){
-            $video_session->setHangoutUrl($url.$appId.$dataPa);
+            $video_session->setUrl($url.$appId.$dataPa);
             $video_session->setStatus("started");
             $video_session->save();
 
-            $response['template']   = "Ha grabado la url del hangout para la sesión de video satisfactoriamente";
+            $response['template']   = "Ha grabado la url de la sesión de video satisfactoriamente";
             $response['status']     = "success";
         }
 
@@ -172,7 +172,7 @@ class video_sessionActions extends sfActions {
         foreach($chapters as $chapter){
             $a_chapters[] = array(
                 "id"    => $chapter->getId(),
-                "name"    => $chapter->getName(),
+                "name"  => $chapter->getName(),
             );
         }
 

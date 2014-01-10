@@ -27,6 +27,8 @@ class VideoSessionService {
     const TYPE_CLASS        = "class";
     const TYPE_SUPPORT      = "support";
 
+    const PLATFORM_HANGOUTS = "hangouts";
+
     public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new VideoSessionService;
@@ -72,7 +74,7 @@ class VideoSessionService {
         $videoSession = VideoSession::getRepository()->find($video_session_id);
 
         if ($videoSession) {
-            $values_keys = array('course_id', 'chapter_id', 'scheduled_for', 'title', 'description');
+            $values_keys = array('course_id', 'chapter_id', 'scheduled_for', 'title', 'description', 'url', 'status');
 
             foreach ($values_keys as $key) {
 
@@ -82,9 +84,10 @@ class VideoSessionService {
             }
 
             $videoSession->save();
+            return $videoSession;
         }
 
-        return $videoSession;
+        return false;
     }
 
     /**

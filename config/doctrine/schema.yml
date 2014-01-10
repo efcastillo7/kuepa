@@ -470,8 +470,9 @@ VideoSession:
     title: {type: string(100)}
     description: {type: string(255)}
     status: { type: enum, values: [pending, started,ended], default: pending }
-    hangout_url: {type: string(400)}
+    url: {type: string(400)}
     type: { type: enum, values: [class, support] }
+    platform: {type: string(50)}
   relations:
     Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
     Student: { class: Profile, onDelete: CASCADE, local: student_profile_id, foreign: id, foreignType: one }

@@ -18,7 +18,7 @@
             foreach ($video_sessions as $video_session):
 
                 //If the hangout has already been created it's joined, otherwise it's created
-                $storedUrl = $video_session->getHangoutUrl();
+                $storedUrl = $video_session->getUrl();
                 if(empty($storedUrl)){
                     $hangout_url    = "https://plus.google.com/hangouts/_?gid=".VideoSessionService::APP_ID;
                 }else{
@@ -40,12 +40,14 @@
                     <td class="text-<?php echo $color ?>"><?php echo $video_session->getCourse()->getName().(empty($chapter) ? "" : " - {$chapter}"); ?></td>
                     <?php if($type==="next"): ?>
                     <td>
-                        <div class="btn-group hangout_actions">
+                        <div class="btn-group">
                         <?php if($isOwner): ?>
                             <a class="editVideoSession-button btn btn-mini" href="<?php echo url_for('video_session/edit?id=' . $video_session->getId()) ?>">Editar</a>
                             <a class="btn btn-mini btn-warning <?php echo $video_session->getStatus() != "started" ? "disabled" : "finishVideoSession-trigger" ?>">Finalizar</a>
                             <?php if(empty($storedUrl)): ?>
-                            <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : 'dQw4w9WgXcQ', 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
+                            <span class="hangout_actions">
+                                <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : 'dQw4w9WgXcQ', 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
+                            </span>
                             <?php else: ?>
                             <a target="_blank" class="btn btn-mini btn-success <?php echo $video_session->getStatus() != "started" ? "disabled" : "" ?>" href="<?php echo $hangout_url; ?>">Acceder</a>
                             <?php endif; ?>

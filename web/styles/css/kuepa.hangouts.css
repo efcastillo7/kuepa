@@ -94,3 +94,6 @@ tr.warning td {
 
 .hangout_actions div {
   vertical-align: middle !important; }
+
+.btn img {
+  margin-right: 5px; }
