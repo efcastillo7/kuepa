@@ -182,6 +182,10 @@ PredictiveLearningPath:
       local: lesson_id
       foreign: id
       type: one
+  indexes:
+    plp_unique_user_path_item:
+      fields: [profile_id, course_id, chapter_id, lesson_id]
+      type: unique 
 
 DependencyPath:
   columns:

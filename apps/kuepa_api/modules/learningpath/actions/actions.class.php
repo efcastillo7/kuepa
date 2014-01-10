@@ -25,13 +25,18 @@ class learningpathActions extends sfActions
 
         if($course_id && $chapter_id && $lesson_id){
         	$plp = LearningPathService::getInstance()->addNodeToPath($profile_id, $course_id, $chapter_id, $lesson_id);
-        	$ret = array(
-        		'id' => $plp->getId(),
-        		'position' => $plp->getPosition(),
-        		'course' => array('id' => $plp->getCourse()->getId(), 'name' => $plp->getCourse()->getName(), 'color' => $plp->getCourse()->getColor(), 'image' => $plp->getCourse()->getThumbnailPath()),
-        		'chapter' => array('id' => $plp->getChapter()->getId(),'name' =>  $plp->getChapter()->getName()),
-        		'lesson' => array('id' => $plp->getLesson()->getId(),'name' =>  $plp->getLesson()->getName()),
-    		);
+
+        	if($plp){
+	        	$ret = array(
+	        		'id' => $plp->getId(),
+	        		'position' => $plp->getPosition(),
+	        		'course' => array('id' => $plp->getCourse()->getId(), 'name' => $plp->getCourse()->getName(), 'color' => $plp->getCourse()->getColor(), 'image' => $plp->getCourse()->getThumbnailPath()),
+	        		'chapter' => array('id' => $plp->getChapter()->getId(),'name' =>  $plp->getChapter()->getName()),
+	        		'lesson' => array('id' => $plp->getLesson()->getId(),'name' =>  $plp->getLesson()->getName()),
+	    		);
+        	}else{
+        		$this->getResponse()->setStatusCode('409');
+        	}
         }
 
         return $this->renderText(json_encode($ret));

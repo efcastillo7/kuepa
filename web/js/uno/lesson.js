@@ -94,6 +94,9 @@ $(window).load(function(){
             course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id,
             onSuccess: function(item){
                 addItemToPath(item);
+            },
+            onError: function(data){
+                alert('Ya tiene esa lección');
             }
         });
     });

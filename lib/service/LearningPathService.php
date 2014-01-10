@@ -14,15 +14,20 @@ class LearningPathService {
 
     public function addNodeToPath($profile_id, $course_id, $chapter_id, $lesson_id, $protected = false){
         $position = $this->getLastIndex($profile_id)+1;
+        $plp = null;
 
-        $plp = new PredictiveLearningPath();
-        $plp->setProfileId($profile_id)
-            ->setCourseId($course_id)
-            ->setChapterId($chapter_id)
-            ->setLessonId($lesson_id)
-            ->setPosition($position)
-            ->setProtected($protected)
-            ->save();
+        try{
+            $plp = new PredictiveLearningPath();
+            $plp->setProfileId($profile_id)
+                ->setCourseId($course_id)
+                ->setChapterId($chapter_id)
+                ->setLessonId($lesson_id)
+                ->setPosition($position)
+                ->setProtected($protected)
+                ->save();
+        }catch(Exception $e){
+            $plp = null;
+        }
 
         return $plp;
     }
