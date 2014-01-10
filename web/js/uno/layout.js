@@ -89,7 +89,13 @@ $(function() {
     //left menu
     var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
         showLeft = document.getElementById( 'showLeft' ),
+        showRight = document.getElementById( 'open-learning-path' ),
+        menuRight = document.getElementById( 'cbp-spmenu-s2' ),
         body = document.body;
+
+    showRight.onclick = function() {
+        classie.toggle( menuRight, 'cbp-spmenu-open' );
+    };
 
     showLeft.onclick = function() {
         if(classie.hasClass(menuLeft, 'cbp-spmenu-open')){
@@ -118,10 +124,9 @@ $(function() {
         menuTimeout = -1;
     });
 
-    
-
     // tooltip
     $('[rel="tooltip"]').tooltip();
+
 
     //init tinyMCE ONCE!
     // tinymce.init({

@@ -42,6 +42,10 @@
         <?php use_javascript("/assets/modernizr/modernizr.custom.js") ?>
         <?php use_javascript("/assets/modernizr/classie.js") ?>
 
+        <!-- LEARNING PATH -->
+        <?php use_javascript("libs/learningPathService.js") ?>
+        <?php use_javascript("libs/learningPath.js") ?>
+
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>

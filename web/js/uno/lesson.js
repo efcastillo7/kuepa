@@ -75,7 +75,6 @@ $(document).ready(function() {
 
     $( "#tabs" ).tabs();
 
-
     //log interval
     setInterval(function(){
         $.ajax('/log/resource', {
@@ -87,4 +86,15 @@ $(document).ready(function() {
             }
         });
     }, 26000);
+});
+
+$(window).load(function(){
+    $("#add_to_learning_path").click(function(){
+        lpService.add({
+            course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id,
+            onSuccess: function(item){
+                addItemToPath(item);
+            }
+        });
+    });
 });

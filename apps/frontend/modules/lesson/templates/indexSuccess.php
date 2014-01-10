@@ -13,6 +13,7 @@
             <p class="title3 clearmargin">
                 <?php echo $lesson->getName() ?>
             </p>
+            <a href="#" id="add_to_learning_path" class="btn btn-mini btn-primary">Agregar a aprendizaje</a>
         </div>
         <div class="span4">
             <div class="txt-right margintop">

@@ -9,6 +9,13 @@
     <!-- <a href="" class="cbp-set"><i></i>Ajustes</a> -->
     <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
 </nav>
+
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+
+    <div class="title">Camino de Aprendizaje <span id="edit-learning-path"><i class="icon-edit"></i></span></div>
+    <?php include_partial("layout/learning_path_item_template") ?>
+
+</nav>
 <?php endif; ?>
 
 <!-- navbar -->
@@ -28,7 +35,6 @@
                 <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
             </ul>
             <ul class="nav pull-right">
-                <li><a href="" class="nav-btn nav-btn-srch"><i></i></a></li>
                 <li class="dropdown">
                     <a id="drop2" href="#" role="button" class="nav-btn nav-btn-ntfc dropdown-toggle" data-toggle="dropdown"><i></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
@@ -37,6 +43,7 @@
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
                     </ul>
                 </li>
+                <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch" id="open-learning-path"><i></i></a></li>
                 <li class="dropdown">
                     <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i> <?php echo $profile->getNickname() ?></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
