@@ -46,7 +46,7 @@
                             <a class="btn btn-mini btn-warning <?php echo $video_session->getStatus() != "started" ? "disabled" : "finishVideoSession-trigger" ?>">Finalizar</a>
                             <?php if(empty($storedUrl)): ?>
                             <span class="hangout_actions">
-                                <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : 'dQw4w9WgXcQ', 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
+                                <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : {'video_session_id':'<?php echo $video_session->getId(); ?>','type':'<?php echo $video_session->getType(); ?>'}, 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
                             </span>
                             <?php else: ?>
                             <a target="_blank" class="btn btn-mini btn-success <?php echo $video_session->getStatus() != "started" ? "disabled" : "" ?>" href="<?php echo $hangout_url; ?>">Acceder</a>

@@ -16,7 +16,7 @@
             foreach ($video_sessions as $video_session):
 
                 //If the hangout has already been created it's joined, otherwise it's created
-                $storedUrl      = $video_session->getHangoutUrl();
+                $storedUrl      = $video_session->getUrl();
                 $supportName    = trim($video_session->getProfile()->getLastName()." ".$video_session->getProfile()->getFirstName());
 
                 ?>

@@ -17,7 +17,7 @@ class supportComponents extends sfComponents {
 
     public function executeModalurl() {
 
-        $this->id = $this->getVar('id');
+        $this->profile_id = $this->getUser()->getGuardUser()->getProfile()->getId();
 
     }
 

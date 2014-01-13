@@ -60,7 +60,7 @@
 
         <!-- Modals -->
         <?php include_partial("views/modals/success") ?>
-        <?php include_partial("support/Modalurl") ?>
+        <?php include_component("support","Modalurl") ?>
 
         <!-- Le javascript
         ================================================== -->
@@ -77,6 +77,8 @@
         <script src="/js/bootstrap-collapse.js"></script>
         <script src="/js/bootstrap-carousel.js"></script>
         <script src="/js/bootstrap-typeahead.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/client:plusone.js"></script>
         <script src="/js/course.js"></script>
         <script src="/js/support.global.js"></script>
 

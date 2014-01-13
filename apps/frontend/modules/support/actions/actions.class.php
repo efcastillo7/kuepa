@@ -28,12 +28,29 @@ class supportActions extends sfActions {
      * @return type
      */
     public function executeCreate(sfWebRequest $request) {
+        header('Access-Control-Allow-Origin: *');
+
+        $profile_id = $request->getParameter("profile_id");
+        $url        = $request->getParameter("url");
+        $gId        = $request->getParameter("gid");
+
         $video_session  = new VideoSession();
         $video_session
-                ->setStudentProfileId( $this->getUser()->getGuardUser()->getProfile()->getId() )
+                ->setStudentProfileId( $profile_id )
+                ->setUrl($url)
                 ->setScheduledFor( date("Y-m-d H:i:s") )
                 ->setType( VideoSessionService::TYPE_SUPPORT )
                 ->save();
+
+        $appId  = strpos($url, "?") > -1 ? "&" : "?"."gid=".VideoSessionService::APP_ID_INT;
+        $dataPa = "&gd=".urlencode(json_encode(array(
+            "video_session_id"  => $video_session->getId(),
+            "host_person_id"    => $gId,
+            "type"              => VideoSessionService::TYPE_SUPPORT
+        )));
+
+        $video_session->setUrl($url.$appId.$dataPa);
+        $video_session->save();
 
         $response   = Array(
             'status'    => "success",
@@ -66,43 +83,6 @@ class supportActions extends sfActions {
             $video_session->save();
 
             $response['template']   = "Ha finalizado la sesión de soporte satisfactoriamente";
-            $response['status']     = "success";
-            $response['code']       = 200;
-        }
-
-        return $this->renderText(json_encode($response));
-
-    }
-
-    /**
-     *
-     * @param sfWebRequest $request
-     * @return type
-     */
-    public function executeUpdate(sfWebRequest $request){
-
-        $id     = $request->getParameter("support_id");
-        $url    = $request->getParameter("hangout_url");
-        $appId  = "&gid=".VideoSessionService::APP_ID_INT;
-        $dataPa = "&gd=".urlencode(json_encode(array(
-            "type"              => VideoSessionService::TYPE_SUPPORT,
-            "video_session_id"  => $id
-        )));
-
-        $response   = Array(
-            'status'    => "error",
-            'template'  => "¡La sesión de soporte #{$id} no existe!",
-            'code'      => 400
-        );
-
-        $video_session  = VideoSession::getRepository()->find($id);
-
-        if($video_session){
-            $video_session
-                ->setHangoutUrl($url.$appId.$dataPa)
-                ->save();
-
-            $response['template']   = "Ha grabado la url de la sesión soporte satisfactoriamente";
             $response['status']     = "success";
             $response['code']       = 200;
         }

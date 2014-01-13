@@ -1,9 +1,7 @@
-<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
-<script type="text/javascript" src="https://apis.google.com/js/client:plusone.js"></script>
-
 <script type="text/javascript">
     var googleID = "<?php echo $google_id; ?>";
 </script>
+
 <div id="" class="container">
     <a href="#" class="pull-right btn btn-default addVideoSession-button" data-platform="hangouts"><img src="img/hangout.png" alt="H" />Crear Hangout</a>
     <p class="title3">Sesiones de video</p>

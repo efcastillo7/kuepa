@@ -81,15 +81,11 @@ class video_sessionActions extends sfActions {
      */
     public function executeUpdate(sfWebRequest $request){
 
+        header('Access-Control-Allow-Origin: *');
+
         $id     = $request->getParameter("video_session_id");
-        $url    = $request->getParameter("hangout_url");
-        $gId    = $this->getUser()->getGuardUser()->getProfile()->getGoogleId();
-        $appId  = "&gid=".VideoSessionService::APP_ID_INT;
-        $dataPa = "&gd=".urlencode(json_encode(array(
-            "type"              => VideoSessionService::TYPE_CLASS,
-            "video_session_id"  => $id,
-            "host_person_id"    => $gId
-        )));
+        $url    = $request->getParameter("url");
+        $gId    = $request->getParameter("gid");
 
         $response   = Array(
             'status'    => "error",
@@ -100,6 +96,14 @@ class video_sessionActions extends sfActions {
         $video_session  = VideoSession::getRepository()->find($id);
 
         if($video_session){
+
+            $appId  = strpos($url, "?") > -1 ? "&" : "?"."gid=".VideoSessionService::APP_ID_INT;
+            $dataPa = "&gd=".urlencode(json_encode(array(
+                "video_session_id"  => $id,
+                "host_person_id"    => $gId,
+                "type"              => $video_session->getType()
+            )));
+
             $video_session->setUrl($url.$appId.$dataPa);
             $video_session->setStatus("started");
             $video_session->save();

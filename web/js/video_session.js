@@ -22,20 +22,13 @@ $(function(){
     //When a teacher confirms to finish a video session
     $(".finishVideoSession-button").click( onVideoSessionFinishClicked );
 
-    //Detects when a Start Hangot button is pressed (Hack to detect iframe clicks)
-    $(window).blur( onWindowBlured );
-    $(".hangout_actions").hover(
-        function(){ iframeMouseOver = true; $hoveredEl = $(this); },
-        function(){ iframeMouseOver = false; $hoveredEl = {}; }
-    );
-
     $(".video_session_status").tooltip();
 
-    if($(".video_session-nav li.active").length==0){
+    if(!$(".video_session-nav li.active").length){
         $(".video_session-nav li:first").addClass("active");
     }
 
-    if($(".video_session-tab_container.active").length==0){
+    if(!$(".video_session-tab_container.active").length){
         $(".video_session-tab_container:first").addClass("active");
     }
 
@@ -202,48 +195,6 @@ function onVideoSessionFinishClicked(e){
         }
 
     },"json");
-}
-
-/**
- * Callback triggered when a Start Hangout button is pressd
- *
- * @param jQuery $tr
- * @returns {void}
- */
-function onHangoutStartClicked($el){
-    var $hangoutUrlModal    = $("#modal-update-video_session-url");
-    var $hidden             = $("[name=video_session_id]",$hangoutUrlModal);
-    var id                  = $el.parents("tr[data-id]").attr("data-id");
-
-    /*
-     * TODO: Checkear si se aplicara reestriccion
-    if( !canStartVideoSession( $tr ) ){
-        e.preventDefault();
-        return false;
-    }
-    */
-
-    $hidden.val(id);
-
-    triggerModalSuccess({
-        id      : "modal-update-video_session-url",
-        title   : "Guardar URL de Hangout",
-        effect  : "md-effect-17"
-    });
-
-}
-
-/**
- * Callback to window onBlur
- * @returns {void}
- */
-function onWindowBlured(){
-    console.log("window blured",iframeMouseOver);
-    if(iframeMouseOver){
-        setTimeout(function(){
-            onHangoutStartClicked($hoveredEl);
-        },10);
-    }
 }
 
 /**
