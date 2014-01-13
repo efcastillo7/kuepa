@@ -122,6 +122,9 @@
     </a>
 
     <div class="each-message" id="message">
+      <div class="avatar">
+        <img src="">
+      </div>
       <div class="chat-box">
         onsectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
       </div>

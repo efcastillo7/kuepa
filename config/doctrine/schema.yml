@@ -12,6 +12,7 @@ Profile:
     birthdate:                 date
     sex:                       { type: enum, values: [male, female] }
     valid_until:               date
+    avatar:                    varchar(100)
   relations:
     sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:

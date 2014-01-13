@@ -51,7 +51,7 @@ $(document).ready(function(){
         onError: onError
       });
     }
-  }, 1000);
+  }, 3000);
 
   $('form#send-message').submit (function() { 
     if(chat_id != ""){
@@ -97,14 +97,7 @@ $(document).ready(function(){
 
     last_message = null;
 
-    if(chat_id !== ""){
-      ms.getThread({
-        message_id: chat_id,
-        from_time: last_message,
-        onSuccess: addMessagesToScreen,
-        onError: onError
-      });  
-    }else{
+    if(chat_id === ""){
       active_user = $(this).data("user");
       //new message
       $(".loading").fadeOut(200);
@@ -127,7 +120,7 @@ $(document).ready(function(){
       },
       onError: onError
     });
-  }, 1000);
+  }, 3000);
 });
 
 //functions for window management
@@ -175,6 +168,8 @@ function addMessageToScreen(values){
   $(elem).addClass(values.in ? "in" : "out");
   $(".chat-box", elem).addClass(values.in ? "in" : "out");
   $(".chat-box", elem).html(values.content);
+  $(".avatar > img", elem).attr('src', values.avatar);
+
   //mejorar
   $(".time", elem).html(timeSince(date*1000));
   $(".load-data").append(elem);

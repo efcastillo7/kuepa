@@ -25,6 +25,23 @@ class UserProfileForm extends ProfileForm
     $this->setWidget("email_address", new sfWidgetFormInputText());
     $this->setValidator("email_address", new sfValidatorString(array('required' => false)));
 
+    $this->setWidget('avatar', new sfWidgetFormInputFileEditable(array(
+            'label' => 'Imagen',
+            'file_src' => 'uploads/avatars/' . $this->getObject()->getAvatar(),
+            'is_image' => true,
+            'edit_mode' => (!$this->isNew()),
+            'with_delete' => true,
+        )));
+
+        $this->setValidator('avatar', new sfValidatorFile(
+                array(
+            'path' => sfConfig::get('sf_upload_dir') . '/avatars',
+            // 'validated_file_class' => 'LocalValidatedFile',
+            'max_size' => 524288, // 7MB
+            'required' => false), array(
+            'max_size' => "Tamaño de imagen demasiado grande",
+        )));
+
     //date
     $years = range(1900, 2000);
     $this->setWidget('birthdate', new sfWidgetFormDate(array(
