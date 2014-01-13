@@ -37,27 +37,6 @@
 
             <div class="right">
 
-              <!-- <a href="#" role="button" class="dropdown-toggle a-friend" data-toggle="dropdown">
-                <i class="spr ico-add-friend">
-                  <i class="spr ico-add-friend-hover"></i>
-                </i>
-              </a>
-
-              <div class="dropdown">
-                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="spr ico-settings">
-                    <i class="spr ico-settings-hover"></i>
-                  </i>
-                </a>
-                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="drop2">
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                  <li role="presentation" class="divider"></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                </ul>
-              </div> -->
-
             </div><!-- /right -->
           </div><!-- /head-message -->
 
@@ -79,7 +58,19 @@
             <div class="border-bottom"></div>
           </div><!-- /body-message -->
 
-          <div class="send-message">
+          <div class="input-append-pos send-message">
+            <form id="send-message">
+              <div class="cont-inputs">
+                <span class="add-on">
+                  <i class="spr ico-message"><i class="spr ico-message-hover"></i></i>
+                </span>
+                <input type="text" placeholder="Escribe un mensaje" class="input-send-message" disabled>
+                <button type="button" class="btn-inside btn-gray">Enviar</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- <div class="send-message">
             <form id="send-message">
               <div class="cont-inputs">
                 <span class="add-on">
@@ -89,7 +80,7 @@
                 <input type="button" class="btn-gray" value="Enviar">
               </div>
             </form>
-          </div>
+          </div> -->
 
         </div><!-- /col-md-8 chat -->
 
@@ -99,24 +90,24 @@
   </div><!-- /full-back-messages -->
 
   <div class="templates" style="display: none;">
-    <a href="#" class="inbox" data-chat="" data-user="" data-name="" id="active-contact">
-      <span class="cont-chat">
+    <a href="#" class="inbox box-data-user" data-chat="" data-user="" data-name="" id="active-contact">
+      <span class="cont-chat cont-ico">
         <i class="spr ico-chat"></i>
       </span>
       <span class="cont-text">
-        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span><br>
-        <span class="abstract">Lorem ipsum dolor sit amet con...</span><br>
+        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span>
+        <span class="abstract">Lorem ipsum dolor sit amet con...</span>
         <span class="time">-</span>
       </span>
     </a>
 
-    <a href="#" class="inbox" data-chat="" data-user="" data-name="" id="contact">
-      <span class="cont-chat">
+    <a href="#" class="inbox box-data-user" data-chat="" data-user="" data-name="" id="contact">
+      <span class="cont-chat cont-ico">
         <!-- <i class="spr ico-chat"></i> -->
       </span>
       <span class="cont-text">
-        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span><br>
-        <span class="abstract">Lorem ipsum dolor sit amet con...</span><br>
+        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span>
+        <span class="abstract">Lorem ipsum dolor sit amet con...</span>
         <span class="time">Argentina, Buenos Aires</span>
       </span>
     </a>
