@@ -12,4 +12,11 @@
  */
 class CollegeLearningPath extends BaseCollegeLearningPath
 {
+	/**
+     * 
+     * @return CollegeLearningPathTable
+     */
+    public static function getRepository() {
+        return Doctrine_Core::getTable('CollegeLearningPath');
+    }
 }

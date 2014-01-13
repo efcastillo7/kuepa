@@ -523,7 +523,47 @@ class migrationActions extends sfActions
         ComponentService::getInstance()->updateDuration($resource->getId());
       }
       $this->resources = $resources;
- 
+  }
+
+  public function executeRedologviewcomponent(sfWebRequest $request){
+  	$q = Doctrine_Manager::getInstance()->getCurrentConnection();
+	$query = "SELECT distinct(resource_id) as resource_id FROM log_view_component where resource_id is null or course_id is null or chapter_id is null or lesson_id is null";
+
+	$result = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($query);
+
+	foreach ($result as $value) {
+		$resource_id = $value['resource_id'];
+
+		$resource = Resource::getRepository()->find($resource_id);
+
+		$lessons = ComponentService::getInstance()->getParents($resource_id);
+
+		if($lessons && $lessons->count()){
+			$lesson = $lessons->getFirst();
+
+			$chapters = ComponentService::getInstance()->getParents($lesson->getId());
+
+			if($chapters && $chapters->count()){
+				$chapter = $chapters->getFirst();
+
+				$courses = ComponentService::getInstance()->getParents($chapter->getId());
+
+				if($courses && $courses->count()){
+					$course = $courses->getFirst();
+
+					//UPDATE
+					$query = "UPDATE log_view_component set course_id = {$course->getId()}, chapter_id = {$chapter->getId()}, lesson_id = {$lesson->getId()} where resource_id = {$resource_id}";
+					Doctrine_Manager::getInstance()->getCurrentConnection()->execute($query);
+					// echo "$query <br>";
+				}
+			}
+			// die();
+		}
+	}
+
+	//remove lost ones
+	$query = "DELETE FROM log_view_component WHERE resource_id is null or course_id is null or chapter_id is null or lesson_id is null";
+	Doctrine_Manager::getInstance()->getCurrentConnection()->execute($query);
   }
 
 }

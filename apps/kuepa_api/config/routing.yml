@@ -17,6 +17,11 @@ profile_api:
   options:
     module: profile
 
+learningpath_api:
+  class: RESTRouteCollection
+  options:
+    module: learningpath
+
 default:
   url:   /:module/:action/*
 

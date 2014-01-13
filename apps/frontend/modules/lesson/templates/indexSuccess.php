@@ -1,4 +1,7 @@
 <script>
+    var course_id = <?php echo $course->getId() ?>;
+    var chapter_id = <?php echo $chapter->getId() ?>;
+    var lesson_id = <?php echo $lesson->getId() ?>;
     var resource_id = <?php echo $resource->getId() ?>;
 </script>
 <?php use_javascript('uno/lesson.js') ?>
@@ -10,6 +13,7 @@
             <p class="title3 clearmargin">
                 <?php echo $lesson->getName() ?>
             </p>
+            <a href="#" id="add_to_learning_path" class="btn btn-mini btn-primary">Agregar a aprendizaje</a>
         </div>
         <div class="span4">
             <div class="txt-right margintop">

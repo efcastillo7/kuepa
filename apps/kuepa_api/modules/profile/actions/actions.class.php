@@ -16,10 +16,8 @@ class profileActions extends sfActions
      * @param sfRequest $request A request object
      */
 	public function executeCreate(sfWebRequest $request) {
-		
-
 		return $this->renderText(json_encode("Success"));
-	}
+	} 
 
 	/**
      * GET /profile/friends
@@ -54,6 +52,7 @@ class profileActions extends sfActions
                     'first_name' => $friend->getFirstName(),
                     'last_name' => $friend->getLastName(),
                     'nickname' => $friend->getNickname(),
+                    'avatar' => '/uploads/avatars' . $friend->getAvatar(),
                     'online' => false,
                     'last_message' => $last_message,
                     'new_messages' => $new_messages
@@ -64,6 +63,7 @@ class profileActions extends sfActions
             		'first_name' => $friend->getFirstName(),
             		'last_name' => $friend->getLastName(),
             		'nickname' => $friend->getNickname(),
+                    'avatar' => '/uploads/avatars' . $friend->getAvatar(),
             		'online' => false,
             		'last_message' => $last_message,
                     'new_messages' => $new_messages

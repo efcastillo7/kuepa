@@ -75,11 +75,10 @@ $(document).ready(function() {
 
     $( "#tabs" ).tabs();
 
-
     //log interval
     setInterval(function(){
         $.ajax('/log/resource', {
-            data: {resource_id: resource_id},
+            data: {resource_id: resource_id, course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id},
             dataType: 'json',
             type: 'POST',
             success: function(data) {
@@ -87,4 +86,18 @@ $(document).ready(function() {
             }
         });
     }, 26000);
+});
+
+$(window).load(function(){
+    $("#add_to_learning_path").click(function(){
+        lpService.add({
+            course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id,
+            onSuccess: function(item){
+                addItemToPath(item);
+            },
+            onError: function(data){
+                alert('Ya tiene esa lección');
+            }
+        });
+    });
 });

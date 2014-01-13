@@ -34,6 +34,12 @@
   <script src="/assets/v2/js/jquery.mousewheel.js"></script>
 
   <script src="/assets/v2/js/jquery.knob.js"></script>
+
+  <?php use_stylesheet("/styles/css/plataforma.css") ?>
+
+  <!-- PUSH MENU -->
+  <?php use_javascript("/assets/modernizr/modernizr.custom.js") ?>
+  <?php use_javascript("/assets/modernizr/classie.js") ?>
   
   <?php use_javascript("/js/jquery.form.min.js") ?>
   <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>
@@ -46,7 +52,7 @@
   <?php include_javascripts() ?>  
 </head>
 
-<body>
+<body class="cbp-spmenu-push">
 
   <div class="wrapper"> <?php /* cierra en layout_footer.php */ ?>
 

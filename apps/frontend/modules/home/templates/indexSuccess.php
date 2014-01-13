@@ -1,3 +1,4 @@
+<?php include_component('layout', 'messages') ?>
 <div id="" class="container">
     <div id="" class="row">
         <div class="span8 offset1">

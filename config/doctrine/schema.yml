@@ -12,6 +12,7 @@ Profile:
     birthdate:                 date
     sex:                       { type: enum, values: [male, female] }
     valid_until:               date
+    avatar:                    varchar(100)
   relations:
     sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
@@ -45,6 +46,8 @@ CollegeLearningPath:
   columns:
     college_id: {type: integer, primary: true}
     component_id: {type: integer, primary: true}
+    deadline: { type: date }
+    position: { type: integer, default: 0 }
 
 College:
   tableName: college
@@ -150,6 +153,75 @@ LearningPath:
     Child:
       class: Component
       local: child_id
+      foreign: id
+      type: one
+
+PredictiveLearningPath:
+  actAs:
+    Timestampable: ~
+  columns:
+    profile_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    position: integer
+    protected: boolean
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+  indexes:
+    plp_unique_user_path_item:
+      fields: [profile_id, course_id, chapter_id, lesson_id]
+      type: unique 
+
+DependencyPath:
+  columns:
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    depends_course_id: integer
+    depends_chapter_id: integer
+    depends_lesson_id: integer
+  relations:
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+    DependsCourse:
+      class: Course
+      local: depends_course_id
+      foreign: id
+      type: one
+    DependsChapter:
+      class: Chapter
+      local: depends_chapter_id
+      foreign: id
+      type: one
+    DependsLesson:
+      class: Lesson
+      local: depends_lesson_id
       foreign: id
       type: one
 
@@ -335,11 +407,30 @@ LogViewComponent:
     Timestampable: ~
   columns:
     profile_id: integer
-    component_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    resource_id: integer
     type: string
   relations:
-    Component:
-      local: component_id
+    Course:
+      class: Component
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      class: Component
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      class: Component
+      local: lesson_id
+      foreign: id
+      type: one
+    Resource:
+      class: Component
+      local: resource_id
       foreign: id
       type: one
     Profile:
@@ -386,6 +477,7 @@ ProfileComponentCompletedStatus:
     effort_index: float
     efficiency_index: float
     learning_index: float
+    time_remaining: integer
   relations:
     Component:
       local: component_id
@@ -480,3 +572,42 @@ RegisterCodeHasCourse:
   columns:
     register_code: {type: string(50), primary: true}
     course_id: {type: integer, primary: true}
+
+FlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    type: string
+    name: string
+    active: {type: boolean, default: false}
+    valid_from: date
+    valid_until: date
+
+ProfileViewFlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    flash_message_id: integer
+    profile_id: integer
+  relations:
+    Profile:
+      type: one
+      local: profile_id
+      foreign: id
+    FlashMessage:
+      type: one
+      local: flash_message_id
+      foreign: id

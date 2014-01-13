@@ -42,6 +42,10 @@
         <?php use_javascript("/assets/modernizr/modernizr.custom.js") ?>
         <?php use_javascript("/assets/modernizr/classie.js") ?>
 
+        <!-- LEARNING PATH -->
+        <?php use_javascript("libs/learningPathService.js") ?>
+        <?php use_javascript("libs/learningPath.js") ?>
+
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -57,15 +61,6 @@
     </head>
 
     <body class="cbp-spmenu-push">
-
-        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-            <a href="#" class="cbp-hom"><i></i>Inicio</a>
-            <a href="#" class="cbp-cal"><i></i>Calendario</a>
-            <a href="#" class="cbp-msg"><i></i>Mensajes</a>
-            <a href="#" class="cbp-tsk"><i></i>Tareas</a>
-            <a href="#" class="cbp-usr"><i></i>Mi Perfil</a>
-            <a href="#" class="cbp-set"><i></i>Ajustes</a>
-        </nav>
 
         <?php include_component('layout', 'navigation') ?>
         <?php echo $sf_content ?>
@@ -90,38 +85,6 @@
         <script src="/js/bootstrap-carousel.js"></script>
         <script src="/js/bootstrap-typeahead.js"></script>
         <script src="/js/course.js"></script>
-
-        <script type="text/javascript">
-            $(".knob-small").knob({
-                height: 24
-            });
-        </script>
-
-        <!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
-        <script>
-            var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-                showLeft = document.getElementById( 'showLeft' ),
-                body = document.body;
-
-            
-            showLeft.onclick = function() {
-                classie.toggle( this, 'active' );
-                classie.toggle( menuLeft, 'cbp-spmenu-open' );
-                disableOther( 'showLeft' );
-            };
-        
-
-            function disableOther( button ) {  
-                if( button !== 'showLeft' ) {
-                    classie.toggle( showLeft, 'disabled' );
-                }
-            }
-        </script>
-        <script type="text/javascript">
-            $(function(){
-               $('[rel="tooltip"]').tooltip();
-            });
-        </script>
 
     </body>
 </html>

@@ -16,6 +16,59 @@ class ComponentService {
         return Component::getRepository()->find($id);
     }
 
+    public function setDeadlineForUser($profile_id, $component_id, $date){
+        $date = is_int($date) ? date('Y-m-d', $date) : $date;
+
+        $plp = ProfileLearningPath::getRepository()->createQuery('plp')
+                ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
+                ->fetchOne();
+
+        if($plp == null){
+            $plp = new ProfileLearningPath;
+            $plp->setProfileId($profile_id)
+                ->setComponentId($component_id);
+        }
+
+        $plp->setDeadline($date)
+            ->save();
+
+        return;
+    }
+
+    public function getDeadlineForUser($profile_id, $component_id){
+        //check if user has college
+        $profile = Profile::getRepository()->find($profile_id);
+        $deadline = null;
+
+        if($profile){
+            //check if user has a deadline
+            $plp = ProfileLearningPath::getRepository()->createQuery('plp')
+                        ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
+                        ->fetchOne();
+
+            if($plp){
+                $deadline = $plp->getDeadline();
+            }
+
+            //if deadline is null
+            if($deadline == null){
+                $college = $profile->getColleges()->getFirst();
+
+                if($college){
+                    $clp = CollegeLearningPath::getRepository()->createQuery('clp')
+                        ->where('component_id = ? and college_id = ?', array($component_id, $college->getId()))
+                        ->fetchOne();
+
+                    if($clp){
+                        $deadline = $clp->getDeadline();
+                    }
+                }
+            }
+        }
+
+        return $deadline;
+    }
+
     public function getCoursesForUser($profile_id) {
         //check if user has college
         $profile = Profile::getRepository()->find($profile_id);
@@ -29,7 +82,6 @@ class ComponentService {
             }else{
                 $courses = Course::getRepository()->getChaptersForUser($profile_id);
             }
-
         }
 
         return $courses;
@@ -294,24 +346,6 @@ class ComponentService {
         }
     }
 
-    public function setDeadline($component_id, $date){
-        $q = Component::getRepository()->createQuery('c')
-                ->update()
-                ->where('component_id = ?', $component_id)
-                ->set('deadline', $date);
-
-        return $q->execute();
-    }
-
-    public function setDeadlineForUser($profile_id, $component_id, $date){
-        $plp = ProfileLearningPath::getRepository()->createQuery('plp')
-                ->update()
-                ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
-                ->set('deadline', date('Y-m-d', $date));
-
-        return $q->execute();
-    }
-
     public function getNoteAvg($profile_id, $component_id){
         //this is the note avg of all resources, including the exercices
         $avg_notes = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile_id, $component_id);
@@ -347,7 +381,8 @@ class ComponentService {
 
     }    
 
-    public function getParents($component_id){
+    public function getParents($component_id, $orderBy = 'asc'){
+
         $q = Component::getRepository()->createQuery('parent')
                 ->select('parent.*')
                 ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')

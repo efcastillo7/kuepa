@@ -1,22 +1,28 @@
+<?php if($profile): ?>
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+    <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
+    <!-- <a href="#" class="cbp-cal"><i></i>Calendario</a> -->
+    <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
+    <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
+    <!-- <a href="" class="cbp-set"><i></i>Ajustes</a> -->
+    <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
+</nav>
+<?php endif; ?>
+
 <nav class="navbar navbar-default navbar-fixed-top nav-message">
     <div class="container messages">
       <div class="navbar-header">
 
+        
         <ul class="nav nav-pills">
-          <!-- <li class="dropdown">
-
-            <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+          <li class="">
+            <a id="showLeft" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
               <i class="spr ico-menu"><i class="spr ico-menu-hover"></i></i>
             </a>
 
-            <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-              <li role="presentation" class="divider"></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-            </ul>
-          </li> -->
+            
+          </li>
           <li><a href="index.php"><img src="img/kuepa_navbar.png" alt="kuepa" title="kuepa"></a></li>
         </ul>
 
