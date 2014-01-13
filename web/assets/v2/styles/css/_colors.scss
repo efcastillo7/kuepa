@@ -1,0 +1,117 @@
+$orange:#ff671b;
+$orange-hover:lighten($orange,3%);
+$orange-active:darken($orange,3%);
+
+$violet:#6f52db;
+$red:#e61523;
+
+$btn-gray:#a9a9ad;
+$btn-gray-hover:lighten($btn-gray,6%);
+$btn-gray-active:darken($btn-gray,17%);
+
+$btn-gray-light:#e3e3e3;
+$btn-gray-light-hover:lighten($btn-gray-light,6%);
+$btn-gray-light-active:darken($btn-gray-light,17%);
+
+$black:#000;
+$dark:#333;
+$gray1:#595959;
+$gray2:#dbdbdb;
+$gray3:#f5f5f5;
+$gray4:#a1a1a5;
+$gray5:#ebebeb;
+$gray6:#f7f7f7;
+$gray7:#b3b3b3;
+$gray8:#8c8c8c;
+$gray9:#666;
+$gray10:#323232;
+$gray11:#fafafa;
+$gray12:#dcdcdc;
+
+$input-border:#c7c7cc;
+$input-border-active:#58585c;
+$input-placeholder:#c7c7cc;
+$input-text:#58585c;
+$input-success:#81cc47;
+$input-alert:#e61515;
+$input-disabled:#e9e9eb;
+
+$dropdown-list:#22344a;
+$breadcrum:#22344a;
+$breadcrum-link1:#919aa5;
+
+$blue:#2568fa;
+$blue2:#5688f9;
+
+$green:#47d97f;
+$green2:#81cc47;
+$green3:#009968;
+
+$subject-biology:#008A5E;
+$biology-back:#57e0b2;
+$biology-border:darken($biology-back,30%);
+$biology-text:#00b379;
+.background-biology{background: $subject-biology;}
+.color-biology{color:$subject-biology;}
+
+$subject-fisics:#DB0962;
+$physics-back:lighten($subject-fisics,38%);
+$physics-border:darken($physics-back,30%);
+$physics-text:#e00964;
+.background-physics{background: $subject-fisics;}
+.color-physics{color:$subject-fisics;}
+
+$subject-reasoning:#00ACA1;
+$reasoning-back:lighten($subject-reasoning,10%);
+$reasoning-border:darken($reasoning-back,20%);
+$reasoning-text:#00aa9f;
+.background-reasoning{background: $subject-reasoning;}
+.color-reasoning{color:$subject-reasoning;}
+
+$subject-maths:#273691;
+$math-back:lighten($subject-maths,45%);
+$math-border:darken($math-back,30%);
+$math-text:#273691;
+.background-maths{background: $subject-maths;}
+.color-maths{color:$subject-maths;}
+
+$subject-grammar:#7AC143;
+$grammar-back:saturate(lighten($subject-grammar,30%),100%);
+$grammar-border:darken($grammar-back,38%);
+$grammar-text:#7ac143;
+.background-grammar{background: $subject-grammar;}
+.color-grammar{color:$subject-grammar;}
+
+$subject-history:#B5121B;
+$history-back:saturate(lighten($subject-history,37%),100%);
+$history-border:darken($history-back,35%);
+$history-text:#b5121b;
+.background-history{background: $subject-history;}
+.color-history{color: lighten($subject-history,10%);}
+
+$subject-socialcs:#11175E;
+$social-back:saturate(lighten($subject-socialcs,60%),100%);
+$social-border:darken($social-back,35%);
+$social-text:#11175e;
+.background-socialcs{background: $subject-socialcs;}
+.color-socialcs{color:$subject-socialcs;}
+
+$subject-simulation:#F76E26;
+$simulation-back:saturate(lighten($subject-simulation,26%),100%);
+$simulation-border:darken($simulation-back,30%);
+$simulation-text:#f76e26;
+.background-simulation{background: $subject-simulation;}
+.color-simulation{color:$subject-simulation;}
+
+$subject-live:#5A4099;
+$live-back:saturate(lighten($subject-live,35%),100%);
+$live-border:darken($live-back,30%);
+$live-text:#5a4099;
+.background-live{background: $subject-live;}
+.color-live{color:$subject-live;}
+
+.white {color: #fff;}
+.gray2 {color: $gray7;}
+.black {color:$black;}
+.orange {color:$orange;}
+.blue{color:$blue;}

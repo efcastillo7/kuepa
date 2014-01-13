@@ -1,0 +1,68 @@
+/* --------------------------------------------------
+// Breadcrum
+-------------------------------------------------- */
+.breadcrum{
+  height: 50px;
+  background: $breadcrum;
+  padding: 9px 0 0 20px;
+
+  .icon{
+    width: 33px;
+    height: 33px;
+    @include border-radius(8px);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+    position: relative;
+
+    img{
+      width:22px;
+      position: absolute;
+      top: 5px;
+      left: 6px;
+    }
+  }
+
+  .ico-arrow-breadcrum{
+    margin: 0 8px;
+  }
+
+  .link-grey{color:$breadcrum-link1;}
+  .link-white{color:#fff;}
+}
+
+/* --------------------------------------------------
+// Title with icons
+-------------------------------------------------- */
+.with-icon{
+  font-size: 22px;
+  font-family: helveticaroman;
+  .wrap{
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.box-annotations{
+  margin:10px 0;
+  .wrap{float: left;}
+  .data{
+    margin-left: 45px;
+    p{
+      color:#232323;
+      margin:0 0 5px 0 !important;
+      font-family:HelveticaMd;
+    }
+    .annotation{font-size: 15px;}
+    .date{
+      font-size: 12px;
+      color:$gray7;
+    }
+    a{
+      color:$blue2;
+      margin-left: 5px;
+      font-family:HelveticaMd;
+      font-size: 13px;
+    }
+  }
+}

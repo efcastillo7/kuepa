@@ -16,6 +16,7 @@ class lessonActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
+        $this->profile = $this->getProfile();
         $course_id = $request->getParameter('course_id');
         $this->course = Course::getRepository()->find($course_id);
 
@@ -68,6 +69,8 @@ class lessonActions extends kuepaActions {
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
         $this->comments = NoteService::getInstance()->getComments($resource_id);
+
+        $this->setLayout("layout_v2");
     }
 
     public function executeCreate(sfWebRequest $request) {

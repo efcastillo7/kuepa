@@ -7,12 +7,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+
+  <link href="/assets/v2/styles/css/fullcalendar.css" rel="stylesheet">
+  <link href="/assets/v2/styles/css/jqui.css" rel="stylesheet">
+  <link href="/assets/v2/styles/css/jquery.cluetip.css" rel="stylesheet">
+
   <link href="/assets/v2/styles/css/bootstrap.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/docs.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/kuepa.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/component.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/style.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/perfect-scrollbar.css" rel="stylesheet">
+  <link href="/assets/v2/styles/css/bootstrap-select.css" rel="stylesheet">
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
   
@@ -35,8 +41,6 @@
 
   <script src="/assets/v2/js/jquery.knob.js"></script>
 
-  <?php use_stylesheet("/styles/css/plataforma.css") ?>
-
   <!-- PUSH MENU -->
   <?php use_javascript("/assets/modernizr/modernizr.custom.js") ?>
   <?php use_javascript("/assets/modernizr/classie.js") ?>
@@ -52,13 +56,15 @@
   <?php include_javascripts() ?>  
 </head>
 
-<body class="cbp-spmenu-push">
+<body>
 
-  <div class="wrapper"> <?php /* cierra en layout_footer.php */ ?>
+  <div class="wrapper">
 
   <?php include_component('layout', 'navigationV2') ?>
 
   <?php echo $sf_content ?>
+
+  <div class="push"></div>
 
 </div> <!-- /wrapper -->
 
@@ -67,41 +73,33 @@
     <p class="gray2 small2 clearmargin"><span class="AvantMd">kuepa</span> Copyright &copy; Kuepa 2012</p>
   </div>
 </footer>
-  <!-- ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
+
   <script src="/assets/v2/js/bootstrap.js"></script>
-  <!--<script src="js/bootstrap-transition.js"></script>
-  <script src="js/bootstrap-alert.js"></script>
-  <script src="js/bootstrap-modal.js"></script>
-  <script src="js/bootstrap-dropdown.js"></script>
-  <script src="js/bootstrap-scrollspy.js"></script>
-  <script src="js/bootstrap-tab.js"></script>
-  <script src="js/bootstrap-tooltip.js"></script>
-  <script src="js/bootstrap-popover.js"></script>
-  <script src="js/bootstrap-button.js"></script>
-  <script src="js/bootstrap-collapse.js"></script>
-  <script src="js/bootstrap-carousel.js"></script>
-  <script src="js/bootstrap-typeahead.js"></script>-->
   <script src="/assets/v2/js/perfect-scrollbar.js"></script>
+  <script src="/assets/v2/js/fullcalendar.js"></script>
+  <script src="/assets/v2/js/jquery-ui.custom.min.js"></script>
+
+  <script src="/assets/v2/js/jquery.placeholder.js"></script>
+
+  <!-- cluetip -->
+  <script src="/assets/v2/js/jquery.hoverIntent.js"></script>
+  <script src="/assets/v2/js/jquery.cluetip.js"></script>
+  <!-- cluetip -->
+
 
   <script language="javascript">
     $(document).ready(function(){
-
-      $('.carousel').carousel({
-        interval: 6000
-      });
 
       $(function(){
         $('[rel="tooltip"]').tooltip();
       });
 
-      $(".knob-small").knob({
-        height: 24
-      });
+      $('input, textarea').placeholder();
+      $('.selectpicker').selectpicker(); //selects
 
+      $('.cont-notifications').perfectScrollbar({wheelSpeed:30});
     });
   </script>
-
 
 
 </body>

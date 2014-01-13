@@ -1,0 +1,29 @@
+@media (min-width: 1366px) {
+  .chat-box{max-width:600px;}
+  .container{width: 1366px;}
+}
+
+@media (max-width: 1366px) {
+  .full-back-messages .container-messages .chat{
+    .body-message{
+      height: 418px;
+    }
+  }
+  .full-back-messages .container-messages{
+    .cont-inboxes{
+      height: 467px;
+    }
+  }
+  .chat-box{max-width:500px; }
+}
+
+
+@media (max-width: 1280px) {
+  .calendar{width:20%;}
+  #calendar{width:80%;}
+}
+
+@media (max-width: 980px) {
+  .calendar{float:none;}
+  #calendar{width:100%;}
+}

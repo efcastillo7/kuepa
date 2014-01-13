@@ -5,10 +5,15 @@
 .omega{padding-right: 0;}
 .right{float: right;}
 .left{float: left;}
+.clear{clear: both;}
 
 .clearmargin {margin:0;}
+.clearpadding{padding:0;}
 
 .margintop {margin-top:20px;}
+.marginbottom {margin-bottom:20px;}
+.marginbottom10 {margin-bottom:10px;}
+.margintop10 {margin-top:10px;}
 .margintop40 {margin-top:40px;}
 .margintop60 {margin-top:60px;}
 
@@ -19,3 +24,9 @@
 .txt-center {text-align:center;}
 .txt-right {text-align:right;}
 .txt-left {text-align:left;}
+
+.separator{
+  width: 100%;
+  height: 1px;
+  background: $input-border;
+}
