@@ -572,3 +572,42 @@ RegisterCodeHasCourse:
   columns:
     register_code: {type: string(50), primary: true}
     course_id: {type: integer, primary: true}
+
+FlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    type: string
+    name: string
+    active: {type: boolean, default: false}
+    valid_from: date
+    valid_until: date
+
+ProfileViewFlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    flash_message_id: integer
+    profile_id: integer
+  relations:
+    Profile:
+      type: one
+      local: profile_id
+      foreign: id
+    FlashMessage:
+      type: one
+      local: flash_message_id
+      foreign: id

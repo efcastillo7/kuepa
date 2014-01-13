@@ -15,10 +15,6 @@ button {
 	border-radius: 2px;
 }
 
-button:hover {
-	background: #A5281B;
-}
-
 @media screen and (max-width: 46.0625em) {
 	.column {
 		width: 100%;
