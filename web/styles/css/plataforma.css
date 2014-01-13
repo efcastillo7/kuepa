@@ -327,6 +327,16 @@ footer {
   bottom: 10px;
   width: 100%;
 }
+.subject-buttonbox .subject-title .st-title {
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  margin: 0px;
+  line-height: 1;
+}
+.subject-buttonbox .subject-title .st-progress {
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+}
 
 .subject-buttonbox .subject-image {
   position: relative;
@@ -562,7 +572,7 @@ footer {
 -------------------------------------------------- */
 .view-mode {
   position: absolute;
-  margin:40px 0 0 70px;
+  margin:40px 0 0 82px;
 }
 .view-mode a {
   height: 26px;
@@ -622,29 +632,38 @@ footer {
   position: relative;
 }
 .lv-icon {
-  height: 36px;
-  width: 36px;
-  padding: 6px;
+  height: 48px;
+  width: 48px;
+  padding: 0px;
   float: left;
   margin-right: 5px;
+  border-radius: 10px;
+  overflow: hidden;
 }
-.lv-container .title3 {
-  padding: 12px 0 0 55px;
+.lv-container .lv-title {
+  padding: 10px 0 0 55px;
   cursor: pointer;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  color: #000;
+  margin: 0;
 }
-.lv-container .title3 i {
-  margin: 3px 3px 0 0;
+.lv-container .lv-title i {
+  margin: 1px 4px 0 0;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
 }
-.lv-container .small1 {
-  margin-top: -25px;
+.lv-container .lv-progress {
+  margin-top: -30px;
   position: absolute;
   right: 0;
+  color: #999;
 }
 .lv-lvlone {
-  padding: 9px 0 0 18px;
+  padding: 2px 0 0 74px;
 }
 .lv-lvlone li {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #E9E9EB;
   padding: 12px 0px 7px 38px;
 }
 .lv-lvlone li:last-child {
@@ -654,7 +673,9 @@ footer {
   margin: -2px 3px 0 0;
 }
 .subject-item {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #E9E9EB;
+  padding-bottom: 8px;
 }
 .subject-item .lv-lvlone li:first-child .lvl-btn .lp-bar-prev,
 .subject-item .lv-lvlone li:last-child .lvl-btn .lp-bar-post {
@@ -927,7 +948,7 @@ div[type*=button]{
 /* Vertical menu that slides from the left or right */
  
 .cbp-spmenu-left {
-    left: -240px;
+    left: -250px;
 }
  
 .cbp-spmenu-right {

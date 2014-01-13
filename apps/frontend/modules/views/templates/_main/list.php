@@ -6,8 +6,8 @@
                     <div class="lv-icon bg-<?php echo $course->getColor() ?>-alt-1">
                         <img src="<?php echo $course->getThumbnailPath() ?>">
                     </div>
-                    <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i><?php echo $course->getName() ?></p>
-                    <p class="small1 HelveticaLt"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>
+                    <p class="lv-title"><i class="icon-chevron-right"></i><?php echo $course->getName() ?></p>
+                    <p class="lv-progress"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>
                 </a>
             </li>
         <?php endforeach; ?>

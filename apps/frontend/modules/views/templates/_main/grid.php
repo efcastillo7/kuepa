@@ -8,8 +8,8 @@
                             <img src="<?php echo $course->getThumbnailPath() ?>" alt="">
                         </div>
                         <div class="subject-title">
-                            <p class="title4 HelveticaMd clearmargin"><?php echo $course->getName() ?></p>
-                            <p class="small1 HelveticaLt"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>
+                            <p class="st-title"><?php echo $course->getName() ?></p>
+                            <p class="st-progress"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>
                         </div>
                         <div class="pbar-circle">
                             <input class="knob" value="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>" data-fgColor="#fff" data-bgColor="#000" data-width="150" data-thickness=".09" data-skin="" data-readOnly=true data-displayInput=false >
