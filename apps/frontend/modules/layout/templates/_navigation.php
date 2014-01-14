@@ -4,9 +4,9 @@
     <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
     <!-- <a href="#" class="cbp-cal"><i></i>Calendario</a> -->
     <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <a href="<?php echo url_for("@video_session") ?>" class="cbp-tsk"><i></i>Tutorias</a>
     <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
     <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
-    <!-- <a href="" class="cbp-set"><i></i>Ajustes</a> -->
     <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
 </nav>
 
@@ -33,6 +33,7 @@
             <ul class="nav nav-mainbtn">
                 <li class="nmb-ins"><a href="<?php echo url_for("stats/index") ?>"><i></i>Reportes</a></li>
                 <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
+                <li class="nmb-mat"><a href="<?php echo url_for("@video_session") ?>"><i></i>Tutorias</a></li>
             </ul>
             <ul class="nav pull-right">
                 <li class="dropdown">
@@ -47,8 +48,8 @@
                 <li class="dropdown">
                     <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i> <?php echo $profile->getNickname() ?></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('user/index') ?>">Editar perfil</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Log out</a></li>
+                        <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="requestSupport-button">Llamar a soporte</a></li> -->
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Salir</a></li>
                     </ul>
                 </li>
             </ul>
@@ -56,16 +57,3 @@
     </div>
 </div><!-- /navbar -->
 
-<!-- Modal 
-<div id="myModal" class="nav-menu-modal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <ul class="unstyled">
-            <li class="nav-menu-btn nmb-ini"><a href=""><i></i>Inicio</a></li>
-            <li class="nav-menu-btn nmb-cal"><a href=""><i></i>Calendario</a></li>
-            <li class="nav-menu-btn nmb-msg"><a href=""><i></i>Mensajes</a></li>
-            <li class="nav-menu-btn nmb-tar"><a href=""><i></i>Tareas</a></li>
-            <li class="nav-menu-btn nmb-mat"><a href=""><i></i>Materias</a></li>
-            <li class="nav-menu-btn nmb-dsh"><a href=""><i></i>Dashboard</a></li>
-            <li class="nav-menu-btn nmb-prf"><a href=""><i></i>Mi Perfil</a></li>
-            <li class="nav-menu-btn nmb-ajs"><a href=""><i></i>Ajustes</a></li>
-        </ul>
-</div> -->

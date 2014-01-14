@@ -14,7 +14,13 @@ class UserProfileForm extends ProfileForm
   {
     unset($this['created_at'],$this['updated_at'],$this['deleted_at'],
         $this['valid_until'], $this['colleges_list'], $this['components_list'],
-        $this['sf_guard_user_id']);
+        $this['sf_guard_user_id'], $this['google_id']);
+
+    //set decorator
+    $decorator = new sfWidgetFormSchemaFormatterLocal($this->getWidgetSchema(), $this->getValidatorSchema());
+    $this->widgetSchema->addFormFormatter('custom', $decorator);
+    $this->widgetSchema->setFormFormatterName('custom');
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form');
 
     $this->setWidget("password", new sfWidgetFormInputPassword());
     $this->setValidator("password", new sfValidatorString(array('required' => false, 'min_length' => 8)));
@@ -30,17 +36,17 @@ class UserProfileForm extends ProfileForm
             'file_src' => 'uploads/avatars/' . $this->getObject()->getAvatar(),
             'is_image' => true,
             'edit_mode' => (!$this->isNew()),
-            'with_delete' => true,
+            'with_delete' => false,
         )));
 
-        $this->setValidator('avatar', new sfValidatorFile(
-                array(
-            'path' => sfConfig::get('sf_upload_dir') . '/avatars',
-            // 'validated_file_class' => 'LocalValidatedFile',
-            'max_size' => 524288, // 7MB
-            'required' => false), array(
-            'max_size' => "Tamaño de imagen demasiado grande",
-        )));
+    $this->setValidator('avatar', new sfValidatorFile(
+            array(
+        'path' => sfConfig::get('sf_upload_dir') . '/avatars',
+        // 'validated_file_class' => 'LocalValidatedFile',
+        'max_size' => 524288, // 7MB
+        'required' => false), array(
+        'max_size' => "Tamaño de imagen demasiado grande",
+    )));
 
     //date
     $years = range(1900, 2000);
@@ -52,6 +58,9 @@ class UserProfileForm extends ProfileForm
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'checkPassword')))
     );
+
+    //get email
+    $this->getWidgetSchema()->setDefaults(array('email_address' => $this->getObject()->getSfGuardUser()->getEmailAddress()));
   }
 
   public function checkPassword($validator, $values)

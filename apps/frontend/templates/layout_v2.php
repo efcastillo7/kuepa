@@ -48,6 +48,9 @@
   <?php use_javascript("/js/jquery.form.min.js") ?>
   <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>
 
+  <script src="/assets/v2/js/bootstrap-select.js"></script>
+  <link href="/assets/v2/styles/css/bootstrap-select.css" rel="stylesheet">
+
   <?php include_http_metas() ?>
   <?php include_metas() ?>
   <?php include_title() ?>

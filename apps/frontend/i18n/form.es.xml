@@ -1,0 +1,134 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+    <file original="global" source-language="en" target-language="es_AR" datatype="plaintext">
+        <body>
+            <trans-unit>
+                <source>Contact</source>
+                <target>Contacto</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Completed</source>
+                <target>Completado</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Enabled</source>
+                <target>Habilitado</target>
+            </trans-unit>
+            <source>Description</source>
+            <target>Descripcion</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Date</source>
+            <target>Fecha</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Client</source>
+            <target>Cliente</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Zipcode</source>
+            <target>Codigo Postal</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Address</source>
+            <target>Direccion</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Name</source>
+            <target>Nombre</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Firstname</source>
+            <target>Nombre</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Lastname</source>
+            <target>Apellido</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Phone</source>
+            <target>Teléfono</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Celphone</source>
+            <target>Celular</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Profession</source>
+            <target>Profesión</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Profession code</source>
+            <target>Matrícula</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Birthdate</source>
+            <target>Fecha de Nacimiento</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Created at</source>
+            <target>Fecha de Creacion</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Mail address</source>
+            <target>Dirección de e-mail</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Username</source>
+            <target>Usuario</target>
+        </trans-unit>
+        <trans-unit>
+            <source>New Password</source>
+            <target>Nueva Contraseña</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Re Password</source>
+            <target>Confirmar Contraseña</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Password</source>
+            <target>Contraseña</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Change</source>
+            <target>Cambiar</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Change</source>
+            <target>Cambiar</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Change Username and Password</source>
+            <target>Cambiar Usuaruio y Contraseña</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Employee</source>
+            <target>Profesional</target>
+        </trans-unit>
+        <trans-unit>
+            <source>Required.</source>
+            <target>Campo requerido.</target>
+        </trans-unit>
+        <trans-unit>
+            <source>File</source>
+            <target>Archivo</target>
+        </trans-unit>
+        <trans-unit>
+            <source>"%value%" is not a number.</source>
+            <target>El campo debe ser numérico.</target>
+        </trans-unit>
+        <trans-unit>
+            <source>"%value%" is not an integer.</source>
+            <target>El campo debe ser numérico.</target>
+        </trans-unit>
+        <trans-unit>
+            <source>"%value%" is too short (%min_length% characters min).</source>
+            <target>El campo debe tener como mínimo %min_length% caracteres.</target>
+        </trans-unit>
+        <trans-unit>
+            <source>"%value%" is too long (%max_length% characters max).</source>
+            <target>El campo debe tener como máximo %max_length% caracteres.</target>
+        </trans-unit>
+        </body>
+    </file>
+</xliff>

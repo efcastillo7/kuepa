@@ -18,6 +18,10 @@ sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }
 
+video_session:
+  url: /tutorias
+  param: { module: video_session, action: index }
+
 sf_guard_signout:
   url:   /logout
   param: { module: sfGuardAuth, action: signout }
