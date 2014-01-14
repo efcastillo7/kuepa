@@ -18,6 +18,8 @@ class userActions extends kuepaActions {
     public function executeIndex(sfWebRequest $request) {
         $this->user = $this->getUser();
         $this->form = new UserProfileForm($this->getProfile());
+
+        $this->setLayout("layout_v2");
     }
 
     public function executeUpdate(sfWebRequest $request) {

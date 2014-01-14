@@ -14,7 +14,7 @@ class UserProfileForm extends ProfileForm
   {
     unset($this['created_at'],$this['updated_at'],$this['deleted_at'],
         $this['valid_until'], $this['colleges_list'], $this['components_list'],
-        $this['sf_guard_user_id']);
+        $this['sf_guard_user_id'], $this['google_id']);
 
     $this->setWidget("password", new sfWidgetFormInputPassword());
     $this->setValidator("password", new sfValidatorString(array('required' => false, 'min_length' => 8)));

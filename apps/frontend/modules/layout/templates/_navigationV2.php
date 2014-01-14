@@ -3,6 +3,7 @@
     <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
     <!-- <a href="#" class="cbp-cal"><i></i>Calendario</a> -->
     <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <a href="<?php echo url_for("@video_session") ?>" class="cbp-tsk"><i></i>Tutorias</a>
     <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
     <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
     <!-- <a href="" class="cbp-set"><i></i>Ajustes</a> -->
@@ -40,6 +41,11 @@
               <i class="spr ico-subjects"><i class="spr ico-subjects-hover"></i></i>Aprendizaje
             </a>
           </li>
+          <li>
+            <a href="<?php echo url_for("@video_session") ?>" class="a-instruments">
+              <i class="spr ico-subjects"><i class="spr ico-subjects-hover"></i></i>Tutorias
+            </a>
+          </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -64,9 +70,10 @@
               <i class="spr ico-arrow-down-hover"></i>
             </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="requestSupport-button">Llamar a soporte</a></li>
               <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('user/index') ?>">Editar Perfil</a></li>
               <li role="presentation" class="divider"></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Logout</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Salir</a></li>
             </ul>
           </li>
 
