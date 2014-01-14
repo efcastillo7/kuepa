@@ -32,7 +32,7 @@ class UserProfileForm extends ProfileForm
     $this->setValidator("email_address", new sfValidatorString(array('required' => false)));
 
     $this->setWidget('avatar', new sfWidgetFormInputFileEditable(array(
-            'label' => 'Imagen',
+            'label' => 'Profile picture',
             'file_src' => 'uploads/avatars/' . $this->getObject()->getAvatar(),
             'is_image' => true,
             'edit_mode' => (!$this->isNew()),

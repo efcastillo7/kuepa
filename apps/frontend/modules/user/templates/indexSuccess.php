@@ -9,6 +9,11 @@
 
     </div><!-- /row -->
 
+    <?php 
+    	// echo $sf_user->setCulture('es_AR');
+    	// echo $sf_user->getCulture(); 
+    ?>
+
 	<form action="<?php echo url_for("user/update") ?>" method="POST" enctype='multipart/form-data'>
 		<?php echo $form->renderGlobalErrors()?>
 	    <div class="row new-event form">
