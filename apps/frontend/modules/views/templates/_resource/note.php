@@ -1,6 +1,6 @@
 <?php use_helper('Date') ?>
 
-<div class="box-annotations">
+<div class="box-annotations" id="note-<?php echo $note->getId() ?>">
     <div class="wrap wrap-arrow-gray">
       <i class="spr ico-annotations"></i>
     </div>
@@ -10,9 +10,10 @@
         <?php echo $note->getContent() ?>
       </p>
       <p class="date">
-        <?php echo format_date($note->getUpdatedAt(), 'dd/MM/yyyy') ?> a las <?php echo format_date($note->getUpdatedAt(), 'HH:mm') ?>hs
+        El <?php echo format_date($note->getUpdatedAt(), 'dd/MM/yyyy') ?> a las <?php echo format_date($note->getUpdatedAt(), 'HH:mm') ?>hs
       </p>
-      <!-- <a href="#">Editar Anotación »</a> -->
+      <!-- <a id="edit-note-link-<?php echo $note->getId() ?>" class="edit-note-link" data-target="<?php echo $note->getId() ?>" href="javascript:void(0);">Editar Anotación »</a>  -->
+      <a class="delete-note-link" target="<?php echo $note->getId() ?>" href="javascript:void(0);">Eliminar Anotación »</a>
     </div>
 </div>
 

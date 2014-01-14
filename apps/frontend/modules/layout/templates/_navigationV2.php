@@ -106,31 +106,24 @@
           </li>
 
           <li>
-            <a href="">
+            <a href="#" id="open-learning-path">
               <i class="spr ico-search"><i class="spr ico-search-hover"></i></i>
             </a>
           </li>
 
           <li class="dropdown">
-            <a id="drop2" href="#" role="button" class="dropdown-toggle a-arrow" data-toggle="dropdown">
+            <a id="drop2" href="#" role="button">
               <i class="spr ico-user"><i class="spr ico-user-hover"></i></i>
-              <i class="spr ico-arrow-down"></i>
-              <i class="spr ico-arrow-down-hover"></i>
+              <!-- <i class="spr ico-arrow-down"></i> -->
+              <!-- <i class="spr ico-arrow-down-hover"></i> -->
             </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-              <li role="presentation" class="divider"></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-            </ul>
           </li>
         </ul>
       </div><!-- /navbar-collapse collapse -->
     </div><!-- /container -->
   </nav><!-- /navbar navbar-fixed-top -->
 
-<?php if($profile && false):?>
+<?php if($profile):?>
 <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
     <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
     <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>

@@ -21,7 +21,7 @@ $(document).ready(function() {
                         if ( typeof(target) != "undefined"){
                             $(target).prepend(data.template);
                         } else {
-                            $("#notes_list").prepend(data.template);
+                            $(".notes.private").prepend(data.template);
                         }
                         
                         container.val('');
@@ -33,7 +33,7 @@ $(document).ready(function() {
                     }
 
                 }
-            })
+            });
         }
     });
 
@@ -45,7 +45,7 @@ $(document).ready(function() {
             type: 'POST',
             success: function(data) {
                 if (data.code === 201) {
-                    $(".li-note-" + note_id).remove();
+                    $("#note-" + note_id).remove();
                 } else {
                     alert('error al eliminar el comentario');
                 }
@@ -55,7 +55,8 @@ $(document).ready(function() {
     });
 
     $("body").delegate(".edit-note-link", "click", function(e) {
-        var note_id = $(this).attr("target");
+        var note_id = $(this).data("target");
+
         var edit_input = $("#edit-note-input-" + note_id);
         var span_note = $("#span-note-" + note_id)
 
@@ -67,13 +68,13 @@ $(document).ready(function() {
             $("#edit-note-link-" + note_id).html("Cancelar");
         }
 
-        $(".li-note-" + note_id).addClass("edit-delete-tag");
+        $("#note-" + note_id).addClass("edit-delete-tag");
 
         edit_input.toggle();
         span_note.toggle();
     });
 
-    $( "#tabs" ).tabs();
+    // $( "#tabs" ).tabs();
 
     //log interval
     setInterval(function(){

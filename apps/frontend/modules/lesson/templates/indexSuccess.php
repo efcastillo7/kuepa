@@ -8,8 +8,8 @@
 
   <section class="container clearpadding">
     <section class="breadcrum">
-      <div class="icon background-<?php echo $subject; ?>">
-        <img src="/img/subject-icons/subject-icn-biology.png">
+      <div class="icon eg-thumb bg-<?php echo $course->getColor()?>-alt-1">
+        <img src="<?php echo $course->getThumbnailPath() ?>">
       </div>
 
       <a class="link-grey" href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a>
@@ -41,7 +41,7 @@
           <ul class="list-aside-lesson">
             <li class="head-list">
               <h3><?php echo $lesson->getName() ?></h3>
-              <h4>10 recursos, 45 minutos</h4>
+              <h4><?php echo $lesson->getChildren()->count() ?> recursos, <?php echo round($lesson->getDuration()/60,2) ?> minutos</h4>
             </li>
             <?php foreach ($lesson->getChildren() as $child): ?>
                 <?php $current_percentage = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $child->getId()) ?>
