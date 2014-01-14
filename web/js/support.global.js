@@ -10,7 +10,9 @@ $(function(){
  * @param jQuery $tr
  * @returns {void}
  */
-function onSupportClicked(){
+function onSupportClicked(e){
+
+    e.preventDefault();
 
     triggerModalSuccess({
         id      : "modal-update-support-url",

@@ -17,14 +17,7 @@
         if (count($video_sessions) > 0):
             foreach ($video_sessions as $video_session):
 
-                //If the hangout has already been created it's joined, otherwise it's created
-                $storedUrl = $video_session->getUrl();
-                if(empty($storedUrl)){
-                    $hangout_url    = "https://plus.google.com/hangouts/_?gid=".VideoSessionService::APP_ID;
-                }else{
-                    $hangout_url    = $storedUrl;
-                }
-
+                $storedUrl      = $video_session->getUrl();
                 $storedColor    = $video_session->getCourse()->getColor();
                 $color          = empty($storedColor) ? "default" : $storedColor;
                 $chapter        = $video_session->getChapter()->getName();
@@ -49,10 +42,10 @@
                                 <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : {'video_session_id':'<?php echo $video_session->getId(); ?>','type':'<?php echo $video_session->getType(); ?>'}, 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
                             </span>
                             <?php else: ?>
-                            <a target="_blank" class="btn btn-mini btn-success <?php echo $video_session->getStatus() != "started" ? "disabled" : "" ?>" href="<?php echo $hangout_url; ?>">Acceder</a>
+                            <a target="_blank" class="btn btn-mini btn-success <?php echo $video_session->getStatus() != "started" ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>
                             <?php endif; ?>
                         <?php else: ?>
-                            <a target="_blank" class="btn btn-mini btn-success <?php echo ($video_session->getStatus() != "started" || empty($storedUrl)) ? "disabled" : "" ?>" href="<?php echo $hangout_url; ?>">Acceder</a>
+                            <a target="_blank" class="btn btn-mini btn-success <?php echo ($video_session->getStatus() != "started" || empty($storedUrl)) ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>
                         <?php endif; ?>
                         </div>
                     </td>

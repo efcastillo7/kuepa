@@ -4,6 +4,8 @@ var $hoveredEl      = {};
 
 $(function(){
 
+    $(".disabled").click(function(e){ e.preventDefault(); });
+
     //Hangout create form init and processing
     initAddVideoSessionForm();
 
