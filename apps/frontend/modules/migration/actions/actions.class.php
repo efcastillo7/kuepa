@@ -173,8 +173,9 @@ class migrationActions extends sfActions
 				->setEnabled(true)
 				->setDuration(1)
 				->save();
-
     		LessonService::getInstance()->addResourceToLesson($lesson->getId(), $resource->getId());
+        ComponentService::getInstance()->updateDuration($resource->getId());
+
     	}
 
 	}	
@@ -469,6 +470,8 @@ class migrationActions extends sfActions
 
 				//add reource to lesson
 				LessonService::getInstance()->addResourceToLesson($nlesson->getId(), $resource->getId());
+        		ComponentService::getInstance()->updateDuration($resource->getId());
+
 			}
 		}
 	}
@@ -478,4 +481,89 @@ class migrationActions extends sfActions
 	//crear lecciones
 	//crear recursos
   }
+
+  public function executeCalculateTime2(sfWebRequest $request){
+  	$this->setDuration($request->getParameter("id"));
+  }
+
+  protected function setDuration($component_id){
+	$component = Component::getRepository()->find($component_id);
+	$duration = 0;
+
+    if ( $component->getType() == Resource::TYPE  ){ // Resource
+        $duration = $component->calculateTime();
+    }else{
+        $childs = ComponentService::getInstance()->getChilds($component->getId());
+        foreach($childs as $child){
+        	$duration += $this->setDuration($child->getId());
+        }
+    }
+
+    //update duration
+    $component->setDuration($duration);
+    $component->save();
+
+    return $duration;
+  }
+
+  
+  /**
+  *  Proceso de Actualizar las duraciones 
+  *  de Components, Recursos,Lesson,
+  */
+  public function executeCalculateTime(sfWebRequest $request){
+      $offset = ( $request->getParameter('offset') ) ? $request->getParameter('offset') : 0;
+      // Calcular los recursos
+      $resources = Resource::getRepository()->createQuery('r')
+                ->where('r.duration >=  ? ','0')
+                ->limit(30)
+                ->offset($offset)
+                ->execute();
+      foreach($resources as $key => $resource){
+        ComponentService::getInstance()->updateDuration($resource->getId());
+      }
+      $this->resources = $resources;
+  }
+
+  public function executeRedologviewcomponent(sfWebRequest $request){
+  	$q = Doctrine_Manager::getInstance()->getCurrentConnection();
+	$query = "SELECT distinct(resource_id) as resource_id FROM log_view_component where resource_id is null or course_id is null or chapter_id is null or lesson_id is null";
+
+	$result = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($query);
+
+	foreach ($result as $value) {
+		$resource_id = $value['resource_id'];
+
+		$resource = Resource::getRepository()->find($resource_id);
+
+		$lessons = ComponentService::getInstance()->getParents($resource_id);
+
+		if($lessons && $lessons->count()){
+			$lesson = $lessons->getFirst();
+
+			$chapters = ComponentService::getInstance()->getParents($lesson->getId());
+
+			if($chapters && $chapters->count()){
+				$chapter = $chapters->getFirst();
+
+				$courses = ComponentService::getInstance()->getParents($chapter->getId());
+
+				if($courses && $courses->count()){
+					$course = $courses->getFirst();
+
+					//UPDATE
+					$query = "UPDATE log_view_component set course_id = {$course->getId()}, chapter_id = {$chapter->getId()}, lesson_id = {$lesson->getId()} where resource_id = {$resource_id}";
+					Doctrine_Manager::getInstance()->getCurrentConnection()->execute($query);
+					// echo "$query <br>";
+				}
+			}
+			// die();
+		}
+	}
+
+	//remove lost ones
+	$query = "DELETE FROM log_view_component WHERE resource_id is null or course_id is null or chapter_id is null or lesson_id is null";
+	Doctrine_Manager::getInstance()->getCurrentConnection()->execute($query);
+  }
+
 }

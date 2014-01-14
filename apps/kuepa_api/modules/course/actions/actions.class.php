@@ -8,7 +8,7 @@
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class courseActions extends sfActions {
+class courseActions extends kuepaActions {
 
     /**
      * POST /course
@@ -102,5 +102,31 @@ class courseActions extends sfActions {
     public function executeDelete(sfWebRequest $request) {
         return $this->renderText('delete');
     }
+
+
+    /**
+     * POST /course/deadline/course_id/:id/date/:date
+     *  
+     * Set deadline for user
+     * @param sfRequest $request A request object
+     */
+    public function executeDeadline(sfWebRequest $request) {
+        $course_id = $request->getParameter("course_id");
+        $date = $request->getParameter("date");
+
+        $response = array(
+            'status' => 'error'
+        );
+
+        if($course_id && $date){
+            $profile_id = $this->getProfile()->getId();
+
+            ComponentService::getInstance()->setDeadlineForUser($profile_id, $course_id, $date);
+            $response['status'] = 'ok';
+        }
+
+        return $this->renderText(json_encode($response));
+
+    }   
 
 }

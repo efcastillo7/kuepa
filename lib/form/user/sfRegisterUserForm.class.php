@@ -5,7 +5,7 @@
  *
  * @package    kuepa
  * @subpackage form
- * @author     fiberbunny
+ * @author     kibind
  * @version    SVN: $Id: sfDoctrinePluginFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfRegisterUserForm extends sfForm
@@ -31,12 +31,12 @@ class sfRegisterUserForm extends sfForm
       'last_name' => new sfValidatorString(array('required' => true)),
       'email_address' => new sfValidatorString(array('required' => true)),
       'sex' => new sfValidatorChoice(array('choices' => array('M', 'F'))),
-      'birthdate' => new sfValidatorDate(array('required' => true)),
+      'birthdate' => new sfValidatorDate(array('required' => false)),
       'nickname' => new sfValidatorString(array('required' => true)),
       'password' => new sfValidatorString(array('required' => true)),
       'repassword' => new sfValidatorString(array('required' => true)),
       'program' => new sfValidatorString(array('required' => false)),
-      'code' => new sfValidatorString(array('required' => false)),
+      'code' => new sfValidatorString(array('required' => true)),
     ));
 
     $this->widgetSchema->setNameFormat('register[%s]');

@@ -13,4 +13,103 @@
 class ResourceDataVideo extends BaseResourceDataVideo
 {
 	const TYPE = 'Video';
+
+  public function getFilePath() {
+      $file_path = $this->getContent();
+      $root_path = sFConfig::get('sf_web_dir');
+      $full_path = $root_path.$file_path;
+      return $full_path;
+  }
+
+  /*
+  * getVideoDuration: Calculates the video duration, 
+  *                   if it was already calculated it's returned from db 
+  * @return video duration
+  */
+  public function getVideoDuration(){
+    $duration = $this->getDuration();
+    $video_type = $this->getVideoType();
+    //if( $duration == NULL || $duration < 15 ){
+      switch ($video_type) {
+        case 'embebed':
+          $duration = $this->getEmbebedDuration();
+          break;
+        case 'youtube':
+          $duration = $this->getYoutubeDuration();
+          break;
+        case 'vimeo':
+          $duration = $this->getVimeoDuration();
+          break;
+        default:
+          # code...
+          break;
+      }
+      $this -> setDuration($duration);
+      $this -> save();
+    //}
+    return($duration);
+  }
+
+  /*
+  * getEmbebedDuration: Calculates the embeded video duration using ffmpeg 
+  *                   sudo apt-get install ffmpeg
+  * @return video duration
+  */
+  public function getEmbebedDuration(){
+    $file_path = $this->getFilePath();
+    $cmd = "ffmpeg -i $file_path 2>&1 | grep Duration | awk '{print $2}' | tr -d ,";
+    $video_time = exec($cmd);
+    $duration = 0;
+    if ( $video_time != ""){
+      list($hours, $mins, $secs) = explode(":", $video_time); // 24:59:59.59
+      $duration = ($hours*3600) + ($mins*60) + round($secs);
+    }
+    //Plugin ffmpeg or video not found
+  
+    return($duration);
+  }
+
+  /*
+  * getYoutubeDuration: Calculates the embeded video duration using youtube API 
+  *
+  * @return video duration
+  */
+  public function getYoutubeDuration(){
+    $url = $this->getContent();
+
+    parse_str(parse_url($url,PHP_URL_QUERY),$arr);
+    if ( array_key_exists('v', $arr)){
+      $video_id = $arr['v']; // youtube.com/v=ASDFWER442D
+    }else{
+      // youtube.com/embed/ASDFWER442D
+      // youtu.be/ASDFWER442D
+      $url = parse_url($url);
+      $path_parts = explode("/",$url['path']);
+      $video_id = array_pop( $path_parts );
+    }
+
+    $data=@file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$video_id.'?v=2&alt=jsonc');
+    if (false===$data) return false;
+
+    $obj=json_decode($data);
+    return $obj->data->duration;
+  }
+
+  /*
+  * getVimeoDuration: Calculates the embeded video duration using vimeo API 
+  *
+  * @return video duration
+  */
+  public function getVimeoDuration(){
+    $str = $this->getContent();
+    $url = parse_url($str);
+    $path_parts = explode("/",$url['path']);
+    $video_id = array_pop( $path_parts );
+    $data=@file_get_contents('http://vimeo.com/api/v2/video/'.$video_id.'.json');
+    if (false===$data) return false;
+    $obj = json_decode($data);
+    return $obj[0] -> duration;
+  }
+
+
 }

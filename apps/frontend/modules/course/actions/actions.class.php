@@ -73,6 +73,8 @@ class courseActions extends kuepaActions {
             if(!$id)
                 CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
 
+            ComponentService::getInstance()->updateDuration( $course->getId() );
+
             $response['template'] = "Ha ".($id?"editado":"creado")." el curso satisfactoriamente";
             $response['status'] = "success";
             $response['course_id'] = $course->getId();

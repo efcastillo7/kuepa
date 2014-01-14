@@ -13,6 +13,10 @@
 class Resource extends BaseResource
 {
 	const TYPE = 'Resource';
+    static $time_per_word = 1.2; // Time reading each word in secs
+    static $video_multiplier = 2; // Video lenght * Multiplier
+    static $pdf_words_per_size = 40; // 40 words for each 1k of size
+    static $time_per_question = 240; // 4 mins per question
 
     /**
      * 
@@ -33,4 +37,110 @@ class Resource extends BaseResource
     public function getTotalTime($profile_id){
         return LogService::getInstance()->getTotalTime($profile_id, $this);
     }
+
+
+    /** 
+    * methods to calculate resources time (in seconds ) 
+    */
+    public function getTimePerWord(){
+        return( self::$time_per_word );
+    }
+
+    public function getVideoMultiplier(){
+        return( self::$video_multiplier );
+    }
+
+    public function getPdfWordsPerSize(){
+        return( self::$pdf_words_per_size );
+    }
+
+    public function getTimePerQuestion(){
+        return( self::$time_per_question );
+    }
+
+    /**
+    *  Main method to calculate time
+    *  @1. Store word_count field on the ResourceData Table for text
+    *  @return time in seconds
+    */
+    public function calculateTime($force = false){
+        $resourceData = $this -> getResourceData() -> getFirst();
+
+        // There are some resources without ResourceData
+        if ( $resourceData == NULL ){
+            return(0);
+        }
+
+        $type = strtolower( $resourceData -> getType() );
+        $content = $resourceData -> getContent();
+        $resource_time = $resourceData->getReadingTime();
+
+        // if reading time is 0, it is calculated , otherwise it is returned
+        if ( (int)$resource_time == 0 || $force ){
+            switch ($type) {
+                 case 'document': // pdf ppt
+                    $word_count = $resourceData -> getWordCount();
+                    //if ( $word_count == NULL){
+                         //uploads/documents/filename
+                        $file_path = $resourceData->getFilePath();
+                        $filesize = round(filesize($file_path)/1000); // in Kb
+                        $word_count = $filesize * self::getPdfWordsPerSize();
+                        $resourceData -> setWordCount($word_count);
+                        $resourceData -> save();
+                    //}
+                    $resource_time = $word_count * self::getTimePerWord();
+                     break;
+                 case 'embeddedweb':
+                    $word_count = $resourceData -> getWordCount();
+                    //if ( $word_count == NULL){
+                        $url = $resourceData->getContent();
+                        $request = curl_init($url);
+                        curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+                        $content = curl_exec ( $request );
+                        $http_status = curl_getinfo($request, CURLINFO_HTTP_CODE);
+                        curl_close($request);
+                        $word_count = str_word_count( strip_tags($content ) );
+                        $resourceData -> setWordCount($word_count);
+                        $resourceData -> save();
+                    //}
+                    $resource_time = $word_count * self::getTimePerWord();
+                     break;
+                 case 'exercise':
+                    $exercise_id = $resourceData->getContent();
+                    $number_of_questions = ExerciseService::getInstance()->getCountQuestions($exercise_id);
+                    $resource_time = $number_of_questions * self::getTimePerQuestion();
+
+                     break;
+                 case 'text':
+                    $word_count = $resourceData -> getWordCount();
+                    //if ( $word_count == NULL){
+                        $word_count = str_word_count( strip_tags($content ) );
+                        $resourceData -> setWordCount($word_count);
+                        $resourceData -> save();
+                    //}
+                    $resource_time = $word_count * self::getTimePerWord();
+                      break;
+                 case 'video':
+                     //duration video_length
+                     $duration = $resourceData->getVideoDuration();
+                     $resource_time = $duration * self::getVideoMultiplier();
+                    break;
+                 
+                 default:
+                     # code...
+                     break;
+            }
+
+            // Updates reading time
+            $resourceData->setReadingTime($resource_time);
+            $resourceData->save();
+
+        }
+
+        // Updates duration on Component table for resource
+        $this->setDuration($resource_time);
+        $this->save();
+        return($resource_time);
+    }
+ 
 }

@@ -16,6 +16,59 @@ class ComponentService {
         return Component::getRepository()->find($id);
     }
 
+    public function setDeadlineForUser($profile_id, $component_id, $date){
+        $date = is_int($date) ? date('Y-m-d', $date) : $date;
+
+        $plp = ProfileLearningPath::getRepository()->createQuery('plp')
+                ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
+                ->fetchOne();
+
+        if($plp == null){
+            $plp = new ProfileLearningPath;
+            $plp->setProfileId($profile_id)
+                ->setComponentId($component_id);
+        }
+
+        $plp->setDeadline($date)
+            ->save();
+
+        return;
+    }
+
+    public function getDeadlineForUser($profile_id, $component_id){
+        //check if user has college
+        $profile = Profile::getRepository()->find($profile_id);
+        $deadline = null;
+
+        if($profile){
+            //check if user has a deadline
+            $plp = ProfileLearningPath::getRepository()->createQuery('plp')
+                        ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
+                        ->fetchOne();
+
+            if($plp){
+                $deadline = $plp->getDeadline();
+            }
+
+            //if deadline is null
+            if($deadline == null){
+                $college = $profile->getColleges()->getFirst();
+
+                if($college){
+                    $clp = CollegeLearningPath::getRepository()->createQuery('clp')
+                        ->where('component_id = ? and college_id = ?', array($component_id, $college->getId()))
+                        ->fetchOne();
+
+                    if($clp){
+                        $deadline = $clp->getDeadline();
+                    }
+                }
+            }
+        }
+
+        return $deadline;
+    }
+
     public function getCoursesForUser($profile_id) {
         //check if user has college
         $profile = Profile::getRepository()->find($profile_id);
@@ -29,7 +82,6 @@ class ComponentService {
             }else{
                 $courses = Course::getRepository()->getChaptersForUser($profile_id);
             }
-
         }
 
         return $courses;
@@ -71,6 +123,9 @@ class ComponentService {
                 ->setType($type)
                 ->save();
 
+        // Update Duration when create a child $type
+        ComponentService::getInstance()->updateDuration( $component->getId() );
+
         return $component;
     }
 
@@ -87,6 +142,9 @@ class ComponentService {
                     $component->set($key, $values[$key]);
                 }
             }
+
+            // Update Duration when edit a child $type
+            ComponentService::getInstance()->updateDuration( $component->getId() );
 
             $component->save();
         }
@@ -160,10 +218,33 @@ class ComponentService {
         return $q->execute();
     }
 
+    public function getCountChilds($component_id, $type = null) {
+        //TODO: check orderBy parameter SQLINJ
+
+        $q = Component::getRepository()->createQuery('child')
+                ->select('count(child.id) as total')
+                ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
+                ->where('lp.parent_id = ?', $component_id);
+
+        if ($type) {
+            $q->andWhere('child.type = ? ', $type);
+        }
+
+        //execute query
+        $r = $q->fetchOne();
+
+        if($q){
+            return $r->getTotal();;
+        }        
+
+        return 0;
+    }
+
     public function getChilds($component_id, $type = null, $orderBy = 'asc') {
         //TODO: check orderBy parameter SQLINJ
 
         $q = Component::getRepository()->createQuery('child')
+                ->select('child.*')
                 ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
                 ->where('lp.parent_id = ?', $component_id)
                 ->orderBy("lp.position $orderBy");
@@ -181,6 +262,7 @@ class ComponentService {
                 ->orderBy('lp.position desc')
                 ->limit(1)
                 ->fetchOne();
+
         if ($q) {
             return $q->getPosition();
         }
@@ -264,4 +346,88 @@ class ComponentService {
         }
     }
 
+    public function getNoteAvg($profile_id, $component_id){
+        //this is the note avg of all resources, including the exercices
+        $avg_notes = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile_id, $component_id);
+
+        return  $avg_notes/100;
+    }
+
+    public function getCountExerciseTryouts($profile_id, $component_id, $from_note = 0){
+        //
+        $component = Component::getRepository()->find($component_id);
+
+        if($component->getType() != "Lesson"){
+            //
+        }else{
+            $query = "SELECT lp.child_id FROM LearningPath lp WHERE lp.parent_id = $component_id";
+
+            $q = ExerciseAttemp::getRepository()->createQuery('ea')
+                    ->select("count(*) as total")
+                ->innerJoin('ea.ResourceData rd ON ea.exercise_id = CAST(rd.content as UNSIGNED)')
+                    ->where('rd.type = ?', 'Exercise')
+                    ->andWhere('ea.value >= ?', $from_note)
+                    ->andWhere("rd.resource_id in ($query)");
+
+            $total = $q->fetchOne();
+
+            if($total){
+                return  $total->getTotal();
+            }
+
+            return 0;
+            
+        }
+
+    }    
+
+    public function getParents($component_id, $orderBy = 'asc'){
+
+        $q = Component::getRepository()->createQuery('parent')
+                ->select('parent.*')
+                ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
+                ->where('lp.child_id = ?', $component_id)
+                ->orderBy("lp.position $orderBy");
+        $parents = $q->execute();
+        return $parents;
+    }
+
+    public function calculateTime($component_id){
+       /* SELECT SUM(c.duration)
+        FROM  component c JOIN learningpath lp ON c.id=lp.child_id
+        WHERE lp.parent_id = ? component_id */
+
+        $q = Component::getRepository()->createQuery('child')
+                ->select('SUM(child.duration) as duration')
+                ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
+                ->where('lp.parent_id = ?', $component_id);
+        $q = $q->fetchOne();
+
+        return $q->getDuration();
+    }
+
+    /**
+    * update de duration recursively. Courses, chapters and lessons
+    */
+    public function updateDuration($component_id){
+
+        $component = Component::getRepository()->find($component_id);
+        if ( $component->getType() == Resource::TYPE  ){ // Resource
+            $duration = $component->calculateTime();
+        }else{
+            $duration = ComponentService::getInstance()->calculateTime($component_id);
+        }
+        $component->setDuration($duration);
+        $component->save();
+ 
+        $parents = $component->getParents();
+
+        if ( count($parents) > 0  ){
+            foreach ($parents as $key => $parent) {
+                ComponentService::getInstance()->updateDuration($parent->getId());
+            }
+            
+        } 
+
+    }
 }

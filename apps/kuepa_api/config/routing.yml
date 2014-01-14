@@ -12,7 +12,24 @@ video_session_api:
     options:
         module: video_session
 
+message_api:
+  class: RESTRouteCollection
+  options:
+    module: message
+
+profile_api:
+  class: RESTRouteCollection
+  options:
+    module: profile
+
+learningpath_api:
+  class: RESTRouteCollection
+  options:
+    module: learningpath
 
 default:
-  url:   /*
-  params: { module: default, action: notImplemented }
+  url:   /:module/:action/*
+
+# default:
+#   url:   /*
+#   params: { module: default, action: notImplemented }

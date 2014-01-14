@@ -1,5 +1,8 @@
 $(function() {
     $(".knob").knob(knob_values);
+    $(".knob-small").knob({
+        height: 24
+    });
 
     $("body").delegate(".component_edit_link", "click", function(e) {
         var target = $(this).attr("target");
@@ -83,20 +86,65 @@ $(function() {
         triggerModalSuccess({id: "modal-create-lesson-form", title: "Crear Lección", effect: "md-effect-17"});
     });
 
-    //init tinyMCE ONCE!
-    tinymce.init({
-        mode: "none",
-        plugins: [
-            "advlist autolink lists link image charmap anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table contextmenu paste jbimages"
-        ],
-        relative_urls: false,
-        convert_urls: false,
-        remove_script_host : false,
-        menubar: "edit insert format view table",
-        toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
-        toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+    //left menu
+    
+    var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+        showLeft = document.getElementById( 'showLeft' ),
+        showRight = document.getElementById( 'open-learning-path' ),
+        menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+        body = document.body;
+
+    if(showRight != undefined){
+        showRight.onclick = function() {
+            classie.toggle( menuRight, 'cbp-spmenu-open' );
+        };
+    }
+
+    showLeft.onclick = function() {
+        if(classie.hasClass(menuLeft, 'cbp-spmenu-open')){
+            clearTimeout(menuTimeout);
+            menuTimeout = -1;
+        }
+        classie.toggle( menuLeft, 'cbp-spmenu-open' );
+    };
+
+    $("#showLeft").mouseenter(function(event) {
+        classie.addClass( menuLeft, 'cbp-spmenu-open' );
     });
+
+    var menuTimeout = -1;
+
+    $("#cbp-spmenu-s1, #showLeft").mouseleave(function(){
+        if(menuTimeout < 0){
+            menuTimeout = setTimeout(function(){
+                classie.removeClass( menuLeft, 'cbp-spmenu-open' );
+            }, 1000);
+        }
+    });
+
+    $("#cbp-spmenu-s1, #showLeft").mouseenter(function(){
+        clearTimeout(menuTimeout);
+        menuTimeout = -1;
+    });
+
+    // tooltip
+    $('[rel="tooltip"]').tooltip();
+
+
+    //init tinyMCE ONCE!
+    // tinymce.init({
+    //     mode: "none",
+    //     plugins: [
+    //         "advlist autolink lists link image charmap anchor",
+    //         "searchreplace visualblocks code fullscreen",
+    //         "insertdatetime media table contextmenu paste jbimages"
+    //     ],
+    //     relative_urls: false,
+    //     convert_urls: false,
+    //     remove_script_host : false,
+    //     menubar: "edit insert format view table",
+    //     toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
+    //     toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+    // });
 
 });

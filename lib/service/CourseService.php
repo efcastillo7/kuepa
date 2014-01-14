@@ -48,11 +48,27 @@ class CourseService {
     }
 
     public function getStudentsList($course_id){
-        return ComponentService::getInstance()->getUsersFromComponent($course_id);    
+        $q = Profile::getRepository()->createQuery('p')
+                ->innerJoin('p.ProfileLearningPath plp')
+                ->innerJoin('p.sfGuardUser sgu')
+                ->innerJoin('sgu.sfGuardUserGroup sgug')
+                ->innerJoin('sgug.Group sgg')
+                ->where('plp.component_id = ?', $course_id)
+                ->andWhere('sgg.name = ?', 'estudiantes');
+
+        return $q->execute();
     }
 
     public function getTeachersList($course_id){
-        return ComponentService::getInstance()->getUsersFromComponent($course_id);    
+        $q = Profile::getRepository()->createQuery('p')
+                ->innerJoin('p.ProfileLearningPath plp')
+                ->innerJoin('p.sfGuardUser sgu')
+                ->innerJoin('sgu.sfGuardUserGroup sgug')
+                ->innerJoin('sgug.Group sgg')
+                ->where('plp.component_id = ?', $course_id)
+                ->andWhere('sgg.name = ?', 'docentes');
+
+        return $q->execute();
     }
 
     public function getChaptersList($course_id){

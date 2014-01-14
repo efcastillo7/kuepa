@@ -1,4 +1,7 @@
 <script>
+    var course_id = <?php echo $course->getId() ?>;
+    var chapter_id = <?php echo $chapter->getId() ?>;
+    var lesson_id = <?php echo $lesson->getId() ?>;
     var resource_id = <?php echo $resource->getId() ?>;
 </script>
 <?php use_javascript('uno/lesson.js') ?>
@@ -7,7 +10,10 @@
     <div id="leccion" class="row">
         <div class="span8">
             <p class="gray3"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a> /  <a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>#<?php echo $chapter->getNameSlug() ?>"><?php echo $chapter->getName() ?></a></p>
-            <p class="title3 clearmargin"><?php echo $lesson->getName() ?></p>
+            <p class="title3 clearmargin">
+                <?php echo $lesson->getName() ?>
+            </p>
+            <a href="#" id="add_to_learning_path" class="btn btn-mini btn-primary">Agregar a aprendizaje</a>
         </div>
         <div class="span4">
             <div class="txt-right margintop">
@@ -76,15 +82,16 @@
                 <div id="tabs">
                   <ul>
                     <li><a class="title5" href="#tabs-annotations">Mis Anotaciones</a></li>
-                    <!-- <li><a class="title5" href="#tabs-grupal-annotations">Anotaciones Grupales</a></li> -->
+                    <li><a class="title5" href="#tabs-comments">Comentarios</a></li>
                   </ul>
                   <div id="tabs-annotations">
-                    <input class="input_add_note span7" type="text" placeholder="Escribe un recordatorio para esta lección..." resource-id="<?php echo $resource->getId() ?>">
+                    <input class="input_add_note span7" type="text" placeholder="Escribe un recordatorio para esta lección..." resource-id="<?php echo $resource->getId() ?>" privacy="private" >
                     <?php include_partial("views/resource/notes", array('notes' => $notes)) ?>
                   </div>
-                  <!-- <div id="tabs-grupal-annotations">
-                    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-                  </div> -->
+                  <div id="tabs-comments">
+                    <input class="input_add_note span7" type="text" placeholder="Escribe un comentario para esta lección..." resource-id="<?php echo $resource->getId() ?>" privacy="public" target="#tabs-comments > ul" >
+                    <?php include_partial("views/resource/notes", array('notes' => $comments)) ?>
+                  </div>
                 </div>                
             </div>
         </div>

@@ -14,7 +14,8 @@ class ComponentForm extends BaseComponentForm {
         unset($this['deleted_at'], $this['updated_at'], 
             $this['created_at'], $this['parents_list'], 
             $this['children_list'], $this['profiles_list'], 
-            $this['node_id'], $this['colleges_list']
+            $this['node_id'], $this['colleges_list'],
+            $this['register_code_list'], $this['deadline']
         );
 
         $this->setWidget('description', new sfWidgetFormTextarea());
@@ -38,6 +39,14 @@ class ComponentForm extends BaseComponentForm {
             'required' => false), array(
             'max_size' => "Tamaño de imagen demasiado grande",
         )));
+
+        // $years = range(date("Y"), date("Y")+1);
+        // $this->setWidget('deadline', new sfWidgetFormDate(array(
+        //     'format' => '%day%/%month%/%year%',
+        //     'years' => array_combine($years, $years)
+        // )));
+
+        
 
         $this->getWidgetSchema()->setIdFormat('%s' . ($this->isNew() ? "" : "-" . $this->getObject()->getId()));
     }

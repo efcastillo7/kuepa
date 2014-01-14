@@ -15,10 +15,10 @@
         <?php use_stylesheet("/styles/css/kuepa.hangouts.css") ?>
         <?php use_stylesheet("/styles/css/plataforma.css") ?>
         <?php use_stylesheet("/styles/css/thumbgrid.css") ?>
-
         <!-- modalwindow -->
         <?php use_stylesheet("/assets/modalwindoweffect/css/default.css") ?>
         <?php use_stylesheet("/assets/modalwindoweffect/css/component.css") ?>
+        <?php use_javascript("/assets/modalwindoweffect/js/modalEffects.js") ?>
 
         <?php use_javascript("/assets/jquery-ui/js/jquery-1.9.1.js", 'first') ?>
         <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>.
@@ -40,6 +40,15 @@
         <!-- UI TOUCH for drag & drop for ios -->
         <?php use_javascript("/assets/jquery-ui-touch/jquery.ui.touch-punch.min.js") ?>
 
+        <!-- PUSH MENU -->
+        <?php use_javascript("/assets/modernizr/modernizr.custom.js") ?>
+        <?php use_javascript("/assets/modernizr/classie.js") ?>
+
+        <!-- LEARNING PATH -->
+        <?php use_javascript("libs/learningPathService.js") ?>
+        <?php use_javascript("libs/learningPath.js") ?>
+
+
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -53,7 +62,8 @@
         <?php include_javascripts() ?>
     </head>
 
-    <body>
+    <body class="cbp-spmenu-push">
+
         <?php include_component('layout', 'navigation') ?>
         <?php echo $sf_content ?>
         <?php include_partial('layout/footer') ?>
@@ -82,10 +92,5 @@
         <script src="/js/course.js"></script>
         <script src="/js/support.global.js"></script>
 
-        <script type="text/javascript">
-            $(".knob-small").knob({
-                height: 24
-            });
-        </script>
     </body>
 </html>

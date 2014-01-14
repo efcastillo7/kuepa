@@ -1,11 +1,33 @@
+<!-- MENU -->
+<?php if($profile): ?>
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+    <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
+    <!-- <a href="#" class="cbp-cal"><i></i>Calendario</a> -->
+    <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
+    <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
+    <!-- <a href="" class="cbp-set"><i></i>Ajustes</a> -->
+    <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
+</nav>
+
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+
+    <div class="title">Camino de Aprendizaje <span id="edit-learning-path"><i class="icon-edit"></i></span></div>
+    <?php include_partial("layout/learning_path_item_template") ?>
+
+</nav>
+<?php endif; ?>
+
 <!-- navbar -->
 <div class="plataforma-nav navbar navbar-fixed-top">
     <div class="navbar-inner">
-            <!-- <ul class="nav">
+            <?php if($profile): ?>
+            <ul class="nav">
                 <li class="nav-menu">
-                    <a href="#myModal" role="button" class="nav-menu-icon" data-toggle="modal"><span>Menu</span></a>
+                    <a id="showLeft" role="button" class="nav-menu-icon"><span>Menu</span></a>
                 </li>
-            </ul> -->
+            </ul>
+            <?php endif; ?>
             <a class="nav-logo" href="<?php echo url_for("@homepage") ?>"></a>
             <?php if($profile): ?>
             <ul class="nav nav-mainbtn">
@@ -13,17 +35,17 @@
                 <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
             </ul>
             <ul class="nav pull-right">
-                <!-- <li><a href="" class="nav-btn nav-btn-srch"><i></i></a></li> -->
-                <!-- <li class="dropdown">
+                <li class="dropdown">
                     <a id="drop2" href="#" role="button" class="nav-btn nav-btn-ntfc dropdown-toggle" data-toggle="dropdown"><i></i></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="http://google.com">Action</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#anotherAction">Another action</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
                     </ul>
-                </li> -->
+                </li>
+                <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch" id="open-learning-path"><i></i></a></li>
                 <li class="dropdown">
-                    <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i> <?php echo $profile->getNickname() ?> <b class="caret"></b></a>
+                    <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i> <?php echo $profile->getNickname() ?></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="requestSupport-button">Llamar a soporte</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Log out</a></li>
@@ -34,17 +56,3 @@
     </div>
 </div><!-- /navbar -->
 
-
-<!-- Modal -->
-<div id="myModal" class="nav-menu-modal modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <ul class="unstyled">
-            <li class="nav-menu-btn nmb-ini"><a href=""><i></i>Inicio</a></li>
-            <li class="nav-menu-btn nmb-cal"><a href=""><i></i>Calendario</a></li>
-            <li class="nav-menu-btn nmb-msg"><a href=""><i></i>Mensajes</a></li>
-            <li class="nav-menu-btn nmb-tar"><a href=""><i></i>Tareas</a></li>
-            <li class="nav-menu-btn nmb-mat"><a href=""><i></i>Materias</a></li>
-            <li class="nav-menu-btn nmb-dsh"><a href=""><i></i>Dashboard</a></li>
-            <li class="nav-menu-btn nmb-prf"><a href=""><i></i>Mi Perfil</a></li>
-            <li class="nav-menu-btn nmb-ajs"><a href=""><i></i>Ajustes</a></li>
-        </ul>
-</div>

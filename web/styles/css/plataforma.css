@@ -11,7 +11,9 @@
  /* --------------------------------------------------
 // Added Font Styles
 -------------------------------------------------- */
-
+html, html a {
+    -webkit-font-smoothing: antialiased;
+}
 
 @font-face {
     font-family: HelveticaHv;
@@ -20,6 +22,10 @@
 @font-face {
     font-family: HelveticaMd;
     src: url(../fonts/HelveticaNeueLTStd-Md.otf);
+}
+@font-face {
+    font-family: HelveticaBd;
+    src: url(../fonts/HelveticaNeueLTStd-Bd.otf);
 }
 @font-face {
     font-family: HelveticaRoman;
@@ -41,13 +47,53 @@ a:hover {
 }
 p {line-height:1.6;}
 h1,h2,h3,h4, .title1, .title2, .title3, .title4
-{line-height:1; font-family: HelveticaHv, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+{line-height:1; font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
 .HelveticaLt {font-family: HelveticaLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 .HelveticaRoman {font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 .HelveticaMd {font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.HelveticaBd {font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 .HelveticaHv {font-family: HelveticaHv, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
+
+::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(169,169,169,0.2); 
+  }
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(169,169,173,0.5);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(169,169,173,0.7);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(169,169,173,0.3);
+    border-radius: 6px;
+}
+
+
+.sb-alpha::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+  }
+.sb-alpha::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.35); 
+    border-radius: 10px;
+}
+.sb-alpha::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+}
+.sb-alpha::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.9);
+}
+.sb-alpha::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0,0,0,0.35); 
+}
 
 /* --------------------------------------------------
 // modal
@@ -130,14 +176,14 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   padding:0px;
 }
 .navbar .nav > li  {
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #E5E5EB;
 }
 .navbar .nav-logo {
   padding: 0 20px;
   float: left;
   display: block;
   background: url("../../img/svgSprite.svg") no-repeat scroll 10px 0 transparent;
-  width: 90px;
+  width: 148px;
   height: 50px;
 }
 .navbar .nav .nav-menu {
@@ -148,7 +194,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   padding: 15px;
 }
 .navbar .nav > li > a.nav-menu-icon:hover {
-  background-color: #E86823;
+  background-color: #FF671B;
 }
 
 .nav-menu-icon::before {
@@ -178,7 +224,10 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 }
 
 .plataforma-nav .nav.pull-right {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #E5E5EB;
+}
+.plataforma-nav .nav.pull-right li:last-child a {
+  padding-right: 20px;
 }
 .plataforma-nav .nav.pull-right li a.nav-btn i {
   display: inline-block;
@@ -190,16 +239,16 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background-color: #efefef;
 }
 .nav-btn-srch i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -260px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -320px 0 transparent;
 }
 .nav-btn-srch:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -260px -50px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -320px -50px transparent;
 }
 .nav-btn-ntfc i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -210px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -270px 0 transparent;
 }
 .nav-btn-prfl i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -310px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -365px 0 transparent;
 }
 .nav-btn-prfl .caret {
   margin: 20px 20px 0 0;
@@ -208,12 +257,16 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 
 /* Nav Main Central Buttons */
 .navbar .nav.nav-mainbtn {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #E5E5EB;
 }
 .navbar .nav.nav-mainbtn li a {
-  color: #e1e1e1;
+  color: #C7C7CC;
   float: left;
-  padding: 0px 18px 0px 5px;
+  font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  margin: auto;
+  height: 30px;
+  padding: 17px 20px 3px;
 } 
 .navbar .nav.nav-mainbtn .active a,
 .navbar .nav.nav-mainbtn a:hover {
@@ -221,24 +274,29 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background-color: #f6f6f6;
 }
 .nav-mainbtn i {
-  width: 50px;
-  height: 50px;
   display: inline-block;
   vertical-align: -20px;
+  width: 50px;
+  height: 50px;
+  margin: -20px -3px 0px -10px;
 }
 .nav-mainbtn .nmb-mat i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -110px -50px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -172px -50px transparent;
 }
-.nav-mainbtn .nmb-mat.active i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -110px 0 transparent;
+.nav-mainbtn .nmb-mat.active i,
+.nav-mainbtn .nmb-mat a:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -172px 0 transparent;
 }
+
 .nav-mainbtn .nmb-ins i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -160px -50px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -51px transparent;
 }
 .nav-mainbtn .nmb-ins.active i, 
 .nav-mainbtn .nmb-ins a:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -160px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -1px transparent;
 }
+
+
 
 
 /* --------------------------------------------------
@@ -268,6 +326,16 @@ footer {
   position: absolute;
   bottom: 10px;
   width: 100%;
+}
+.subject-buttonbox .subject-title .st-title {
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  margin: 0px;
+  line-height: 1;
+}
+.subject-buttonbox .subject-title .st-progress {
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
 }
 
 .subject-buttonbox .subject-image {
@@ -504,7 +572,7 @@ footer {
 -------------------------------------------------- */
 .view-mode {
   position: absolute;
-  margin:40px 0 0 70px;
+  margin:40px 0 0 82px;
 }
 .view-mode a {
   height: 26px;
@@ -538,6 +606,21 @@ footer {
   background: url("../../img/icn_view_mode.png") no-repeat scroll -60px -29px transparent;
 }
 
+.eg-details .description p.eg-dtitle {
+  margin-left: -95px;
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.eg-details .description .eg-description {
+  width: 250px;
+  height: 380px;
+  margin: 0px;
+  overflow: auto;
+  padding-right: 16px;
+}
+.eg-details .description .eg-description p {
+  font-size: 12px;
+}
+
 /* --------------------------------------------------
 // View Mode: List View
 -------------------------------------------------- */
@@ -549,29 +632,38 @@ footer {
   position: relative;
 }
 .lv-icon {
-  height: 36px;
-  width: 36px;
-  padding: 6px;
+  height: 48px;
+  width: 48px;
+  padding: 0px;
   float: left;
   margin-right: 5px;
+  border-radius: 10px;
+  overflow: hidden;
 }
-.lv-container .title3 {
-  padding: 12px 0 0 55px;
+.lv-container .lv-title {
+  padding: 10px 0 0 55px;
   cursor: pointer;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  color: #000;
+  margin: 0;
 }
-.lv-container .title3 i {
-  margin: 3px 3px 0 0;
+.lv-container .lv-title i {
+  margin: 1px 4px 0 0;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
 }
-.lv-container .small1 {
-  margin-top: -25px;
+.lv-container .lv-progress {
+  margin-top: -30px;
   position: absolute;
   right: 0;
+  color: #999;
 }
 .lv-lvlone {
-  padding: 9px 0 0 18px;
+  padding: 2px 0 0 74px;
 }
 .lv-lvlone li {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #E9E9EB;
   padding: 12px 0px 7px 38px;
 }
 .lv-lvlone li:last-child {
@@ -581,7 +673,6 @@ footer {
   margin: -2px 3px 0 0;
 }
 .subject-item {
-  margin-bottom: 20px;
 }
 .subject-item .lv-lvlone li:first-child .lvl-btn .lp-bar-prev,
 .subject-item .lv-lvlone li:last-child .lvl-btn .lp-bar-post {
@@ -715,7 +806,372 @@ div[type*=button]{
 .margintop50{margin-top: 50px;}
 .margintop100{margin-top: 100px;}
 
-.eg-details .description > div{
+
+
+
+
+/* --------------------------------------------------
+//  PULL MENU
+-------------------------------------------------- */
+
+/* icons */
+.cbp-spmenu.cbp-spmenu-left i {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  margin: -11px 13px -2px -4px;
+}
+
+.cbp-spmenu a.cbp-hom i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -180px -105px transparent;
+}
+.cbp-spmenu a.cbp-hom.active i,
+.cbp-spmenu a.cbp-hom:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -180px -155px transparent;
+}
+
+.cbp-spmenu a.cbp-cal i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -230px -105px transparent;
+}
+.cbp-spmenu a.cbp-cal.active i,
+.cbp-spmenu a.cbp-cal:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -230px -155px transparent;
+}
+
+.cbp-spmenu a.cbp-msg i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -280px -105px transparent;
+}
+.cbp-spmenu a.cbp-msg.active i,
+.cbp-spmenu a.cbp-msg:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -280px -155px transparent;
+}
+
+.cbp-spmenu a.cbp-tsk i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -330px -105px transparent;
+}
+.cbp-spmenu a.cbp-tsk.active i,
+.cbp-spmenu a.cbp-tsk:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -330px -155px transparent;
+}
+
+.cbp-spmenu a.cbp-usr i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -380px -105px transparent;
+}
+.cbp-spmenu a.cbp-usr.active i,
+.cbp-spmenu a.cbp-usr:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -380px -155px transparent;
+}
+
+
+.cbp-spmenu a.cbp-set i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -430px -105px transparent;
+}
+.cbp-spmenu a.cbp-set.active i,
+.cbp-spmenu a.cbp-set:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -430px -155px transparent;
+}
+
+
+
+/* General styles for all menus */
+ 
+.cbp-spmenu {
+    background: #fff;
+    position: fixed;
+}
+ 
+.cbp-spmenu h3 {
+    color: #afdefa;
+    font-size: 1.9em;
+    padding: 20px;
+    margin: 0;
+    font-weight: 300;
+    background: #0d77b6;
+}
+
+.cbp-spmenu h4 {
+    color: #afdefa;
+    font-size: 1.7em;
+    padding: 20px 12px;
+    margin: 0;
+    font-weight: 300;
+    background: #0d77b6;
+}
+ 
+.cbp-spmenu.cbp-spmenu-left a {
+    display: block;
+    color: #AFAFB3;
+    font-size: 15px;
+    font-weight: 300;
+    font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+ 
+.cbp-spmenu.cbp-spmenu-left a:hover {
+    background: #5789FA;
+    color: #fff;
+}
+ 
+.cbp-spmenu.cbp-spmenu-left a:active {
+    background: #afdefa;
+    color: #47a3da;
+}
+ 
+/* Orientation-dependent styles for the content of the menu */
+ 
+.cbp-spmenu-vertical {
+    width: 243px;
+    top: 50px;
+    z-index: 1000;
+    bottom: 0;
+}
+ 
+.cbp-spmenu-vertical.cbp-spmenu-left a {
+    border-bottom: 1px solid #E9E9EB;
+    padding: 16px 16px 12px;
+}
+ 
+.cbp-spmenu-horizontal {
+    width: 100%;
+    height: 150px;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+ 
+.cbp-spmenu-horizontal h3 {
+    height: 100%;
+    width: 20%;
+    float: left;
+}
+ 
+.cbp-spmenu-horizontal a {
+    float: left;
+    width: 20%;
+    padding: 0.8em;
+    border-left: 1px solid #258ecd;
+}
+ 
+/* Vertical menu that slides from the left or right */
+ 
+.cbp-spmenu-left {
+    left: -250px;
+}
+ 
+.cbp-spmenu-right {
+    right: -320px;
+    width: 300px;
+    overflow-y: auto;
+    padding-top: 50px;
+}
+ 
+.cbp-spmenu-left.cbp-spmenu-open {
+    left: 0px;
+     -moz-box-shadow:    -50px 0px 100px 60px rgba(0,0,0,.5); 
+    -webkit-box-shadow: -50px 0px 100px 60px rgba(0,0,0,.5);
+    box-shadow:         -50px 0px 100px 60px rgba(0,0,0,.5);
+}
+ 
+.cbp-spmenu-right.cbp-spmenu-open {
+    right: 0px;
+    -moz-box-shadow:    50px 0px 100px 60px rgba(0,0,0,.5); 
+    -webkit-box-shadow: 50px 0px 100px 60px rgba(0,0,0,.5);
+    box-shadow:         50px 0px 100px 60px rgba(0,0,0,.5);
+}
+ 
+/* Horizontal menu that slides from the top or bottom */
+ 
+.cbp-spmenu-top {
+    top: -150px;
+}
+ 
+.cbp-spmenu-bottom {
+    bottom: -150px;
+}
+ 
+.cbp-spmenu-top.cbp-spmenu-open {
+    top: 0px;
+}
+ 
+.cbp-spmenu-bottom.cbp-spmenu-open {
+    bottom: 0px;
+}
+ 
+/* Push classes applied to the body */
+ 
+.cbp-spmenu-push {
+    overflow-x: hidden;
+    position: relative;
+    left: 0;
+}
+ 
+.cbp-spmenu-push-toright {
+    left: 240px;
+}
+ 
+.cbp-spmenu-push-toleft {
+    left: -240px;
+}
+ 
+/* Transitions */
+ 
+.cbp-spmenu,
+.cbp-spmenu-push {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+ 
+/* Example media queries */
+ 
+@media screen and (max-width: 55.1875em){
+ 
+    .cbp-spmenu-horizontal {
+        font-size: 75%;
+        height: 110px;
+    }
+ 
+    .cbp-spmenu-top {
+        top: -110px;
+    }
+ 
+    .cbp-spmenu-bottom {
+        bottom: -110px;
+    }
+ 
+}
+ 
+@media screen and (max-height: 26.375em){
+ 
+    .cbp-spmenu-vertical {
+        font-size: 90%;
+        width: 190px;
+    }
+ 
+    .cbp-spmenu-left,
+    .cbp-spmenu-push-toleft {
+        left: -190px;
+    }
+ 
+    .cbp-spmenu-right {
+        right: -190px;
+    }
+ 
+    .cbp-spmenu-push-toright {
+        left: 190px;
+    }
+}
+
+.cbp-path-item{
+  padding: 10px 10px 8px;
+  border-bottom: 1px solid #dbdbdb;
   position: relative;
-  max-height: 320px;
+}
+
+.cbp-spmenu-right .cbp-path-item:first{
+  margin-top: 200px;
+}
+
+.cbp-path-item.active{
+  background-color: #2568fa;
+  color: white;
+}
+
+.cbp-path-item:hover{
+  background-color: #d8e4fe;
+  cursor:hand;
+  cursor:pointer;
+}
+
+.cbp-path-item .cbp-path-item-image {
+  display:inline-block;
+  vertical-align: top;
+  margin-right: 6px;
+}
+.cbp-path-item .cbp-path-item-image div {
+  border-radius: 8px;
+  width:36px;
+}
+
+.cbp-path-item .cbp-path-item-datacontainer {
+  display:inline-block;
+  vertical-align: top;
+  width:200px;
+}
+
+.cbp-spmenu .title{
+  display: block;
+  color: #6D6D6D;
+  font-size: 15px;
+  font-weight: 300;
+  font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid #E9E9EB;
+  padding: 16px 16px 13px;
+  position: fixed;
+  background-color: white;
+  width: 258px;
+  z-index: 100;
+  margin-top: -50px;
+}
+
+.cbp-path-item-position{
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display:inline-block;
+  vertical-align: top;
+  margin-top:-3px;
+  font-size: 10px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  width:15px;
+}
+
+.cbp-path-item p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cbp-path-item .cbp-path-item-lesson, .cbp-path-item .cbp-path-item-course, .cbp-path-item .cbp-path-item-chapter{
+  color: black;
+}
+
+.cbp-path-item .cbp-path-item-lesson {
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cbp-path-item .cbp-path-item-course {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+
+.cbp-path-item .stats{
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  width: 24%;
+  height: 100%;
+  background-color: white;
+  display: none;
+}
+
+.cbp-path-item .remove{
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  right: 0;
+  width: 17%;
+  height: 100%;
+  background-color: rgb(226, 0, 0);
+  display: none;
+}
+
+.cbp-spmenu-right #edit-learning-path{
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.templates{
+  display: none;
 }

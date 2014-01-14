@@ -12,4 +12,7 @@
  */
 class ExerciseAttemp extends BaseExerciseAttemp
 {
+	public static function getRepository() {
+        return Doctrine_Core::getTable('ExerciseAttemp');
+    }
 }

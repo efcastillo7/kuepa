@@ -30,6 +30,10 @@ account_expired:
   url:  /account/expired
   param: { module: public, action: accountexpired }
 
+messages:
+  url: /messages
+  param: { module: message, action: index }
+
 # generic rules
 # please, remove them by adding more specific rules
 default_index:

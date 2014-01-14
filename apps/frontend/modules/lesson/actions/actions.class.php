@@ -57,12 +57,17 @@ class lessonActions extends kuepaActions {
         $this->is_last_resource = $this->lesson->atLastResource();
         $this->is_first_resource = $this->lesson->atFirstResource();
 
+        //test
+        ComponentService::getInstance()->updateDuration($this->resource->getId());
+
         //update log
-        LogService::getInstance()->viewResource(Resource::TYPE, $this->lesson->getActualResourceId(), $this->getUser()->getProfile()->getId());
+        LogService::getInstance()->viewResource($this->getUser()->getProfile()->getId(), 
+            Resource::TYPE, $this->course->getId(), $this->chapter->getId(), $this->lesson->getId(), $this->resource->getId());
 
         //set ProfileComponentCompletedStatus
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
+        $this->comments = NoteService::getInstance()->getComments($resource_id);
     }
 
     public function executeCreate(sfWebRequest $request) {
@@ -90,6 +95,8 @@ class lessonActions extends kuepaActions {
             if (!$id)
                 ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
 
+            ComponentService::getInstance()->updateDuration( $lesson->getId() );
+
             $response['template'] = "Ha " . ($id ? "editado" : "creado") . " la lección satisfactoriamente";
             $response['status'] = "success";
         } else {
@@ -102,20 +109,139 @@ class lessonActions extends kuepaActions {
 
         return $this->renderText($response['template']);
     }
-    
-    public function executeTest(sfWebRequest $request) {
-        $answers = array();
-        
-        //correcta es la 1, la 2 es incorrecta
-        $answers[1] = 1;
-        
-        //correcta son las 3 y 4 y son las unicas que hay
-        $answers[2] = array(3,4);
-        
-        //[argentina] queda en la region [sur] de [america, america del sur, continente americano]. La provincia [asdadsads] es la provincia más al [asddas] del mundo.
-        $answers[3] = array("argentina", "sur", "continente americano", "caca", "cacona");
-        
-        var_dump(Exercise::getRepository()->find(1)->evaluate($answers));
+
+
+    public function executeList(sfWebRequest $request){
+        $this -> lessons = Lesson::getRepository()->createQuery('l')
+                ->limit(10)
+                ->execute();
+
     }
+
+    public function executeDependencyTree(sfWebRequest $request){
+        //$course
+        //$chapter
+        $lesson_id = $request->getParameter('lesson_id');
+        $this -> lesson = ComponentService::getInstance()->find($lesson_id);
+        $chapter = ComponentService::getInstance()->getParents($lesson_id);
+        $this -> chapter = $chapter[0];
+        $course = ComponentService::getInstance()->getParents($this -> chapter->getId());
+        $this -> course =$course[0];
+
+        $this -> courses = Course::getRepository()
+                           ->createQuery('c')
+                           ->orderBy("c.name")
+                           ->execute();
+        //$this -> lessons = LessonService::getInstance()->getDependencyPath($lesson_id);
+ 
+    }
+
+    /** Ajax request */
+    public function executeDependencyPathList(sfWebRequest $request){
+        //sfLoader::loadHelpers('Partial');
+         sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
+
+        $course_id = $request->getParameter('course_id');
+        $chapter_id = $request->getParameter('chapter_id');
+        $lesson_id = $request->getParameter('lesson_id');
+
+        $dp_list = LessonService::getInstance()->getDependencyPathList($course_id, $chapter_id, $lesson_id);
+
+        $partial = get_partial('dependency_path_list', array('dp_list' => $dp_list));
+        $response = Array(
+            'status' => "error",
+            'template' => $partial,
+            'code' => 200
+        );
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
+    }
+
+    /** Ajax request */
+    public function executeGetDependsLessonList(sfWebRequest $request){
+        //sfLoader::loadHelpers('Partial');
+        sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
+
+        $course_id = $request->getParameter('course_id');
+        $chapter_id = $request->getParameter('chapter_id');
+        $lesson_id = $request->getParameter('lesson_id');
+        $depends_chapter_id = $request->getParameter('depends_chapter_id');
+
+        /*
+         * build query to bring the lesson based on course and chapter
+         * and add a flag(based on DependencyPath) to check as selected
+         */
+        /*
+        // Traer las lecciones para el curso y capitulo X
+        // No se pueden traer por curso y capitulo, debido a la recursividad
+        // No es un arbol jerarquico perfecto
+        // Asi que se traen todas las lecciones del capitulo sin 
+        // importar de que curso son
+        */
+        $lessons = ComponentService::getInstance()->getChilds($depends_chapter_id);
+        $locals =  array('lessons' => $lessons,
+                         'course_id' => $course_id,
+                         'chapter_id' => $chapter_id,
+                         'lesson_id' => $lesson_id);
+ 
+        $partial = get_partial('depends_lesson_list', $locals);
+        $response = Array(
+            'status' => "error",
+            'template' => $partial,
+            'code' => 200
+        );
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
+    }
+
+    public function executeSaveDependency(sfWebRequest $request){
+        $form = $request->getParameter('dependency_path');
+        $depends_lesson_ids = $form['depends_lesson_id'];
+        unset($form['depends_lesson_id']);
+
+        foreach ($depends_lesson_ids as $key => $lesson_id){
+            $form['depends_lesson_id'] = $lesson_id;
+            print_r($form);
+            LessonService::getInstance()->addDependencyToLesson($form);
+        } 
+        $response = Array(
+            'status' => "error",
+            'template' => "okookokk",
+            'code' => 400
+        ); 
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
+     }
+
+    public function executeDeleteDependency(sfWebRequest $request){
+        $dependency_path_id = $request->getParameter('dependency_path_id');
+        LessonService::getInstance()->removeDependencyForLesson($dependency_path_id);
+
+        $response = Array(
+            'status' => "error",
+            'template' => "okookokk",
+            'code' => 400
+        ); 
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
+    }
+
+
 
 }

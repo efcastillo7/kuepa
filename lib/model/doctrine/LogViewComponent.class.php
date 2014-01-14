@@ -18,7 +18,7 @@ class LogViewComponent extends BaseLogViewComponent
 
     public function __toString(){
     	$time = $this->getCreatedAt();
-    	return $this->getComponent()->getName();
+    	return $this->getResource()->getName();
     }
 
     public function getLapse(){
@@ -27,5 +27,9 @@ class LogViewComponent extends BaseLogViewComponent
 
     public function isSkim(){
         return $this->getLapse() < 10;
+    }
+
+    public function getComponent(){
+        return $this->getResource();
     }
 }
