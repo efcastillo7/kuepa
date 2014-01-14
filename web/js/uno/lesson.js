@@ -91,7 +91,7 @@ $(document).ready(function() {
 $(window).load(function(){
     $("#add_to_learning_path").click(function(){
         //show menu right
-        classie.toggle( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
+        classie.addClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
 
         lpService.add({
             course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id,

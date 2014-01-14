@@ -11,6 +11,7 @@
         <a class="component_set_status btn btn-mini <?php echo $lesson->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>"><?php echo $lesson->isEnabled() ? "Desactivar" : "Activar" ?></a>
         <a class="component_edit_link btn btn-mini" target="modal-create-lesson-form-<?php echo $lesson->getId() ?>">Editar</a>
         <a class="component_remove_link btn btn-mini" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>">Remover</a>
+        <a href="<?php echo url_for("lesson/dependencyTree?lesson_id=" . $lesson->getId()) ?>" class="btn btn-mini">Ver dependencias</a>
         <span class="lp-time"><?php echo $lesson->getDuration() ?></span>
         <?php endif; ?>
     </div>

@@ -56,8 +56,6 @@
                 }
             });
 
-            console.log(response.data.attemps);
-
             var atts = [];
             for(var i =0; i< response.data.attemps.length; i++){
                 atts[i] = parseFloat(response.data.attemps[i]);
@@ -92,6 +90,23 @@
                     data: atts
                 }]
             });
+
+            //add dependencies if score
+            if(score < 70){
+                var ans = confirm('desea agregar dependencias?');
+                if(ans){
+                    classie.addClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
+                    lpService.addDependencies({
+                        course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id,
+                        onSuccess: function(item){
+                            addItemsToPath(item);
+                        },
+                        onError: function(data){
+                            alert('Ya tiene esa lección');
+                        }
+                    });
+                }
+            }
         },
         dataType: 'json'
 	};
