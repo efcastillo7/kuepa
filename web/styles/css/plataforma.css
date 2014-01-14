@@ -611,11 +611,11 @@ footer {
   font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .eg-details .description .eg-description {
-  width: 300px;
-  height: 350px;
+  width: 250px;
+  height: 380px;
   margin: 0px;
   overflow: auto;
-  padding-right: 20px;
+  padding-right: 16px;
 }
 .eg-details .description .eg-description p {
   font-size: 12px;
@@ -673,9 +673,6 @@ footer {
   margin: -2px 3px 0 0;
 }
 .subject-item {
-  margin-bottom: 8px;
-  border-bottom: 1px solid #E9E9EB;
-  padding-bottom: 8px;
 }
 .subject-item .lv-lvlone li:first-child .lvl-btn .lp-bar-prev,
 .subject-item .lv-lvlone li:last-child .lvl-btn .lp-bar-post {
