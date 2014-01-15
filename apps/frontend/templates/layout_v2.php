@@ -7,6 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  <!-- Le styles -->
 
   <link href="/assets/v2/styles/css/fullcalendar.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/jqui.css" rel="stylesheet">
@@ -70,7 +71,12 @@
 
 <footer>
   <div class="container">
-    <p class="gray2 small2 clearmargin"><span class="AvantMd">kuepa</span> Copyright &copy; Kuepa 2012</p>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ft-logo">kuepa</div>
+        <p class="ft-copy">Copyright &copy; Kuepa 2013</p>
+      </div>
+    </div>
   </div>
 </footer>
 

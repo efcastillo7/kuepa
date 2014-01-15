@@ -11,6 +11,9 @@
 @import 'animations';
 @import 'forms';
 @import 'ui';
+@import 'sidemenu';
+@import 'navbar';
+
 
 
 @font-face {
@@ -55,7 +58,9 @@
   font-style: normal;
 }
 
-
+html, html a {
+    -webkit-font-smoothing: antialiased;
+}
 html,body{height: 100%;}
 
 body {
@@ -133,32 +138,31 @@ h2.primary{
 }
 
 /* --------------------------------------------------
-// navbar
--------------------------------------------------- */
-
-.navbar .nav {
-  font-size: 18px;
-}
-.navbar .nav > li > a {
-  padding:0;
-}
-.navbar .nav > li  {
-  padding: 18px 15px 15px;
-  border-left: 1px solid #ccc;
-}
-.navbar .brand {
-  padding: 14px 20px;
-}
-
-/* --------------------------------------------------
 // Footer
 -------------------------------------------------- */
 footer {
-  background-color: $gray3;
+  background-color: $darkblue;
   border: 0 none;
-  padding: 25px 0 20px;
+  padding: 23px 0 16px;
+  margin-top: 50px;
 
   //position:absolute; //nuevo
+}
+footer .ft-logo {
+  float:left;
+  text-indent:-9999px;
+  width: 102px;
+  height: 20px;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -10px -65px transparent;
+  margin-top: -3px;
+}
+footer .ft-copy {
+  font-size: 12px;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  color: #fff;
+  margin:0;
+  float: right;
 }
 
 /* --------------------------------------------------
@@ -780,51 +784,7 @@ div[class^="subject-"]{
 /* --------------------------------------------------
 // Messages
 -------------------------------------------------- */
-// header
-.nav-header{
-  background: #fff;
-  .navbar-header .nav-pills > li{
-    border:0;
-    padding: 10px 15px 10px;
-  }
 
-  .nav-items{
-    li{
-      height: 49px;
-      display: inline-block;
-      border-left: 1px solid #ccc;
-      padding: 12px 15px 12px !important;
-
-      i{margin-right: 8px;}
-    }
-  }
-
-  .navbar-default .navbar-nav > li > a{
-    color:#d0d0d0;
-    font-size: 17px;
-  }
-  .navbar-default{
-    background: #fff;
-  }
-  .navbar-right > li{
-    height: 49px;
-    padding: 10px 10px 18px 10px !important;
-  }
-  .navbar-right li:last-child{
-    padding-bottom:0 !important;
-  }
-  .navbar-right .counter{
-    background: $orange;
-    color: #fff;
-    font-size: 12px;
-    @include border-radius(4px);
-    padding:2px 4px;
-    position: absolute;
-    top:0px;
-    right:-5px;
-    line-height: 1;
-  }
-}// .nav-message
 
 
 .head-message{
@@ -1725,66 +1685,6 @@ div[class^="subject-"]{
 
 }
 
-//Notificaciones del header
-.dropdown-menu.notifications.arrow-right-img::after{right: 22px;}
-.dropdown-menu.notifications{
-  width: 420px;
-  right: -1px;
-  h1{
-    color:$orange;
-    font-size: 16px;
-    border-bottom:1px solid #ccc;
-    font-family: HelveticaRoman;
-    padding:0 0 15px 20px;
-    margin-bottom: 0;
-  }
-  .cont-notifications{
-    height: 220px;
-    position: relative;
-    overflow: hidden;
-  }
-  .item{
-    padding: 10px 0 10px 50px;
-    border-top:1px solid #ccc;
-
-    &:first-child{border-top:0;}
-
-    h2{
-      font-size: 14px;
-      font-family: HelveticaRoman;
-      margin:0;
-      color:$gray4;
-    }
-    .left{
-      margin:0 5px 20px 0;
-    }
-    .text{
-      color:$gray10;
-      display: block;
-    }
-    .time{
-      color:$gray4;
-      font-size: 12px;
-      display: block;
-    }
-  }
-.cont-button{
-  border-top:1px solid #ccc;
-  button{
-    margin:10px auto 5px auto;
-    display: block;
-  }
-}
-  .item.event{
-    .name{color:$violet;}
-  }
-  .item.message{
-    .name{color:$green2;}
-  }
-  .item.task{
-    .name{color:$red;}
-  }
-}
 
 
 
