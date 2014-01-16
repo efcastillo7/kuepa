@@ -10,7 +10,7 @@
  */
 class learningpathActions extends sfActions
 {
- /**
+    /**
      * POST /learningpath
      *
      * @param sfRequest $request A request object
@@ -40,7 +40,40 @@ class learningpathActions extends sfActions
         }
 
         return $this->renderText(json_encode($ret));
+    }
 
+    public function executeAdddependencies(sfWebRequest $request) {
+        $course_id = $request->getParameter('course_id');
+        $chapter_id = $request->getParameter('chapter_id');
+        $lesson_id = $request->getParameter('lesson_id');
+        $exercise_id = $request->getParameter('exercise_id');
+        $profile_id = $this->getUser()->getProfile()->getId();
+
+        $ret = array();
+        $dependencies = array();
+
+        if($course_id && $chapter_id && $lesson_id){
+            //get dependencies
+            $dependencies = LessonService::getInstance()->getDependencyPathList($course_id, $chapter_id, $lesson_id);
+        }elseif($exercise_id){
+            //dependencies for that exercise
+        }
+
+        foreach ($dependencies as $dependency) {
+            $plp = LearningPathService::getInstance()->addNodeToPath($profile_id, $dependency->getDependsCourseId(), $dependency->getDependsChapterId(), $dependency->getDependsLessonId());
+
+            if($plp){
+                $ret[] = array(
+                    'id' => $plp->getId(),
+                    'position' => $plp->getPosition(),
+                    'course' => array('id' => $plp->getCourse()->getId(), 'name' => $plp->getCourse()->getName(), 'color' => $plp->getCourse()->getColor(), 'image' => $plp->getCourse()->getThumbnailPath()),
+                    'chapter' => array('id' => $plp->getChapter()->getId(),'name' =>  $plp->getChapter()->getName()),
+                    'lesson' => array('id' => $plp->getLesson()->getId(),'name' =>  $plp->getLesson()->getName()),
+                );
+            }
+        }
+
+        return $this->renderText(json_encode($ret));
     }
 
     /**
@@ -100,14 +133,4 @@ class learningpathActions extends sfActions
         return $this->renderText('ok');
     }
 
-
-    /**
-     * POST /learningpath/deadline/learningpath_id/:id/date/:date
-     *  
-     * Set deadline for user
-     * @param sfRequest $request A request object
-     */
-    public function executeDeadline(sfWebRequest $request) {
-
-    }  
 }

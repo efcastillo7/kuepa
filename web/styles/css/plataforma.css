@@ -166,7 +166,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 -------------------------------------------------- */
 
 .navbar{
-  z-index: 1000;
+  z-index: 999;
 }
 
 .navbar .nav {
@@ -897,7 +897,7 @@ div[type*=button]{
 .cbp-spmenu-vertical {
     width: 243px;
     top: 50px;
-    z-index: 1000;
+    z-index: 998;
     bottom: 0;
 }
  
@@ -945,6 +945,7 @@ div[type*=button]{
      -moz-box-shadow:    -50px 0px 100px 60px rgba(0,0,0,.5); 
     -webkit-box-shadow: -50px 0px 100px 60px rgba(0,0,0,.5);
     box-shadow:         -50px 0px 100px 60px rgba(0,0,0,.5);
+    z-index: 998;
 }
  
 .cbp-spmenu-right.cbp-spmenu-open {
@@ -952,6 +953,7 @@ div[type*=button]{
     -moz-box-shadow:    50px 0px 100px 60px rgba(0,0,0,.5); 
     -webkit-box-shadow: 50px 0px 100px 60px rgba(0,0,0,.5);
     box-shadow:         50px 0px 100px 60px rgba(0,0,0,.5);
+    z-index: 998;
 }
  
 /* Horizontal menu that slides from the top or bottom */
