@@ -30,10 +30,10 @@ class Exercise extends BaseExercise {
             $ans = $one_question->evaluate($keyvalueanswers[$one_question->getId()]);
             $total_score += $ans['score'];
 
-            $score[$one_question->getId()] = $ans['answers'];
+            $score[$one_question->getId()] = $ans;
         }
 
-        return array('score' => $total_score, 'answers' => $score);
+        return array('score' => $total_score, 'questions' => $score);
     }
 
     public function getTotalScore(){
@@ -43,9 +43,9 @@ class Exercise extends BaseExercise {
             ->innerJoin('eq.Answers ans')
             ->where('e.id = ?', $this->getId())
             ->select("sum(ans.value) as total")
-            ->execute();
+            ->fetchOne();
 
-        return $q->getFirst()->getTotal();
+        return $q->getTotal();
     }
 
 }

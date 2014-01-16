@@ -51,7 +51,7 @@ class exerciseActions extends sfActions
   			'questions' => array('count' => $exercise->getQuestions()->count()),
   			'score'  => array('total' => $exercise->getTotalScore(), 'value' => $correct_values['score']),
   		),
-  		'answers' => $correct_values['answers'],
+  		'questions' => $correct_values['questions'],
       'attemps' => $r_attemps
 	);
 

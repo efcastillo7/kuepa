@@ -20,16 +20,18 @@
 	var options = {
         success: function(response, statusText, xhr, $form) {
             var exercise = response.data.exercise;
-            var answers = response.data.answers;
+            var answers = response.data.questions;
             var total_time = new Date().getTime() - init_time;
             total_time = (total_time/60000).toFixed(1);
 
             for (var key in answers){
             	var objs = $("span#answer_" + exercise.id + "_" + key);
-            	for(var i=0;i<answers[key].length;i++){
-            		$(objs[i]).html("<img src='/images/icons/" + (answers[key][i].correct ? "ok-icon.jpg" : "error-icon.png") + "'>");
+            	for(var i=0;i<answers[key]['answers'].length;i++){
+            		$(objs[i]).html("<img src='/images/icons/" + (answers[key]['answers'][i].correct ? "ok-icon.jpg" : "error-icon.png") + "'>");
             	}
             }
+
+            console.log(response.data);
 
             var score = (exercise.score.value/exercise.score.total*100).toFixed(2);
 

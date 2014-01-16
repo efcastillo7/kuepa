@@ -97,4 +97,19 @@ class LearningPathService {
 
         return 0;
     }
+
+    public function getExerciseDependencyPathList($exercise_id){
+        $q = DependencyExercisePath::getRepository()->createQuery("dp")
+                ->where("exercise_id = ?", $exercise_id);
+
+        return($q->execute());
+    }
+
+    public function getExerciseQuestionDependencyPathList($exercise_id, $exercise_question_id){
+        $q = DependencyExercisePath::getRepository()->createQuery("dp")
+                ->where("exercise_id = ?", $exercise_id)
+                ->andWhere("exercise_question_id = ?", $exercise_question_id);
+
+        return($q->execute());
+    }
 }
