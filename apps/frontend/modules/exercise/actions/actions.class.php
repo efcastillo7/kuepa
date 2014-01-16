@@ -48,7 +48,10 @@ class exerciseActions extends sfActions
     //get question ids
     $question_ids = array();
     foreach ($correct_values['questions'] as $key => $value) {
-      $question_ids[] = $key;
+      //if response is not correct
+      if(!$value['correct']){
+        $question_ids[] = $key;
+      }
     }
 
     //exercise dependencies

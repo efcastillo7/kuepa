@@ -33,63 +33,7 @@
 
             var score = (exercise.score.value/exercise.score.total*100).toFixed(2);
 
-            triggerModalExercise({
-                id: "modal-exercise", 
-                title: "Resultado de su ejercitación", 
-                count_questions: exercise.questions.count,
-                score: score + " %",
-                time: total_time,
-                text: "", 
-                effect: "md-effect-17"});
-
-            $(".dial").knob({
-                'readOnly': true,
-                'width': 150,  
-            });
-
-            $({value: 0}).animate({value: score}, {
-                duration: 1500,
-                easing:'swing',
-                step: function() 
-                {
-                    $('.dial').val(Math.ceil(this.value)).trigger('change');
-                }
-            });
-
-            var atts = [];
-            for(var i =0; i< response.data.attemps.length; i++){
-                atts[i] = parseFloat(response.data.attemps[i]);
-            }
-
-            $('#graph').highcharts({
-                title: {
-                    text: 'Historial de notas',
-                    x: -20 //center
-                },
-                tooltip: {
-                    valueSuffix: ''
-                },
-                yAxis: {
-                    title: {
-                        text: 'Nota '
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                },
-                series: [{
-                    name: 'Ejercicio',
-                    data: atts
-                }]
-            });
+            aaa(response.data);
 
             //add dependencies if score
             if(score < 70){
@@ -115,6 +59,32 @@
 	$('#exercise_form').bind('form-pre-serialize', function(e) {
         tinyMCE.triggerSave();
     });
+
+    function aaa(data){
+        var el = $("#modal-exercise-fail");
+
+        $('.md-close',el).click(function(e){
+            e.stopPropagation();
+            $(el).removeClass('md-show');
+        });
+
+        console.log(data);
+
+        if(data.dependencies.length > 0){
+            $(".lessons", el).show();
+            var obj = $(".lessons .lesson", el);
+            var parent = obj.parent();
+            for(var i=0; i< data.dependencies.length; i++){
+                var clone = obj.clone();
+                $("h5",clone).html(data.dependencies[i].lesson.name);
+
+                parent.append(clone);
+            }
+        }
+        
+        el.show();
+        el.addClass("md-show");
+    }
 
     $(document).ready(function(){
         

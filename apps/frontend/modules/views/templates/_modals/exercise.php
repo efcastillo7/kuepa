@@ -22,4 +22,42 @@
         </div>
     </div>
 </div>
+<div class="md-modal" id="modal-exercise-success">
+    <div class="md-content">
+        <h3 id="title">Examen</h3>
+        <div>
+            Felicitaciones! Has aprobado tu examen :)
+            <button class="md-close">Cerrar</button>
+        </div>
+    </div>
+</div>
+<div class="md-modal" id="modal-exercise-fail">
+    <div class="md-content">
+        <h3 id="title">Examen</h3>
+        <div>
+            No has aprobado la lección :( <br>
+            <br>
+            ¿Deseas volver a intentarlo?
+            <a href="" class="btn">si</a> <a href="" class="btn">no</a>
+            <br><br><br>
+            <div class="lessons">
+                O quizás quieras ver estas lecciones antes de vovler a intentarlo... <br>
+                <br>
+                <div>
+                    <div class="lesson">
+                        <h5>Lección 1</h5>
+                        <a href="" class="btn btn-mini">Agregar</a>    
+                    </div>
+                </div>
+            </div>
+            <br style="clear: both;"><br>
+            <button class="md-close">Cerrar</button>
+        </div>
+    </div>
+</div>
 <div class="md-overlay"></div><!-- the overlay element -->
+
+<style>
+    .lesson{float: left; width: 100px;}
+    .lessons{ display: none;}
+</style>
