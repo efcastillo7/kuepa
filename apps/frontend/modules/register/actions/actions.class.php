@@ -19,9 +19,11 @@ class registerActions extends sfActions
   {
     $this->form = new sfRegisterUserForm();
 
-	if($request->isMethod("POST")){
-		$this->registedDo($request);
-	}
+  	if($request->isMethod("POST")){
+  		$this->registedDo($request);
+  	 }
+
+     $this->setLayout("layout_v2");
   }
 
   protected function registedDo(sfWebRequest $request){
