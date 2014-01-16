@@ -31,8 +31,6 @@
             	}
             }
 
-            console.log(response.data);
-
             var score = (exercise.score.value/exercise.score.total*100).toFixed(2);
 
             triggerModalExercise({

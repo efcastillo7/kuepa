@@ -98,17 +98,20 @@ class LearningPathService {
         return 0;
     }
 
-    public function getExerciseDependencyPathList($exercise_id){
+    public function getExerciseDependencyPathList($exercise_id, $exercise_question_id = null){
         $q = DependencyExercisePath::getRepository()->createQuery("dp")
+                ->innerJoin("dp.DependsCourse dco")
+                ->innerJoin("dp.DependsChapter dch")
+                ->innerJoin("dp.DependsLesson dl")
                 ->where("exercise_id = ?", $exercise_id);
 
-        return($q->execute());
-    }
-
-    public function getExerciseQuestionDependencyPathList($exercise_id, $exercise_question_id){
-        $q = DependencyExercisePath::getRepository()->createQuery("dp")
-                ->where("exercise_id = ?", $exercise_id)
-                ->andWhere("exercise_question_id = ?", $exercise_question_id);
+        if($exercise_question_id){
+            if(is_array($exercise_question_id)){
+                $q->andWhereIn('exercise_question_id', $exercise_question_id);
+            }else{
+                $q->andWhere("exercise_question_id = ?", $exercise_question_id);   
+            }
+        }
 
         return($q->execute());
     }
