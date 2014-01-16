@@ -610,26 +610,32 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   position: relative;
 }
 .lv-icon {
-  height: 36px;
-  width: 36px;
-  padding: 6px;
+  height: 48px;
+  width: 48px;
   float: left;
   margin-right: 5px;
+  border-radius: 8px;
+  overflow: hidden;
 }
-.lv-container .title3 {
-  padding: 12px 0 0 55px;
+.lv-container .lv-title {
+  padding: 7px 0 0 0px;
   cursor: pointer;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  color: #333;
+  margin: 0px;
 }
-.lv-container .title3 i {
-  margin: 3px 3px 0 0;
+.lv-container .lv-title i {
+  margin: 1px 4px 0 0;
 }
-.lv-container .small1 {
+.lv-container .lv-data {
   margin-top: -25px;
   position: absolute;
   right: 0;
+  color: #999;
 }
 .lv-lvlone {
-  padding: 9px 0 0 18px;
+    padding: 9px 0 0 18px;
 }
 .lv-lvlone li {
   border-top: 1px solid #ccc;
