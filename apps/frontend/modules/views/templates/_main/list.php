@@ -7,7 +7,7 @@
                         <img src="<?php echo $course->getThumbnailPath() ?>">
                     </div>
                     <p class="lv-title"><i class="icon-chevron-right"></i><?php echo $course->getName() ?></p>
-                    <p class="lv-data"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>
+                    <p class="lv-progress"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>
                 </a>
             </li>
         <?php endforeach; ?>

@@ -12,6 +12,7 @@
         <?php use_stylesheet("/styles/css/bootstrap-responsive.css") ?>
         <?php use_stylesheet("/styles/css/docs.css") ?>
         <?php use_stylesheet("/styles/css/kuepa.css") ?>
+        <?php use_stylesheet("/styles/css/kuepa.hangouts.css") ?>
         <?php use_stylesheet("/styles/css/plataforma.css") ?>
         <?php use_stylesheet("/styles/css/thumbgrid.css") ?>
         <!-- modalwindow -->
@@ -20,14 +21,15 @@
         <?php use_javascript("/assets/modalwindoweffect/js/modalEffects.js") ?>
 
         <?php use_javascript("/assets/jquery-ui/js/jquery-1.9.1.js", 'first') ?>
-        <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>
+        <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>.
+        <?php use_javascript("/assets/modalwindoweffect/js/modalEffects.js") ?>
 
         <!-- jqform -->
         <?php use_javascript("/js/jquery.form.min.js") ?>
 
         <!-- knob -->
         <?php use_javascript("/js/jquery.knob.js") ?>
-        
+
         <?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
         <?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
 
@@ -68,6 +70,7 @@
 
         <!-- Modals -->
         <?php include_partial("views/modals/success") ?>
+        <?php include_component("support","Modalurl") ?>
 
         <!-- Le javascript
         ================================================== -->
@@ -84,7 +87,10 @@
         <script src="/js/bootstrap-collapse.js"></script>
         <script src="/js/bootstrap-carousel.js"></script>
         <script src="/js/bootstrap-typeahead.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+        <script type="text/javascript" src="https://apis.google.com/js/client:plusone.js"></script>
         <script src="/js/course.js"></script>
+        <script src="/js/support.global.js"></script>
 
     </body>
 </html>
