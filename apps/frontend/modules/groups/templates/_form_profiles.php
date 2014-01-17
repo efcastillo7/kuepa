@@ -1,0 +1,45 @@
+
+<form class="form">
+  <div class="row-fluid">
+    <div class="span4">
+      <input type="text" class="input-medium search-query">
+    </div>
+    <div class="span2">
+      <button type="submit" class="btn">Buscar</button>
+    </div>
+  </div>
+</form>
+
+<form action="<?php echo url_for('groups/AddProfiles') ?>" method="post">
+  <input type="hidden" name="group_id" value="<?php echo $group_id ?>">
+  <div class="row-fluid">
+    <div class="span12" style="height:400px;overflow-y:auto">
+      <h5>Listado de Estudiantes</h5>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                <input type="checkbox" onClick="checkAll( this,'.checkbox') ">
+                Seleccionar Todos
+              </td>
+            </tr>
+            <?php foreach ($profiles as $key => $profile): ?>
+            <tr>
+              <td>
+                  <input type="checkbox" name="profile_ids[]" value="<?php echo $profile->getId(); ?>" class="checkbox">
+                  <?php echo substr($profile->getFullName(), 0,20) ?>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span3">
+      <button type="submit" class="md-close">Guardar</button>
+    </div>
+  </div>
+
+</form>

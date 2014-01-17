@@ -81,6 +81,7 @@
         <script src="/js/bootstrap-carousel.js"></script>
         <script src="/js/bootstrap-typeahead.js"></script>
         <script src="/js/course.js"></script>
+        <script src="/js/uno/application.js"></script>
 
     </body>
 </html>

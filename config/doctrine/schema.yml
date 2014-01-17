@@ -21,6 +21,13 @@ Profile:
       local: profile_id
       foreign: college_id
       foreignAlias: Profiles
+    Groups:
+      class: Groups
+      refClass: GroupProfile
+      type: many
+      local: profile_id
+      foreign: group_id
+      foreignAlias: Profiles
     Components:
       class: Component
       refClass: ProfileLearningPath
@@ -567,3 +574,58 @@ RegisterCodeHasCourse:
   columns:
     register_code: {type: string(50), primary: true}
     course_id: {type: integer, primary: true}
+
+Groups:
+  actAs:
+    Timestampable: ~
+  columns:
+    name: varchar(255)
+    description: string
+    level: integer
+    creator_id: {type: integer, notnull: true}
+  relations:
+    Parents:
+      class: Groups
+      refClass: GroupSubGroup
+      local: child_id
+      foreign: parent_id
+      type: many
+    Children:
+      class: Groups
+      refClass: GroupSubGroup
+      local: parent_id
+      foreign: child_id
+      type: many
+    Profiles:
+      class: Profile
+      refClass: GroupProfile
+      type: many
+      local: group_id
+      foreign: profile_id
+      foreignAlias: Groups
+    Author:
+      class: Profile
+      type: one
+      local: creator_id
+      foreign: id
+
+GroupSubGroup:
+  columns:
+    parent_id: integer
+    child_id: integer
+  relations:
+    Parent:
+      class: Groups
+      local: parent_id
+      foreign: id
+      type: one
+    Child:
+      class: Groups
+      local: child_id
+      foreign: id
+      type: one
+
+GroupProfile:
+  columns:
+    group_id: {type: integer, primary: true}
+    profile_id: {type: integer, primary: true}
