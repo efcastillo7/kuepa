@@ -312,8 +312,20 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 
 .subject-buttonbox .subject-title {
   position: absolute;
-  bottom: 10px;
+  bottom: 24px;
   width: 100%;
+}
+.subject-title .st-title {
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  margin: 0;
+  line-height: 1;
+}
+.subject-title .st-progress {
+  font-family: HelveticaRegular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  margin: 0;
+  line-height: 1;
 }
 
 .subject-buttonbox .subject-image {
