@@ -368,9 +368,12 @@ $("a.inbox").click(function(event){
   $(function() {
 
     $(".list-aside-lesson li a").each(function(){
-      var len = $(this).children("span").text().length;
+      var text = $(this).text().trim();
+      var len = text.length;
+      console.log(len);
 
       if( len > 30 ){
+        $(this).html("<span>" + text + "</span>");
         $(this).parent("li").addClass("long");
         $(this).children("span").addClass("long-text");
 

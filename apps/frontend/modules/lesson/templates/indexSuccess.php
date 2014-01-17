@@ -72,9 +72,7 @@
                     </div>
                   </div>
                   <a class="<?php echo $child->getId() == $resource->getId() ? "orange" : "" ?>" href="<?php echo url_for("@lesson_view_resource?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&resource_id=" . $child->getId()) ?>">
-                    <span>
                       <?php echo $child->getName() ?>
-                    </span>
                   </a>
                 </li>
                 <?php $previous_percentage = $current_percentage; ?>
