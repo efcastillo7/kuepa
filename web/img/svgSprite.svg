@@ -295,14 +295,14 @@
 	 M489.495,19.543c0,2.783,1.735,6.397,5.005,6.397c3.213,0,5.005-3.614,5.005-6.397S497.264,14.5,494.5,14.5
 	S489.495,16.76,489.495,19.543z"/>
 <g>
-	<rect x="536.5" y="19.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="19" height="2"/>
-	<rect x="536.5" y="23.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="19" height="2"/>
-	<rect x="536.5" y="27.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="19" height="2"/>
-	<rect x="536.5" y="31.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="19" height="2"/>
-	<rect x="532.5" y="19.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="2" height="2"/>
-	<rect x="532.5" y="23.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="2" height="2"/>
-	<rect x="532.5" y="27.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="2" height="2"/>
-	<rect x="532.5" y="31.5" fill-rule="evenodd" clip-rule="evenodd" fill="#5789FA" width="2" height="2"/>
+	<rect x="536.5" y="19.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="19" height="2"/>
+	<rect x="536.5" y="23.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="19" height="2"/>
+	<rect x="536.5" y="27.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="19" height="2"/>
+	<rect x="536.5" y="31.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="19" height="2"/>
+	<rect x="532.5" y="19.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="2" height="2"/>
+	<rect x="532.5" y="23.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="2" height="2"/>
+	<rect x="532.5" y="27.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="2" height="2"/>
+	<rect x="532.5" y="31.5" fill-rule="evenodd" clip-rule="evenodd" fill="#FF671B" width="2" height="2"/>
 </g>
 <path fill-rule="evenodd" clip-rule="evenodd" fill="#C7C7CC" d="M502.876,80.107c-1.001-1.306-1.917-2.154-3.652-2.636
 	l-1.625,5.691c-0.162,0.529-0.429,0.954-0.954,0.954c-0.523,0-0.952-0.43-0.952-0.954v-4.528c0-0.658-0.534-1.192-1.192-1.192

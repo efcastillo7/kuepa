@@ -8,14 +8,17 @@
   <meta name="author" content="">
 
   <!-- Le styles -->
+  <link rel="stylesheet" href="/styles/css/docs.css">
+  <link rel="stylesheet" href="/styles/css/kuepa.css">
+  <link rel="stylesheet" href="/styles/css/kuepa.hangouts.css">
+  <link rel="stylesheet" href="/styles/css/plataforma.css">
+  <link rel="stylesheet" href="/styles/css/thumbgrid.css">
 
   <link href="/assets/v2/styles/css/fullcalendar.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/jqui.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/jquery.cluetip.css" rel="stylesheet">
 
   <link href="/assets/v2/styles/css/bootstrap.css" rel="stylesheet">
-  <link href="/assets/v2/styles/css/docs.css" rel="stylesheet">
-  <link href="/assets/v2/styles/css/kuepa.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/component.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/style.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/perfect-scrollbar.css" rel="stylesheet">
@@ -50,7 +53,6 @@
   <?php use_javascript("/assets/jquery-ui/js/jquery-ui-1.10.3.custom.min.js", 'first') ?>
 
   <script src="/assets/v2/js/bootstrap-select.js"></script>
-  <link href="/assets/v2/styles/css/bootstrap-select.css" rel="stylesheet">
 
   <?php include_http_metas() ?>
   <?php include_metas() ?>
