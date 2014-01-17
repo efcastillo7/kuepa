@@ -70,6 +70,8 @@ class lessonActions extends kuepaActions {
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
         $this->comments = NoteService::getInstance()->getComments($resource_id);
 
+        $this->type = $this->resource->getResourceData()->getFirst()->getType();
+
         $this->setLayout("layout_v2");
     }
 

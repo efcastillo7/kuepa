@@ -370,7 +370,6 @@ $("a.inbox").click(function(event){
     $(".list-aside-lesson li a").each(function(){
       var text = $(this).text().trim();
       var len = text.length;
-      console.log(len);
 
       if( len > 30 ){
         $(this).html("<span>" + text + "</span>");
