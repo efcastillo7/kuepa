@@ -9,23 +9,29 @@
 		slides[1] = function(){
 			var obj = $(".eg-grid .subject-item:first .subject-link");
 			obj.css("position","relative");
-			obj.css("z-index","9999");
+			obj.css("z-index","9000");
 			obj.delay(500).effect("shake");
 		};
 		slides[2] = function(){
 			var obj = $(".eg-grid .subject-item:first .subject-link");
 			obj.css("z-index","");
 			classie.addClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
-			$("#cbp-spmenu-s2").css("z-index","9999");
+			$("#cbp-spmenu-s2").css("z-index","9000");
 		};
 		slides[3] = function(){
 			classie.removeClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
 			$("#cbp-spmenu-s2").css("z-index","");
-			$("#eg-grid").delay(500)
-					.animate({'opacity':0},250).animate({'opacity':1},250)
-					.animate({'opacity':0},250).animate({'opacity':1},250);
-
+			var obj = $("#eg-grid");
+			obj.css({"position": "relative", "z-index" : "9000", 'opacity': 0});
+			obj.animate({'opacity':1},250);
 		};
+		slides[4] = function(){
+			var obj = $("#eg-grid");
+			obj.animate({'opacity':0},250, function(){
+						obj.css({"z-index" : "", 'opacity': 1});
+					});
+
+		}
 
 		magnificPopup.open({
 	      alignTop: true,
@@ -70,56 +76,72 @@
 	  max-width: 500px;
 	  margin: 20px auto;
 	}
-
-	.slide{
-		/*width: 100%;*/
-		/*height: 100%;*/
-		display: none;
-		color: white;
-		font-size: 22px;
-		position: relative;
-		margin: 280px auto;
-		width: 300px;
-	}
-
-	.close{
-		position: absolute;
-		right: -10px;
-		top: 0px;
-		/*top: -10px;*/
-		color: white;
-	}
 </style>
 
 <div class="hidden">
 	<div id="popup">
-		<div class="close">
-			Cerrar	
+		<div class="container">
+			<div class="row">
+				<div class="slide" data-slide="1">
+				  	<p class="slide-title">
+				  		¡Hola <?php echo $profile->getFirstName() ?>! 
+				  	</p>
+				  	<p class="slide-main">
+				  		Bienvenido al PreICFES Kuepa. En este demo podrás ver el funcionamiento del curso para una materia de las 8 que evalúa el ICFES.
+				  	</p>
+				  	<a href="javascript:void(0)" class="btn btn-primary btn-large">Comenzar Demo</a>
+				</div>
+			</div>
 		</div>
-	  <div class="slide" data-slide="1">
-	  	Hola <?php echo $profile->getFirstName() ?>, bienvenido al Preicfes Kuepa. En este demo podrás ver el funcionamiento del curso para una materia de las 8 que evalúa el ICFES.
-	  	<br><br>
-	  	<a href="javascript:void(0)" class="btn">Seguir </a>
-	  </div>
-	  <div class="slide" data-slide="2">
-	  	Para empezar contesta el simulacro que encontrarás en el cuadro Simulacros y cuando termines obtendrás tus resultados.
-	  	<br><br>
-	  	<a href="javascript:void(0)" class="btn">Seguir </a>
-	  </div>
-	  <div class="slide" data-slide="3">
-	  	Con tus resultados te asignaremos las lecciones que debes tomar para estar listo para la prueba, siempre podrás ver cuáles te faltan aquí.
-	  	<br><br>
-	  	<a href="javascript:void(0)" class="btn">Seguir </a>
-	  </div>
-	  <div class="slide" data-slide="4">
-	  	Si quieres explorar las lecciones disponibles y conocer todo el contenido de Kuepa ve a cada materia y navega libremente
-	  	<br><br>
-	  	<a href="javascript:void(0)" class="btn">Seguir </a>
-	  </div>
-	  <div class="slide" data-slide="5">
-	  	Y listo, basta de historias. Ya puedes empezar a estudiar, recuerda que siempre podrás tener la versión completa del Preicfes haciendo clic aquí 
-	  	<br><br>
-	  	<a href="javascript:void(0)" class="btn">Comprar </a>
-	  </div>
+		<div class="container">
+			<div class="row">
+				<div class="slide slide2 slide-small" data-slide="2">
+					<div class="arrow"></div>
+					<p class="slide-title">
+				  		1. Para comenzar 
+				  	</p>
+				  	<p class="slide-main">
+						Antes que nada, contesta el simulacro que encontrarás en el cuadro Simulacros y cuando termines obtendrás tus resultados.
+					</p>
+				  	<a href="javascript:void(0)" class="btn btn-primary">¡Entendido! Sigamos...</a>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="slide slide3 slide-small" data-slide="3">
+					<div class="arrow"></div>
+					<p class="slide-title">
+				  		2. Tu camino de aprendizaje
+				  	</p>
+				  	<p class="slide-main">
+				  		Con tus resultados te asignaremos las lecciones que debes tomar para estar listo para la prueba, siempre podrás ver cuáles te faltan aquí.
+				  	</p>
+				  	<a href="javascript:void(0)" class="btn btn-primary">¡Listo! Próxima...</a>
+				</div>
+			</div>
+		</div>
+		<div class="slide slide4 slide-small" data-slide="4">
+					<p class="slide-title">
+				  		3. Explora por ti mismo
+				  	</p>
+				  	<p class="slide-main">
+				  		Si quieres ver las lecciones disponibles y conocer todo el contenido de Kuepa ve a cada materia y navega libremente.
+				  	</p>
+				  	<a href="javascript:void(0)" class="btn btn-primary">¡Bien! Última...</a>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="slide" data-slide="5">
+					<p class="slide-title">
+				  		4. ¡A estudiar!
+				  	</p>
+				  	<p class="slide-main">
+				  		Y listo, basta de historias, ya puedes empezar a estudiar. Recuerda que siempre podrás acceder a todas las lecciones comprando la versión completa del Preicfes. 
+				  	</p>
+				  	<a href="javascript:void(0)" class="btn btn-primary btn-large">Comenzar a estudiar</a>
+				</div>
+			</div>
+		</div>	
 	</div>
 </div>
