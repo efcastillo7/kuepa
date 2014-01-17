@@ -69,18 +69,20 @@ jQuery(document).ready(function($){
 
   function dp_loadDefaults(){
     if ( dp_defaults.course_id != ""){
-      jQuery("#dependency_path_course_id").val(dp_defaults.course_id);
-      jQuery("#dependency_path_course_id").trigger("change");            
+      setTimeout(function(){ 
+        jQuery("#dependency_path_course_id").val(dp_defaults.course_id);
+        jQuery("#dependency_path_course_id").trigger("change");            
+      },600);
 
       setTimeout(function(){ 
-         jQuery("#dependency_path_chapter_id").val(dp_defaults.chapter_id);
+        jQuery("#dependency_path_chapter_id").val(dp_defaults.chapter_id);
         jQuery("#dependency_path_chapter_id").trigger("change");
-      },400);
+      },1800);
 
       setTimeout(function(){ 
         jQuery("#dependency_path_lesson_id").val(dp_defaults.lesson_id);
         jQuery("#dependency_path_lesson_id").trigger("change");
-      },1000);
+      },2700);
 
     }
   }

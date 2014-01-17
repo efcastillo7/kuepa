@@ -209,8 +209,7 @@ class lessonActions extends kuepaActions {
 
         foreach ($depends_lesson_ids as $key => $lesson_id){
             $form['depends_lesson_id'] = $lesson_id;
-            print_r($form);
-            LessonService::getInstance()->addDependencyToLesson($form);
+             LessonService::getInstance()->addDependencyToLesson($form);
         } 
         $response = Array(
             'status' => "error",
