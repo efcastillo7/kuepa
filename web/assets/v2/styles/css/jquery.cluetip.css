@@ -23,7 +23,7 @@ div.ui-cluetip {
 #cluetip-waitimage {
   width: 32px;
   height: 32px;
-  background-image: url(../../img/loading.gif);
+ /* background-image: url(../../img/loading.gif);*/
 
   position: absolute;
 }
@@ -58,9 +58,15 @@ div.ui-cluetip {
 }
 
 /* default arrows */
+div.cluetip-arrows.ui-state-default{
+  width: 0 !important;
+  height: 0 !important;
+}
+
+
 div.cluetip-default .cluetip-arrows {
   border-width: 0;
-  background: transparent none;
+  /*background: transparent none;*/
 }
 div.clue-right-default .cluetip-arrows {
   background-image: url(../../img/darrowleft.gif);
@@ -113,7 +119,7 @@ div.clue-bottom-default .cluetip-arrows {
 }
 
 /* jtip arrows */
-div.cluetip-jtip .cluetip-arrows {
+/*div.cluetip-jtip .cluetip-arrows {
   border-width: 0;
   background: transparent none;
 }
@@ -141,7 +147,7 @@ div.clue-bottom-jtip .cluetip-arrows {
   height: 11px;
   margin-left: -11px;
 }
-
+*/
 /***************************************
    =cluetipClass: 'rounded'
 -------------------------------------- */
@@ -161,7 +167,7 @@ div.clue-bottom-jtip .cluetip-arrows {
 }
 
 .cluetip-rounded  .cluetip-arrows {
-  border-color: #ccc;
+  /*border-color: #ccc;*/
 }
 
 /* need to be more specific here to override ThemeRoller defaults */

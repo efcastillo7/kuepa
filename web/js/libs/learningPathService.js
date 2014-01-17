@@ -33,5 +33,16 @@ function LearningPathService(params){
 			error: values.onError
 		});
 	}
+
+	this.addDependencies = function (values){
+		$.ajax({
+			url: '/kuepa_api.php/learningpath/adddependencies',
+			type: 'POST',
+			dataType: 'json',
+			data: {course_id: values.course_id, lesson_id: values.lesson_id, chapter_id: values.chapter_id},
+			success: values.onSuccess,
+			error: values.onError
+		});
+	}
 }
 

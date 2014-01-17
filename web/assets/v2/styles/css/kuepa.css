@@ -7,17 +7,7 @@
  * Special thanks and love to Twitter Bootstrap, @mdo and @fat. 
  *
  */
-
-
-
-
-/* --------------------------------------------------
-    Bananero
--------------------------------------------------- */
-
-
-
-
+ 
 /* --------------------------------------------------
     Style Jokers
 -------------------------------------------------- */
@@ -115,6 +105,28 @@ form select {margin-top:-4px}
 }
 
 
+/* --------------------------------------------------
+// navbar
+-------------------------------------------------- */
+.navlogin {
+	background: url("../../img/icn_user.png") no-repeat scroll 0px 12px transparent;
+	padding-left:24px;
+}
+.navbar .nav.navlogin li a {
+	padding:15px 0 15px 0;
+}
+.navbar .nav {
+	margin:0;
+}
+.navbar .nav > li > a {
+	padding:15px 18px 15px 0;
+}
+.navbar .nav.pull-right {
+	margin-left:10px;
+}
+.navbar .nav.pull-right.social {
+	margin-left:0;
+}
 .login {
 	padding:10px;
 }
@@ -160,14 +172,9 @@ form select {margin-top:-4px}
 	margin-left:-1px;
 }
 
-
-
-
-
 /* --------------------------------------------------
 // Header
 -------------------------------------------------- */
-
 .header {
 	margin-top:70px;
 	margin-bottom:60px;
@@ -341,7 +348,18 @@ span.form-step {
 /* --------------------------------------------------
 // footer
 -------------------------------------------------- */
-
+footer {
+	border-top:1px solid #E0E0E0;
+	padding:25px 0 10px;
+}
+footer span.AvantMd {
+	float:left;
+	text-indent:-9999px;
+	width: 85px;
+	height: 20px;
+	background: url("../../img/kuepa_ft.png") no-repeat scroll 0px 0px transparent;
+	margin-top: -3px;
+}
 
 
 /* --------------------------------------------------
@@ -1006,11 +1024,4 @@ min-height:0;
 .alink{
 	cursor: hand;
 	cursor: pointer;
-}
-
-
-
-
-.templates{
-  display: none;
 }
