@@ -12,13 +12,18 @@ class sfRegisterUserForm extends sfForm
 {
   public function configure()
   {
-    $sex = array('M' => 'Male', 'F' => 'Female');
+    $sex = array('M' => 'Masculino', 'F' => 'Femenino');
+
+    $validate_code = $this->getOption('validate-code', true);
+
+    $years = range(date("Y"), 1960);
+
   	$this->setWidgets(array(
       'first_name' => new sfWidgetFormInputText(),
       'last_name' => new sfWidgetFormInputText(),
       'email_address' => new sfWidgetFormInputText(),
       'sex' => new sfWidgetFormChoice(array('choices' => $sex)),
-      'birthdate' => new sfWidgetFormDate(),
+      'birthdate' => new sfWidgetFormDate(array('format' => "%day% / %month% / %year%", "years" => $years)),
       'nickname' => new sfWidgetFormInputText(),
       'password' => new sfWidgetFormInputPassword(),
       'repassword' => new sfWidgetFormInputPassword(),
@@ -29,7 +34,10 @@ class sfRegisterUserForm extends sfForm
     $this->setValidators(array(
       'first_name' => new sfValidatorString(array('required' => true)),
       'last_name' => new sfValidatorString(array('required' => true)),
-      'email_address' => new sfValidatorString(array('required' => true)),
+      'email_address' => new sfValidatorAnd(array(
+        new sfValidatorDoctrineUnique(array('model' => 'sfGuardUser', 'column' => 'email_address')),
+        new sfValidatorEmail(array('required' => true))
+        )),
       'sex' => new sfValidatorChoice(array('choices' => array('M', 'F'))),
       'birthdate' => new sfValidatorDate(array('required' => false)),
       'nickname' => new sfValidatorString(array('required' => true)),
@@ -39,16 +47,33 @@ class sfRegisterUserForm extends sfForm
       'code' => new sfValidatorString(array('required' => true)),
     ));
 
+    $this->getWidgetSchema()->setLabels(array(
+      'first_name' => 'Nombre',
+      'last_name' => 'Apellidos',
+      'email_address' => 'Email',
+      'sex' => 'Sexo',
+      'birthdate' => 'Fecha de Nacimiento',
+      'nickname' => 'Usuario',
+      'password' => 'Contraseña',
+      'repassword' => 'Confirmar Contraseña',
+      'code' =>  'Codigo',
+      'program' => 'Programa'
+    ));
+
     $this->widgetSchema->setNameFormat('register[%s]');
+
+
 
     // add a post validator
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'checkPassword')))
     );
 
-    $this->validatorSchema->setPostValidator(
-      new sfValidatorCallback(array('callback' => array($this, 'checkCode')))
-    );
+    if($validate_code){
+      $this->validatorSchema->setPostValidator(
+        new sfValidatorCallback(array('callback' => array($this, 'checkCode')))
+      );
+    }
   }
 
   public function checkPassword($validator, $values)

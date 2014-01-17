@@ -12,12 +12,12 @@
 		<?php echo $form->renderGlobalErrors()?>
 	    <div class="row new-event form">
 	      <div class="col-md-6">
-	          <?php echo $form['nickname']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['first_name']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['last_name']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['email_address']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['birthdate']->renderRow(array('class' => 'selectpicker')); ?>
 	          <?php echo $form['sex']->renderRow(array('class' => 'selectpicker')); ?>
+	          <?php echo $form['nickname']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['password']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['repassword']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['code']->renderRow(array('class' => 'input-big')); ?>

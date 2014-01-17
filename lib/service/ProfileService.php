@@ -67,7 +67,7 @@ class ProfileService {
         return $q->execute();
     }
 
-    public function addNewUser($params){
+    public function addNewUser($params, $type = 2){
         $sfUser = new sfGuardUser();
         $sfUser->setFirstName($params['first_name'])
                ->setLastName($params['last_name'])
@@ -83,6 +83,12 @@ class ProfileService {
                 ->setLastName($sfUser->getLastName())
                 ->setBirthdate('')
                 ->setSex($params['sex']);
+
+        //set user as student
+        $group = new sfGuardUserGroup();
+        $group->setUserId($sfUser->getId())
+              ->setGroupId($type)
+              ->save();
 
         //save!
         $profile->save();

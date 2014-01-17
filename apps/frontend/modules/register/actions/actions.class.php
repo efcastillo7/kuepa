@@ -17,7 +17,9 @@ class registerActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->form = new sfRegisterUserForm();
+    $code = $request->getParameter("code", "" );
+
+    $this->form = new sfRegisterUserForm(array('code' => $code), array('validate-code' => false));
 
   	if($request->isMethod("POST")){
   		$this->registedDo($request);
@@ -31,17 +33,12 @@ class registerActions extends sfActions
 
   	$this->form->bind($params);
   	if($this->form->isValid()){
-  		//check first for code
-  	   	if($params['code'] != ""){
-  	   		$code = RegisterCode::getRepository()->find($params['code']);
-
-  	   		if(!$code->isValidCode()){
-  	   			//code is invalid
-  	   			return;
-  	   		}
-  	   	}
-
   	   	$profile = ProfileService::getInstance()->addNewUser($params);
+
+        if($params['code'] == "PANAMERICANA"){
+          echo "entro";
+          CollegeService::getInstance()->addProfileToCollege($profile->getId(), 1);
+        }
 
   	    //set flash
   	    $this->getUser()->setFlash('notice', "Ya puedes ingresar con tu usuario y contraseña!");

@@ -100,13 +100,15 @@ $(function() {
         };
     }
 
-    showLeft.onclick = function() {
-        if(classie.hasClass(menuLeft, 'cbp-spmenu-open')){
-            clearTimeout(menuTimeout);
-            menuTimeout = -1;
-        }
-        classie.toggle( menuLeft, 'cbp-spmenu-open' );
-    };
+    if(showLeft != undefined){
+        showLeft.onclick = function() {
+            if(classie.hasClass(menuLeft, 'cbp-spmenu-open')){
+                clearTimeout(menuTimeout);
+                menuTimeout = -1;
+            }
+            classie.toggle( menuLeft, 'cbp-spmenu-open' );
+        };
+    }
 
     $("#showLeft").mouseenter(function(event) {
         classie.addClass( menuLeft, 'cbp-spmenu-open' );
