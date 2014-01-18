@@ -1905,21 +1905,9 @@ legend + .control-group {
 }
 .btn-primary {
   color: #ffffff;
-  text-shadow: 0 -1px 0 rgb a(0, 0, 0, 0.25);
-  background-color: #BD4100;
-  background-image: -moz-linear-gradient(top, #e86823, #BD4100);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e86823), to(#BD4100));
-  background-image: -webkit-linear-gradient(top, #e86823, #BD4100);
-  background-image: -o-linear-gradient(top, #e86823, #BD4100);
-  background-image: linear-gradient(to bottom, #e86823, #BD4100);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe86823', endColorstr='#ffe8aa23', GradientType=0);
-  border-color: #BD4100 #BD4100 #BD4100;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  *background-color: #BD4100;
+  background-color: #FF671B;
+  *background-color: #FF671B;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
-
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
 .btn-primary:hover,
 .btn-primary:active,
@@ -1927,25 +1915,18 @@ legend + .control-group {
 .btn-primary.disabled,
 .btn-primary[disabled] {
   color: #ffffff;
-  background-color: #BD4100;
-  *background-color: #db9d17;
+  background-color: #FF7A38;
+  *background-color: #FF7A38;
 }
 .btn-primary:active,
 .btn-primary.active {
-  background-color: #c48c14 \9;
+  background-color: #FF671B;
 }
 .btn-warning {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgb a(0, 0, 0, 0.25);
   background-color: #ec854d;
-  background-image: -moz-linear-gradient(top, #ef9868, #e86823);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ef9868), to(#e86823));
-  background-image: -webkit-linear-gradient(top, #ef9868, #e86823);
-  background-image: -o-linear-gradient(top, #ef9868, #e86823);
-  background-image: linear-gradient(to bottom, #ef9868, #e86823);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffef9868', endColorstr='#ffe86823', GradientType=0);
-  border-color: #e86823 #e86823 #ac4812;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #e86823;
   /* Darken IE7 buttons by default so they stand out more given they won't have borders */
