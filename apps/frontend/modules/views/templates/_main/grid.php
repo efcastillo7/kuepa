@@ -24,8 +24,8 @@
             <a class="subject-link addcourse-button" href="#">
                 <div class="subject-buttonbox txt-center">
                     <div class="subject-title">
-                        <p class="title4 HelveticaMd clearmargin">Agregar Curso</p>
-                        <p class="small1 HelveticaLt">&nbsp; </p>
+                        <p class="st-title">Agregar Curso</p>
+                        <p class="st-progress">&nbsp; </p>
                     </div>
                     <div class="pbar-circle">
                         <input class="knob" value="0" data-fgColor="#fff" data-bgColor="#000" data-width="150" data-thickness=".09" data-skin="" data-readOnly=true data-displayInput=false >

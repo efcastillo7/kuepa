@@ -12,7 +12,6 @@
 
         <!-- Le styles -->
         <link rel="stylesheet" href="/styles/css/bootstrap.css">
-        <link rel="stylesheet" href="/styles/css/bootstrap-responsive.css">
         <link rel="stylesheet" href="/styles/css/docs.css">
         <link rel="stylesheet" href="/styles/css/kuepa.css">
         <link rel="stylesheet" href="/styles/css/kuepa.hangouts.css">
@@ -22,8 +21,6 @@
         <!-- modalwindow -->
         <link rel="stylesheet" href="/assets/modalwindoweffect/css/default.css">
         <link rel="stylesheet" href="/assets/modalwindoweffect/css/component.css">
-        <script type="text/javascript" src="/assets/modalwindoweffect/js/modalEffects.js"></script>
-
         <script type="text/javascript" src="/assets/modalwindoweffect/js/modalEffects.js"></script>
 
         <!-- jqform -->

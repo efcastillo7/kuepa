@@ -20,7 +20,8 @@
 }
 
 .course-data-container{
-	position: relative;
+	position: absolute;
+	right: 94px;
 }
 
 .subject-list, .subject-grid{
