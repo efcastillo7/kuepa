@@ -33,7 +33,7 @@
             <ul class="nav nav-mainbtn">
                 <li class="nmb-ins"><a href="<?php echo url_for("stats/index") ?>"><i></i>Reportes</a></li>
                 <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
-                <li class="nmb-mat"><a href="<?php echo url_for("@video_session") ?>"><i></i>Tutorias</a></li>
+                <li class="nmb-tut"><a href="<?php echo url_for("@video_session") ?>"><i></i>Tutorias</a></li>
             </ul>
             <ul class="nav pull-right">
                 <li class="dropdown">
@@ -44,14 +44,15 @@
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
                     </ul>
                 </li>
-                <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch" id="open-learning-path"><i></i></a></li>
+                <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch"><i></i></a></li>
                 <li class="dropdown">
-                    <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i> <?php echo $profile->getNickname() ?></a>
+                    <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i><!--<?php echo $profile->getNickname() ?> --></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                         <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="requestSupport-button">Llamar a soporte</a></li> -->
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Salir</a></li>
                     </ul>
                 </li>
+                <li><a href="javascript:void(0)" class="nav-btn nav-btn-path" id="open-learning-path"><i></i></a></li>
             </ul>
             <?php endif; ?>
     </div>

@@ -8,6 +8,12 @@
   <meta name="author" content="">
 
   <!-- Le styles -->
+  <!-- <link rel="stylesheet" href="/styles/css/docs.css"> -->
+  <!-- <link rel="stylesheet" href="/styles/css/kuepa.css"> -->
+  <link rel="stylesheet" href="/styles/css/kuepa.hangouts.css">
+  <link rel="stylesheet" href="/styles/css/plataforma.css">
+  <!-- <link rel="stylesheet" href="/styles/css/thumbgrid.css"> -->
+
 
   <link href="/assets/v2/styles/css/fullcalendar.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/jqui.css" rel="stylesheet">

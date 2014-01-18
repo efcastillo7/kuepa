@@ -331,6 +331,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 
 .navbar{
   z-index: 999;
+  min-width: 860px;
 }
 
 .navbar .nav {
@@ -387,11 +388,11 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   height: 0;
 }
 
-.plataforma-nav .nav.pull-right {
+.plataforma-nav .nav.pull-right,
+.navbar-fixed-top .nav.navbar-right {
   border-left: 1px solid #E5E5EB;
 }
 .plataforma-nav .nav.pull-right li:last-child a {
-  padding-right: 20px;
 }
 .plataforma-nav .nav.pull-right li a.nav-btn i {
   display: inline-block;
@@ -412,10 +413,16 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background: url("../../img/svgSprite.svg") no-repeat scroll -270px 0 transparent;
 }
 .nav-btn-prfl i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -365px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -369px 0 transparent;
 }
 .nav-btn-prfl .caret {
   margin: 20px 20px 0 0;
+}
+.nav-btn-path i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -519px -50px transparent;
+}
+.nav-btn-path:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -519px 0px transparent;
 }
 
 
@@ -427,10 +434,10 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   color: #C7C7CC;
   float: left;
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   margin: auto;
   height: 30px;
-  padding: 17px 20px 3px;
+  padding: 17px 16px 3px 14px;
 } 
 .navbar .nav.nav-mainbtn .active a,
 .navbar .nav.nav-mainbtn a:hover {
@@ -445,20 +452,31 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   margin: -20px -3px 0px -10px;
 }
 .nav-mainbtn .nmb-mat i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -172px -50px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -169px -50px transparent;
+  width: 53px;
 }
 .nav-mainbtn .nmb-mat.active i,
 .nav-mainbtn .nmb-mat a:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -172px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -169px 0 transparent;
 }
 
 .nav-mainbtn .nmb-ins i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -51px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -221px -51px transparent;
+  width: 48px;
 }
 .nav-mainbtn .nmb-ins.active i, 
 .nav-mainbtn .nmb-ins a:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -1px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -221px -1px transparent;
 }
+.nav-mainbtn .nmb-tut i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -472px -51px transparent;
+  width: 47px;
+}
+.nav-mainbtn .nmb-tut.active i, 
+.nav-mainbtn .nmb-tut a:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -472px -1px transparent;
+}
+
 
 .nav-btn-prfl {
   font-size: 15px;
