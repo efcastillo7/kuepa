@@ -203,7 +203,7 @@ html, html a {
 body {
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding-top: 100px;
-  color: #000;
+  color: #404042;
 }
 
 a:hover {
@@ -493,6 +493,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background-color: #ccc;
   position: relative;
   padding-top: 20px;
+  transition:all 0.2s ease-in-out;
 }
 
 .subject-buttonbox .subject-title {
@@ -506,7 +507,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
       font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: 20px;
       margin: 0;
-      line-height: 1;
+      line-height: 1.1;
     }
     .subject-title .st-progress {
       font-family: HelveticaRegular, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -538,6 +539,29 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   top: 20px;
   left: 48px;
 }
+
+.subject-add {
+  border:2px dashed #E5E5EB;
+  background-color: #fff;
+  color: #949499;
+  width: 242px;
+  height: 222px;
+  transition:all 0.2s ease-in-out;
+}
+.subject-plus {
+  font-size: 200px;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-top: 75px;
+  color: #E9E9EB;
+  transition:all 0.2s ease-in-out;
+}
+.subject-add:hover {
+  border:2px dashed #C7C7CC;
+}
+.subject-add:hover .subject-plus {
+  color: #AFAFB3;
+}
+
 
 .learning-path {
   background-color: #E4E4E4;

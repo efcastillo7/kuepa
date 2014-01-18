@@ -147,18 +147,21 @@ h6, .title6 {font-size:15px;}
 
 /* Grays */
 .white {color: #FFF;}
-.gray1 {color: #F2F2F2;}
-.gray2 {color: #B3B3B3;}
-.gray3 {color: #8C8C8C;}
-.gray4 {color: #666666;}
-.gray5 {color: #3D3D3D;}
-.black {color:#000;}
+.gray1 {color: #E9E9EB;}
+.gray2 {color: #C7C7CC;}
+.gray3 {color: #AFAFB3;}
+.gray4 {color: #949499;}
+.gray5 {color: #58585C;}
+.gray6 {color: #404042;}
+.black {color:#323233;}
 .whitebg {background-color:#fff;}
 .blackbg {background-color:#000;}
+.darkbluebg {background-color:#162230;}
 
 /* Accent colors */
-.orange {color:#E86823;}
-
+.orange {color:#FF671B;}
+.cyan {color:#2568FA;}
+.darkblue {color:#162230;}
 
 /* --------------------------------------------------
 // Modals
