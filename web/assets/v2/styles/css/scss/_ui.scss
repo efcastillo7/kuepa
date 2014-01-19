@@ -2,9 +2,13 @@
 // Breadcrum
 -------------------------------------------------- */
 .breadcrum{
-  height: 50px;
   background: $breadcrum;
-  padding: 9px 0 0 20px;
+  padding: 7px 0 7px 20px;
+  font-size: 15px;
+  position: fixed;
+  z-index: 999;
+  right: 0;
+  left: 0;
 
   .icon{
     width: 33px;
@@ -12,23 +16,24 @@
     @include border-radius(8px);
     display: inline-block;
     vertical-align: middle;
-    margin-right: 15px;
+    margin-right: 6px;
     position: relative;
+    overflow: hidden;
 
     img{
-      width:22px;
-      position: absolute;
-      top: 5px;
-      left: 6px;
+
     }
   }
-
-  .ico-arrow-breadcrum{
-    margin: 0 8px;
-  }
-
-  .link-grey{color:$breadcrum-link1;}
+  .ico-arrow-breadcrum{margin: 0 8px;opacity: .5;}
+  .link-grey{opacity: .5;}
   .link-white{color:#fff;}
+
+  &.gray{
+    background: $gray3;
+    border-top:1px solid $input-disabled;
+    border-bottom:1px solid $input-disabled;
+    .ico-arrow-breadcrum{opacity: 1;}
+  }
 }
 
 /* --------------------------------------------------

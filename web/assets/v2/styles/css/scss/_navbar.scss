@@ -8,7 +8,6 @@
 }
 
 .navbar-header {
-  border-right: 1px solid #E5E5EB;
 }
 
 
@@ -26,7 +25,6 @@
   border-right: 1px solid #E5E5EB;
 }
 .navbar .nav > li > a.nav-menu-icon {
-  padding: 13px 15px 17px;
 }
 .navbar .nav > li > a.nav-menu-icon:hover {
   background-color: #FF671B;
@@ -80,7 +78,7 @@
 .navbar .nav.nav-mainbtn li a {
   color: #C7C7CC;
   float: left;
-  font-size: 18px;
+  font-size: 16px;
   margin: auto;
   height: 49px;
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -98,21 +96,6 @@
   margin: -25px -4px 0px -10px;
   height: 50px;
 }
-.nav-mainbtn .nmb-mat i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -172px -50px transparent;
-}
-.nav-mainbtn .nmb-mat.active i,
-.nav-mainbtn .nmb-mat a:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -172px 0 transparent;
-}
-
-.nav-mainbtn .nmb-ins i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -51px transparent;
-}
-.nav-mainbtn .nmb-ins.active i, 
-.nav-mainbtn .nmb-ins a:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -1px transparent;
-}
 
 /* --------------------------------------------------
 // Nav Pull Right Btns
@@ -121,10 +104,8 @@
 .nav.navbar-right > li > a:hover,
 .nav.navbar-right > li > a:focus {
   padding: 0px;
-  border-left: 1px solid #E5E5EB;
 }
 .nav.navbar-right li:last-child a {
-  padding-right: 20px;
 }
 .nav.navbar-right li a.nav-btn i {
   display: inline-block;
@@ -135,18 +116,7 @@
 .nav.navbar-right li a:hover {
   background-color: #efefef;
 }
-.nav-btn-srch i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -320px 0 transparent;
-}
-.nav-btn-srch:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -320px -50px transparent;
-}
-.nav-btn-ntfc i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -270px 0 transparent;
-}
-.nav-btn-prfl i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -365px 0 transparent;
-}
+
 .nav-btn-prfl .caret {
   margin: 20px 20px 0 0;
 }

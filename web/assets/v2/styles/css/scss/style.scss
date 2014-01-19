@@ -11,9 +11,8 @@
 @import 'animations';
 @import 'forms';
 @import 'ui';
-@import 'sidemenu';
 @import 'navbar';
-
+@import 'sidemenu';
 
 
 @font-face {
@@ -36,6 +35,18 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: HelveticaBd;
+  src: url('../fonts/helveticaneueltstd-bd-webfont.eot');
+  src: url('../fonts/helveticaneueltstd-bd-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/helveticaneueltstd-bd-webfont.woff') format('woff'),
+  url('../fonts/helveticaneueltstd-bd-webfont.ttf') format('truetype'),
+  url('../fonts/helveticaneueltstd-bd-webfont.svg#helvetica_neue_bd_std65Md') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @font-face {
   font-family: HelveticaRoman;
   src: url('../fonts/helveticaneueltstd-roman-webfont.eot');
@@ -58,9 +69,9 @@
   font-style: normal;
 }
 
-html, html a {
-    -webkit-font-smoothing: antialiased;
-}
+
+
+html, html a {-webkit-font-smoothing:antialiased;}
 html,body{height: 100%;}
 
 body {
@@ -68,18 +79,22 @@ body {
   padding-top: 50px;
   color: #000;
   overflow-y:scroll;
+  line-height: 20px;
 }
 .wrapper{
   min-height: 100%;
   height: auto !important;
   height: 100%;
   margin: 0 auto -62px;
-  //margin-top:47px;
 }
 footer,.push{
   height: 62px;
 }
 
+a{
+  color:$link-default;
+  &:hover{color:$orange;}
+}
 p {
   font-size:14px;
   line-height:1.6;
@@ -137,82 +152,394 @@ h2.primary{
   }
 }
 
-/* --------------------------------------------------
-// Footer
--------------------------------------------------- */
-footer {
-  background-color: $darkblue;
-  border: 0 none;
-  padding: 23px 0 16px;
-  margin-top: 50px;
-
-  //position:absolute; //nuevo
-}
-footer .ft-logo {
-  float:left;
-  text-indent:-9999px;
-  width: 102px;
-  height: 20px;
-  background: url("../../img/svgSprite.svg") no-repeat scroll -10px -65px transparent;
-  margin-top: -3px;
-}
-footer .ft-copy {
-  font-size: 12px;
-  opacity: 0.2;
-  filter: alpha(opacity=20);
-  color: #fff;
-  margin:0;
-  float: right;
+.two-columns,
+.header-two-columns {
+  position:relative;
+  margin-left: 240px;
 }
 
-/* --------------------------------------------------
-//
--------------------------------------------------- */
-.wrapper-aside-lesson{
+.header-two-columns{
+  border-bottom:1px solid $gray12;
+  margin-top: 46px;
+  
+  h1{
+    font-size: 30px;
+    font-family:HelveticaLt;
+    border-left: 5px solid $gray12;
+    padding:40px 0 10px 25px;
+    margin:0;
+  }
+}
+
+
+
+.wrapper-aside-lesson-exercise{
   float: left;
-
-  .aside-lesson{
-    background: #fff;
-
-    .header-lesson{
-      height: 82px;
-      padding: 56px 0 0 20px;
-      border-bottom: 1px solid $gray12;
-      position: relative;
-      a{
-        font-size: 14px;
-        font-weight: bold;
-        color:#888;
-        i{margin:-2px 5px 0 0;}
-      }
-      span{
-        display: inline-block;
-        height: 30px;
-        width: 1px;
-        background: #ccc;
-        position: absolute;
-        bottom: 0;
-        left: 125px;
-      }
+  width: 240px;
+}
+.header-lesson-exercise{
+  height: 82px;
+  padding: 56px 0 0 20px;
+  border-bottom: 1px solid $gray12;
+  position: relative;
+}
+ul.list-aside-lesson-exercise{
+  padding:0;
+  li{
+    height: 45px;
+    padding-left: 20px;
+    border-bottom: 1px solid $gray12;
+    line-height: 45px;
+    position: relative;
+    &.long{
+      height:auto;
+      line-height:20px;
+      margin:0;
     }
 
-    .list-aside-lesson{
-      padding:0;
+    input{display: none;}
+    div.icon{
+      width: 30px;
+      height: 30px;
+      position: relative;
+      display: inline-block;
+      vertical-align: sub;
+      .ico-full{left:7px;}
+      .ico-triangle-gray,
+      .ico-triangle-full{
+        left: 11px;
+      }
+    }
+    a{
+      margin-left: 5px;
+      font-size: 14px;
+      font-family: HelveticaMd;
+      &.completed{color:$input-placeholder;}
 
+      span{
+        //margin: -15px 0 9px 0;
+        &.long-text{
+          margin: -25px 10px 10px 35px;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .head-list{
+    height: 55px;
+    border-bottom: 1px solid $gray12;
+
+    h3{
+      font-size: 16px;
+      font-family: HelveticaMd;
+      margin-bottom:3px;
+    }
+    h4{
+      font-size: 12px;
+      font-family: HelveticaLt;
+      margin-top:0;
+    }
+  }
+}//ul.list-aside-lesson-exercise
+
+//se aplica a .aside-exercise y .aside-lesson para que al escrolear, el aside se mantenga fijo
+aside.relativa{
+  position: relative;
+  top:-34px;
+  bottom: 140px;
+  overflow: auto;
+}
+aside.fija{
+  position: fixed;
+  top: 110px;
+  bottom: 140px;
+  overflow: auto;
+}
+
+
+
+/* --------------------------------------------------
+// Exercise
+-------------------------------------------------- */
+.wrapper-aside-exercise{
+  position: relative;
+  @extend .wrapper-aside-lesson-exercise;
+
+  .lessons{
+    position: absolute;
+    height: 34px;
+    padding: 5px 15px;
+    border-right: 1px solid #ececec;
+    a{
+      font-size: 14px;
+      i{margin:-2px 5px 0 0;}
+    }
+  }
+
+  .aside-exercise{
+
+    .list-aside-exercise{
+      @extend .list-aside-lesson-exercise;
+      margin-top: 34px;
       li{
-        height: 45px;
-        padding-left: 20px;
-        border-bottom: 1px solid $gray12;
-        line-height: 45px;
-        position: relative;
-        input{display: none;}
-        a{
-          margin-left: 35px;
-          font-size: 14px;
-          font-family: HelveticaMd;
-          &.completed{color:$input-placeholder;}
+        height: auto !important;
+        border-bottom: 0 !important;
+        padding-left: 0 !important;
+        &>a{
+          margin-left: 0 !important;
+          padding-left: 35px;
+          border-bottom: 1px solid $input-disabled;
+          border-top: 1px solid $input-disabled;
+          margin-bottom: -1px;
+          color:#000;
+          cursor: pointer;
+          display: block;
+        }
+        i{
+          float: right;
+          margin:20px 20px 0 0;
         }
 
+      ul.section{
+        padding-left: 0;
+        & > li{
+          position: relative;
+          line-height: 40px;
+          border-top:0;
+          padding-left: 25px !important;
+
+          & > a{
+            margin-left: 35px !important;
+            padding-left: 0 !important;
+            border-top:1px solid $input-disabled;
+            margin-bottom: -1px;
+            &.first{
+              border-top: 0px !important;
+            }
+          }
+        }
+        ul.questions{
+          padding-left:0;
+          margin-top:10px;
+          li{
+            line-height: 20px;
+            border:0;
+            font-size: 14px;
+            margin-bottom: 6px;
+            a{
+              margin-left:35px !important;
+              padding-left: 0 !important;
+              border:0;
+            }
+            .line{
+              width: 2px;
+              height: 36px;
+              background: $input-disabled;
+              position: absolute;
+              left: 13px;
+              top: -9px;
+            }
+            .dot8{
+              position: absolute;
+              left: 10px;
+              top: 5px;
+              &.active{background: $orange;}
+            }
+            .ico-arrow-orange{
+              margin:5px 20px 0 0;
+              display: none;
+              &.active{display: block;}
+            }
+            &:hover{
+              .ico-arrow-orange{display: block;}
+              .dot8{background: $orange !important;}
+            }
+          }
+          li.active{
+            .ico-arrow-orange{display: block;}
+            .dot8{background: $orange !important;}
+          }
+
+        }//ul.questions
+      }//ul.section
+    }//li
+
+      .back-icon{
+        width: 28px;
+        height: 28px;
+        @include border-radius(30px);
+        background: $input-border;
+        position: absolute;
+        top: 6px;
+        left:25px;
+        z-index: 1;
+        &.active{background: $orange;}
+        i{margin:6px 6px 0 0;}
+      }
+      .before,.after{
+        width: 4px;
+        height: 7px;
+        background: $input-border;
+        position: absolute;
+        left: 37px;
+        &.active{background: $orange;}
+      }
+      .before{top:0;}
+      .after{top: 34px;}
+    }
+  }//aside-exercise
+}
+
+section.data-exercise{
+  background: #fff;
+  border-left: 5px solid $gray12;
+  padding: 24px 0px 50px;
+  .breadcrum{
+    margin: 0 -40px 0 -30px;
+    position: static;
+  }
+
+  h1{
+    height: 82px;
+    padding: 40px 15px 0 25px;
+    border-bottom: 1px solid $gray12;
+    font-size: 30px;
+    font-family: HelveticaLt, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-top:0;
+  }
+  .content{
+    padding: 0 40px 0 30px;
+    h2{
+      font-size: 18px;
+      font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin:0 0 20px;
+    }
+    section.text-image{
+      margin-top:30px;
+      max-width: 1230px;
+      figure{
+        width: 15%;
+        float: left;
+        img{width: 140px;}
+      }
+      article.with-image{
+        width: 85%;
+        padding-left: 10px;
+        float: right;
+        .icon{
+          width: 32px;
+          height: 32px;
+          display: inline-block;
+          background: $green2;
+          @include border-radius(8px);
+        }
+        h2{
+          font-family:HelveticaMd;
+          font-size: 18px;
+          margin:10px 0 5px 0;
+        }
+        h3{
+          font-family:HelveticaLt;
+          font-size: 14px;
+          margin:0 0 30px 0;
+        }
+      }
+    }
+    &.questions{
+      font-family:HelveticaMd;
+      max-width: 1000px;
+      padding:0 40px 40px 30px;
+      h4{
+        font-family:HelveticaMd;
+        font-size: 16px;
+      }
+      .head-fieldset{
+        border:1px solid $input-border;
+        border-bottom: 0;
+        padding: 18px 0 18px 20px;
+        font-size: 16px;
+        margin: 0;
+      }
+      fieldset{
+        border:1px solid $input-border;
+        margin-bottom:30px;
+        padding: 20px;
+        ul{
+          margin:0;
+          padding:15px 0 10px 20px;
+          li{
+            margin-bottom: 10px;
+            label{
+              font-size: 16px;
+              padding-top: 1px;
+            }
+          }
+        }
+        .input-small{margin-bottom:10px;}
+      }
+      table{
+        width: 100%;
+        border:1px solid $input-border;
+        margin:0 0 30px 0;
+        thead{
+          background: $gray3;
+          font-size: 12px;
+          color:#AFAFB3;
+          border-bottom:1px solid $input-border;
+          td{padding:13px 20px;}
+        }
+        td{padding:5px 20px;}
+        span.number{
+          float: left;
+          margin:5px 5px 0 0;
+        }
+        .dropdown-stylized{line-height: 30px;}
+      }
+    }//&.questions
+
+    article.without-image{
+      width: 100%;
+      h2{
+        font-family:HelveticaMd;
+        font-size: 18px;
+        margin:10px 0 5px 0;
+      }
+      h3{
+        font-family:HelveticaLt;
+        font-size: 14px;
+        margin:0 0 30px 0;
+      }
+    }
+  }//content
+}
+section.correct{
+  height: 74px;
+  background: $blue;
+  color:#fff;
+  .subject{
+    font-size:20px;
+    line-height: 74px;
+    padding-left: 30px;
+  }
+  .send{font-size:18px;}
+  .send-square{margin-left: 10px;}
+}
+
+/* --------------------------------------------------
+// Lessons
+-------------------------------------------------- */
+.wrapper-aside-lesson{
+  @extend .wrapper-aside-lesson-exercise;
+
+  .aside-lesson{
+    .header-lesson{
+      @extend .header-lesson-exercise;
+    }
+    .list-aside-lesson{
+      @extend ul.list-aside-lesson-exercise;
+    }
+    .list-aside-lesson{
+      li{
         .lp-node {
           position: absolute;
           margin: 8px 0 0 0;
@@ -221,7 +548,8 @@ footer .ft-copy {
           height: 12px;
           margin:24px 0 0 13px;
         }
-        .lp-bar-prev.full,.lp-bar-post.full{
+        .lp-bar-prev.full,
+        .lp-bar-post.full{
           background: $orange;
         }
         .lp-bar-prev{
@@ -254,22 +582,7 @@ footer .ft-copy {
           left:31px;
         }
       }
-      .head-list{
-        height: 55px;
-        border-bottom: 1px solid $gray12;
-
-        h3{
-          font-size: 16px;
-          font-family: HelveticaMd;
-          margin-bottom:3px;
-        }
-        h4{
-          font-size: 12px;
-          font-family: HelveticaLt;
-          margin-top:0;
-        }
-      }
-    }
+    }//list-aside-lesson
   }//aside-lesson
 }//.wrapper-aside-lesson
 
@@ -277,41 +590,39 @@ section.data-lesson{
   background: #fff;
   border-left: 5px solid $gray12;
   padding-bottom: 50px;
+  position: relative;
 
     h1{
       height: 82px;
-      padding: 40px 15px 0 25px;
+      padding: 40px 15px 10px 25px;
       border-bottom: 1px solid $gray12;
       font-size: 30px;
       font-family:HelveticaLt;
       margin-top:0;
-      .prev-next{
-        float: right;
-        margin-top: 5px;
-        position: relative;
-
-        a{
-          font-size: 14px;
-          margin:0 10px;
-          font-weight: bold;
-        }
-        i{
-          margin:0 10px;
-        }
-        span{
-          display: inline-block;
-          height: 30px;
-          width: 1px;
-          background: #ccc;
-          position: absolute;
-          bottom: -6px;
-          left: 109px;
-        }
-      }
     }
+  .prev-next{
+    float: right;
+    margin-top: 4px;
+    position: relative;
+    a{
+      font-size: 14px;
+      &:first-child{margin:0 10px 0 0;}
+    }
+    i{margin:0 5px;}
+    span{
+      display: inline-block;
+      height: 30px;
+      width: 1px;
+      background: $gray12;
+      position: absolute;
+      bottom: -6px;
+      left: 77px;
+    }
+  }
 
   .content{
     padding: 0px 15px 0 25px;
+    margin-top:40px;
     &.annotations{padding-right: 10%;}
 
     h2{
@@ -330,12 +641,10 @@ section.data-lesson{
         font-size: 11px;
       }
     }
-
     a.btn-primary{
       float: right;
       margin: 40px 0 10px 0;
     }
-
     .box-annotations{margin:20px 0;}
   }
 }//data-lesson
@@ -343,7 +652,6 @@ section.data-lesson{
 /* --------------------------------------------------
 // View Mode: List View
 -------------------------------------------------- */
-
 .lv-icon {
   height: 46px;
   width: 46px;
@@ -355,9 +663,7 @@ section.data-lesson{
   margin:0;
   padding:0;
 
-  .subject-item {
-    position: relative;
-  }
+  .subject-item {position: relative;}
   .title3 {
     padding: 5px 0 0 55px;
     cursor: pointer;
@@ -519,10 +825,7 @@ section.data-lesson{
     position: absolute;
     right: 0;
   }
-  .title3 {
-    padding: 12px 0 0 55px;
-  }
-
+  .title3 {padding: 12px 0 0 55px;}
 }
 
 .unit-container {
@@ -572,10 +875,11 @@ section.data-lesson{
         }
       }
       h5{
+        margin-top:0;
+        padding-top: 10px;
         a{color:#000;}
-        span{
-          font-size: 14px;
-        }
+        a:hover{color:$orange;}
+        span{font-size: 14px;}
       }
     }
 
@@ -784,7 +1088,51 @@ div[class^="subject-"]{
 /* --------------------------------------------------
 // Messages
 -------------------------------------------------- */
+// header
+.nav-header{
+  background: #fff;
+  .navbar-header .nav-pills > li{
+    border:0;
+    padding: 10px 15px 10px;
+  }
 
+  .nav-items{
+    li{
+      height: 49px;
+      display: inline-block;
+      border-left: 1px solid #ccc;
+      padding: 12px 15px 12px !important;
+
+      i{margin-right: 8px;}
+    }
+  }
+
+  .navbar-default .navbar-nav > li > a{
+    color:#d0d0d0;
+    font-size: 17px;
+  }
+  .navbar-default{
+    background: #fff;
+  }
+  .navbar-right > li{
+    height: 49px;
+    padding: 10px 10px 18px 10px !important;
+  }
+  .navbar-right li:last-child{
+    padding-bottom:0 !important;
+  }
+  .navbar-right .counter{
+    background: $orange;
+    color: #fff;
+    font-size: 12px;
+    @include border-radius(4px);
+    padding:2px 4px;
+    position: absolute;
+    top:0px;
+    right:-5px;
+    line-height: 1;
+  }
+}// .nav-message
 
 
 .head-message{
@@ -1685,6 +2033,66 @@ div[class^="subject-"]{
 
 }
 
+//Notificaciones del header
+.dropdown-menu.notifications.arrow-right-img::after{right: 22px;}
+.dropdown-menu.notifications{
+  width: 420px;
+  right: -1px;
+  h1{
+    color:$orange;
+    font-size: 16px;
+    border-bottom:1px solid #ccc;
+    font-family: HelveticaRoman;
+    padding:0 0 15px 20px;
+    margin-bottom: 0;
+  }
+  .cont-notifications{
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .item{
+    padding: 10px 0 10px 50px;
+    border-top:1px solid #ccc;
+
+    &:first-child{border-top:0;}
+
+    h2{
+      font-size: 14px;
+      font-family: HelveticaRoman;
+      margin:0;
+      color:$gray4;
+    }
+    .left{
+      margin:0 5px 20px 0;
+    }
+    .text{
+      color:$gray10;
+      display: block;
+    }
+    .time{
+      color:$gray4;
+      font-size: 12px;
+      display: block;
+    }
+  }
+.cont-button{
+  border-top:1px solid #ccc;
+  button{
+    margin:10px auto 5px auto;
+    display: block;
+  }
+}
+  .item.event{
+    .name{color:$violet;}
+  }
+  .item.message{
+    .name{color:$green2;}
+  }
+  .item.task{
+    .name{color:$red;}
+  }
+}
 
 
 
@@ -1797,3 +2205,5 @@ div[class^="subject-"]{
 .ps-container .ps-scrollbar-y-rail.hover .ps-scrollbar-y {
   background-color: #999;
 }
+.container.ui h3{margin:50px 0 15px 0;}
+

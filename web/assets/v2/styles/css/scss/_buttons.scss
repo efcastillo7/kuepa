@@ -223,3 +223,15 @@
   background: $input-success;
   color:#fff;
 }
+
+.send-square{
+  width: 74px;
+  height: 74px;
+  color:#fff;
+  border:0;
+  font-size: 20px;
+  transition:all 0.1s ease-in-out;
+}
+.send-square.blue{background: $blue3;}
+.send-square.blue:hover{background: lighten($blue3,25%);}
+.send-square.blue:active{background: darken($blue3,15%);}

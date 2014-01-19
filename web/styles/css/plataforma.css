@@ -339,6 +339,8 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 }
 .navbar .nav > li > a {
   padding:0px;
+  transition:all 0.2s ease-in-out;
+  cursor:pointer;
 }
 .navbar .nav > li  {
   border-right: 1px solid #E5E5EB;
@@ -370,6 +372,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background: #ccc;
   box-shadow: 0 3px white, 0 -6px #ccc, 0 -9px white, 0 -12px #ccc;
   content: '';
+  transition: all 0.2s ease-in-out;
 }
 
 .nav-menu-icon:hover::before {
@@ -438,6 +441,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   margin: auto;
   height: 30px;
   padding: 17px 16px 3px 14px;
+  transition: all 0.2s ease-in-out;
 } 
 .navbar .nav.nav-mainbtn .active a,
 .navbar .nav.nav-mainbtn a:hover {
@@ -1124,6 +1128,7 @@ div[type*=button]{
 .cbp-spmenu-vertical.cbp-spmenu-left a {
     border-bottom: 1px solid #E9E9EB;
     padding: 16px 16px 12px;
+    transition: all 0.2s ease-in-out;
 }
  
 .cbp-spmenu-horizontal {
