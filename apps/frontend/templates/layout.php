@@ -44,8 +44,8 @@
         <script type="text/javascript" src="/assets/modernizr/classie.js"></script>
 
         <!-- LEARNING PATH -->
-        <script type="text/javascript" src="libs/learningPathService.js"></script>
-        <script type="text/javascript" src="libs/learningPath.js"></script>
+        <script type="text/javascript" src="/js/libs/learningPathService.js"></script>
+        <script type="text/javascript" src="/js/libs/learningPath.js"></script>
 
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

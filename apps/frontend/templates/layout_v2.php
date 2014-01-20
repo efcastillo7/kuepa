@@ -52,6 +52,10 @@
 
   <script src="/assets/v2/js/bootstrap-select.js"></script>
 
+  <!-- LEARNING PATH -->
+  <script type="text/javascript" src="/js/libs/learningPathService.js"></script>
+  <script type="text/javascript" src="/js/libs/learningPath.js"></script>
+
   <?php include_http_metas() ?>
   <?php include_metas() ?>
   <?php include_title() ?>
