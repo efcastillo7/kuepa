@@ -36,7 +36,6 @@ class registerActions extends sfActions
   	   	$profile = ProfileService::getInstance()->addNewUser($params);
 
         if($params['code'] == "PANAMERICANA"){
-          echo "entro";
           CollegeService::getInstance()->addProfileToCollege($profile->getId(), 1);
         }
 
