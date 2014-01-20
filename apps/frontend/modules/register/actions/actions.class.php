@@ -39,6 +39,9 @@ class registerActions extends sfActions
           CollegeService::getInstance()->addProfileToCollege($profile->getId(), 1);
         }
 
+        //signin
+        $this->getUser()->signIn($profile->getSfGuardUser());
+
   	    //set flash
   	    $this->getUser()->setFlash('notice', "Ya puedes ingresar con tu usuario y contraseña!");
 
