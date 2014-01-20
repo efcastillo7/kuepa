@@ -163,7 +163,7 @@ function addMessageToScreen(values){
   //get values
   var template = $(".templates #message");
   elem = template.clone().attr("id", null),
-  date = mysqlDateToTimestamp(values.date);
+  date = values.created_at;
 
   $(elem).addClass(values.in ? "in" : "out");
   $(".chat-box", elem).addClass(values.in ? "in" : "out");
@@ -175,7 +175,7 @@ function addMessageToScreen(values){
   $(".load-data").append(elem);
 
   //update last_message date
-  last_message = mysqlDateToTimestamp(values.date);
+  last_message = values.created_at;
 
   $('.cont-scroll').perfectScrollbar({wheelSpeed:30,wheelPropagation:true}).scrollTop($('.cont-scroll')[0].scrollHeight);
 }
