@@ -76,12 +76,6 @@ class GroupsService {
         return($gsg);
     }
 
-    public function getProfilesInGroup($group_id){
-        $group = self::getInstance()->find($group_id);
-        //$users = Profile::getRepository()->createQuery('p')->execute();
-        $users = $group->getProfiles();
-        return($users);
-    }
         
     public function addProfileToGroup($group_id, $profile_id){
         $gp = new GroupProfile();
@@ -99,19 +93,64 @@ class GroupsService {
         
     } 
 
+    public function getProfilesInGroup($group_id, $filters = array()){
+        $group = self::getInstance()->find($group_id);
+
+        //$users = $group->getProfiles();
+
+        $q = Profile::getRepository()->createQuery('p')
+                ->select('p.*')
+                ->innerJoin('p.GroupProfile gp ON p.id=gp.profile_id ')
+                ->where('gp.group_id ='.$group_id.'');
+        if ( count($filters) > 0 ){
+            // "key"       => value
+            //i.e: p.firstname => 'Pedro'
+            //i.e: p.firstname = ? OR p.lastname = ? => array('Pedro','Pedro')
+            foreach ($filters as $key => $filter) {
+                $q->andWhere($filter['cond'], $filter['value']);
+            }
+        }
+        // TODO: Pagination
+        $q->limit(100);
+
+        return($q->execute());
+    }
+
     /** Profiile List
     *   filtering the already added profiles in the current group
     */
     public function getProfilesList($group_id, $filters = array() ){
         // Todo : Add $filters andWhere
-        /**
-        */
         $q = Profile::getRepository()->createQuery('p')
                 ->select('p.*')
                 ->leftJoin('p.GroupProfile gp ON (gp.group_id ='.$group_id.'  AND p.id=gp.profile_id )')
                 ->where('gp.group_id IS NULL');
+        if ( count($filters) > 0 ){
+            // "key" => value
+            // p.firstname => 'Pedro'
+            foreach ($filters as $key => $filter) {
+                $q->andWhere($filter['cond'], $filter['value']);
+            }
+        }
+        // TODO: Pagination
+        $q->limit(100);
 
         return $q->execute();
+    }
+
+    public function getProfiles($group_id, $kind, $filters = array()){
+      $group = GroupsService::getInstance()->find($group_id);
+      if ( $kind == 'profiles'){
+        $parent = GroupsService::getInstance()->getParent($group_id);
+        if ( $parent ){ // if it is subgroup
+          $profiles = GroupsService::getInstance()->getProfilesInGroup($parent->getId(), $filters);
+        }else{
+          $profiles = GroupsService::getInstance()->getProfilesList($group_id, $filters);
+        }
+      } else if($kind == 'group_profiles'){
+        $profiles = GroupsService::getInstance()->getProfilesInGroup($group_id, $filters);
+      }
+      return($profiles);
     }
 
 

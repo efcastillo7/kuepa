@@ -14,6 +14,10 @@ $(document).ready(function(){
 	// triggerModalSuccess({id: "modal-form", title: "Ha enviado su nota", text: "probando 123", effect: "md-effect-17"});
 });
 
+function modalClose(jObj){
+	jQuery(jObj).removeClass('md-show');
+}
+
 function triggerModalSuccess(data){
 
 	//redo
@@ -29,7 +33,8 @@ function triggerModalSuccess(data){
 
 	$('.md-close',el).click(function(e){
 		e.stopPropagation();
-		el.removeClass('md-show');
+		modalClose(el);
+		//el.removeClass('md-show');
 	});
 
 }

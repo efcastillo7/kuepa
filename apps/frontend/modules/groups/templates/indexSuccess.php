@@ -140,18 +140,30 @@ function removeUserFromGroup(group_id, profile_id){
   return(false);
 }
 
-
-
-function submitForm(objform){
+function search_profles_list(objform){
   $form = jQuery(objform);
-  var params = jQuery(objform).serialize();
-  var url = $form.attr('url');
-  var group = $form.find('#group_id').val();
-  jQuery.post(url, params, function(){
-    loadProfilesForm();
+  var params = $form.serialize();
+  var url = $form.attr("action");
+  $(objform).ajaxSubmit({
+    'dataType' : 'json',
+    success :function(data){
+        jQuery("#form-profiles > .md-content > #md-subcontent").html(data.template);
+      }
   });
-
+  return(false);
 }
+
+/** TODO: AJAX Submit form*/
+function add_profiles(objform){
+    // submit the form 
+  $(objform).ajaxSubmit(function(){
+    alert("Almacenado con Exito");
+    modalClose( jQuery('#form-profiles') );
+  });
+  // return false to prevent normal browser submit and page navigation 
+  return false; 
+}
+
 
  function collapseTree(objLink, group_id, action){
 

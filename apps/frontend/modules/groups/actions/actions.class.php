@@ -46,19 +46,49 @@ class groupsActions extends kuepaActions
     return $this->renderText(json_encode($response));
   }
 
+  public function executeProfileSearch(sfWebRequest $request){
+    $kind = $request->getParameter('kind');
+    $group_id = $request->getParameter('group_id');
+    $search_text =  $request->getParameter('search_text');
+    $group = GroupsService::getInstance()->find($group_id);
+    $filters = array();
+    if ( $search_text != ""){
+     $filters[] = array("cond" => "(p.first_name LIKE ? OR p.last_name LIKE ?) ", 
+                        "value" => array("%$search_text%", "%$search_text%") );
+    }
+
+    $profiles = GroupsService::getInstance()->getProfiles($group_id, $kind, $filters);
+
+    $locals = array('profiles' => $profiles,
+                    'group' => $group,
+                    'search_text' => $search_text );
+    if ( $kind == "profiles"){
+      $partial = $this->getPartial('form_profiles', $locals);
+    }else if( $kind == "group_profiles"){
+      $partial = $this->getPartial('profiles_list', $locals);
+    }
+
+    $response = Array(
+        'status' => "error",
+        'template' => $partial,
+        'code' => 200);
+
+    return $this->renderText(json_encode($response));
+
+  }
+
+  /**
+  * TODO: To improve, we can call the ProfileSearch
+  * instead of calling ProflesForm and ProfilesList
+  * just sending the "kind" param
+  */
   public function executeProfilesForm(sfWebRequest $request){
     $group_id = $request->getParameter('group_id');
     $group = GroupsService::getInstance()->find($group_id);
-   // $profiles = Profile::getRepository()->createQuery('p')->execute();
-    $parent = GroupsService::getInstance()->getParent($group_id);
-    if ( $parent ){ // if it is subgroup
-      $profiles = GroupsService::getInstance()->getProfilesInGroup($parent->getId());
-    }else{
-      $profiles = GroupsService::getInstance()->getProfilesList($group_id);
-    }
+    $profiles = GroupsService::getInstance()->getProfiles($group_id, "profiles");
 
     $locals = array('profiles' => $profiles,
-                    'group_id' => $group_id );
+                    'group' => $group );
     $partial = $this->getPartial('form_profiles', $locals);
 
     $response = Array(
@@ -69,12 +99,18 @@ class groupsActions extends kuepaActions
     return $this->renderText(json_encode($response));
   }
 
+
+  /**
+  * TODO: To improve, we can call the ProfileSearch
+  * instead of calling ProflesForm and ProfilesList
+  * just sending the "kind" param
+  */
   public function executeProfilesList(sfWebRequest $request){
     $group_id = $request->getParameter('group_id');
     $group = GroupsService::getInstance()->find($group_id);
-    //  
-    $group_profiles = GroupsService::getInstance()->getProfilesInGroup($group_id);
-    $locals = array('group_profiles' => $group_profiles,
+    $profiles = GroupsService::getInstance()->getProfiles($group_id, "group_profiles");
+
+    $locals = array('profiles' => $profiles,
                     'group' => $group );
     $partial = $this->getPartial('profiles_list', $locals);
     $response = Array(
@@ -97,8 +133,8 @@ class groupsActions extends kuepaActions
       }
     }
 
-    $this -> renderText( "count ".count($profile_ids) );
-    $this->redirect('groups/index');
+    return( $this -> renderText( "count ".count($profile_ids) ) );
+   // $this->redirect('groups/index');
   }
 
   public function executeDeleteProfileGroup(sfWebRequest $request){

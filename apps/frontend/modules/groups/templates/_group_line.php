@@ -18,10 +18,10 @@
   <cite title="<?php echo strip_tags( $group->getRaw('description') ) ?>" class="<?php echo $css_levels[ ($group->getLevel()%4) ] ?>"> 
       <b><?php echo $group->getName() ?></b>
   </cite>
-  <a class="editGroups-button btn" alt="editar">
+  <a class="editGroups-button btn" title="Editar">
     <i class="icon-edit"></i>
   </a>
-  <a class="addSubGroups-button btn" alt="Crear SubGrupo">
+  <a class="addSubGroups-button btn" title="Crear SubGrupo">
     <i class=" icon-plus-sign"></i>
   </a>
   <a class="addProfiles-button btn" title="Agregar Estudiantes">
