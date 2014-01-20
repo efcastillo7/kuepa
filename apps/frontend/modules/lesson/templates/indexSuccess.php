@@ -29,14 +29,6 @@
   <div class="container">
     <div class="row">
 
-      <!-------------- TITULO --------- -->
-      <section class="header-two-columns">
-        <h1 class="main-title" style="">
-          <?php echo $resource->getName() ?>
-        </h1>
-      </section>
-      <!-------------- /TITULO --------- -->
-
       
       <?php $content = $type == "Exercise" ? "exercise" : "lessons" ?>
       <?php include_partial("menu_$content", array(

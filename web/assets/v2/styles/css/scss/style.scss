@@ -77,7 +77,6 @@ html,body{height: 100%;}
 body {
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding-top: 50px;
-  color: #000;
   overflow-y:scroll;
   line-height: 20px;
 }
@@ -155,7 +154,9 @@ h2.primary{
 .two-columns,
 .header-two-columns {
   position:relative;
-  margin-left: 240px;
+  margin: 46px 0 0 240px;
+  background: #fff;
+  border-left: 5px solid $gray12;
 }
 
 .header-two-columns{
@@ -245,15 +246,11 @@ ul.list-aside-lesson-exercise{
 //se aplica a .aside-exercise y .aside-lesson para que al escrolear, el aside se mantenga fijo
 aside.relativa{
   position: relative;
-  top:-34px;
-  bottom: 140px;
-  overflow: auto;
+  top:140px;
 }
 aside.fija{
   position: fixed;
-  top: 110px;
-  bottom: 140px;
-  overflow: auto;
+  top: 140px;
 }
 
 
@@ -391,28 +388,27 @@ aside.fija{
 }
 
 section.data-exercise{
-  background: #fff;
-  border-left: 5px solid $gray12;
-  padding: 24px 0px 50px;
   .breadcrum{
     margin: 0 -40px 0 -30px;
     position: static;
   }
-
-  h1{
-    height: 82px;
-    padding: 40px 15px 0 25px;
+  .main-title{
     border-bottom: 1px solid $gray12;
-    font-size: 30px;
-    font-family: HelveticaLt, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin-top:0;
+    h1{
+      padding: 40px 220px 8px 30px; 
+      font-size: 30px;
+      font-family: HelveticaLt, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin-top:0;
+      line-height:1.2;
+      max-width:1210px;
+    }
   }
   .content{
     padding: 0 40px 0 30px;
     h2{
       font-size: 18px;
       font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin:0 0 20px;
+      margin:20px 0;
     }
     section.text-image{
       margin-top:30px;
@@ -510,6 +506,10 @@ section.data-exercise{
         margin:0 0 30px 0;
       }
     }
+    .btn {
+      float:right;
+      margin-top:30px;
+    }
   }//content
 }
 section.correct{
@@ -532,6 +532,15 @@ section.correct{
   @extend .wrapper-aside-lesson-exercise;
 
   .aside-lesson{
+    .lessons {
+      border-bottom:1px solid #E9E9EB;
+      .arrow-hover-left {
+        padding:8px 14px 10px 12px;
+        font-size:15px;
+        margin-top:-38px;
+        position:absolute;
+      }
+    }
     .header-lesson{
       @extend .header-lesson-exercise;
     }
@@ -586,29 +595,26 @@ section.correct{
   }//aside-lesson
 }//.wrapper-aside-lesson
 
-section.data-lesson{
+section.data-exercise{
   background: #fff;
   border-left: 5px solid $gray12;
-  padding-bottom: 50px;
   position: relative;
 
-    h1{
-      height: 82px;
-      padding: 40px 15px 10px 25px;
-      border-bottom: 1px solid $gray12;
-      font-size: 30px;
-      font-family:HelveticaLt;
-      margin-top:0;
-    }
   .prev-next{
     float: right;
-    margin-top: 4px;
-    position: relative;
+    position: absolute;
+    right: 20px;
+    margin-top:-30px;
     a{
-      font-size: 14px;
-      &:first-child{margin:0 10px 0 0;}
+      font-size: 15px;
+      padding:8px 8px 10px 12px;
+      &:first-child{
+      border-right:1px solid #e3e3e3;
+      }
     }
-    i{margin:0 5px;}
+    i{
+      margin:-1px 8px 0px;
+    }
     span{
       display: inline-block;
       height: 30px;
@@ -619,35 +625,38 @@ section.data-lesson{
       left: 77px;
     }
   }
+  .annotations{
+    border-top:1px solid #E9E9EB;
+    padding: 30px 0;
+    margin-top:30px;
+    .content{
+      padding: 0px 30px;
+      max-width:1200px;
 
-  .content{
-    padding: 0px 15px 0 25px;
-    margin-top:40px;
-    &.annotations{padding-right: 10%;}
-
-    h2{
-      font-size: 16px;
-      font-family: helveticaMd;
-      margin: 25px 0;
-    }
-    p,figure{margin:25px 0 0 0;}
-    figure{
-      position: relative;
-      figcaption{
-        width: 85px;
-        position: absolute;
-        bottom: 0;
-        left:435px;
-        font-size: 11px;
+      h2{
+        font-size: 16px;
+        font-family: helveticaMd;
+        margin: 25px 0;
       }
+      p,figure{margin:25px 0 0 0;}
+      figure{
+        position: relative;
+        figcaption{
+          width: 85px;
+          position: absolute;
+          bottom: 0;
+          left:435px;
+          font-size: 11px;
+        }
+      }
+      a.btn-primary{
+        float: right;
+        margin: 40px 0 10px 0;
+      }
+      .box-annotations{margin:20px 0;}
     }
-    a.btn-primary{
-      float: right;
-      margin: 40px 0 10px 0;
-    }
-    .box-annotations{margin:20px 0;}
   }
-}//data-lesson
+}//data-exercise
 
 /* --------------------------------------------------
 // View Mode: List View
