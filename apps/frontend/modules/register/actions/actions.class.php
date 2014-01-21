@@ -19,7 +19,7 @@ class registerActions extends sfActions
   {
     $code = $request->getParameter("code", "" );
 
-    $this->form = new sfRegisterUserForm(array('code' => $code), array('validate-code' => false));
+    $this->form = new sfRegisterDemoUserForm(array('code' => $code), array('validate-code' => false));
 
   	if($request->isMethod("POST")){
   		$this->registedDo($request);
@@ -33,6 +33,9 @@ class registerActions extends sfActions
 
   	$this->form->bind($params);
   	if($this->form->isValid()){
+        $params['nickname'] = $params['email_address'];
+        $params['sex'] = 'M';
+        
   	   	$profile = ProfileService::getInstance()->addNewUser($params);
 
         if($params['code'] == "PANAMERICANA"){

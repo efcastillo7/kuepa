@@ -15,12 +15,9 @@
 	          <?php echo $form['first_name']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['last_name']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['email_address']->renderRow(array('class' => 'input-big')); ?>
-	          <?php echo $form['birthdate']->renderRow(array('class' => 'selectpicker')); ?>
-	          <?php echo $form['sex']->renderRow(array('class' => 'selectpicker')); ?>
-	          <?php echo $form['nickname']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['password']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['repassword']->renderRow(array('class' => 'input-big')); ?>
-	          <?php echo $form['code']->renderRow(array('class' => 'input-big')); ?>
+	          <?php echo $form['code']->render(array('class' => 'input-big')); ?>
 	      </div><!-- /col-md-6 -->
 	    </div><!-- /row -->
 
