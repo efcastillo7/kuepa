@@ -105,8 +105,7 @@
     Buttons From Aerolab _buttons.scss
 -------------------------------------------------- */
 
-.btn-primary, .btn-small, .btn-large, .btn-tiny {
-  color: #fff;
+.btn {
   text-align: center;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -264,7 +263,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 // modal
 -------------------------------------------------- */
 .modal-backdrop {
-  background-color: #fff;
+  background-color: #162230;
 }
 .modal-backdrop,
 .modal-backdrop.fade.in {

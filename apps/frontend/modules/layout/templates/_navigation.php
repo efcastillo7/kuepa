@@ -8,6 +8,7 @@
     <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
     <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
     <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
+    <a href="#myModal" role="button" class="cbp-set" data-toggle="modal"><i></i>modal 1</a>
 </nav>
 
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
@@ -57,4 +58,22 @@
             <?php endif; ?>
     </div>
 </div><!-- /navbar -->
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <p id="myModalLabel"><span class="orange">Modal Title.</span> <span class="HelveticaLt">Flash Message.</span></p>
+  </div>
+  <div class="modal-body">
+    <p>
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-large" data-dismiss="modal" aria-hidden="true">Close</a>
+    <a class="btn btn-primary btn-large">Save changes</a>
+  </div>
+</div>
 
