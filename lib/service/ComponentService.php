@@ -107,6 +107,7 @@ class ComponentService {
             'description' => '',
             'level' => '',
             'duration' => 0,
+            'node_id' => null
         );
         //merge values
         $values = $values + $def_values;
@@ -121,6 +122,7 @@ class ComponentService {
                 ->setProfileId($values['profile_id'])
                 ->setDuration($values['duration'])
                 ->setType($type)
+                ->setNodeId($values['node_id'])
                 ->save();
 
         // Update Duration when create a child $type

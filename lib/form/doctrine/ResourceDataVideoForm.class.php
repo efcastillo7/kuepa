@@ -39,6 +39,8 @@ class ResourceDataVideoForm extends BaseResourceDataVideoForm
     $this->setDefaults(array(
         'type' => ResourceDataVideo::TYPE,
     ));
+
+    $this->setValidator('content', new sfValidatorPass());
   }
 
   public function saveEmbeddedForms($con = null, $forms = null)

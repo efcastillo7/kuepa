@@ -19,7 +19,7 @@ class migrationActions extends sfActions
 		$quiz = $request->getParameter("quiz");
 		$lesson_id = $request->getParameter("to");
 
-		$mysql_conn = mysqli_connect("127.0.0.1","root","p4ssw0rd123","z110k_$course");
+		$mysql_conn = mysqli_connect("70.32.82.167","remote","r3m0teUS45%2","z110k_$course");
     	mysqli_query($mysql_conn, "SET NAMES utf8;");
 
 
@@ -190,7 +190,11 @@ class migrationActions extends sfActions
   {
   	$this->setTemplate("index2");
 
-    $mysql_conn = mysqli_connect("127.0.0.1","root","p4ssw0rd123","110k_dokeos_main");
+  	$persist = true;
+  	$copy = false;
+  	$copy_video = false;
+
+    $mysql_conn = mysqli_connect("70.32.82.167","remote","r3m0teUS45%2","110k_dokeos_main");
     mysqli_query($mysql_conn, "SET NAMES utf8;");
 
     $course_code = $request->getParameter("course");
@@ -336,22 +340,22 @@ class migrationActions extends sfActions
 
 	//check if dir exists
 	$base_path =  sfConfig::get('sf_upload_dir') . "/resources";
-	if(!file_exists($base_path)){
+	if(!file_exists($base_path) && $copy){
 		mkdir($base_path);
 	}
 
 	$base_path .= "/$course_code";
-	if(!file_exists($base_path)){
+	if(!file_exists($base_path) && $copy){
 		mkdir($base_path);
 	}
 
 	//images path
-	if(!file_exists($base_path . "/images")){
+	if(!file_exists($base_path . "/images") && $copy){
 		mkdir($base_path . "/images");
 	}
 
 	//video path
-	if(!file_exists($base_path . "/videos")){
+	if(!file_exists($base_path . "/videos") && $copy){
 		mkdir($base_path . "/videos");
 	}
 
@@ -360,118 +364,121 @@ class migrationActions extends sfActions
 
 	$profile_id = $this->getUser()->getProfile()->getId();
 
-	$course = CourseService::getInstance()->create(array(
-		'name' => $course_code,
-		'descripcion' => "$course_code",
-		'profile_id' => $profile_id
-	));
-
-	//add dummy user for testing
-	CourseService::getInstance()->addTeacher($course->getId(), $profile_id);
-	
-
-	foreach ($unidades as $unidad) {
-		$chapter = ChapterService::getInstance()->create(array(
-			'name' => $unidad['nombre'],
+	if($persist){
+		$course = CourseService::getInstance()->create(array(
+			'name' => $course_code,
+			'descripcion' => "$course_code",
 			'profile_id' => $profile_id
 		));
 
-		CourseService::getInstance()->addChapterToCourse($course->getId(), $chapter->getId());
+		//add dummy user for testing
+		CourseService::getInstance()->addTeacher($course->getId(), $profile_id);
+		
 
-		foreach ($unidad['lessons'] as $lesson) {
-			$nlesson = LessonService::getInstance()->create(array(
-				'name' => $lesson['nombre'],
-				'description' => $lesson['descripcion'],
+		foreach ($unidades as $unidad) {
+			$chapter = ChapterService::getInstance()->create(array(
+				'name' => $unidad['nombre'],
 				'profile_id' => $profile_id
 			));
 
-			//add lesson to chapter
-			ChapterService::getInstance()->addLessonToChapter($chapter->getId(), $nlesson->getId());
+			CourseService::getInstance()->addChapterToCourse($course->getId(), $chapter->getId());
 
-			//add resources
-			foreach ($lesson['recursos'] as $recurso) {
-				//set resource
-				$resource = ResourceService::getInstance()->create(array(
-					'name' => $recurso['nombre'],
-					'description' => $recurso['data']['titulo'],
-					'profile_id' => $profile_id
+			foreach ($unidad['lessons'] as $lesson) {
+				$nlesson = LessonService::getInstance()->create(array(
+					'name' => $lesson['nombre'],
+					'description' => $lesson['descripcion'],
+					'profile_id' => $profile_id,
+					'node_id' => $lesson['id']
 				));
 
-				//set resource data
-				switch ($recurso['tipo']) {
-					case 9:
-						foreach ($recurso['data']['links'] as $link) {
-							$pos = strrpos($link,"/");
-							$imgname = str_replace(
-								array(" ", "%", "/", "\""),
-								array("-", "-", "-", "-"), 
-								substr($link, $pos+1));
+				//add lesson to chapter
+				ChapterService::getInstance()->addLessonToChapter($chapter->getId(), $nlesson->getId());
 
-							if(strpos($link,"http") === false){
-								$link = "http://www.kuepa.com" . $link;
+				//add resources
+				foreach ($lesson['recursos'] as $recurso) {
+					//set resource
+					$resource = ResourceService::getInstance()->create(array(
+						'name' => $recurso['nombre'],
+						'description' => $recurso['data']['titulo'],
+						'profile_id' => $profile_id
+					));
+
+					//set resource data
+					switch ($recurso['tipo']) {
+						case 9:
+							foreach ($recurso['data']['links'] as $link) {
+								$pos = strrpos($link,"/");
+								$imgname = str_replace(
+									array(" ", "%", "/", "\""),
+									array("-", "-", "-", "-"), 
+									substr($link, $pos+1));
+
+								if(strpos($link,"http") === false){
+									$link = "http://www.kuepa.com" . $link;
+								}
+								if(!file_exists($base_path . "/images/" . $imgname) && $copy)
+									copy($link, $base_path . "/images/" . $imgname);
 							}
-							if(!file_exists($base_path . "/images/" . $imgname))
-								copy($link, $base_path . "/images/" . $imgname);
-						}
 
 
-						$rec = new ResourceDataText();
-						$rec->setResourceId($resource->getId())
-							->setContent($recurso['data']['texto'])
-							->setEnabled(true)
-							->setDuration(1)
-							->save();
+							$rec = new ResourceDataText();
+							$rec->setResourceId($resource->getId())
+								->setContent($recurso['data']['texto'])
+								->setEnabled(true)
+								->setDuration(1)
+								->save();
 
-						break;
-					case 3:
-						foreach ($recurso['data']['links'] as $link) {
-							$imgname = str_replace(
-								array(" ", "%", "/", "\""),
-								array("-", "-", "-", "-"), 
-								$link);
+							break;
+						case 3:
+							foreach ($recurso['data']['links'] as $link) {
+								$imgname = str_replace(
+									array(" ", "%", "/", "\""),
+									array("-", "-", "-", "-"), 
+									$link);
 
-							$link = "http://www.kuepa.com/escuela/video/" . $link;
+								$link = "http://www.kuepa.com/escuela/video/" . $link;
 
-							if(!file_exists($base_path . "videos/" . $imgname))
-								copy($link, $base_path . "videos/" . $imgname);
-						}
+								if(!file_exists($base_path . "videos/" . $imgname) && $copy)
+									copy($link, $base_path . "videos/" . $imgname);
+							}
 
-						$rec = new ResourceDataVideo();
-
-						$rec->setResourceId($resource->getId())
-							->setContent("/uploads/resources/$course_code/videos/" . $recurso['data']['links'][0])
-							->setEnabled(true)
-							->setDuration(1)
-							->setVideoType('embebed')
-							->save();
-						break;
-					
-					default:
-						if($recurso['data']['embebido'] == 1){
 							$rec = new ResourceDataVideo();
 
 							$rec->setResourceId($resource->getId())
-								->setContent($recurso['data']['links'][0])
+								->setContent("/uploads/resources/$course_code/videos/" . $recurso['data']['links'][0])
 								->setEnabled(true)
 								->setDuration(1)
-								->setVideoType('youtube')
+								->setVideoType('embebed')
 								->save();
-						}else{
-							$rec = new ResourceDataEmbeddedWeb();
+							break;
+						
+						default:
+							if($recurso['data']['embebido'] == 1){
+								$rec = new ResourceDataVideo();
 
-							$rec->setResourceId($resource->getId())
-								->setContent($recurso['url'])
-								->setEnabled(true)
-								->setDuration(1)
-								->save();
-						}
-						break;
+								$rec->setResourceId($resource->getId())
+									->setContent($recurso['data']['links'][0])
+									->setEnabled(true)
+									->setDuration(1)
+									->setVideoType('youtube')
+									->save();
+							}else{
+								$rec = new ResourceDataEmbeddedWeb();
+
+								$rec->setResourceId($resource->getId())
+									->setContent($recurso['url'])
+									->setEnabled(true)
+									->setDuration(1)
+									->save();
+							}
+							break;
+					}
+
+					//add reource to lesson
+					LessonService::getInstance()->addResourceToLesson($nlesson->getId(), $resource->getId());
+	        		ComponentService::getInstance()->updateDuration($resource->getId());
+
 				}
-
-				//add reource to lesson
-				LessonService::getInstance()->addResourceToLesson($nlesson->getId(), $resource->getId());
-        		ComponentService::getInstance()->updateDuration($resource->getId());
-
 			}
 		}
 	}
