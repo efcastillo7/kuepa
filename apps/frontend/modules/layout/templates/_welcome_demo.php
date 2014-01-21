@@ -13,6 +13,11 @@
 			obj.delay(500).effect("shake");
 		};
 		slides[2] = function(){
+			//add lesson demo
+			var data = '[{"id":"1","position":"1","course":{"id":"1791","name":"Biolog\u00eda I","color":"red","image":"\/uploads\/thumbnail\/82deb81a5c8c482876fd696bdd4fe96a4b521236.png"},"chapter":{"id":"3959","name":"Los seres vivos como sistemas abiertos: intercambios de materia y energ\u00eda"},"lesson":{"id":"3964","name":"Ciclo del agua"}},{"id":"2","position":"2","course":{"id":"2022","name":"Geograf\u00eda I","color":"violet","image":"\/uploads\/thumbnail\/6566912c4924ab110f2ac6c326b982dee9e834d1.png"},"chapter":{"id":"2055","name":"Ambientes en el mundo"},"lesson":{"id":"2064","name":"Problem\u00e1ticas ambientales"}},{"id":"3","position":"3","course":{"id":"684","name":"Historia I","color":"lightblue","image":"\/uploads\/thumbnail\/ede8a73b45b6b13a441c17903f58926575e844a0.png"},"chapter":{"id":"685","name":"El origen del Universo y del hombre"},"lesson":{"id":"686","name":"Inicios del universo y de la tierra"}}]';
+			var json = JSON.parse(data);
+			addItemsToPath(json);
+
 			var obj = $(".eg-grid .subject-item:first .subject-link");
 			obj.css("z-index","");
 			classie.addClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
@@ -21,6 +26,10 @@
 		slides[3] = function(){
 			classie.removeClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
 			$("#cbp-spmenu-s2").css("z-index","");
+			
+			//remove demo items
+			$("#cbp-spmenu-s2 .cbp-path-item").remove();
+
 			var obj = $("#eg-grid");
 			obj.css({"position": "relative", "z-index" : "9000", 'opacity': 0});
 			obj.animate({'opacity':1},250);
