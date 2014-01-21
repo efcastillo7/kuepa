@@ -173,8 +173,9 @@ class migrationActions extends sfActions
 				->setEnabled(true)
 				->setDuration(1)
 				->save();
+
     		LessonService::getInstance()->addResourceToLesson($lesson->getId(), $resource->getId());
-        ComponentService::getInstance()->updateDuration($resource->getId());
+        	ComponentService::getInstance()->updateDuration($resource->getId());
 
     	}
 
@@ -296,6 +297,45 @@ class migrationActions extends sfActions
 					);
 					
 					break;
+
+				case '6':
+					$query = "SELECT * FROM consulta where codirecu = $recurso_id and actual = 1";
+					$lectura = mysqli_query($mysql_conn,$query);
+					$lectura = mysqli_fetch_array($lectura);
+
+					$regex = "/src=\"(.*?)\"/";
+
+					$texto = "
+						<h4>Concepto</h4>
+						<p>{$lectura['Concepto']}</p>
+						<h4>Definición</h4>
+						<p>{$lectura['Definici']}</p>
+						<h4>Fórmulas</h4>
+						<p>{$lectura['Formulas']}</p>";
+
+					preg_match_all($regex, $texto, $match);
+					$data['links'] = $match[1];
+
+					$base_path =  "/uploads/resources/$course_code/images/";
+
+
+					foreach($data['links'] as $link){
+						$pos = strrpos($link,"/");
+						$imgname = str_replace(
+							array(" ", "%", "/", "\""),
+							array("-", "-", "-", "-"), 
+							substr($link, $pos+1));
+						$texto = str_replace($link, $base_path . $imgname, $texto);
+					}
+
+					$data = array(
+						'titulo' => $this->replaceChars($lectura['Concepto']),
+						'texto' => $texto,
+						'cantidad_palabras' => $lectura['cantidad_palabras'],
+						'links' => $match[1]
+					);
+					break;
+
 				
 				default:
 					$query = "SELECT * FROM leccion_enlaces where id = $recurso_id";;
@@ -313,8 +353,6 @@ class migrationActions extends sfActions
 						'cantidad_palabras' => 0,
 						'links' => $match[1]
 					);	
-
-
 
 					break;
 			}
@@ -405,6 +443,7 @@ class migrationActions extends sfActions
 
 					//set resource data
 					switch ($recurso['tipo']) {
+						case 6:
 						case 9:
 							foreach ($recurso['data']['links'] as $link) {
 								$pos = strrpos($link,"/");
@@ -438,7 +477,7 @@ class migrationActions extends sfActions
 
 								$link = "http://www.kuepa.com/escuela/video/" . $link;
 
-								if(!file_exists($base_path . "videos/" . $imgname) && $copy)
+								if(!file_exists($base_path . "videos/" . $imgname) && $copy && $copy_video)
 									copy($link, $base_path . "videos/" . $imgname);
 							}
 
