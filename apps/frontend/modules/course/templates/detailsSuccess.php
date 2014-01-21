@@ -17,7 +17,7 @@
             </div>
             <div class="span12">
                 <div class="unit-container">
-                    <p class="gray4 italic">
+                    <p class="gray4">
                         <?php echo $course->getRaw('description'); ?>
                     </p>
                 </div>
@@ -31,7 +31,7 @@
                         <?php if ($sf_user->hasCredential("docente")): ?>
                         <li class="subject-item addchapter-button unsortable">
                             <div id="" class="black" type="button">
-                                <p class="title5 HelveticaRoman clearmargin">+ Agrear unidad al curso</p>
+                                <p class="title5 HelveticaMd clearmargin">+ Agrear unidad al curso</p>
                             </div>
                             <div>
                                 <div class="row-fluid">

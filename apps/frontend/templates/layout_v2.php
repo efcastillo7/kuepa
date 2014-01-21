@@ -8,16 +8,20 @@
   <meta name="author" content="">
 
   <!-- Le styles -->
+  <!-- <link rel="stylesheet" href="/styles/css/docs.css"> -->
   <link rel="stylesheet" href="/styles/css/kuepa.css">
   <link rel="stylesheet" href="/styles/css/kuepa.hangouts.css">
   <link rel="stylesheet" href="/styles/css/plataforma.css">
+  <!-- <link rel="stylesheet" href="/styles/css/thumbgrid.css"> -->
 
   <link href="/assets/v2/styles/css/fullcalendar.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/jqui.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/jquery.cluetip.css" rel="stylesheet">
 
   <link href="/assets/v2/styles/css/bootstrap.css" rel="stylesheet">
-  <link href="/assets/v2/styles/css/component.css" rel="stylesheet">
+  <link href="/assets/v2/styles/css/docs.css" rel="stylesheet">
+<!--   <link href="/assets/v2/styles/css/kuepa.css" rel="stylesheet">
+ -->  <link href="/assets/v2/styles/css/component.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/style.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/perfect-scrollbar.css" rel="stylesheet">
   <link href="/assets/v2/styles/css/bootstrap-select.css" rel="stylesheet">
@@ -72,20 +76,16 @@
 
   <?php echo $sf_content ?>
 
-  <div class="push"></div>
 
 </div> <!-- /wrapper -->
 
 <footer>
   <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="ft-logo">kuepa</div>
-        <p class="ft-copy">Copyright &copy; Kuepa 2013</p>
-      </div>
-    </div>
+    <div class="ft-logo">kuepa</div>
+    <p class="ft-copy">Copyright &copy; Kuepa 2014</p>
   </div>
 </footer>
+
 
   <script src="/assets/v2/js/bootstrap.js"></script>
   <script src="/assets/v2/js/perfect-scrollbar.js"></script>

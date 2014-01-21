@@ -8,7 +8,7 @@
   <section class="data-exercise two-columns clearpadding" data-spy="scroll" data-target="#navbar-scroll">
 
     <div class="content">
-      <h2><?php echo $exercise->getDescription() ?></h2>
+      <h2><?php echo $exercise->getTitle() ?></h2>
 
       <section class="breadcrum gray">
         <div class="icon bg-<?php echo $course->getColor()?>-alt-1">
@@ -71,6 +71,8 @@
             }
 
             var score = (exercise.score.value/exercise.score.total*100).toFixed(2);
+
+            // if(response.data.dependencies.length)
 
             //add dependencies if score
             if(score < 70){

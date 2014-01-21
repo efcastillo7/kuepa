@@ -1,6 +1,8 @@
 @media (min-width: 1366px) {
   .chat-box{max-width:600px;}
-  .container{width: 1366px;}
+
+  .aside-exercise.fija,
+  .aside-lesson.fija{width: 240px;}
 }
 
 @media (max-width: 1366px) {
@@ -15,6 +17,9 @@
     }
   }
   .chat-box{max-width:500px; }
+
+  .aside-exercise.fija,
+  .aside-lesson.fija{width: 240px;}
 }
 
 

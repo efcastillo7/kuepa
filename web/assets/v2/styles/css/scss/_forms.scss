@@ -17,10 +17,14 @@
   color:$input-placeholder;
 }
 
-.input-big::-webkit-input-placeholder,.input-small::-moz-placeholder { color:$input-placeholder;}
+.input-big::-webkit-input-placeholder,
+.input-small::-moz-placeholder{
+  color:$input-placeholder;
+}
 
 .input-big{height: 44px;}
 .input-small{height: 36px;}
+.input-small.orange{color:$orange;}
 
 .input-success{
   border-color:$input-success;
@@ -118,13 +122,17 @@
 .checkbox.live + label.chk-label.live{background-position: 0 -240px;}
 .checkbox.gray + label.chk-label.gray{background-position: 0 -270px;}
 
-.checkbox.checkbox-default + label.chk-label.checkbox-default{background-position: 0 -300px;}
-.checkbox.checkbox-default:hover + label.chk-label.checkbox-default:hover{background-position: 0 -321px;}
+.checkbox.checkbox-default + label.chk-label.checkbox-default{background: url("../../img/chk1.png") no-repeat;}
+.checkbox.checkbox-default:hover + label.chk-label.checkbox-default:hover{background: url("../../img/chk2.png") no-repeat;}
 .checkbox.checkbox-default:checked:hover + label.chk-label.checkbox-default:hover,
-.checkbox.checkbox-default:checked + label.chk-label.checkbox-default{background-position: 0 -342px;}
+.checkbox.checkbox-default:checked + label.chk-label.checkbox-default{background: url("../../img/chk3.png") no-repeat;}
 
-.checkbox.checkbox-default.disabled + label.chk-label.checkbox-default{background-position: 0 -363px;color:$input-disabled;cursor: default;}
-.checkbox.checkbox-default.disabled:hover + label.chk-label.checkbox-default:hover{background-position: 0 -363px;}
+.checkbox.checkbox-default.disabled + label.chk-label.checkbox-default{
+  background: url("../../img/chk4.png") no-repeat;
+  color:$input-disabled;
+  cursor: default;
+}
+.checkbox.checkbox-default.disabled:hover + label.chk-label.checkbox-default:hover{background: url("../../img/chk4.png") no-repeat;}
 
 
 .checkbox.biology:checked + label.chk-label.biology {background-position: 0 -15px;}
@@ -146,16 +154,16 @@
   color:$input-text;
   font-size:14px;
   cursor:pointer;
-  background: url("../../img/sprite-chk.png") 0 -384px no-repeat;
+  background: url("../../img/radio1.png") no-repeat;
   padding: 5px 0 0 25px;
 }
-.radio-default:hover + .radio-label:hover {background: url("../../img/sprite-chk.png") 0 -405px no-repeat;}
+.radio-default:hover + .radio-label:hover {background: url("../../img/radio2.png")  no-repeat;}
 .radio-default:checked + .radio-label,
-.radio-default:checked:hover + .radio-label{background: url("../../img/sprite-chk.png") 0 -426px no-repeat;}
+.radio-default:checked:hover + .radio-label{background: url("../../img/radio3.png")  no-repeat;}
 
 .radio-default.disabled + .radio-label,
 .radio-default.disabled:hover + .radio-label:hover{
-  background: url("../../img/sprite-chk.png") 0 -447px no-repeat;
+  background: url("../../img/radio4.png") no-repeat;
   color:$input-disabled;
   cursor: default;
 }

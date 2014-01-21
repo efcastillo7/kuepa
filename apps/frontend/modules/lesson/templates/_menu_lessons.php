@@ -1,4 +1,4 @@
-<section class="wrapper-aside-lesson col-md-3 clearpadding">
+<section class="wrapper-aside-lesson clearpadding">
   <aside class="aside-lesson">
     <div class="lessons">
       <a href="#" class="arrow-hover-left">

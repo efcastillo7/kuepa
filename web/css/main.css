@@ -20,7 +20,8 @@
 }
 
 .course-data-container{
-	position: relative;
+	position: absolute;
+	right: 94px;
 }
 
 .subject-list, .subject-grid{
@@ -35,6 +36,7 @@
 
 .main .subject-grid {
 	margin-top: 20px;
+	margin-bottom:60px;
 	color: #fff;
 }
 

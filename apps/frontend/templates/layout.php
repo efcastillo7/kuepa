@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="/styles/css/kuepa.hangouts.css">
         <link rel="stylesheet" href="/styles/css/plataforma.css">
         <link rel="stylesheet" href="/styles/css/thumbgrid.css">
+        
         <!-- modalwindow -->
         <link rel="stylesheet" href="/assets/modalwindoweffect/css/default.css">
         <link rel="stylesheet" href="/assets/modalwindoweffect/css/component.css">
@@ -46,7 +47,6 @@
         <!-- LEARNING PATH -->
         <script type="text/javascript" src="/js/libs/learningPathService.js"></script>
         <script type="text/javascript" src="/js/libs/learningPath.js"></script>
-
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>

@@ -120,22 +120,20 @@ button::-moz-focus-inner {
 
 .mfp-close {
   position: absolute;
-  right: 30px;
-  top: 4px;
+  right: 14px;
+  top: 13px;
   text-decoration: none;
   text-align: center;
   padding: 0 0 18px 10px;
   color: white;
   font-style: normal;
-  font-size: 14px;
+  font-size: 34px;
   font-family: HelveticaRegular, Arial, Baskerville, monospace;
   text-transform: none;
 }
   .mfp-close:hover, .mfp-close:focus {
     color: #FF671B;
   }
-  .mfp-close:active {
-    top: 1px; }
 
   .mfp-close span {
     font-size: 30px;

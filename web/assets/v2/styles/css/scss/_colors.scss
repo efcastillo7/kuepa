@@ -1,9 +1,15 @@
 $orange:#ff671b;
-$orange-hover:lighten($orange,3%);
-$orange-active:darken($orange,3%);
+$orange-hover:lighten($orange,6%);
+$orange-active:darken($orange,6%);
 
 $violet:#6f52db;
 $red:#e61523;
+$blue:#2568fa;
+$blue2:#5688f9;
+$blue3:darken($blue,20%);
+$green:#47d97f;
+$green2:#81cc47;
+$green3:#009968;
 
 $btn-gray:#a9a9ad;
 $btn-gray-hover:lighten($btn-gray,6%);
@@ -13,40 +19,33 @@ $btn-gray-light:#e3e3e3;
 $btn-gray-light-hover:lighten($btn-gray-light,6%);
 $btn-gray-light-active:darken($btn-gray-light,17%);
 
+$link-default:#FF671B;
 $black:#000;
 $dark:#333;
-$gray1:#595959;
-$gray2:#dbdbdb;
-$gray3:#f5f5f5;
-$gray4:#a1a1a5;
-$gray5:#ebebeb;
-$gray6:#f7f7f7;
-$gray7:#b3b3b3;
-$gray8:#8c8c8c;
-$gray9:#666;
-$gray10:#323232;
-$gray11:#fafafa;
-$gray12:#dcdcdc;
+$gray1:#58585C;
+$gray2:#C7C7CC;
+$gray3:#F5F5F7;
+$gray4:#949499;
+$gray5:#E9E9EB;
+$gray6:#F5F5F7;
+$gray7:#AFAFB3;
+$gray8:#949499;
+$gray9:#58585C;
+$gray10:#323233;
+$gray11:#F5F5F7;
+$gray12:#C7C7CC;
 
 $input-border:#c7c7cc;
 $input-border-active:#58585c;
 $input-placeholder:#c7c7cc;
 $input-text:#58585c;
-$input-success:#81cc47;
+$input-success:$green2;
 $input-alert:#e61515;
 $input-disabled:#e9e9eb;
 
 $dropdown-list:#22344a;
 $breadcrum:#22344a;
 $breadcrum-link1:#919aa5;
-
-$blue:#2568fa;
-$blue2:#5688f9;
-$darkblue:#162230;
-
-$green:#47d97f;
-$green2:#81cc47;
-$green3:#009968;
 
 $subject-biology:#008A5E;
 $biology-back:#57e0b2;

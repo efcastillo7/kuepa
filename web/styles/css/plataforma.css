@@ -105,8 +105,7 @@
     Buttons From Aerolab _buttons.scss
 -------------------------------------------------- */
 
-.btn-primary, .btn-small, .btn-large, .btn-tiny {
-  color: #fff;
+.btn {
   text-align: center;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -172,7 +171,6 @@
 }
 
 
-
  /* --------------------------------------------------
 // Added Font Styles
 -------------------------------------------------- */
@@ -204,13 +202,14 @@ html, html a {
 body {
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding-top: 100px;
-  color: #000;
+  color: #404042;
 }
 
 a:hover {
   text-decoration: none;
 }
-p {line-height:1.6;}
+p {
+    line-height: 1.6;}
 h1,h2,h3,h4, .title1, .title2, .title3, .title4
 {line-height:1; font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
@@ -264,7 +263,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 // modal
 -------------------------------------------------- */
 .modal-backdrop {
-  background-color: #fff;
+  background-color: #162230;
 }
 .modal-backdrop,
 .modal-backdrop.fade.in {
@@ -326,7 +325,6 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background: url("../../img/svgButtons.svg") no-repeat scroll -384px -128px transparent;
 }
 
-
 /* --------------------------------------------------
 // navbar
 -------------------------------------------------- */
@@ -341,9 +339,11 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 }
 .navbar .nav > li > a {
   padding:0px;
+  transition:all 0.2s ease-in-out;
+  cursor:pointer;
 }
 .navbar .nav > li  {
-    border-right: 1px solid #E5E5EB;
+  border-right: 1px solid #E5E5EB;
 }
 .navbar .nav-logo {
   padding: 0 20px;
@@ -363,6 +363,9 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 .navbar .nav > li > a.nav-menu-icon:hover {
   background-color: #FF671B;
 }
+.navbar-inner {
+  background-color: rgba(255,255,255,0.97)
+}
 
 .nav-menu-icon::before {
   display: inline-block;
@@ -372,6 +375,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background: #ccc;
   box-shadow: 0 3px white, 0 -6px #ccc, 0 -9px white, 0 -12px #ccc;
   content: '';
+  transition: all 0.2s ease-in-out;
 }
 
 .nav-menu-icon:hover::before {
@@ -389,8 +393,6 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   width: 0;
   height: 0;
 }
-
-
 
 .plataforma-nav .nav.pull-right,
 .navbar-fixed-top .nav.navbar-right {
@@ -442,6 +444,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   margin: auto;
   height: 30px;
   padding: 17px 16px 3px 14px;
+  transition: all 0.2s ease-in-out;
 } 
 .navbar .nav.nav-mainbtn .active a,
 .navbar .nav.nav-mainbtn a:hover {
@@ -472,7 +475,6 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 .nav-mainbtn .nmb-ins a:hover i {
   background: url("../../img/svgSprite.svg") no-repeat scroll -221px -1px transparent;
 }
-
 .nav-mainbtn .nmb-tut i {
   background: url("../../img/svgSprite.svg") no-repeat scroll -472px -51px transparent;
   width: 47px;
@@ -481,6 +483,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 .nav-mainbtn .nmb-tut a:hover i {
   background: url("../../img/svgSprite.svg") no-repeat scroll -472px -1px transparent;
 }
+
 
 .nav-btn-prfl {
   font-size: 15px;
@@ -497,25 +500,28 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background-color: #ccc;
   position: relative;
   padding-top: 20px;
+  transition:all 0.2s ease-in-out;
 }
 
 .subject-buttonbox .subject-title {
   position: absolute;
   bottom: 24px;
-  width: 100%;
+  padding: 0 10px;
+  width: 220px;
+  z-index: 500;
 }
-.subject-title .st-title {
-  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 20px;
-  margin: 0;
-  line-height: 1;
-}
-.subject-title .st-progress {
-  font-family: HelveticaRegular, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  margin: 0;
-  line-height: 1;
-}
+    .subject-title .st-title {
+      font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 20px;
+      margin: 0;
+      line-height: 1.1;
+    }
+    .subject-title .st-progress {
+      font-family: HelveticaRegular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      margin: 0;
+      line-height: 1;
+    }
 
 .subject-buttonbox .subject-image {
   position: relative;
@@ -540,6 +546,29 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   top: 20px;
   left: 48px;
 }
+
+.subject-add {
+  border:2px dashed #E5E5EB;
+  background-color: #fff;
+  color: #949499;
+  width: 242px;
+  height: 222px;
+  transition:all 0.2s ease-in-out;
+}
+.subject-plus {
+  font-size: 200px;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-top: 75px;
+  color: #E9E9EB;
+  transition:all 0.2s ease-in-out;
+}
+.subject-add:hover {
+  border:2px dashed #C7C7CC;
+}
+.subject-add:hover .subject-plus {
+  color: #AFAFB3;
+}
+
 
 .learning-path {
   background-color: #E4E4E4;
@@ -790,14 +819,11 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .eg-details .description .eg-description {
-  width: 300px;
-  height: 350px;
-  margin: 0px;
-  overflow: auto;
-  padding-right: 20px;
+    margin: 0px;
 }
 .eg-details .description .eg-description p {
-  font-size: 12px;
+  font-size: 13px;
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* --------------------------------------------------
@@ -810,6 +836,11 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 .lv-container .subject-item {
   position: relative;
 }
+.lv-container .subject-item.addchapter-button {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  margin-bottom: 30px;
+}
 .lv-icon {
   height: 48px;
   width: 48px;
@@ -817,6 +848,10 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   margin-right: 5px;
   border-radius: 8px;
   overflow: hidden;
+}
+.lv-icon img {
+  max-width: none;
+  max-height: 48px;
 }
 .lv-container .lv-title {
   padding: 7px 0 0 0px;
@@ -840,7 +875,8 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 }
 .lv-lvlone li {
   border-top: 1px solid #ccc;
-  padding: 12px 0px 7px 38px;
+  padding: 12px 0px 7px 41px;
+  position: relative;
 }
 .lv-lvlone li:last-child {
   border-bottom: 1px solid #ccc;
@@ -879,7 +915,6 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 // Unit View
 -------------------------------------------------- */
 .unit-view {
-  border-top: 10px solid #008A5E;
   margin-top: -47px;
 }
 .unit-hd {
@@ -1105,6 +1140,7 @@ div[type*=button]{
 .cbp-spmenu-vertical.cbp-spmenu-left a {
     border-bottom: 1px solid #E9E9EB;
     padding: 16px 16px 12px;
+    transition: all 0.2s ease-in-out;
 }
  
 .cbp-spmenu-horizontal {

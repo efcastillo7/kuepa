@@ -337,8 +337,20 @@ i[class$="-hover"]{
   width: 10px;
   height: 15px;
 }
-.ico-arrow-left10{background-position: -101px -97px;}
-.ico-arrow-right10{background-position: -136px -101px;}
+.ico-arrow-left10{
+  background-position: -51px -150px;
+  margin:-1px 5px 0px 8px;
+}
+.arrow-hover-left:hover > .ico-arrow-left10{
+  background-position: -63px -150px;
+  transition:all 0.15s ease-in;
+}
+.ico-arrow-right10{background-position: -88px -150px;}
+
+.arrow-hover-right:hover > .ico-arrow-right10{
+  background-position: -76px -150px;
+  transition:all 0.15s ease-in;
+}
 
 .ico-full{
   width:15px;
@@ -354,4 +366,37 @@ i[class$="-hover"]{
 }
 .ico-triangle-full{
   background-position: -126px -102px;
+}
+.ico-arrow-down-aside{
+  width:7px;
+  height: 4px;
+  background-position: -106px -39px;
+  transition:all 0.25s ease-in-out;
+}
+.ico-arrow-down-aside.rotate{
+  transform:rotate(-180deg);
+  -webkit-transform:rotate(-180deg);
+  -ms-transform:rotate(-180deg);
+
+}
+.ico-arrow-orange{
+  width: 7px;
+  height: 10px;
+  background-position: -106px -18px;
+}
+.dot8{
+  width: 8px;
+  height: 8px;
+  @include border-radius(10px);
+  background: $input-disabled;
+  display: inline-block;
+  vertical-align: middle;
+  &.orange{background: $orange;}
+}
+
+.ico-arrows-right{
+  width: 10px;
+  height: 15px;
+  background-position: -147px -100px;
+  &:first-child{margin-right: -7px;}
 }

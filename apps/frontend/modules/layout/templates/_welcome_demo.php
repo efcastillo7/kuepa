@@ -110,7 +110,7 @@
 				  		1. Para comenzar 
 				  	</p>
 				  	<p class="slide-main">
-						Antes que nada, contesta el simulacro que encontrarás en el cuadro Simulacros y cuando termines obtendrás tus resultados.
+						Antes que nada, contesta la prueba que encontrarás en el cuadro Simulacros y cuando termines obtendrás tus resultados.
 					</p>
 				  	<a href="javascript:void(0)" class="btn btn-primary">¡Entendido! Sigamos...</a>
 				</div>
@@ -146,9 +146,10 @@
 				  		4. ¡A estudiar!
 				  	</p>
 				  	<p class="slide-main">
-				  		Y listo, basta de historias, ya puedes empezar a estudiar. Recuerda que siempre podrás acceder a todas las lecciones comprando la versión completa del Preicfes. 
+				  		Y listo, basta de historias, ya puedes comenzar. Recuerda que siempre podrás acceder a todas las lecciones comprando la versión completa del Preicfes. 
 				  	</p>
-				  	<a href="javascript:void(0)" class="btn btn-primary btn-large">Comenzar a estudiar</a>
+				  	<div><a href="javascript:void(0)" class="btn btn-primary btn-large">Comienza con tu simulacro</a></div>
+				  	<div class="margintop"><a href="javascript:void(0)" class="btn btn-large">Navega libremente</a></div>
 				</div>
 			</div>
 		</div>	
