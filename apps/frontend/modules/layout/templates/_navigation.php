@@ -8,7 +8,7 @@
     <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
     <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
     <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
-    <a href="#myModal" role="button" class="cbp-set" data-toggle="modal"><i></i>modal 1</a>
+    <!-- <a href="#myModal" role="button" class="cbp-set" data-toggle="modal"><i></i>modal 1</a> -->
 </nav>
 
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">

@@ -91,5 +91,6 @@
         <script src="/js/course.js"></script>
         <script src="/js/support.global.js"></script>
 
+        <?php include_partial('global/analytics') ?>
     </body>
 </html>

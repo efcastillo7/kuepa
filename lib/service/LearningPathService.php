@@ -103,7 +103,8 @@ class LearningPathService {
                 ->innerJoin("dp.DependsCourse dco")
                 ->innerJoin("dp.DependsChapter dch")
                 ->innerJoin("dp.DependsLesson dl")
-                ->where("exercise_id = ?", $exercise_id);
+                ->where("exercise_id = ?", $exercise_id)
+                ->orderBy("dl.id asc");
 
         if($exercise_question_id){
             if(is_array($exercise_question_id)){

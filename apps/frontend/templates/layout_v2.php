@@ -99,6 +99,7 @@
   <script src="/assets/v2/js/jquery.cluetip.js"></script>
   <!-- cluetip -->
 
+  <?php include_partial('global/analytics') ?>
 
   <script language="javascript">
     $(document).ready(function(){

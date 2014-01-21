@@ -29,7 +29,7 @@ class layoutComponents extends kuepaComponents {
             //set message as viewed
             if($this->messages->count() > 0){
                 $message = $this->messages->getFirst();
-                // FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
+                FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
             }
         }   
     }
