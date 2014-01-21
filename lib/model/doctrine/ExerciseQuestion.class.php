@@ -15,6 +15,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
     public function evaluate($answer) {
         $score = array();
         $total_score = 0;
+        $correct = false;
 
         switch ($this->getType()) {
             case "multiple-choice":
@@ -33,6 +34,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                     );
 
                     $total_score += $posible_answers[$i]->getValue() * $is_valid;
+                    $correct = $correct || $is_valid;
                 }
                 
                 break;
@@ -49,7 +51,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                     );
 
                     $total_score += $exercise_answer->getValue() * $is_correct;
-
+                    $correct = $correct || $is_valid;
                 }
                 break;
             case "complete":
@@ -90,7 +92,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                         );
 
                         $total_score += $exercise_answer->getValue() * $is_correct;
-
+                        $correct = $correct || $is_valid;
                     }
                 }
                 break;
@@ -98,7 +100,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 break;
         }
 
-        return array('score' => $total_score, 'answers' => $score);
+        return array('score' => $total_score, 'answers' => $score, 'correct' => $correct);
     }
 
 }

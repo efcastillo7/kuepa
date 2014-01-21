@@ -47,6 +47,7 @@ class learningpathActions extends sfActions
         $chapter_id = $request->getParameter('chapter_id');
         $lesson_id = $request->getParameter('lesson_id');
         $exercise_id = $request->getParameter('exercise_id');
+        $question_ids = $request->getParameter('question_ids ');
         $profile_id = $this->getUser()->getProfile()->getId();
 
         $ret = array();
@@ -57,6 +58,7 @@ class learningpathActions extends sfActions
             $dependencies = LessonService::getInstance()->getDependencyPathList($course_id, $chapter_id, $lesson_id);
         }elseif($exercise_id){
             //dependencies for that exercise
+            $dependencies = LearningPathService::getInstance()->getExerciseDependencyPathList($exercise->getId(), $question_ids);
         }
 
         foreach ($dependencies as $dependency) {
