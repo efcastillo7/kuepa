@@ -499,10 +499,6 @@ span.form-step {
 footer {
 	padding:23px 0 16px;
 	background-color: #162230;
-	margin-top: 50px;
-	position: absolute;
-	left: 0;
-	right: 0;
 }
 footer .ft-logo {
 	float:left;

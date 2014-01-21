@@ -1,6 +1,6 @@
 $orange:#ff671b;
-$orange-hover:lighten($orange,3%);
-$orange-active:darken($orange,3%);
+$orange-hover:lighten($orange,6%);
+$orange-active:darken($orange,6%);
 
 $violet:#6f52db;
 $red:#e61523;
@@ -19,21 +19,21 @@ $btn-gray-light:#e3e3e3;
 $btn-gray-light-hover:lighten($btn-gray-light,6%);
 $btn-gray-light-active:darken($btn-gray-light,17%);
 
-$link-default:#888;
+$link-default:#FF671B;
 $black:#000;
 $dark:#333;
-$gray1:#595959;
-$gray2:#dbdbdb;
-$gray3:#f5f5f5;
-$gray4:#a1a1a5;
-$gray5:#ebebeb;
-$gray6:#f7f7f7;
-$gray7:#b3b3b3;
-$gray8:#8c8c8c;
-$gray9:#666;
-$gray10:#323232;
-$gray11:#fafafa;
-$gray12:#dcdcdc;
+$gray1:#58585C;
+$gray2:#C7C7CC;
+$gray3:#F5F5F7;
+$gray4:#949499;
+$gray5:#E9E9EB;
+$gray6:#F5F5F7;
+$gray7:#AFAFB3;
+$gray8:#949499;
+$gray9:#58585C;
+$gray10:#323233;
+$gray11:#F5F5F7;
+$gray12:#C7C7CC;
 
 $input-border:#c7c7cc;
 $input-border-active:#58585c;

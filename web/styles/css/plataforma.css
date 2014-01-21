@@ -209,7 +209,8 @@ body {
 a:hover {
   text-decoration: none;
 }
-p {line-height:1.6;}
+p {
+    line-height: 1.6;}
 h1,h2,h3,h4, .title1, .title2, .title3, .title4
 {line-height:1; font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
@@ -833,6 +834,11 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 .lv-container .subject-item {
   position: relative;
 }
+.lv-container .subject-item.addchapter-button {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  margin-bottom: 30px;
+}
 .lv-icon {
   height: 48px;
   width: 48px;
@@ -840,6 +846,10 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   margin-right: 5px;
   border-radius: 8px;
   overflow: hidden;
+}
+.lv-icon img {
+  max-width: none;
+  max-height: 48px;
 }
 .lv-container .lv-title {
   padding: 7px 0 0 0px;
@@ -863,7 +873,8 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 }
 .lv-lvlone li {
   border-top: 1px solid #ccc;
-  padding: 12px 0px 7px 38px;
+  padding: 12px 0px 7px 41px;
+  position: relative;
 }
 .lv-lvlone li:last-child {
   border-bottom: 1px solid #ccc;
@@ -902,7 +913,6 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 // Unit View
 -------------------------------------------------- */
 .unit-view {
-  border-top: 10px solid #008A5E;
   margin-top: -47px;
 }
 .unit-hd {
