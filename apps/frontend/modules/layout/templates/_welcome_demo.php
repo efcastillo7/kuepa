@@ -71,7 +71,7 @@
 		});
 
 		$("#goto-sim").click(function(){
-			location.href = "/lesson/view/684/685/686";
+			location.href = "/lesson/view/1/328/329";
 		});
 	});
 

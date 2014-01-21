@@ -18,8 +18,8 @@
                 </a>
             </li>
         <?php endforeach; ?>
-        <!-- Add course if has privilege -->
         <?php if ($sf_user->hasCredential("docente")): ?>
+        <!-- Add course if has privilege -->
         <li class="subject-item">
             <a class="subject-link addcourse-button" href="#">
                 <div class="subject-buttonbox txt-center subject-add">
