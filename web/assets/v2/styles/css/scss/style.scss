@@ -187,11 +187,10 @@ h2.primary{
 ul.list-aside-lesson-exercise{
   padding:0;
   li{
-    height: 45px;
-    padding-left: 20px;
+    padding: 13px 20px 12px 50px;
     border-bottom: 1px solid $gray12;
-    line-height: 45px;
     position: relative;
+    line-height:1.24;
     &.long{
       height:auto;
       line-height:20px;
@@ -200,21 +199,15 @@ ul.list-aside-lesson-exercise{
 
     input{display: none;}
     div.icon{
-      width: 30px;
-      height: 30px;
-      position: relative;
-      display: inline-block;
-      vertical-align: sub;
-      .ico-full{left:7px;}
+      .ico-full{}
       .ico-triangle-gray,
       .ico-triangle-full{
         left: 11px;
       }
     }
     a{
-      margin-left: 5px;
       font-size: 14px;
-      font-family: HelveticaMd;
+      font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
       &.completed{color:$input-placeholder;}
 
       span{
@@ -227,18 +220,17 @@ ul.list-aside-lesson-exercise{
     }
   }
   .head-list{
-    height: 55px;
-    border-bottom: 1px solid $gray12;
-
+    padding: 10px 20px 10px 20px;
     h3{
       font-size: 16px;
       font-family: HelveticaMd;
-      margin-bottom:3px;
+      margin:0px;
     }
     h4{
       font-size: 12px;
       font-family: HelveticaLt;
-      margin-top:0;
+      margin:3px 0 0;
+      color:#AFAFB3;
     }
   }
 }//ul.list-aside-lesson-exercise
@@ -539,6 +531,7 @@ section.correct{
         font-size:15px;
         margin-top:-38px;
         position:absolute;
+        border-right:1px solid #E9E9EB;
       }
     }
     .header-lesson{
@@ -550,41 +543,37 @@ section.correct{
     .list-aside-lesson{
       li{
         .lp-node {
-          position: absolute;
-          margin: 8px 0 0 0;
+          margin: 0px 0 0 -34px;
         }
         .lp-bar-post{
-          height: 12px;
-          margin:24px 0 0 13px;
         }
         .lp-bar-prev.full,
         .lp-bar-post.full{
           background: $orange;
         }
         .lp-bar-prev{
-          height: 11px;
-          margin:-9px 0 0 13px;
         }
         .lp-bar-prev.viewed, .lp-bar-post.viewed{display: none;}
 
         .back-full,.back-full-gray{
           width: 28px;
           height: 28px;
-          z-index: 9999;
+          z-index: 310;
           @include border-radius(30px);
           position: absolute;
           top:8px;
+          left:16px;
         }
         .back-full{background: $orange;}
         .back-full-gray{background: #c7c7cc;}
 
         .ico-full,.ico-triangle-gray,.ico-triangle-full{
           position: absolute;
-          z-index: 99990;
+          z-index: 311;
         }
         .ico-full{
           top:17px;
-          left: 27px;
+          left: 22px;
         }
         .ico-triangle-gray,.ico-triangle-full{
           top:18px;
@@ -594,6 +583,11 @@ section.correct{
     }//list-aside-lesson
   }//aside-lesson
 }//.wrapper-aside-lesson
+
+.list-aside-lesson li:nth-of-type(2) .icon .lp-node .lp-bar-prev,
+.list-aside-lesson li:last-child .icon .lp-node .lp-bar-post  {
+  display:none;
+}
 
 section.data-exercise{
   background: #fff;
@@ -722,20 +716,25 @@ section.data-exercise{
 }
 
 .lp-node {
-  position: absolute;
-  margin: -3px 0 0 -33px;
+  margin:0px 0 0 -34px;
 
   canvas {
     position: absolute;
     z-index: 999;
   }
+  > div:last-child {
+    position:absolute;
+    top:8px;
+    z-index:305;
+  }
 }
 .lp-bar-prev{
   position: absolute;
   background-color: #ccc;
-  width: 3px;
-  height: 13px;
-  margin: -10px 0 0 11px;
+  width: 4px;
+  height: 8px;
+  margin-left:12px;
+  top:0px;
 }
 .eg-multimenu{
   margin-left:41.66666666666667%;
@@ -762,9 +761,10 @@ section.data-exercise{
 .lp-bar-post{
   position: absolute;
   background-color: #ccc;
-  width: 3px;
-  height: 8px;
-  margin: 22px 0 0 11px;
+  width: 4px;
+  margin-left: 12px;
+  top:34px;
+  bottom:-1px;
 }
 .lp-bar-prev.viewed, .lp-bar-post.viewed {
   background-color: #fff;
@@ -971,8 +971,6 @@ section.data-exercise{
         &:hover{color: #fff;}
       }
       .lp-node{
-        position:relative;
-        margin-left:-20px;
       }
       .unit{margin-left: 10px;}
      &:hover{background-color: #444;}
@@ -1714,8 +1712,8 @@ div[class^="subject-"]{
         border-bottom: 1px solid #000;
         padding: 9px 10px 9px 5px;
 
-       .lp-bar-prev{margin: -10px 0 0 11px;}
-       .lp-node{margin-left: 5px;}
+       .lp-bar-prev{}
+       .lp-node{}
 
         a {
           font-size: 15px;

@@ -337,7 +337,10 @@ i[class$="-hover"]{
   width: 10px;
   height: 15px;
 }
-.ico-arrow-left10{background-position: -51px -150px;}
+.ico-arrow-left10{
+  background-position: -51px -150px;
+  margin:-1px 5px 0px 8px;
+}
 .arrow-hover-left:hover > .ico-arrow-left10{
   background-position: -63px -150px;
   transition:all 0.15s ease-in;

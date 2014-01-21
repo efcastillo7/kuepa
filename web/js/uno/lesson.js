@@ -365,33 +365,33 @@ $("a.inbox").click(function(event){
 
 /////////////////////////////////////////////////////////////////////// leccion_recurso.php
 
-  $(function() {
+  // $(function() {
 
-    $(".list-aside-lesson li a").each(function(){
-      var text = $(this).text().trim();
-      var len = text.length;
+  //   $(".list-aside-lesson li a").each(function(){
+  //     var text = $(this).text().trim();
+  //     var len = text.length;
 
-      if( len > 30 ){
-        $(this).html("<span>" + text + "</span>");
-        $(this).parent("li").addClass("long");
-        $(this).children("span").addClass("long-text");
+  //     if( len > 30 ){
+  //       $(this).html("<span>" + text + "</span>");
+  //       $(this).parent("li").addClass("long");
+  //       $(this).children("span").addClass("long-text");
 
-        var li = $(this).parent(".long");
-        var altura = $(li).height();
+  //       var li = $(this).parent(".long");
+  //       var altura = $(li).height();
 
-        $(li).find(".icon").css("top",(altura-44)/2);
-        $(li).find(".lp-bar-post").css({
-          "height":((altura-30)/2)+1,
-          "top":"4px"
-        });
-        $(li).find(".lp-bar-prev").css({
-          "height":((altura-30)/2)+2,
-          "bottom":0
-        });
-      }
+  //       $(li).find(".icon").css("top",(altura-44)/2);
+  //       $(li).find(".lp-bar-post").css({
+  //         "height":((altura-30)/2)+1,
+  //         "top":"4px"
+  //       });
+  //       $(li).find(".lp-bar-prev").css({
+  //         "height":((altura-30)/2)+2,
+  //         "bottom":0
+  //       });
+  //     }
 
 
-    });
-  });
+  //   });
+  // });
 /////////////////////////////////////////////////////////////////////// end leccion_recurso.php
 });

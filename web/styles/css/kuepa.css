@@ -102,6 +102,10 @@ h2, h3, h5, h6 {
 }
 
 p  {font-size:14px;}
+b, strong {
+	font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: normal;
+}
 
 h1, .title1 {font-size:58px;line-height:1;}
 h2, .title2 {font-size:42px;}
