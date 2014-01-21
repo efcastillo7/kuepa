@@ -58,7 +58,7 @@ class learningpathActions extends sfActions
             $dependencies = LessonService::getInstance()->getDependencyPathList($course_id, $chapter_id, $lesson_id);
         }elseif($exercise_id){
             //dependencies for that exercise
-            $dependencies = LearningPathService::getInstance()->getExerciseDependencyPathList($exercise->getId(), $question_ids);
+            $dependencies = LearningPathService::getInstance()->getExerciseDependencyPathList($exercise_id, $question_ids);
         }
 
         foreach ($dependencies as $dependency) {

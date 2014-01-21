@@ -37,9 +37,8 @@
 		slides[4] = function(){
 			var obj = $("#eg-grid");
 			obj.animate({'opacity':0},250, function(){
-						obj.css({"z-index" : "", 'opacity': 1});
-					});
-
+				obj.css({"z-index" : "", 'opacity': 1});
+			});
 		}
 
 		magnificPopup.open({
@@ -69,23 +68,15 @@
 			}else{
 				magnificPopup.close();
 			}
+		});
 
+		$("#goto-sim").click(function(){
+			location.href = "/lesson/view/684/685/686";
 		});
 	});
 
 
 </script>
-
-<style>
-	.white-popup {
-	  position: relative;
-	  background: #FFF;
-	  padding: 20px;
-	  width: auto;
-	  max-width: 500px;
-	  margin: 20px auto;
-	}
-</style>
 
 <div class="hidden">
 	<div id="popup">
@@ -148,7 +139,7 @@
 				  	<p class="slide-main">
 				  		Y listo, basta de historias, ya puedes comenzar. Recuerda que siempre podrás acceder a todas las lecciones comprando la versión completa del Preicfes. 
 				  	</p>
-				  	<div><a href="javascript:void(0)" class="btn btn-primary btn-large">Comienza con tu simulacro</a></div>
+				  	<div><a href="" id="goto-sim" class="btn btn-primary btn-large">Comienza con tu simulacro</a></div>
 				  	<div class="margintop"><a href="javascript:void(0)" class="btn btn-large">Navega libremente</a></div>
 				</div>
 			</div>

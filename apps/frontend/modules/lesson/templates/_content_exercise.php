@@ -60,6 +60,7 @@
         success: function(response, statusText, xhr, $form) {
             var exercise = response.data.exercise;
             var answers = response.data.questions;
+            var questions = response.data.questions;
             var total_time = new Date().getTime() - init_time;
             total_time = (total_time/60000).toFixed(1);
 
@@ -72,23 +73,27 @@
 
             var score = (exercise.score.value/exercise.score.total*100).toFixed(2);
 
-            // if(response.data.dependencies.length)
+            if(response.data.dependencies.length > 0){
+              var question_ids = [];
 
-            //add dependencies if score
-            if(score < 70){
-                var ans = confirm('desea agregar dependencias?');
-                if(ans){
-                    classie.addClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
-                    lpService.addDependencies({
-                        course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id,
-                        onSuccess: function(item){
-                            addItemsToPath(item);
-                        },
-                        onError: function(data){
-                            alert('Ya tiene esa lección');
-                        }
-                    });
+              for(var question_id in questions){
+                if(!questions[question_id].correct){
+                  question_ids.push(question_id);
                 }
+              }
+
+              classie.addClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
+              lpService.addDependenciesForExam({
+                  exercise_id: exercise.id,
+                  question_ids: question_ids,
+                  onSuccess: function(item){
+                      alert('Listo, ya hemos armado tu camino de aprendizaje. Empieza a estudiar ahora!');
+                      addItemsToPath(item);
+                  },
+                  onError: function(data){
+                      // alert('Ya tiene esa lección');
+                  }
+              });
             }
         },
         dataType: 'json'
