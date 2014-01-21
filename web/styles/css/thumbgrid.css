@@ -161,7 +161,7 @@
 	-moz-border-radius: 50px;
 	-webkit-border-radius: 30px;
 	position: absolute;
-	z-index: 999;
+	z-index: 300;
 	margin-left: 860px;
 	margin-top: 20px;
 }
