@@ -30,7 +30,7 @@
     <div class="row">
 
       
-      <?php $content = $type == "Exercise" ? "exercise" : "lessons" ?>
+      <?php $content = $type == "Exercise" ? "exercise" : "resources" ?>
       <?php include_partial("menu_$content", array(
         'course' => $course, 
         'chapter' => $chapter, 
@@ -38,6 +38,7 @@
         'resource' => $resource, 
         'profile' => $profile)) ?>
 
+      <?php $content = $type == "Exercise" ? "exercise" : "lessons" ?>
       <?php include_partial("content_$content", array(
         'course' => $course, 
         'chapter' => $chapter, 

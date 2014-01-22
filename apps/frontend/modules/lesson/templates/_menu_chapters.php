@@ -1,18 +1,18 @@
 <section class="wrapper-aside-lesson clearpadding">
   <aside class="aside-lesson">
     <div class="lessons">
-      <a href="<?php echo url_for("chapter/expanded2?course_id={$course->getId()}&chapter_id={$chapter->getId()}&lesson_id={$chapter->getId()}") ?>" class="arrow-hover-left navigation-menu">
+      <a href="#" class="arrow-hover-left">
         <i class="spr ico-arrow-left10"></i>
-        Unidades
+        Cursos
       </a>
     </div>
     <ul class="list-aside-lesson">
       <li class="head-list">
-        <h3><?php echo $chapter->getName() ?></h3>
-        <h4><?php echo $chapter->getChildren()->count() ?> recursos, <?php echo round($chapter->getDuration()/60,2) ?> minutos</h4>
+        <h3><?php echo $course->getName() ?></h3>
+        <h4><?php echo $course->getChildren()->count() ?> recursos, <?php echo round($course->getDuration()/60,2) ?> minutos</h4>
       </li>
       
-      <?php $previous_percentage = 0; foreach ($chapter->getChildren() as $child): ?>
+      <?php $previous_percentage = 0; foreach ($course->getChildren() as $child): ?>
           <?php $current_percentage = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $child->getId()); ?>
           <li>
             <div class="icon">
@@ -30,7 +30,7 @@
                 <input class="knob" value="<?php echo $current_percentage ?>" data-fgColor="#ff671b" data-bgColor="#c7c7cc" data-width="28" data-height="28" data-thickness=".28" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
               </div>
             </div>
-            <a class="<?php echo $child->getId() == $lesson->getId() ? "orange" : "" ?> navigation-menu navigation-menu-in" href="<?php echo url_for("resource/expanded2?course_id={$course->getId()}&chapter_id={$chapter->getId()}&lesson_id={$child->getId()}") ?>">
+            <a class="<?php echo $child->getId() == $chapter->getId() ? "orange" : "" ?> navigation-menu navigation-menu-in" href="<?php echo url_for("lesson/expanded2?course_id={$course->getId()}&chapter_id={$child->getId()}") ?>">
                 <?php echo $child->getName() ?>
             </a>
           </li>

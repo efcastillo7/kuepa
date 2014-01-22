@@ -74,6 +74,33 @@ $(document).ready(function() {
         span_note.toggle();
     });
 
+    $("body").delegate(".navigation-menu", "click", function(e) {
+      e.preventDefault();
+      var link = $(this).attr('href'),
+        parent = $(this).parents(".row:first"),
+        container = $(this).parents(".wrapper-aside-lesson").first(),
+        goto_dir = $(this).hasClass("navigation-menu-in"),
+        from = "left",
+        to = "right";
+      
+      $.getJSON($(this).attr('href'), function(response) {
+          var content = $(response.template).hide();
+          $(".knob", content).knob(knob_values);
+
+          if(goto_dir){
+            from = "right"; to = "left";
+          }
+
+          parent.prepend(content);
+          //remove old
+          $(container).hide('slide', {direction: to}, function(){ 
+            container.remove(); 
+          });
+          $(content).show('slide', {direction: from});
+      });
+
+    });
+
     // $( "#tabs" ).tabs();
 
     //log interval

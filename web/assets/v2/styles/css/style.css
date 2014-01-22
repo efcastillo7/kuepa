@@ -1746,7 +1746,8 @@ h2.primary {
 
 .wrapper-aside-lesson-exercise, .wrapper-aside-exercise, .wrapper-aside-lesson {
   float: left;
-  width: 240px; }
+  width: 240px;
+  position: absolute; }
 
 .header-lesson-exercise, .wrapper-aside-lesson .aside-lesson .header-lesson {
   height: 82px;

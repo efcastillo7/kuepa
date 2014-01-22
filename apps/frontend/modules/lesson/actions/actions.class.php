@@ -247,6 +247,32 @@ class lessonActions extends kuepaActions {
         return $this->renderText($response['template']);
     }
 
+    public function executeExpanded2(sfWebRequest $request) {
+        $course_id = $request->getParameter('course_id');
+        $chapter_id = $request->getParameter('chapter_id');
+        $lesson_id = $request->getParameter('lesson_id');
 
+        $this->profile = $this->getProfile();
+
+        $this->course = Course::getRepository()->find($course_id);
+        $this->chapter = Chapter::getRepository()->find($chapter_id);
+        if($lesson_id){
+            $this->lesson = Lesson::getRepository()->find($lesson_id);
+        }else{
+            $this->lesson = new Lesson();
+        }
+        $this->resource = new Resource();
+
+        if ($request->isXmlHttpRequest()) {
+            $response = Array(
+                'status' => 'success',
+                'template' => $this->getPartial('lesson/menu_lessons')
+            );
+
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($this->getPartial('lesson/menu_lessons'));
+    }
 
 }
