@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit>
+        <source>Nickname</source>
+        <target>Nombre de Usuario</target>
+      </trans-unit>
+      <trans-unit>
+        <source>First name</source>
+        <target>Nombre</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Last name</source>
+        <target>Apellidos</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Email address</source>
+        <target>E-mail</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Birthdate</source>
+        <target>Fecha de Nacimiento</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sex</source>
+        <target>Sexo</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Profile picture</source>
+        <target>Imágen de Perfil</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Password</source>
+        <target>Contraseña</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Repassword</source>
+        <target>Confirmación de Contraseña</target>
+      </trans-unit>
+      <trans-unit>
+        <source>male</source>
+        <target>Masculino</target>
+      </trans-unit>
+      <trans-unit>
+        <source>female</source>
+        <target>Femenino</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -45,14 +45,36 @@ class exerciseActions extends sfActions
       $r_attemps[] = $attemp->getValue();
     }
 
+    //get question ids
+    $question_ids = array();
+    foreach ($correct_values['questions'] as $key => $value) {
+      //if response is not correct
+      if(!$value['correct']){
+        $question_ids[] = $key;
+      }
+    }
+
+    //exercise dependencies
+    $dependencies_arr = LearningPathService::getInstance()->getExerciseDependencyPathList($exercise->getId(), $question_ids);
+    $dependencies = array();
+
+    foreach ($dependencies_arr as $dependency) {
+      $dependencies[] = array(
+        'course' => array('id' => $dependency->getDependsCourse()->getId(), 'name' => $dependency->getDependsCourse()->getName(), 'color' => $dependency->getDependsCourse()->getColor(), 'image' => $dependency->getDependsCourse()->getThumbnailPath()),
+        'chapter' => array('id' => $dependency->getDependsChapter()->getId(),'name' =>  $dependency->getDependsChapter()->getName()),
+        'lesson' => array('id' => $dependency->getDependsLesson()->getId(),'name' =>  $dependency->getDependsLesson()->getName()),
+      );
+    }
+
   	$ar_response = array(
   		'exercise' => array(
   			'id' => $exercise_id, 
   			'questions' => array('count' => $exercise->getQuestions()->count()),
   			'score'  => array('total' => $exercise->getTotalScore(), 'value' => $correct_values['score']),
   		),
-  		'answers' => $correct_values['answers'],
-      'attemps' => $r_attemps
+  		'questions' => $correct_values['questions'],
+      'attemps' => $r_attemps,
+      'dependencies' => $dependencies
 	);
 
     if ($request->isXmlHttpRequest()) {

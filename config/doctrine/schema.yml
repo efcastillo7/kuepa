@@ -226,6 +226,42 @@ DependencyPath:
       foreign: id
       type: one
 
+DependencyExercisePath:
+  columns:
+    exercise_id: integer
+    exercise_question_id: integer
+    depends_course_id: integer
+    depends_chapter_id: integer
+    depends_lesson_id: integer
+  relations:
+    Exercise:
+      local: exercise_id
+      foreign: id
+      type: one
+    ExerciseQuestion:
+      local: exercise_question_id
+      foreign: id
+      type: one
+    DependsCourse:
+      class: Course
+      local: depends_course_id
+      foreign: id
+      type: one
+    DependsChapter:
+      class: Chapter
+      local: depends_chapter_id
+      foreign: id
+      type: one
+    DependsLesson:
+      class: Lesson
+      local: depends_lesson_id
+      foreign: id
+      type: one
+  indexes:
+    dep_exe_path_unique_pair:
+      fields: [exercise_id, exercise_question_id, depends_course_id ,depends_chapter_id, depends_lesson_id]
+      type: unique 
+
 ResourceData:
   actAs:
     Timestampable: ~

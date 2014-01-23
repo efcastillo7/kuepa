@@ -1,7 +1,8 @@
 <footer>
-    <div class="container">
-        <p class="gray2 small2 clearmargin"><span class="AvantMd">kuepa</span> Copyright &copy; Kuepa 2013</p>
-    </div>
+  <div class="container">
+    <div class="ft-logo">kuepa</div>
+    <p class="ft-copy">Copyright &copy; Kuepa 2014</p>
+  </div>
 </footer>
 <script type="text/javascript">
         $(".knob-small").knob({

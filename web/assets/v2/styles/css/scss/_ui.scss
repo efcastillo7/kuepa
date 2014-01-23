@@ -1,0 +1,80 @@
+/* --------------------------------------------------
+// Breadcrum
+-------------------------------------------------- */
+.breadcrum{
+  background: $breadcrum;
+  padding: 7px 0 7px 20px;
+  font-size: 15px;
+  position: fixed;
+  z-index: 500;
+  right: 0;
+  left: 0;
+
+  .icon{
+    width: 33px;
+    height: 33px;
+    @include border-radius(8px);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 9px;
+    position: relative;
+    overflow: hidden;
+
+    img{
+      max-height:33px;
+      max-width:none;
+    }
+  }
+  .ico-arrow-breadcrum{margin: 0 8px;opacity: .5;}
+  .link-grey{
+    opacity: .8;
+    color:#fff;
+  }
+  .link-white{
+    color:#fff;
+    font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  &.gray{
+    background: $gray3;
+    border-top:1px solid $input-disabled;
+    border-bottom:1px solid $input-disabled;
+    .ico-arrow-breadcrum{opacity: 1;}
+  }
+}
+
+/* --------------------------------------------------
+// Title with icons
+-------------------------------------------------- */
+.with-icon{
+  font-size: 22px;
+  font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  .wrap{
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.box-annotations{
+  margin:10px 0;
+  .wrap{float: left;}
+  .data{
+    margin-left: 45px;
+    p{
+      color:#232323;
+      margin:0 0 5px 0 !important;
+      font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .annotation{font-size: 15px;}
+    .date{
+      font-size: 12px;
+      color:$gray7;
+    }
+    a{
+      color:$blue2;
+      margin-left: 5px;
+      font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+    }
+  }
+}

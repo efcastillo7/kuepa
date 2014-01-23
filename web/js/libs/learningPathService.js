@@ -34,12 +34,23 @@ function LearningPathService(params){
 		});
 	}
 
-	this.addDependencies = function (values){
+	this.addDependenciesForLesson = function (values){
 		$.ajax({
 			url: '/kuepa_api.php/learningpath/adddependencies',
 			type: 'POST',
 			dataType: 'json',
 			data: {course_id: values.course_id, lesson_id: values.lesson_id, chapter_id: values.chapter_id},
+			success: values.onSuccess,
+			error: values.onError
+		});
+	}
+
+	this.addDependenciesForExam = function (values){
+		$.ajax({
+			url: '/kuepa_api.php/learningpath/adddependencies',
+			type: 'POST',
+			dataType: 'json',
+			data: {exercise_id: values.exercise_id, question_ids: values.question_ids},
 			success: values.onSuccess,
 			error: values.onError
 		});

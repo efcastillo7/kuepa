@@ -31,6 +31,11 @@ all:
     escaping_strategy:      true
     escaping_method:        ESC_SPECIALCHARS
 
+    #i18n
+    i18n: true
+    standard_helpers: [Partial, Cache, I18N]
+    default_culture:  es
+
     # Enable the database manager
     use_database:           true
     

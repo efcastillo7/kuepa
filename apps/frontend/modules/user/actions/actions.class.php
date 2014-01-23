@@ -27,6 +27,8 @@ class userActions extends kuepaActions {
         $this->form = new UserProfileForm($this->getProfile());
         $this->processForm($request, $this->form);
         $this->setTemplate('index');
+
+        $this->setLayout("layout_v2");
     }
 
     protected function processForm(sfWebRequest $request, sfForm $form) {

@@ -69,6 +69,7 @@
 	width: 940px;
 	height: 100%;
 	margin: auto;
+	position: relative;
 }
 
 .eg-thumb {
@@ -87,13 +88,19 @@
 	max-height: 60px;
 }
 .eg-details {
-	float: left;
-	position: relative;
-	padding: 30px 0px 0 18px;
+	position: absolute;
+	width: 300px;
+	overflow: auto;
+	top: 36px;
+	bottom: 14px;
+	left: 80px;
+	padding-right: 14px;
 }
 .eg-details .title {
 	font-size: 24px;
 	font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	line-height: 1.2;
+	margin-bottom: 2px;
 }
 .eg-details .title a {
 	color: #fff;
@@ -103,13 +110,12 @@
 	filter:alpha(opacity=70);
 	font-size: 12px;
 	line-height: 1;
-	margin-bottom: 8px;
 }
 
 
 .eg-expander .data {
 	position: absolute;
-	margin: 96px 0 0 10px;
+	margin: 95px 0 0 10px;
 	font-size: 12px;
 	/*opacity:0.5;*/
 	/*filter:alpha(opacity=50);*/
@@ -121,6 +127,8 @@
 	margin-bottom: 4px;
 	border-radius: 6px;
 	-moz-border-radius:6px;
+	transition:all 0.2s ease-in-out;
+	cursor:pointer;
 }
 .eg-expander .data a:hover {
 	background-color: rgba(0,0,0,0.3);
@@ -153,7 +161,7 @@
 	-moz-border-radius: 50px;
 	-webkit-border-radius: 30px;
 	position: absolute;
-	z-index: 999;
+	z-index: 300;
 	margin-left: 860px;
 	margin-top: 20px;
 }
@@ -176,6 +184,7 @@
 	-moz-transform: rotate(45deg);
 	transform: rotate(45deg);
 	margin: 1px 0px 0 9px;
+	transition:all 0.2s ease-in-out;
 }
 
 .eg-close::after {
@@ -197,7 +206,7 @@
 .eg-multimenu {
 	border-left: 1px solid #000;
 	border-right: 1px solid #000;
-	width: 490px;
+	width: 440px;
 	height: 100%;
 	float: left;
 	margin-left: 10px;
@@ -212,6 +221,7 @@
 	border-bottom: 1px solid #000;
 	font-size: 15px;
 	font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	transition:all 0.2s ease-in-out;
 }
 .eg-multimenu .eg-back li a {
 	padding: 12px 70px 8px 72px;

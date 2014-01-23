@@ -13,7 +13,7 @@
 class DependencyPath extends BaseDependencyPath
 {
 
-      public static function getRepository() {
-        return Doctrine_Core::getTable('DependencyPath');
+    public static function getRepository() {
+      return Doctrine_Core::getTable('DependencyPath');
     }
 }
