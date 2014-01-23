@@ -18,10 +18,15 @@ class video_sessionActions extends sfActions {
 
         $this->profile_id                   = $this->getUser()->getGuardUser()->getProfile()->getId();
         $this->google_id                    = $this->getUser()->getGuardUser()->getProfile()->getGoogleId();
-        $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromUser( $this->profile_id );
-        $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromUser( $this->profile_id );
-        $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $this->profile_id );
-        $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $this->profile_id );
+        if($this->getUser()->hasCredential("docente")){
+            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $this->profile_id );
+            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $this->profile_id );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $this->profile_id );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $this->profile_id );
+        }else{
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $this->profile_id );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $this->profile_id );
+        }
 
     }
 
@@ -32,7 +37,9 @@ class video_sessionActions extends sfActions {
      */
     public function executeCreate(sfWebRequest $request) {
 
-        $id     = $request->getParameter("id");
+        $id = $request->getParameter("id");
+        $students = $request->getParameter("students_ids");
+
         if($id) {
             $video_session      = VideoSession::getRepository()->find($id);
         } else {
@@ -51,6 +58,8 @@ class video_sessionActions extends sfActions {
 
         $params = $request->getParameter( $form->getName() );
 
+        $visibility = $params["visibility"];
+
         $form->bind(
             $params,
             $request->getFiles( $form->getName() )
@@ -59,6 +68,14 @@ class video_sessionActions extends sfActions {
         if ($form->isValid()) {
 
             $video_session          = $form->save();
+
+            if($visibility == "private"){
+                $a_students = explode(",",$students);
+
+                VideoSessionService::getInstance()->updateParticipants($video_session->getId(), $a_students);
+
+            }
+
             $response['template']   = "Ha ".($id?"editado":"creado")." la sesión de video satisfactoriamente";
             $response['status']     = "success";
 
@@ -83,16 +100,20 @@ class video_sessionActions extends sfActions {
 
         header('Access-Control-Allow-Origin: *');
 
+        //Gets the parameters from the request
         $id     = $request->getParameter("video_session_id");
         $url    = $request->getParameter("url");
+        $pId    = $request->getParameter("profile_id");
         $gId    = $request->getParameter("gid");
 
+        //Default response
         $response   = Array(
             'status'    => "error",
             'template'  => "¡La sesión de video #{$id} no existe!",
             'code'      => 400
         );
 
+        //Searchs for the video_session
         $video_session  = VideoSession::getRepository()->find($id);
 
         if($video_session){
@@ -109,6 +130,56 @@ class video_sessionActions extends sfActions {
             $video_session->save();
 
             $response['template']   = "Ha grabado la url de la sesión de video satisfactoriamente";
+            $response['status']     = "success";
+        }
+
+        //Serchs for the video_session_participant record
+        $video_session_participant = VideoSessionParticipant::findByVideoSessionAndProfileId($id,$pId);
+
+        if(!$video_session_participant){
+            $video_session_participant = new VideoSessionParticipant();
+            $video_session_participant->setVideoSessionId($id);
+            $video_session_participant->setProfileId($pId);
+        }
+
+        $video_session_participant->setFirstConection(date("Y-m-d h:m:s"));
+        $video_session_participant->setLastConnection(date("Y-m-d h:m:s"));
+        $video_session_participant->setInterruptions(0);
+        $video_session_participant->save();
+
+        return $this->renderText(json_encode($response));
+
+    }
+
+    /**
+     *
+     * @param sfWebRequest $request
+     * @return type
+     */
+    public function executeTrack_time(sfWebRequest $request){
+
+        header('Access-Control-Allow-Origin: *');
+
+        $id         = $request->getParameter("video_session_id");
+        $pId        = $request->getParameter("profile_id");
+        $interval   = $request->getParameter("interval");
+
+        $response   = Array(
+            'status'    => "error",
+            'template'  => "¡La sesión de video #{$id} no existe!",
+            'code'      => 400
+        );
+
+        $video_session_participant = VideoSessionParticipant::findByVideoSessionAndProfileId($id,$pId);
+
+        if($video_session_participant){
+
+            $currentSeconds = (int) $video_session_participant->getSecondsOnline();
+            $video_session_participant->setSecondsOnline($currentSeconds + (int) $interval);
+            $video_session_participant->setLastConnection(date("Y-m-d h:m:s"));
+            $video_session_participant->save();
+
+            $response['template']   = "Tiempo registrado correctamente";
             $response['status']     = "success";
         }
 
@@ -183,6 +254,36 @@ class video_sessionActions extends sfActions {
         $response   = Array(
             'status'    => "success",
             'template'  => $a_chapters,
+            'code'      => 200
+        );
+
+        return $this->renderText( json_encode($response) );
+
+    }
+
+    /**
+     *
+     * @param sfWebRequest $request
+     * @return type
+     */
+    public function executeGet_course_students(sfWebRequest $request){
+        $id         = $request->getParameter("id");
+        $students   = CourseService::getInstance()->getStudentsList($id);
+
+        $a_students = array();
+
+        foreach($students as $student){
+            $a_students[] = array(
+                "id"        => $student->getId(),
+                "name"      => $student->getFullName(),
+                "avatar"    => $student->getAvatar(),
+                "avatarPath"=> $student->getAvatarPath()
+            );
+        }
+
+        $response   = Array(
+            'status'    => "success",
+            'template'  => $a_students,
             'code'      => 200
         );
 

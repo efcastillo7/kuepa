@@ -26,9 +26,16 @@ class VideoSessionForm extends BaseVideoSessionForm {
             'course_id'     => new sfWidgetFormChoice(array(
                 "choices"   => $this->getCoursesForChoiceWidget() )
             ),
-            'chapter_id'  => new sfWidgetFormChoice(array("choices" => array())),
+            'chapter_id'    => new sfWidgetFormChoice(array("choices" => array())),
             'title'         => new sfWidgetFormInputText(),
             'description'   => new sfWidgetFormTextarea(),
+            'visibility'    => new sfWidgetFormChoice(array(
+                "choices"   => array(
+                    "public"    => "Público",
+                    "private"   => "Privado"
+                )
+            )
+            ),
             'scheduled_for' => new sfWidgetFormDateTime(
                 array(
                     "date"  =>
@@ -45,14 +52,16 @@ class VideoSessionForm extends BaseVideoSessionForm {
             'description'   => 'Descripción',
             'course_id'     => 'Curso',
             'chapter_id'    => 'Lección',
-            'scheduled_for' => 'Fecha y hora'
+            'scheduled_for' => 'Fecha y hora',
+            'visibility'    => 'Visibilidad'
         ));
 
         $this->setDefaults(array(
             "scheduled_for" => date("c", time() ),
             'profile_id'    => $this->getObject()->getProfileId(),
             'type'          => VideoSessionService::TYPE_CLASS,
-            'platform'      => VideoSessionService::PLATFORM_HANGOUTS
+            'platform'      => VideoSessionService::PLATFORM_HANGOUTS,
+            'visibility'    => 'public'
         ));
 
         $this->setValidators(array(
@@ -63,6 +72,7 @@ class VideoSessionForm extends BaseVideoSessionForm {
             'platform'      => new sfValidatorPass(),
             'course_id'     => new sfValidatorInteger(  array('required' => true),  array('required' => 'Seleccione un curso relacionado.')),
             'chapter_id'    => new sfValidatorPass(),
+            'visibility'    => new sfValidatorPass(),
             'scheduled_for' => new sfValidatorDateTime(
                 array(
                     'required'  => true,

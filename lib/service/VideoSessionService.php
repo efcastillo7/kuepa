@@ -17,6 +17,11 @@ class VideoSessionService {
         "ended"     => "Finalizada"
     );
 
+    public static $visibility_es = array(
+        "public"    => "Pública",
+        "private"   => "Privada"
+    );
+
     const STATUS_PENDING    = 'pending';
     const STATUS_STARTED    = 'started';
     const STATUS_ENDED      = 'ended';
@@ -106,14 +111,70 @@ class VideoSessionService {
     }
 
     /**
+     *
+     * @param type $video_session_id
+     * @return type
+     */
+    public function deleteParticipants($video_session_id) {
+
+        $q = Doctrine_Query::create()
+            ->delete('VideoSessionParticipant vsp')
+            ->where('vsp.video_session_id = ?',$video_session_id);
+
+        return $q->execute();
+
+    }
+
+    /**
+     *
+     * @param string $video_session_id
+     * @param array $participants_ids
+     */
+    public function updateParticipants($video_session_id, $participants_ids){
+        $this->deleteParticipants($video_session_id);
+        $participants_ids = array_unique($participants_ids);
+        if(count($participants_ids)>0){
+            foreach($participants_ids as $participant_id){
+                $participant = new VideoSessionParticipant();
+                $participant->setVideoSessionId($video_session_id);
+                $participant->setProfileId($participant_id);
+                $participant->save();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param string $video_session_id
+     * @param array $participants_ids
+     */
+    public function getParticipantsIds($video_session_id=""){
+
+        if(empty($video_session_id)){
+            return "";
+        }
+
+        $ids = array();
+        $videoSessionParticipants = VideoSessionParticipant::getRepository()->findBy("video_session_id",$video_session_id);
+
+        if (count($videoSessionParticipants) > 0) {
+            foreach($videoSessionParticipants as $participant){
+                $ids[] = $participant->getProfileId();
+            }
+        }
+
+        return implode(",", $ids);
+    }
+
+    /**
      * Retrieves an array of the upcomming video sessions created by the user
      *
      * @param type $profile_id
      * @return array of \VideoSession
      */
-    public function getNextVideoSessionsFromUser($profile_id) {
+    public function getNextVideoSessionsFromProfessor($profile_id) {
 
-        return $this->getVideoSessionsFromUser(array(
+        return $this->getVideoSessionsFromProfessor(array(
             "next"          => true,
             "profile_id"    => $profile_id
         ));
@@ -126,9 +187,9 @@ class VideoSessionService {
      * @param type $profile_id
      * @return \VideoSession
      */
-    public function getPrevVideoSessionsFromUser($profile_id) {
+    public function getPrevVideoSessionsFromProfessor($profile_id) {
 
-        return $this->getVideoSessionsFromUser(array(
+        return $this->getVideoSessionsFromProfessor(array(
             "prev"          => true,
             "profile_id"    => $profile_id
         ));
@@ -145,7 +206,7 @@ class VideoSessionService {
      * @return \VideoSession[]
      * @throws Exception
      */
-    public function getVideoSessionsFromUser($params = array()){
+    public function getVideoSessionsFromProfessor($params = array()){
 
         $defaults   = array(
             "next"          => false,
@@ -173,6 +234,35 @@ class VideoSessionService {
 
         return $q->execute();
 
+    }
+
+    /**
+     * Retrieves an array of the upcomming video sessions related to the user's courses
+     *
+     * @param type $profile_id
+     * @return array of \VideoSession
+     */
+    public function getNextVideoSessionsForProfessor($profile_id) {
+
+        return $this->getVideoSessionsForProfessor(array(
+            "next"          => true,
+            "profile_id"    => $profile_id
+        ));
+
+    }
+
+    /**
+     * Retrieves an array of the past video sessions related to the user's courses
+     *
+     * @param type $profile_id
+     * @return \VideoSession
+     */
+    public function getPrevVideoSessionsForProfessor($profile_id) {
+
+        return $this->getVideoSessionsForProfessor(array(
+            "prev"          => true,
+            "profile_id"    => $profile_id
+        ));
     }
 
     /**
@@ -215,7 +305,7 @@ class VideoSessionService {
      * @return \VideoSession[]
      * @throws Exception
      */
-    public function getVideoSessionsForUser($params = array()){
+    public function getVideoSessionsForProfessor($params = array()){
 
         $defaults   = array(
             "next"          => false,
@@ -238,6 +328,7 @@ class VideoSessionService {
 
         foreach($courses as $course){ $ids[]=$course->getId(); }
 
+
         $q = VideoSession::getRepository()->createQuery("vs")
                 ->leftJoin('vs.Course c')
                 ->where('c.id IN ('.implode(",", $ids).')')
@@ -246,6 +337,62 @@ class VideoSessionService {
                 ->orderBy("vs.scheduled_for DESC");
 
         return $q->execute();
+
+    }
+
+    /**
+     * Retrieves an array of the previous or next video sessions related to the user's courses
+     * @param array $params
+     * <ul>
+     * <li><b>'next'</b> <i>boolean</i></li>
+     * <li><b>'prev'</b> <i>boolean</i></li>
+     * <li><b>'profile_id'</b> <i>boolean</i></li>
+     * </ul>
+     * @return \VideoSession[]
+     * @throws Exception
+     */
+    public function getVideoSessionsForUser($params = array()){
+
+        $defaults   = array(
+            "next"          => false,
+            "prev"          => false,
+            "profile_id"    => -1
+        );
+
+        $dateOp     = "<";
+        $config     = $params + $defaults;
+
+        if($config["next"] === true){
+            $dateOp = ">";
+        }
+
+        if((int)$config["profile_id"] < 1){
+            throw new Exception("Profile ID not specified");
+        }
+
+        $courses = ComponentService::getInstance()->getCoursesForUser($config["profile_id"]);
+
+        foreach($courses as $course){ $courses_ids[]=$course->getId(); }
+
+        //Retrieves public related video_session
+        $qPublic = VideoSession::getRepository()->createQuery("vs")
+                ->leftJoin('vs.Course c')
+                ->where('c.id IN ('.implode(",", $courses_ids).')')
+                ->andWhere("vs.type = 'class'")
+                ->andWhere("vs.scheduled_for {$dateOp} NOW()")
+                ->andWhere("vs.visibility = 'public'")
+                ->orderBy("vs.scheduled_for DESC");
+
+        //Private related video_session where the user is invited
+        $qPrivate = VideoSession::getRepository()->createQuery("vs")
+                ->innerJoin("vs.VideoSessionParticipant vsp")
+                ->innerJoin('vs.Course c')
+                ->where('c.id IN ('.implode(",", $courses_ids).')')
+                ->andWhere("vs.type = 'class'")
+                ->andWhere("vsp.profile_id = {$config["profile_id"]}")
+                ->andWhere("vs.scheduled_for {$dateOp} NOW()");
+
+        return $qPublic->execute()->merge($qPrivate->execute());
 
     }
 
@@ -299,6 +446,24 @@ class VideoSessionService {
                 ->orderBy("vs.scheduled_for DESC");
 
         return $q->execute();
+    }
+
+    /**
+     *
+     * @param string $url
+     * @param string $pid
+     * @return string
+     */
+    public function injectProfileId($url="",$pid=""){
+        if(!empty($url)){
+            $decoded    = urldecode($url);
+            $noParams   = substr($decoded, 0, strrpos($decoded, "{"));
+            $params     = json_decode(substr($decoded,  strrpos($decoded, "{")));
+            $params->profile_id = $pid;
+            $newParams  = json_encode($params);
+            return $noParams.urlencode($newParams);
+        }
+        return $url;
     }
 
 }

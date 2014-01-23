@@ -18,6 +18,7 @@
                 //If the hangout has already been created it's joined, otherwise it's created
                 $storedUrl      = $video_session->getUrl();
                 $supportName    = trim($video_session->getProfile()->getLastName()." ".$video_session->getProfile()->getFirstName());
+                $storedUrl      = VideoSessionService::getInstance()->injectProfileId($storedUrl,$pid);
 
                 ?>
                 <tr data-id="<?php echo $video_session->getId() ?>" data-scheduled_for="<?php echo $video_session->getScheduledFor() ?>">

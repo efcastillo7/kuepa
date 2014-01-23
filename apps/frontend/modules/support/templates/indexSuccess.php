@@ -6,7 +6,8 @@
             'list_container',
             array(
                 'pending'   => $pending_video_sessions,
-                'historic'  => $historic_video_sessions
+                'historic'  => $historic_video_sessions,
+                'id'        => $profile_id
             )
         );
         ?>

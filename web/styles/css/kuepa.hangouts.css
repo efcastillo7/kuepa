@@ -70,19 +70,59 @@ tr.warning td {
   border-bottom: solid 1px #ddd;
   padding: 20px; }
 
-.video_session_status {
+.list_icon {
   width: 12px;
   height: 12px;
   margin: 4px 0 0 6px;
   display: block;
-  border-radius: 50%;
   cursor: pointer; }
+
+.video_session_status {
+  border-radius: 50%; }
   .video_session_status.pending {
     background-color: #F3CD89; }
   .video_session_status.started {
     background-color: #89CF7F; }
   .video_session_status.ended {
     background-color: #F38989; }
+
+.video_session_visibility {
+  background-size: cover !important; }
+  .video_session_visibility.public {
+    background: url(../../img/public.svg) center center no-repeat; }
+  .video_session_visibility.private {
+    background: url(../../img/private.svg) center center no-repeat; }
+
+.usersSelection {
+  display: none; }
+
+.contUsers {
+  background: #fff;
+  margin: 10px 0;
+  border-radius: 3px;
+  padding: 10px;
+  height: 100px;
+  overflow-y: auto;
+  color: #444; }
+  .contUsers .student {
+    width: 245px;
+    float: left;
+    border-radius: 3px;
+    font-size: 13px;
+    margin: 0 10px 10px 0;
+    cursor: pointer; }
+    .contUsers .student .info {
+      padding: 3px 5px;
+      border: solid 1px #ddd;
+      border-top: solid 4px #bbb;
+      border-radius: 3px; }
+    .contUsers .student.selected .info {
+      background: #E7F2FA;
+      border: solid 1px #4486B3;
+      border-top: solid 4px #4486B3; }
+    .contUsers .student:hover .info {
+      border: solid 1px #6BA6CE;
+      border-top: solid 4px #6BA6CE; }
 
 #signin-button {
   padding: 10px 10px 0;

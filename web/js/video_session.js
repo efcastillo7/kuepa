@@ -4,13 +4,11 @@ var $hoveredEl      = {};
 
 $(function(){
 
+    //Avoids disabled buttons to work
     $(".disabled").click(function(e){ e.preventDefault(); });
 
     //Hangout create form init and processing
-    initAddVideoSessionForm();
-
-    //Hangout edit form init and processing
-    initEditVideoSessionForm();
+    initAddVideoSessionForm()
 
     //When a teacher clicks on the Add Hangout button a modal form is shown
     $(".addVideoSession-button").click( onVideoSessionAddClicked );
@@ -24,7 +22,7 @@ $(function(){
     //When a teacher confirms to finish a video session
     $(".finishVideoSession-button").click( onVideoSessionFinishClicked );
 
-    $(".video_session_status").tooltip();
+    $("[data-toggle=tooltip]").tooltip();
 
     if(!$(".video_session-nav li.active").length){
         $(".video_session-nav li:first").addClass("active");
@@ -33,9 +31,6 @@ $(function(){
     if(!$(".video_session-tab_container.active").length){
         $(".video_session-tab_container:first").addClass("active");
     }
-
-    $("[name='video_session[course_id]']").bind("change", onCourseChange).trigger("change");
-
 
 });
 
@@ -56,25 +51,16 @@ function initAddVideoSessionForm(){
             if (data.status === "success") {
                 location.href = "/video_session";
             } else {
-                $("[name='video_session[course_id]']").bind("change", onCourseChange).trigger("change");
+                $("[name='video_session[course_id]']",$container).unbind().bind("change", onCourseChange).trigger("change");
+                $("[name='video_session[visibility]']",$container).unbind().bind("change", onVisibilityChange).trigger("change");
                 $("form",$container).ajaxForm(options);
             }
         },
-        dataType: 'json'
+        dataType: 'json',
+        beforeSerialize: mapParticipants
     };
 
     $("form",$container).ajaxForm(options);
-}
-
-/**
- * Instanciates an ajax form for the hangout url submission
- * @returns void
- */
-function initEditVideoSessionForm(){
-    $("form","#modal-update-video_session-url").ajaxForm({
-        success : onHangoutFormSuccess,
-        dataType: 'json'
-    });
 }
 
 /**
@@ -105,7 +91,9 @@ function onVideoSessionAddClicked(e){
 
     var $this = $(this);
     var platform = $this.attr("data-platform");
+    var $modal = $("#modal-create-video_session-form");
 
+    //If the professor doesn't have a google id, is asked to be registered
     if(googleID === "" && platform === "hangouts"){
         triggerModalSuccess({
             id:     "modal-google_login",
@@ -115,14 +103,18 @@ function onVideoSessionAddClicked(e){
         return true;
     }
 
+    //Else:
     $("#video_session_type").val("class");
     $("#video_session_platform").val(platform);
 
     triggerModalSuccess({
-        id:     "modal-create-video_session-form",
+        id:     $modal.attr("id"),
         title:  "Crear sesión de video",
         effect: "md-effect-17"
     });
+
+    $("[name='video_session[course_id]']",$modal).unbind().bind("change", onCourseChange).trigger("change");
+    $("[name='video_session[visibility]']",$modal).unbind().bind("change", onVisibilityChange).trigger("change");
 }
 
 /**
@@ -133,6 +125,7 @@ function onVideoSessionAddClicked(e){
 function onVideoSessionEditClicked(e){
     var $this   = $(this);
     var $cont   = $("#modal-edit-video_session-form-container");
+    var $form   = $("#modal-edit-video_session-form");
     var href    = $this.attr("href");
 
     e.preventDefault();
@@ -140,16 +133,18 @@ function onVideoSessionEditClicked(e){
     $cont.text("Cargando...");
 
     triggerModalSuccess({
-        id      : "modal-edit-video_session-form",
+        id      : $form.attr("id"),
         title   : "Editar sesión de video",
         effect  : "md-effect-17"
     });
 
     $.get(href,function(data){
         $cont.html(data.template);
-        $("[name='video_session[course_id]']",$cont).bind("change", onCourseChange).trigger("change");
+        $("[name='video_session[course_id]']",$cont).unbind().bind("change", onCourseChange).trigger("change");
+        $("[name='video_session[visibility]']",$cont).unbind().bind("change", onVisibilityChange).trigger("change");
         $("form",$cont).ajaxForm({
             success : onHangoutFormSuccess,
+            beforeSerialize: mapParticipants,
             dataType: 'json'
         });
     },"json");
@@ -161,14 +156,14 @@ function onVideoSessionEditClicked(e){
  * @returns {void}
  */
 function onVideoSessionFinishTriggered(e){
-    var $this       = $(this);
-    var id          = $this.closest("tr").attr("data-id");
-    var modal_id    = "modal-finish-video_session";
+    var $this   = $(this);
+    var id      = $this.closest("tr").attr("data-id");
+    var $modal  = $("#modal-finish-video_session");
 
-    $("#"+modal_id).attr("data-video_session_id",id);
+    $modal.attr("data-video_session_id",id);
 
     triggerModalSuccess({
-        id      : modal_id,
+        id      : $modal.attr("id"),
         effect  : "md-effect-17"
     });
 
@@ -176,7 +171,7 @@ function onVideoSessionFinishTriggered(e){
 
 /**
  *
- * @param {type} $tr
+ * @param {jQuery} $tr
  * @returns {void}
  */
 function onVideoSessionFinishClicked(e){
@@ -225,28 +220,36 @@ function onCourseChange(){
     var $this       = $(this);
     var $form       = $this.parents("form");
     var $chapters   = $form.find("[name='video_session[chapter_id]']");
+    var $cStudents  = $(".contUsers");
     var chapter_id  = $form.find(".chapter_id").val();
 
     if(!$this.val()) return false;
 
-    $.getJSON('/video_session/get_course_chapters/id/'+$this.val(),function(data){
-        if(data.status === "success"){
-            $("option",$chapters).remove();
+    //Gets the current course lessons
+    getCourseChapters(chapter_id,$this.val(),$chapters);
 
-            for(i in data.template){
+    //Gets the current course students if it's private
+    if($("[name='video_session[visibility]']",$form).val() == "private"){
+        getCourseStudents($this.val(),$cStudents,$form);
+    }
+}
 
-                var chapter = data.template[i];
+/**
+ *
+ * @returns {Boolean}
+ */
+function onVisibilityChange(){
+    var $this           = $(this);
+    var $form           = $this.parents("form");
+    var $userSelection  = $(".usersSelection");
 
-                $chapters.append(
-                    $("<option />",{
-                        'value' : chapter.id
-                    }).text(chapter.name)
-                );
-
-                $("option[value="+chapter_id+"]",$chapters).attr("selected","selected");
-            }
-        }
-    });
+    if($this.val() == "private"){
+        $("[name='video_session[course_id]']",$form).unbind().bind("change", onCourseChange).trigger("change");
+        $userSelection.slideDown(500);
+        return true;
+    }
+    $userSelection.slideUp(500);
+    return true;
 }
 
 /**
@@ -263,7 +266,6 @@ function onGoogleLogin(authResult) {
             request.execute(function(resp) {
                 $.getJSON('/video_session/update_user_googleid?google_id='+resp.id,function(data){
                     if(data.status === "success"){
-                        alert("yaiii");
                         location.href="/video_session";
                     }else{
                         alert(data.template);
@@ -274,4 +276,100 @@ function onGoogleLogin(authResult) {
     } else {
         console.log('Sign-in state: ' + authResult['error']);
     }
+}
+
+/**
+ * Selects or deselects a student
+ * @returns {Boolean}
+ */
+function onStudentClicked(){
+
+    $(this).toggleClass("selected");
+
+}
+
+/**
+ *
+ * @param {Form} $form
+ * @param {Object} options
+ * @returns {void}
+ */
+function mapParticipants($form, options) {
+
+    var ids = "";
+
+    $.map( $(".student.selected",$form), function( val, i ) {
+        ids+=$(val).attr("data-id")+',';
+    });
+    $(".students_ids",$form).val(ids.replace(/,(?=[^,]*$)/, ''));
+}
+
+/**
+ *
+ * @param {string} course_id
+ * @param {jQuery} $chapters
+ * @returns {void}
+ */
+function getCourseChapters(chapter_id,course_id,$chapters){
+    $.getJSON('/video_session/get_course_chapters/id/'+course_id,function(data){
+        if(data.status === "success"){
+
+            $("option",$chapters).remove();
+
+            for(i in data.template){
+
+                var chapter = data.template[i];
+
+                $chapters.append(
+                    $("<option />",{
+                        'value' : chapter.id
+                    }).text(chapter.name)
+                );
+            }
+
+            $("option[value="+chapter_id+"]",$chapters).attr("selected","selected");
+        }
+    });
+}
+
+/**
+ *
+ * @param {string} course_id
+ * @param {jQuery} $cStudents
+ * @param {jQuery} $form
+ * @returns {void}
+ */
+function getCourseStudents(course_id,$cStudents,$form){
+    $.getJSON('/video_session/get_course_students/id/'+course_id,function(data){
+
+        if(data.status === "success"){
+            $cStudents.html("");
+
+            var students_ids = $(".students_ids",$form).val().split(",");
+
+            if(data.template.length > 0){
+
+                for(var i in data.template){
+
+                    var student = data.template[i];
+                    var isSelected = students_ids.indexOf(student.id) > -1;
+
+                    $cStudents.append(
+                        $("<div class='student"+(isSelected ? " selected" : "")+"' data-id='"+student.id+"' />")
+                            //.append($("<div class='avatar'><img src='"+student.avatarPath+student.avatar+"' /></div>"))
+                            .append($("<div class='info'>"+student.name+"</div>"))
+                            .append($("<div class='clearfix' />"))
+                    );
+
+                    if(i>1 && i%2==1){
+                        $cStudents.append($("<div class='clearfix' />"));
+                    }
+
+                }
+                $(".student").bind("click", onStudentClicked);
+            }else{
+                $cStudents.text("El curso seleccionado no posee alumnos activos");
+            }
+        }
+    });
 }
