@@ -260,7 +260,7 @@ DependencyExercisePath:
   indexes:
     dep_exe_path_unique_pair:
       fields: [exercise_id, exercise_question_id, depends_course_id ,depends_chapter_id, depends_lesson_id]
-      type: unique 
+      type: unique
 
 ResourceData:
   actAs:
@@ -702,8 +702,13 @@ NotificationAction:
     columns:
         id: {type: integer, primary: true, autoincrement: true}
         term_key: string
+        profile_id: integer
         route_name: string
-        params: blob
+        params: {type: string(400)}
+        wildcards: {type: string(400)}
+        type: {type: string(50)}
+    relations:
+        Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
 
 Notification:
     actAs:
@@ -717,9 +722,9 @@ Notification:
     columns:
         id: {type: integer, primary: true, autoincrement: true}
         notification_action_id: integer
-        user_id: integer
-        wildcards: blob
+        profile_id: integer
         seen: bit
         clicked_at: timestamp
     relations:
         NotificationAction: { class: NotificationAction, onDelete: CASCADE, local: notification_action_id, foreign: id, foreignType: one }
+        Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }

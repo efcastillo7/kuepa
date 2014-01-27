@@ -67,7 +67,7 @@ class video_sessionActions extends sfActions {
 
         if ($form->isValid()) {
 
-            $video_session          = $form->save();
+            $video_session = $form->save();
 
             if($visibility == "private"){
                 $a_students = explode(",",$students);
@@ -76,13 +76,16 @@ class video_sessionActions extends sfActions {
 
             }
 
-            $response['template']   = "Ha ".($id?"editado":"creado")." la sesión de video satisfactoriamente";
+            //Generates the notifications
+            NotificationsService::getInstance()->addVideoSessionNotification($video_session->getId());
+
+            $response['template']   = "Ha ".($id ? "editado" : "creado")." la sesión de video satisfactoriamente";
             $response['status']     = "success";
 
             } else {
 
-            $response['template']   = $this->getPartial("form", array('form' => $form));
-        }
+                $response['template']   = $this->getPartial("form", array('form' => $form));
+            }
 
         if ($request->isXmlHttpRequest()) {
             return $this->renderText(json_encode($response));

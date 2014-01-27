@@ -34,6 +34,10 @@ class VideoSessionService {
 
     const PLATFORM_HANGOUTS = "hangouts";
 
+    /**
+     *
+     * @return VideoSessionService
+     */
     public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new VideoSessionService;
@@ -164,6 +168,44 @@ class VideoSessionService {
         }
 
         return implode(",", $ids);
+    }
+
+    /**
+     *
+     * @param string $video_session_id
+     * @return boolean
+     */
+    public function getEnabledProfiles($video_session_id){
+
+        //Gets the video session
+        $videoSession = VideoSession::getRepository()->find($video_session_id);
+        $ids = array();
+
+        if(!$videoSession){
+            return false;
+        }
+
+        //Depending on the visibility
+        $visibility = $videoSession->getVisibility();
+
+        //If is private gets the invited students
+        if($visibility == "private"){
+            $videoSessionParticipants = VideoSessionParticipant::getRepository()->findBy("video_session_id",$video_session_id);
+            foreach($videoSessionParticipants as $participant){
+                $ids[] = $participant->getProfileId();
+            }
+        }
+        //If is public gets the course students
+        else{
+            $courseId = $videoSession->getCourse()->getId();
+            $students = CourseService::getInstance()->getStudentsList($courseId);
+
+            foreach($students as $student){
+                $ids[] = $student->getId();
+            }
+        }
+
+        return $ids;
     }
 
     /**

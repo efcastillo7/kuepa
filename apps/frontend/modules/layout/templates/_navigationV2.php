@@ -109,7 +109,7 @@
       <li><a href="javascript:void(0)" class="nav-btn nav-btn-path" id="open-learning-path"><i></i></a></li>
     </ul>
 
-    
+
   </div><!-- /.navbar-collapse -->
   <?php endif; ?>
 </nav>
