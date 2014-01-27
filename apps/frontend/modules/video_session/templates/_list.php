@@ -3,7 +3,10 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th width="24"></th>
+            <th width="12"></th>
+            <?php if ($sf_user->hasCredential("docente")): ?>
+            <th width="12"></th>
+            <?php endif; ?>
             <th width="80">Fecha</th>
             <th width="60">Horario</th>
             <th>Título</th>
@@ -23,9 +26,15 @@
                 $chapter        = $video_session->getChapter()->getName();
                 $isOwner        = $video_session->getProfileId() == $pid;
 
+                //Adds the profile_id to the url
+                $storedUrl      = VideoSessionService::getInstance()->injectProfileId($storedUrl,$pid);
+
                 ?>
                 <tr data-id="<?php echo $video_session->getId() ?>" data-scheduled_for="<?php echo $video_session->getScheduledFor() ?>">
-                    <td><div class="video_session_status <?php echo $video_session->getStatus(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$status_es[$video_session->getStatus()]; ?>">&nbsp;</div></td>
+                    <td><div class="list_icon video_session_status <?php echo $video_session->getStatus(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$status_es[$video_session->getStatus()]; ?>">&nbsp;</div></td>
+                    <?php if ($sf_user->hasCredential("docente")): ?>
+                    <td><div class="list_icon video_session_visibility <?php echo $video_session->getVisibility(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$visibility_es[$video_session->getVisibility()]; ?>">&nbsp;</div></td>
+                    <?php endif; ?>
                     <td><?php echo format_date($video_session->getScheduledFor(), 'dd-MM-yyyy'); ?></td>
                     <td><?php echo format_date($video_session->getScheduledFor(), 'HH:mm'); ?>hs</td>
                     <td><?php echo $video_session->getTitle() ?></td>
@@ -39,7 +48,7 @@
                             <a class="btn btn-mini btn-warning <?php echo $video_session->getStatus() != "started" ? "disabled" : "finishVideoSession-trigger" ?>">Finalizar</a>
                             <?php if(empty($storedUrl)): ?>
                             <span class="hangout_actions">
-                                <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : {'video_session_id':'<?php echo $video_session->getId(); ?>','type':'<?php echo $video_session->getType(); ?>'}, 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
+                                <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : {'video_session_id':'<?php echo $video_session->getId(); ?>','type':'<?php echo $video_session->getType(); ?>','profile_id':'<?php echo $pid; ?>'}, 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
                             </span>
                             <?php else: ?>
                             <a target="_blank" class="btn btn-mini btn-success <?php echo $video_session->getStatus() != "started" ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>

@@ -3,3 +3,6 @@ default:
 
 update:
     is_secure: false
+
+track_time:
+    is_secure: false
