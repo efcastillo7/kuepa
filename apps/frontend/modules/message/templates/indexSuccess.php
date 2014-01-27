@@ -108,7 +108,7 @@
       <span class="cont-text">
         <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span>
         <span class="abstract">Lorem ipsum dolor sit amet con...</span>
-        <span class="time">Argentina, Buenos Aires</span>
+        <span class="time">-</span>
       </span>
     </a>
 

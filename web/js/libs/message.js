@@ -217,7 +217,7 @@ function addContact(values){
   if(values.last_message instanceof Array){
     var template = $(".templates #contact").first();
     var elem = template.clone().attr("id", null); 
-    $(".abstract", elem).html('Profesor');
+    $(".abstract", elem).html('');
   }else{
     var template = $(".templates #active-contact").first();
     var elem = template.clone().attr("id", null); 
