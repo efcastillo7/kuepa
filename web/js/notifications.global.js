@@ -25,7 +25,7 @@ $(function() {
     });
 
     //Opens a notification and marks it as interacted
-    $(".cont-notifications .item, .notifications-list .notification").click(function() {
+    $(".cont-notifications .item, .notifications-list .notification").on("click",function() {
         var $notification = $(this);
 
         if ($notification.is(".not_clicked")) {
@@ -69,7 +69,7 @@ function refreshNotifications() {
 
     $.post("/notification/refresh", data, function(html) {
         var $html = $(html);
-        
+
         $contNotifications.prepend($html);
 
         var count = $("[name=notifications_count]:first").val();
