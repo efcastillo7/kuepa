@@ -23,6 +23,8 @@ class notificationActions extends sfActions {
             $this->notifications = NotificationsService::getInstance()->getNotificationsForUser($this->profile->getId());
             $this->count = NotificationsService::getInstance()->getUnreadNotificationsCountForUser($this->profile->getId());
         }
+
+        $this->setLayout("layout_v2");
     }
 
     /**
