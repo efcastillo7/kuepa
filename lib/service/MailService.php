@@ -61,8 +61,8 @@ class MailService {
         $this->mailer->Host = 'smtp.gmail.com';  // Specify main and backup server
         $this->mailer->Port = 587;
         $this->mailer->SMTPAuth = true;     // Enable SMTP authentication
-        $this->mailer->Username = 'cyberfranco@gmail.com';  // SMTP username
-        $this->mailer->Password = '13993051'; // SMTP password
+        $this->mailer->Username = '';  // SMTP username testing@gmail.com
+        $this->mailer->Password = ''; // SMTP password
         $this->mailer->SMTPSecure = 'tls';
       }else{ // mail
         // do nothing use default sendmail
