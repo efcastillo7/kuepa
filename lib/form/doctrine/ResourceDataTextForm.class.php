@@ -19,6 +19,9 @@ class ResourceDataTextForm extends BaseResourceDataTextForm
 
     unset($this['document_type'], $this['video_type']);
 
+    $this->setWidget('content', new sfWidgetFormTextarea());
+    $this->widgetSchema['content']->setAttribute("class","settinymce");
+
     $this->setDefaults(array(
 		  'type' => ResourceDataText::TYPE
     ));

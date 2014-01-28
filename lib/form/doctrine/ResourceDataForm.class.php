@@ -27,9 +27,9 @@ class ResourceDataForm extends BaseResourceDataForm
   	$this->setWidget("path", new sfWidgetFormInputHidden());
   	$this->setWidget("tags", new sfWidgetFormInputText());
   	$this->setWidget("resource_id", new sfWidgetFormInputHidden());
+
+    $this->setValidator("content", new sfValidatorPass(array('required' => false)));
         
-    $this->setWidget('content', new sfWidgetFormTextarea());
-    $this->widgetSchema['content']->setAttribute("class","settinymce");
   	$this->widgetSchema['duration']->setAttribute("class","spinner");
   }
 }
