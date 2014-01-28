@@ -15,9 +15,10 @@
         <link rel="stylesheet" href="/styles/css/docs.css">
         <link rel="stylesheet" href="/styles/css/kuepa.css">
         <link rel="stylesheet" href="/styles/css/kuepa.hangouts.css">
+        <link rel="stylesheet" href="/styles/css/kuepa.notifications.css">
         <link rel="stylesheet" href="/styles/css/plataforma.css">
         <link rel="stylesheet" href="/styles/css/thumbgrid.css">
-        
+
         <!-- modalwindow -->
         <link rel="stylesheet" href="/assets/modalwindoweffect/css/default.css">
         <link rel="stylesheet" href="/assets/modalwindoweffect/css/component.css">
@@ -90,6 +91,7 @@
         <script type="text/javascript" src="https://apis.google.com/js/client:plusone.js"></script>
         <script src="/js/course.js"></script>
         <script src="/js/support.global.js"></script>
+        <script src="/js/notifications.global.js"></script>
 
         <?php include_partial('global/analytics') ?>
     </body>

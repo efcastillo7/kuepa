@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit>
+        <source>video_session_added</source>
+        <target>agregó una tutoría</target>
+        <source>scheduled_for</source>
+        <target>programada para</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

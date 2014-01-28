@@ -1,0 +1,77 @@
+.notification-count {
+    border-radius: 3px;
+    background: #FF671B;
+    text-shadow: none;
+    color: #fff;
+    font-size: 11px;
+    padding: 0px 5px 2px;
+    text-align: center;
+    position: absolute;
+    line-height: 15px;
+    top: 5px;
+    right: 5px;
+
+    &:empty{
+        display:none;
+    }
+}
+
+.dropdown-menu{
+    &.notifications {
+
+        border-radius: 0 0 5px 5px;
+        margin-top: 0px;
+        margin-right: -1px;
+        width:450px;
+
+        h5 {
+            margin: 5px 0 10px 20px;
+            font-size: 16px;
+        }
+
+        .cont-button {
+            padding: 10px 10px 5px;
+        }
+
+    }
+}
+
+.cont-notifications {
+    border-top: solid 1px #ccc;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cont-notifications .item, .notifications-list .notification {
+    border-bottom: solid 1px #ccc;
+    padding: 5px 5px 5px 40px;
+    font-size:13px;
+    cursor:pointer;
+
+    .actor{
+        font-size: 14px;
+    }
+
+    .summary{
+        color: #333;
+    }
+
+    &.not_clicked {
+        background: #FFFFE5;
+    }
+
+    &.event{
+        .actor{
+            color: #66cc00;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            float: left;
+            margin: 2px 5px 20px 0;
+            background: url("../../img/hangout.png") center center no-repeat;
+            background-size: contain;
+        }
+    }
+}
