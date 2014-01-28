@@ -18,6 +18,10 @@ class userActions extends kuepaActions {
     public function executeIndex(sfWebRequest $request) {
         $this->user = $this->getUser();
         $this->form = new UserProfileForm($this->getProfile());
+        
+        //$this->getUser()->setCulture('');
+        //$this->getUser()->getAttributeHolder()->clear();
+        //die("AVER:".$this->getUser()->getCulture());
 
         $this->setLayout("layout_v2");
     }
