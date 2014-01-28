@@ -94,14 +94,19 @@ class GroupsService {
     } 
 
     public function getProfilesInGroup($group_id, $filters = array()){
-        $group = self::getInstance()->find($group_id);
-
+        //$group = self::getInstance()->find($group_id);
         //$users = $group->getProfiles();
 
         $q = Profile::getRepository()->createQuery('p')
                 ->select('p.*')
-                ->innerJoin('p.GroupProfile gp ON p.id=gp.profile_id ')
+                ->innerJoin('p.GroupProfile gp')
                 ->where('gp.group_id ='.$group_id.'');
+       /* $pager = new sfDoctrinePager('Profile', 50);
+        $pager->setQuery($q);
+        $pager->setPage(1);
+        $pager->init();
+        return($pager-> getResults());*/
+
         if ( count($filters) > 0 ){
             // "key"       => value
             //i.e: p.firstname => 'Pedro'
@@ -111,6 +116,7 @@ class GroupsService {
             }
         }
         // TODO: Pagination
+        // 
         $q->limit(100);
 
         return($q->execute());
@@ -143,6 +149,12 @@ class GroupsService {
       if ( $kind == 'profiles'){
         $parent = GroupsService::getInstance()->getParent($group_id);
         if ( $parent ){ // if it is subgroup
+          $filters = array();
+          $filters[] = array("cond" => "gp.profile_id NOT IN 
+                                        (SELECT gp2.profile_id
+                                         FROM GroupProfile gp2
+                                         WHERE gp2.group_id = ?)",
+                             "value" => $group_id);
           $profiles = GroupsService::getInstance()->getProfilesInGroup($parent->getId(), $filters);
         }else{
           $profiles = GroupsService::getInstance()->getProfilesList($group_id, $filters);
