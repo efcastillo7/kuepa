@@ -35,6 +35,12 @@ Profile:
       local: profile_id
       foreign: component_id
       foreignAlias: Profiles
+    MailMessages:
+      class: MailMessage
+      type: many
+      local: id
+      foreign: profile_id
+      type: many
 
 ProfileLearningPath:
   columns:
@@ -629,3 +635,22 @@ GroupProfile:
   columns:
     group_id: {type: integer, primary: true}
     profile_id: {type: integer, primary: true}
+
+MailMessage:
+  actAs: { Timestampable: ~ }
+  columns:
+    profile_id: {type: integer}
+    subject: {type: varchar(255) }
+    email: {type: varchar(100) }
+    name:  {type: varchar(100) }
+    content: { type: clob }
+    priority: {type: integer, default: '5'}
+    status: { type: varchar(10), default: 'pending'}
+    sent_at: timestamp
+    creator_id: {type: integer}
+  relations:
+    Profile:
+      class: Profile
+      type: one
+      local: profile_id
+      foreign: id
