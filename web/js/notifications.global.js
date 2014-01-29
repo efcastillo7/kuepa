@@ -74,12 +74,15 @@ function refreshNotifications() {
         data: data,
         success: function(data){
             //avoid preprending multiple responses
-            var count = $(data.template).val();
+            var count = data.count;
 
-            if(count == "0"){
-                $notifticationCount.text("").hide();
-            }else{
+            if(count > 0){
                 $notifticationCount.text(count).show();
+                
+                //add notifications
+                $contNotifications.prepend($(data.template));
+            }else{
+                $notifticationCount.text("").hide();
             }
 
             int_notifications = setTimeout(refreshNotifications,5000);

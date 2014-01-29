@@ -86,7 +86,8 @@ class notificationActions extends sfActions {
         $response = Array(
             'status' => "error",
             'template' => "No se pudo refrescar",
-            'code' => 400
+            'code' => 400,
+            'count' => 0
         );
 
         if ($this->getUser()->isAuthenticated()) {
@@ -98,6 +99,7 @@ class notificationActions extends sfActions {
 
             $response['template'] = $this->getPartial("refresh");
             $response['status'] = "success";
+            $response['count'] = $this->count;
 
             return $this->renderText(json_encode($response));
         }

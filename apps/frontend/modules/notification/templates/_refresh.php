@@ -1,4 +1,3 @@
-<input type="hidden" name="notifications_count" value="<?php echo $count; ?>" />
 <?php
 foreach ($notifications as $notification):
     $clicked_at = $notification->getClickedAt();
