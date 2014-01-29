@@ -31,7 +31,9 @@ class messageActions extends sfActions
                 'subject' => $message->getSubject(),
                 'content' => $message->getContent(),
                 'author' => $message->getProfile()->getNickname(),
+                'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
                 'date' => $message->getCreatedAt(),
+                'created_at' => strtotime($message->getCreatedAt()),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
             );
         }
@@ -65,8 +67,10 @@ class messageActions extends sfActions
         		'subject' => $message->getSubject(),
         		'content' => $message->getContent(),
         		'author' => $message->getProfile()->getNickname(),
+                'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
                 'recipients' => $recipients,
                 'date' => $message->getCreatedAt(),
+                'created_at' => strtotime($message->getCreatedAt()),
         		'last_update' => $message->getUpdatedAt(),
                 'read' => $message->getRecipients()->getFirst()->getIsRead()
     		);
@@ -96,6 +100,7 @@ class messageActions extends sfActions
         		'subject' => $message->getSubject(),
         		'content' => $message->getContent(),
         		'author' => $message->getProfile()->getNickname(),
+                'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
         		'date' => $message->getCreatedAt(),
                 'created_at' => strtotime($message->getCreatedAt()),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
@@ -130,7 +135,9 @@ class messageActions extends sfActions
                 'subject' => $message->getSubject(),
                 'content' => $message->getContent(),
                 'author' => $message->getProfile()->getNickname(),
+                'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
                 'date' => $message->getCreatedAt(),
+                'created_at' => strtotime($message->getCreatedAt()),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
             );
         }

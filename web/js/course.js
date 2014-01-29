@@ -118,5 +118,5 @@ $(function() {
             //reload knob
             $(".knob", content).knob(knob_values);
         });
-    });
+    });
 });

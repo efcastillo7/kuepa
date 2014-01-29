@@ -87,17 +87,28 @@ $(function() {
     });
 
     //left menu
+    
     var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
         showLeft = document.getElementById( 'showLeft' ),
+        showRight = document.getElementById( 'open-learning-path' ),
+        menuRight = document.getElementById( 'cbp-spmenu-s2' ),
         body = document.body;
 
-    showLeft.onclick = function() {
-        if(classie.hasClass(menuLeft, 'cbp-spmenu-open')){
-            clearTimeout(menuTimeout);
-            menuTimeout = -1;
-        }
-        classie.toggle( menuLeft, 'cbp-spmenu-open' );
-    };
+    if(showRight != undefined){
+        showRight.onclick = function() {
+            classie.toggle( menuRight, 'cbp-spmenu-open' );
+        };
+    }
+
+    if(showLeft != undefined){
+        showLeft.onclick = function() {
+            if(classie.hasClass(menuLeft, 'cbp-spmenu-open')){
+                clearTimeout(menuTimeout);
+                menuTimeout = -1;
+            }
+            classie.toggle( menuLeft, 'cbp-spmenu-open' );
+        };
+    }
 
     $("#showLeft").mouseenter(function(event) {
         classie.addClass( menuLeft, 'cbp-spmenu-open' );
@@ -118,10 +129,9 @@ $(function() {
         menuTimeout = -1;
     });
 
-    
-
     // tooltip
     $('[rel="tooltip"]').tooltip();
+
 
     //init tinyMCE ONCE!
     // tinymce.init({

@@ -18,6 +18,12 @@ class userActions extends kuepaActions {
     public function executeIndex(sfWebRequest $request) {
         $this->user = $this->getUser();
         $this->form = new UserProfileForm($this->getProfile());
+        
+        //$this->getUser()->setCulture('');
+        //$this->getUser()->getAttributeHolder()->clear();
+        //die("AVER:".$this->getUser()->getCulture());
+
+        $this->setLayout("layout_v2");
     }
 
     public function executeUpdate(sfWebRequest $request) {
@@ -25,6 +31,8 @@ class userActions extends kuepaActions {
         $this->form = new UserProfileForm($this->getProfile());
         $this->processForm($request, $this->form);
         $this->setTemplate('index');
+
+        $this->setLayout("layout_v2");
     }
 
     protected function processForm(sfWebRequest $request, sfForm $form) {

@@ -51,7 +51,7 @@ $(document).ready(function(){
         onError: onError
       });
     }
-  }, 1000);
+  }, 3000);
 
   $('form#send-message').submit (function() { 
     if(chat_id != ""){
@@ -97,14 +97,7 @@ $(document).ready(function(){
 
     last_message = null;
 
-    if(chat_id !== ""){
-      ms.getThread({
-        message_id: chat_id,
-        from_time: last_message,
-        onSuccess: addMessagesToScreen,
-        onError: onError
-      });  
-    }else{
+    if(chat_id === ""){
       active_user = $(this).data("user");
       //new message
       $(".loading").fadeOut(200);
@@ -127,7 +120,7 @@ $(document).ready(function(){
       },
       onError: onError
     });
-  }, 1000);
+  }, 3000);
 });
 
 //functions for window management
@@ -170,17 +163,19 @@ function addMessageToScreen(values){
   //get values
   var template = $(".templates #message");
   elem = template.clone().attr("id", null),
-  date = mysqlDateToTimestamp(values.date);
+  date = values.created_at;
 
   $(elem).addClass(values.in ? "in" : "out");
   $(".chat-box", elem).addClass(values.in ? "in" : "out");
   $(".chat-box", elem).html(values.content);
+  $(".avatar > img", elem).attr('src', values.avatar);
+
   //mejorar
   $(".time", elem).html(timeSince(date*1000));
   $(".load-data").append(elem);
 
   //update last_message date
-  last_message = mysqlDateToTimestamp(values.date);
+  last_message = values.created_at;
 
   $('.cont-scroll').perfectScrollbar({wheelSpeed:30,wheelPropagation:true}).scrollTop($('.cont-scroll')[0].scrollHeight);
 }
@@ -222,7 +217,7 @@ function addContact(values){
   if(values.last_message instanceof Array){
     var template = $(".templates #contact").first();
     var elem = template.clone().attr("id", null); 
-    $(".abstract", elem).html('Profesor');
+    $(".abstract", elem).html('');
   }else{
     var template = $(".templates #active-contact").first();
     var elem = template.clone().attr("id", null); 

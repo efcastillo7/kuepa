@@ -1,19 +1,21 @@
 # Main user entity, sfGuardUser is only used to store basic user data and login credentials
 Profile:
-  tableName:                   profile
+  tableName: profile
   actAs:
     Timestampable: ~
     SoftDelete: ~
   columns:
-    sf_guard_user_id:          integer 
+    sf_guard_user_id:          integer
+    google_id: varchar(45)
     nickname:                  varchar(20)
     first_name:                varchar(20)
     last_name:                 varchar(20)
     birthdate:                 date
     sex:                       { type: enum, values: [male, female] }
     valid_until:               date
+    avatar:                    varchar(100)
   relations:
-    sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
+    sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
       class: College
       refClass: ProfileCollege
@@ -195,6 +197,10 @@ PredictiveLearningPath:
       local: lesson_id
       foreign: id
       type: one
+  indexes:
+    plp_unique_user_path_item:
+      fields: [profile_id, course_id, chapter_id, lesson_id]
+      type: unique
 
 DependencyPath:
   columns:
@@ -232,6 +238,42 @@ DependencyPath:
       local: depends_lesson_id
       foreign: id
       type: one
+
+DependencyExercisePath:
+  columns:
+    exercise_id: integer
+    exercise_question_id: integer
+    depends_course_id: integer
+    depends_chapter_id: integer
+    depends_lesson_id: integer
+  relations:
+    Exercise:
+      local: exercise_id
+      foreign: id
+      type: one
+    ExerciseQuestion:
+      local: exercise_question_id
+      foreign: id
+      type: one
+    DependsCourse:
+      class: Course
+      local: depends_course_id
+      foreign: id
+      type: one
+    DependsChapter:
+      class: Chapter
+      local: depends_chapter_id
+      foreign: id
+      type: one
+    DependsLesson:
+      class: Lesson
+      local: depends_lesson_id
+      foreign: id
+      type: one
+  indexes:
+    dep_exe_path_unique_pair:
+      fields: [exercise_id, exercise_question_id, depends_course_id ,depends_chapter_id, depends_lesson_id]
+      type: unique
 
 ResourceData:
   actAs:
@@ -275,7 +317,7 @@ ResourceData:
 
 
 ResourceDataDocument:
-  columns: 
+  columns:
     document_type: { type: enum, values: [pdf, image, ppt] }
   inheritance:
     extends: ResourceData
@@ -291,7 +333,7 @@ ResourceDataText:
     keyValue: Text
 
 ResourceDataVideo:
-  columns: 
+  columns:
     video_type: { type: enum, values: [youtube, vimeo, embebed] }
     path: { type: string }
   inheritance:
@@ -654,3 +696,123 @@ MailMessage:
       type: one
       local: profile_id
       foreign: id
+
+VideoSession:
+  tableName: video_session
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    profile_id: integer
+    student_profile_id: integer
+    chapter_id: integer
+    course_id: integer
+    scheduled_for: datetime
+    title: {type: string(100)}
+    description: {type: string(255)}
+    status: { type: enum, values: [pending, started,ended], default: pending }
+    url: {type: string(400)}
+    type: { type: enum, values: [class, support] }
+    visibility: { type: enum, values: [public, private], default: public }
+    platform: {type: string(50)}
+  relations:
+    Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+    Student: { class: Profile, onDelete: CASCADE, local: student_profile_id, foreign: id, foreignType: one }
+    Chapter: { class: Component, onDelete: CASCADE, local: chapter_id, foreign: id, foreignType: one }
+    Course: { class: Component, onDelete: CASCADE, local: course_id, foreign: id, foreignType: one }
+
+VideoSessionParticipant:
+  tableName: video_session_participant
+  actAs:
+    Timestampable: ~
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    video_session_id: integer
+    profile_id: integer
+    first_conection: timestamp
+    last_connection: timestamp
+    interruptions: int
+    seconds_online: int
+  relations:
+    Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+    VideoSession: { class: VideoSession, onDelete: CASCADE, local: video_session_id, foreign: id, foreignType: one }
+
+FlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    type: string
+    name: string
+    active: {type: boolean, default: false}
+    valid_from: date
+    valid_until: date
+
+ProfileViewFlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    flash_message_id: integer
+    profile_id: integer
+  relations:
+    Profile:
+      type: one
+      local: profile_id
+      foreign: id
+    FlashMessage:
+      type: one
+      local: flash_message_id
+      foreign: id
+
+NotificationAction:
+    actAs:
+        Timestampable:
+          created:
+            name: created_at
+            type: timestamp
+            format: Y-m-d H:i:s
+          updated:
+            disabled: true
+    columns:
+        id: {type: integer, primary: true, autoincrement: true}
+        term_key: string
+        profile_id: integer
+        route_name: string
+        params: {type: string(400)}
+        wildcards: {type: string(400)}
+        type: {type: string(50)}
+    relations:
+        Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+
+Notification:
+    actAs:
+        Timestampable:
+          created:
+            name: created_at
+            type: timestamp
+            format: Y-m-d H:i:s
+          updated:
+            disabled: true
+    columns:
+        id: {type: integer, primary: true, autoincrement: true}
+        notification_action_id: integer
+        profile_id: integer
+        seen: bit
+        clicked_at: timestamp
+    relations:
+        NotificationAction: { class: NotificationAction, onDelete: CASCADE, local: notification_action_id, foreign: id, foreignType: one }
+        Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+

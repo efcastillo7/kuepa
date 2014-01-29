@@ -7,6 +7,11 @@ course_api:
   options:
     module: course
 
+video_session_api:
+    class: RESTRouteCollection
+    options:
+        module: video_session
+
 message_api:
   class: RESTRouteCollection
   options:
@@ -16,6 +21,11 @@ profile_api:
   class: RESTRouteCollection
   options:
     module: profile
+
+learningpath_api:
+  class: RESTRouteCollection
+  options:
+    module: learningpath
 
 default:
   url:   /:module/:action/*

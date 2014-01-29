@@ -981,10 +981,32 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     var that    = this
     var animate = this.$element.hasClass('fade') ? 'fade' : ''
 
+//hack
+    if( this.$element.hasClass('flash') ){
+      var color = 'default';
+    }
+    if( this.$element.hasClass('success') ){
+      var color = 'success';
+    }
+    if( this.$element.hasClass('danger') ){
+      var color = 'danger';
+    }
+    if( this.$element.hasClass('warning') ){
+      var color = 'warning';
+    }
+    if( this.$element.hasClass('info') ){
+      var color = 'info';
+    }
+    if( this.$element.hasClass('options') ){
+      var color = 'options';
+    }
+
+
+
     if (this.isShown && this.options.backdrop) {
       var doAnimate = $.support.transition && animate
 
-      this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
+      this.$backdrop = $('<div class="modal-backdrop ' + animate + ' ' + color + '" />')
         .appendTo(document.body)
 
       this.$element.on('click.dismiss.modal', $.proxy(function (e) {

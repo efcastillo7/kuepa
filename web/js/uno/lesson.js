@@ -21,7 +21,7 @@ $(document).ready(function() {
                         if ( typeof(target) != "undefined"){
                             $(target).prepend(data.template);
                         } else {
-                            $("#notes_list").prepend(data.template);
+                            $(".notes.private").prepend(data.template);
                         }
                         
                         container.val('');
@@ -33,7 +33,7 @@ $(document).ready(function() {
                     }
 
                 }
-            })
+            });
         }
     });
 
@@ -45,7 +45,7 @@ $(document).ready(function() {
             type: 'POST',
             success: function(data) {
                 if (data.code === 201) {
-                    $(".li-note-" + note_id).remove();
+                    $("#note-" + note_id).remove();
                 } else {
                     alert('error al eliminar el comentario');
                 }
@@ -55,7 +55,8 @@ $(document).ready(function() {
     });
 
     $("body").delegate(".edit-note-link", "click", function(e) {
-        var note_id = $(this).attr("target");
+        var note_id = $(this).data("target");
+
         var edit_input = $("#edit-note-input-" + note_id);
         var span_note = $("#span-note-" + note_id)
 
@@ -67,14 +68,40 @@ $(document).ready(function() {
             $("#edit-note-link-" + note_id).html("Cancelar");
         }
 
-        $(".li-note-" + note_id).addClass("edit-delete-tag");
+        $("#note-" + note_id).addClass("edit-delete-tag");
 
         edit_input.toggle();
         span_note.toggle();
     });
 
-    $( "#tabs" ).tabs();
+    $("body").delegate(".navigation-menu", "click", function(e) {
+      e.preventDefault();
+      var link = $(this).attr('href'),
+        parent = $(this).parents(".row:first"),
+        container = $(this).parents(".wrapper-aside-lesson").first(),
+        goto_dir = $(this).hasClass("navigation-menu-in"),
+        from = "left",
+        to = "right";
+      
+      $.getJSON($(this).attr('href'), function(response) {
+          var content = $(response.template).hide();
+          $(".knob", content).knob(knob_values);
 
+          if(goto_dir){
+            from = "right"; to = "left";
+          }
+
+          parent.prepend(content);
+          //remove old
+          $(container).hide('slide', {direction: to}, function(){ 
+            container.remove(); 
+          });
+          $(content).show('slide', {direction: from});
+      });
+
+    });
+
+    // $( "#tabs" ).tabs();
 
     //log interval
     setInterval(function(){
@@ -87,4 +114,158 @@ $(document).ready(function() {
             }
         });
     }, 26000);
+});
+
+$(window).load(function(){
+    $("#add_to_learning_path").click(function(){
+        //show menu right
+        classie.addClass( document.getElementById( 'cbp-spmenu-s2' ), 'cbp-spmenu-open' );
+
+        lpService.add({
+            course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id,
+            onSuccess: function(item){
+                addItemToPath(item);
+            },
+            onError: function(data){
+                alert('Ya tiene esa lección');
+            }
+        });
+    });
+});
+
+$(document).ready(function(){
+
+/////////////////////////////////////////////////////////////////////// ejercitacion.php
+  //arrows
+  $(".title-arrow").click(function(){
+    var arrow = $(this).find("i");
+    var collapsing = $(this).data("target");
+
+    if( $(collapsing).hasClass('collapsing') ){return;}
+
+    if( $(arrow).hasClass("rotate") ){
+      $(arrow).removeClass("rotate");
+    }else{
+      $(arrow).addClass("rotate");
+    }
+  });
+
+  //orange icon
+  $(".section li a").click(function(){
+    var collapsing = $(this).data("target");
+
+    if( $(collapsing).hasClass('collapsing') ){
+      return;
+    }
+
+    var icon = $(this).find(".back-icon");
+    var after = $(this).find(".after");
+    var before = $(this).find(".before");
+
+    if( $(icon).hasClass("active") ){
+      $(icon).removeClass("active");
+      $(after).removeClass("active");
+      $(before).removeClass("active");
+    }else{
+      $(icon).addClass("active");
+      $(after).addClass("active");
+      $(before).addClass("active");
+    }
+  });
+
+  // scrollspy
+
+  // Cache selectors
+  var lastId,
+  //topMenu = $("#top-menu"),
+      topMenu = $(".questions"),
+      topMenuHeight = topMenu.outerHeight()+15,
+  // All list items
+      menuItems = topMenu.find("a"),
+  // Anchors corresponding to menu items
+      scrollItems = menuItems.map(function(){
+        var item = $($(this).attr("href"));
+        if (item.length) { return item; }
+      });
+
+  // Bind click handler to menu items
+  // so we can get a fancy scroll animation
+  menuItems.click(function(e){
+    var href = $(this).attr("href"),
+        offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight-50;
+    $('html, body').stop().animate({
+      scrollTop: offsetTop
+    }, 300);
+    e.preventDefault();
+  });
+
+  // Bind to scroll
+  $(window).scroll(function(){
+    // Get container scroll position
+    //var fromTop = $(this).scrollTop()+topMenuHeight;
+    var fromTop = $(this).scrollTop()+topMenuHeight+55;
+
+    // Get id of current scroll item
+    var cur = scrollItems.map(function(){
+      if ($(this).offset().top < fromTop)
+        return this;
+    });
+    // Get the id of the current element
+    cur = cur[cur.length-1];
+    var id = cur && cur.length ? cur[0].id : "";
+
+    if (lastId !== id) {
+      lastId = id;
+      // Set/remove active class
+      menuItems
+          .parent().removeClass("active")
+          .end().filter("[href=#"+id+"]").parent().addClass("active");
+    }
+  });
+
+/////////////////////////////////////////////////////////////////////// end ejercitacion.php
+
+  // aside follow scroll
+  $(document).scroll(function () {
+    var altura = $("section.container section.breadcrum").height() + $(".header-two-columns").height() + 20;//20 es el padding de scroll1
+
+    if ($(document).scrollTop() > altura) {
+      $('.aside-exercise,.aside-lesson').removeClass("relativa").addClass("fija");
+    }
+    else {
+      $('.aside-exercise,.aside-lesson').removeClass("fija").addClass('relativa');
+    }
+  });
+
+/////////////////////////////////////////////////////////////////////// leccion_recurso.php
+
+  // $(function() {
+
+  //   $(".list-aside-lesson li a").each(function(){
+  //     var text = $(this).text().trim();
+  //     var len = text.length;
+
+  //     if( len > 30 ){
+  //       $(this).html("<span>" + text + "</span>");
+  //       $(this).parent("li").addClass("long");
+  //       $(this).children("span").addClass("long-text");
+
+  //       var li = $(this).parent(".long");
+  //       var altura = $(li).height();
+
+  //       $(li).find(".icon").css("top",(altura-44)/2);
+  //       $(li).find(".lp-bar-post").css({
+  //         "height":((altura-30)/2)+1,
+  //         "top":"4px"
+  //       });
+  //       $(li).find(".lp-bar-prev").css({
+  //         "height":((altura-30)/2)+2,
+  //         "bottom":0
+  //       });
+  //     }
+
+
+  //   });
+  // });
+/////////////////////////////////////////////////////////////////////// end leccion_recurso.php
 });

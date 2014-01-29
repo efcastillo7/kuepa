@@ -31,16 +31,20 @@ all:
     escaping_strategy:      true
     escaping_method:        ESC_SPECIALCHARS
 
+    #i18n
+    i18n: true
+    standard_helpers: [Partial, Cache, I18N, ImprovedUrl]
+    default_culture: es_AR
+
     # Enable the database manager
     use_database:           true
-    
+
     login_module:           sfGuardAuth
     login_action:           signin
 
     secure_module:          sfGuardAuth
     secure_action:          secure
-    
+
     enabled_modules: [default, sfGuardAuth]
     
-    standard_helpers: [Partial, Cache, ImprovedUrl]
-  
+

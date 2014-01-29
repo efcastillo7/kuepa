@@ -1,0 +1,8 @@
+default:
+  is_secure: true
+
+update:
+    is_secure: false
+
+track_time:
+    is_secure: false

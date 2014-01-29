@@ -14,3 +14,7 @@ lib/model/om/*
 lib/model/map/*
 web/*Plugin/*
 /nbproject/private/
+.sass-cache/*
+web/assets/v2/styles/css/scss/.sass-cache/*
+web/assets/v2/styles/css/.sass-cache/
+.DS_Store

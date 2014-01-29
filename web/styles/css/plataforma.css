@@ -8,6 +8,169 @@
  *
  */
  
+
+ /* --------------------------------------------------
+    John Doe Styles
+-------------------------------------------------- */
+
+.slide{
+    display: none;
+    color: white;
+    font-size: 22px;
+    position: relative;
+    z-index: 9999;
+    width: 400px;
+    text-align: center;
+    margin: 280px auto 0;
+  }
+  
+.slide-title {
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 34px;
+  line-height: 1.1;
+  margin: 20px 0;
+}
+.slide-main {
+  font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 30px;
+}
+.slide-small .slide-title {
+  font-size: 28px;
+  line-height: 1.1;
+  margin: 10px 0;
+}
+.slide-small .slide-main {
+  margin-bottom: 20px;
+}
+
+.slide .arrow {
+  background-image:url("../../img/brushes.svg");
+  background-repeat:no-repeat;
+  background-color: transparent;
+}
+
+.slide.slide2 {
+    margin: 220px 0 0 390px;
+    width: 400px;
+    text-align: left;
+}
+.slide.slide2 .arrow {
+  background-position:0px 0px; 
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  margin: 0px 0 0 -86px;
+}
+
+.slide.slide3 {
+    margin: 0;
+    width: 340px;
+    text-align: right;
+    position: absolute;
+    right: 400px;
+    top: 67px;
+}
+.slide.slide3 .arrow {
+  background-position:0 -40px; 
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  right: -90px;
+  top: -12px;
+}
+
+.slide.slide4 {
+    right: 0;
+    left: 0;
+    padding: 30px 220px;
+    bottom: 0px;
+    position: absolute;
+    background-color: rgba(0,0,0,0.855);
+    margin: 0px;
+    width: auto;
+}
+
+
+
+/* --------------------------------------------------
+    Modal Windows
+-------------------------------------------------- */
+.modalwindow {
+
+}
+
+/* --------------------------------------------------
+    Buttons From Aerolab _buttons.scss
+-------------------------------------------------- */
+
+.btn {
+  text-align: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  padding: 13px 20px 10px;
+  transition: all 0.1s  ease-in-out;
+  outline: none; }
+
+.btn-primary {
+  font-size: 16px; }
+
+.btn-large {
+  font-size: 20px;
+  padding: 15px 30px 12px;
+}
+
+.btn-small {
+  height: 34px;
+  line-height: 24px; }
+
+.btn-tiny {
+  height: 26px;
+  padding: 1px 15px 0 15px;
+  font-size: 12px;
+  line-height: 25px; }
+
+.btn-inside {
+  height: 30px;
+  padding: 5px 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  color: #fff;
+  text-align: center;
+  outline: none; }
+
+.btn-gray {
+  background-color: #a9a9ad; }
+  .btn-gray:hover {
+    background-color: #b9b9bc; }
+  .btn-gray:active {
+    background-color: #7d7d83; }
+
+.btn-gray-light {
+  background-color: #e3e3e3; }
+  .btn-gray-light:hover {
+    background-color: #b9b9bc; }
+  .btn-gray-light:active {
+    background-color: #7d7d83; }
+
+.btn-orange {
+  background-color: #ff671b; }
+  .btn-orange:hover {
+    background-color: #ff712a;
+    color: #fff; }
+  .btn-orange:active {
+    background-color: #ff5d0c; }
+
+.btn-primary {
+  
+}
+
+
  /* --------------------------------------------------
 // Added Font Styles
 -------------------------------------------------- */
@@ -39,13 +202,14 @@ html, html a {
 body {
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding-top: 100px;
-  color: #000;
+  color: #404042;
 }
 
 a:hover {
   text-decoration: none;
 }
-p {line-height:1.6;}
+p {
+    line-height: 1.6;}
 h1,h2,h3,h4, .title1, .title2, .title3, .title4
 {line-height:1; font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
@@ -99,7 +263,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 // modal
 -------------------------------------------------- */
 .modal-backdrop {
-  background-color: #fff;
+  background-color: #162230;
 }
 .modal-backdrop,
 .modal-backdrop.fade.in {
@@ -166,7 +330,8 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 -------------------------------------------------- */
 
 .navbar{
-  z-index: 1000;
+  z-index: 999;
+  min-width: 860px;
 }
 
 .navbar .nav {
@@ -174,6 +339,8 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 }
 .navbar .nav > li > a {
   padding:0px;
+  transition:all 0.2s ease-in-out;
+  cursor:pointer;
 }
 .navbar .nav > li  {
   border-right: 1px solid #E5E5EB;
@@ -196,6 +363,9 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
 .navbar .nav > li > a.nav-menu-icon:hover {
   background-color: #FF671B;
 }
+.navbar-inner {
+  background-color: rgba(255,255,255,0.97)
+}
 
 .nav-menu-icon::before {
   display: inline-block;
@@ -205,6 +375,7 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background: #ccc;
   box-shadow: 0 3px white, 0 -6px #ccc, 0 -9px white, 0 -12px #ccc;
   content: '';
+  transition: all 0.2s ease-in-out;
 }
 
 .nav-menu-icon:hover::before {
@@ -223,11 +394,11 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   height: 0;
 }
 
-.plataforma-nav .nav.pull-right {
+.plataforma-nav .nav.pull-right,
+.navbar-fixed-top .nav.navbar-right {
   border-left: 1px solid #E5E5EB;
 }
 .plataforma-nav .nav.pull-right li:last-child a {
-  padding-right: 20px;
 }
 .plataforma-nav .nav.pull-right li a.nav-btn i {
   display: inline-block;
@@ -248,10 +419,16 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   background: url("../../img/svgSprite.svg") no-repeat scroll -270px 0 transparent;
 }
 .nav-btn-prfl i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -365px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -369px 0 transparent;
 }
 .nav-btn-prfl .caret {
   margin: 20px 20px 0 0;
+}
+.nav-btn-path i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -519px -50px transparent;
+}
+.nav-btn-path:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -519px 0px transparent;
 }
 
 
@@ -263,10 +440,11 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   color: #C7C7CC;
   float: left;
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   margin: auto;
   height: 30px;
-  padding: 17px 20px 3px;
+  padding: 17px 16px 3px 14px;
+  transition: all 0.2s ease-in-out;
 } 
 .navbar .nav.nav-mainbtn .active a,
 .navbar .nav.nav-mainbtn a:hover {
@@ -281,32 +459,34 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   margin: -20px -3px 0px -10px;
 }
 .nav-mainbtn .nmb-mat i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -172px -50px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -169px -50px transparent;
+  width: 53px;
 }
 .nav-mainbtn .nmb-mat.active i,
 .nav-mainbtn .nmb-mat a:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -172px 0 transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -169px 0 transparent;
 }
 
 .nav-mainbtn .nmb-ins i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -51px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -221px -51px transparent;
+  width: 48px;
 }
 .nav-mainbtn .nmb-ins.active i, 
 .nav-mainbtn .nmb-ins a:hover i {
-  background: url("../../img/svgSprite.svg") no-repeat scroll -222px -1px transparent;
+  background: url("../../img/svgSprite.svg") no-repeat scroll -221px -1px transparent;
+}
+.nav-mainbtn .nmb-tut i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -472px -51px transparent;
+  width: 47px;
+}
+.nav-mainbtn .nmb-tut.active i, 
+.nav-mainbtn .nmb-tut a:hover i {
+  background: url("../../img/svgSprite.svg") no-repeat scroll -472px -1px transparent;
 }
 
 
-
-
-/* --------------------------------------------------
-// Footer
--------------------------------------------------- */
-footer {
-  background-color: #F5F5F5;
-  border: 0 none;
-  padding: 25px 0 20px;
-  margin-top: 30px;
+.nav-btn-prfl {
+  font-size: 15px;
 }
 
 
@@ -320,13 +500,28 @@ footer {
   background-color: #ccc;
   position: relative;
   padding-top: 20px;
+  transition:all 0.2s ease-in-out;
 }
 
 .subject-buttonbox .subject-title {
   position: absolute;
-  bottom: 10px;
-  width: 100%;
+  bottom: 24px;
+  padding: 0 10px;
+  width: 220px;
+  z-index: 500;
 }
+    .subject-title .st-title {
+      font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 20px;
+      margin: 0;
+      line-height: 1.1;
+    }
+    .subject-title .st-progress {
+      font-family: HelveticaRegular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      margin: 0;
+      line-height: 1;
+    }
 
 .subject-buttonbox .subject-image {
   position: relative;
@@ -351,6 +546,29 @@ footer {
   top: 20px;
   left: 48px;
 }
+
+.subject-add {
+  border:2px dashed #E5E5EB;
+  background-color: #fff;
+  color: #949499;
+  width: 242px;
+  height: 222px;
+  transition:all 0.2s ease-in-out;
+}
+.subject-plus {
+  font-size: 200px;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-top: 75px;
+  color: #E9E9EB;
+  transition:all 0.2s ease-in-out;
+}
+.subject-add:hover {
+  border:2px dashed #C7C7CC;
+}
+.subject-add:hover .subject-plus {
+  color: #AFAFB3;
+}
+
 
 .learning-path {
   background-color: #E4E4E4;
@@ -601,14 +819,11 @@ footer {
   font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .eg-details .description .eg-description {
-  width: 300px;
-  height: 350px;
-  margin: 0px;
-  overflow: auto;
-  padding-right: 20px;
+    margin: 0px;
 }
 .eg-details .description .eg-description p {
-  font-size: 12px;
+  font-size: 13px;
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* --------------------------------------------------
@@ -621,31 +836,47 @@ footer {
 .lv-container .subject-item {
   position: relative;
 }
+.lv-container .subject-item.addchapter-button {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  margin-bottom: 30px;
+}
 .lv-icon {
-  height: 36px;
-  width: 36px;
-  padding: 6px;
+  height: 48px;
+  width: 48px;
   float: left;
   margin-right: 5px;
+  border-radius: 8px;
+  overflow: hidden;
 }
-.lv-container .title3 {
-  padding: 12px 0 0 55px;
+.lv-icon img {
+  max-width: none;
+  max-height: 48px;
+}
+.lv-container .lv-title {
+  padding: 7px 0 0 0px;
   cursor: pointer;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  color: #333;
+  margin: 0px;
 }
-.lv-container .title3 i {
-  margin: 3px 3px 0 0;
+.lv-container .lv-title i {
+  margin: 1px 4px 0 0;
 }
-.lv-container .small1 {
+.lv-container .lv-data {
   margin-top: -25px;
   position: absolute;
   right: 0;
+  color: #999;
 }
 .lv-lvlone {
-  padding: 9px 0 0 18px;
+    padding: 9px 0 0 18px;
 }
 .lv-lvlone li {
   border-top: 1px solid #ccc;
-  padding: 12px 0px 7px 38px;
+  padding: 12px 0px 7px 41px;
+  position: relative;
 }
 .lv-lvlone li:last-child {
   border-bottom: 1px solid #ccc;
@@ -684,7 +915,6 @@ footer {
 // Unit View
 -------------------------------------------------- */
 .unit-view {
-  border-top: 10px solid #008A5E;
   margin-top: -47px;
 }
 .unit-hd {
@@ -797,7 +1027,7 @@ div[type*=button]{
 -------------------------------------------------- */
 
 /* icons */
-.cbp-spmenu  i {
+.cbp-spmenu.cbp-spmenu-left i {
   display: inline-block;
   width: 28px;
   height: 28px;
@@ -870,8 +1100,17 @@ div[type*=button]{
     font-weight: 300;
     background: #0d77b6;
 }
+
+.cbp-spmenu h4 {
+    color: #afdefa;
+    font-size: 1.7em;
+    padding: 20px 12px;
+    margin: 0;
+    font-weight: 300;
+    background: #0d77b6;
+}
  
-.cbp-spmenu a {
+.cbp-spmenu.cbp-spmenu-left a {
     display: block;
     color: #AFAFB3;
     font-size: 15px;
@@ -879,12 +1118,12 @@ div[type*=button]{
     font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
  
-.cbp-spmenu a:hover {
+.cbp-spmenu.cbp-spmenu-left a:hover {
     background: #5789FA;
     color: #fff;
 }
  
-.cbp-spmenu a:active {
+.cbp-spmenu.cbp-spmenu-left a:active {
     background: #afdefa;
     color: #47a3da;
 }
@@ -893,14 +1132,15 @@ div[type*=button]{
  
 .cbp-spmenu-vertical {
     width: 243px;
-    height: 100%;
     top: 50px;
-    z-index: 1000;
+    z-index: 998;
+    bottom: 0;
 }
  
-.cbp-spmenu-vertical a {
+.cbp-spmenu-vertical.cbp-spmenu-left a {
     border-bottom: 1px solid #E9E9EB;
     padding: 16px 16px 12px;
+    transition: all 0.2s ease-in-out;
 }
  
 .cbp-spmenu-horizontal {
@@ -927,11 +1167,14 @@ div[type*=button]{
 /* Vertical menu that slides from the left or right */
  
 .cbp-spmenu-left {
-    left: -240px;
+    left: -245px;
 }
  
 .cbp-spmenu-right {
-    right: -240px;
+    right: -320px;
+    width: 300px;
+    overflow-y: auto;
+    padding-top: 50px;
 }
  
 .cbp-spmenu-left.cbp-spmenu-open {
@@ -939,10 +1182,15 @@ div[type*=button]{
      -moz-box-shadow:    -50px 0px 100px 60px rgba(0,0,0,.5); 
     -webkit-box-shadow: -50px 0px 100px 60px rgba(0,0,0,.5);
     box-shadow:         -50px 0px 100px 60px rgba(0,0,0,.5);
+    z-index: 998;
 }
  
 .cbp-spmenu-right.cbp-spmenu-open {
     right: 0px;
+    -moz-box-shadow:    50px 0px 100px 60px rgba(0,0,0,.5); 
+    -webkit-box-shadow: 50px 0px 100px 60px rgba(0,0,0,.5);
+    box-shadow:         50px 0px 100px 60px rgba(0,0,0,.5);
+    z-index: 998;
 }
  
 /* Horizontal menu that slides from the top or bottom */
@@ -1026,4 +1274,119 @@ div[type*=button]{
     .cbp-spmenu-push-toright {
         left: 190px;
     }
+}
+
+.cbp-path-item{
+  padding: 10px 10px 8px;
+  border-bottom: 1px solid #dbdbdb;
+  position: relative;
+}
+
+.cbp-spmenu-right .cbp-path-item:first{
+  margin-top: 200px;
+}
+
+.cbp-path-item.active{
+  background-color: #2568fa;
+  color: white;
+}
+
+.cbp-path-item:hover{
+  background-color: #d8e4fe;
+  cursor:hand;
+  cursor:pointer;
+}
+
+.cbp-path-item .cbp-path-item-image {
+  display:inline-block;
+  vertical-align: top;
+  margin-right: 6px;
+}
+.cbp-path-item .cbp-path-item-image div {
+  border-radius: 8px;
+  width:36px;
+}
+
+.cbp-path-item .cbp-path-item-datacontainer {
+  display:inline-block;
+  vertical-align: top;
+  width:200px;
+}
+
+.cbp-spmenu .title{
+  display: block;
+  color: #6D6D6D;
+  font-size: 15px;
+  font-weight: 300;
+  font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-bottom: 1px solid #E9E9EB;
+  padding: 16px 16px 13px;
+  position: fixed;
+  background-color: white;
+  width: 258px;
+  z-index: 100;
+  margin-top: -50px;
+}
+
+.cbp-path-item-position{
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display:inline-block;
+  vertical-align: top;
+  margin-top:-3px;
+  font-size: 10px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  width:15px;
+}
+
+.cbp-path-item p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cbp-path-item .cbp-path-item-lesson, .cbp-path-item .cbp-path-item-course, .cbp-path-item .cbp-path-item-chapter{
+  color: black;
+}
+
+.cbp-path-item .cbp-path-item-lesson {
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cbp-path-item .cbp-path-item-course {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+
+.cbp-path-item .stats{
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  width: 24%;
+  height: 100%;
+  background-color: white;
+  display: none;
+}
+
+.cbp-path-item .remove{
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  right: 0;
+  width: 17%;
+  height: 100%;
+  background-color: rgb(226, 0, 0);
+  display: none;
+}
+
+.cbp-spmenu-right #edit-learning-path{
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.templates{
+  display: none;
 }

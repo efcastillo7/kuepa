@@ -41,6 +41,29 @@ class chapterActions extends kuepaActions {
         return $this->renderText($this->getPartial('views/navigator/lesson_list'));
     }
 
+    public function executeExpanded2(sfWebRequest $request) {
+        $course_id = $request->getParameter('course_id');
+        $chapter_id = $request->getParameter('chapter_id');
+        $lesson_id = $request->getParameter('lesson_id');
+
+        $this->profile = $this->getProfile();
+
+        $this->course = Course::getRepository()->find($course_id);
+        $this->chapter = Chapter::getRepository()->find($chapter_id);
+        $this->lesson = Lesson::getRepository()->find($lesson_id);
+
+        if ($request->isXmlHttpRequest()) {
+            $response = Array(
+                'status' => 'success',
+                'template' => $this->getPartial('lesson/menu_chapters')
+            );
+
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($this->getPartial('lesson/menu_chapters'));
+    }
+
     public function executeCreate(sfWebRequest $request) {
         $id = $request->getParameter("id");
 

@@ -16,6 +16,7 @@ class lessonActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
+        $this->profile = $this->getProfile();
         $course_id = $request->getParameter('course_id');
         $this->course = Course::getRepository()->find($course_id);
 
@@ -68,6 +69,10 @@ class lessonActions extends kuepaActions {
         ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
         $this->comments = NoteService::getInstance()->getComments($resource_id);
+
+        $this->type = $this->resource->getResourceData()->getFirst()->getType();
+
+        $this->setLayout("layout_v2");
     }
 
     public function executeCreate(sfWebRequest $request) {
@@ -241,6 +246,32 @@ class lessonActions extends kuepaActions {
         return $this->renderText($response['template']);
     }
 
+    public function executeExpanded2(sfWebRequest $request) {
+        $course_id = $request->getParameter('course_id');
+        $chapter_id = $request->getParameter('chapter_id');
+        $lesson_id = $request->getParameter('lesson_id');
 
+        $this->profile = $this->getProfile();
+
+        $this->course = Course::getRepository()->find($course_id);
+        $this->chapter = Chapter::getRepository()->find($chapter_id);
+        if($lesson_id){
+            $this->lesson = Lesson::getRepository()->find($lesson_id);
+        }else{
+            $this->lesson = new Lesson();
+        }
+        $this->resource = new Resource();
+
+        if ($request->isXmlHttpRequest()) {
+            $response = Array(
+                'status' => 'success',
+                'template' => $this->getPartial('lesson/menu_lessons')
+            );
+
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($this->getPartial('lesson/menu_lessons'));
+    }
 
 }

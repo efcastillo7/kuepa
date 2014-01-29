@@ -1,73 +1,77 @@
 <h1><?php echo $course->getName() ?></h1>
 
-<h3>Avance</h3>
-<?php if($has_stats): ?>
-<div class="row">
-	<div class="span8">
-		<?php include_component('stats', 'burndownChartWeeks', array('course_id' => $course->getId())) ?>
+<?php if(false): ?>
+	<h3>Avance</h3>
+	<?php if($has_stats): ?>
+	<div class="row">
+		<div class="span8">
+			<?php 
+				include_component('stats', 'burndownChartWeeks', array('course_id' => $course->getId()));
+			?>
+		</div>
+		<div class="span4">
+			<h4>Estadísticas</h4>
+			<table class="table">
+				<tr>
+					<th>Duración del Curso</th>
+					<td><?php echo round($stats['course_duration']) ?> hs</td>
+				</tr>
+				<tr>
+					<th>Horas Dedicadas</th>
+					<td><?php echo $stats['hs_dedicated'] ?> hs</td>
+				</tr>
+				<tr>
+					<th>Dias Transcurridos</th>
+					<td><?php echo $stats['days_lapse'] ?></td>
+				</tr>
+				<tr>
+					<th>Promedio Dedicado Semanal</th>
+					<td><?php echo $stats['weeks_lapse'] > 0 ? $stats['hs_dedicated']/$stats['weeks_lapse'] : 0 ?> hs</td>
+				</tr>
+				<tr>
+					<th>Dias para Finalizar</th>
+					<td><?php echo $stats['days_remaining'] ?></td>
+				</tr>
+				<tr>
+					<th>Horas Restantes</th>
+					<td><?php echo $stats['hs_remaining'] ?> hs</td>
+				</tr>
+				<tr>
+					<th>Esfuerzo Semanal para Finalizar en Fecha</th>
+					<td><?php echo $stats['weeks_remaining'] > 1 ? round($stats['hs_remaining']/$stats['weeks_remaining']) : $stats['hs_remaining'] ?> hs</td>
+				</tr>
+			</table>
+		</div>
 	</div>
-	<div class="span4">
-		<h4>Estadísticas</h4>
-		<table class="table">
-			<tr>
-				<th>Duración del Curso</th>
-				<td><?php echo round($stats['course_duration']) ?> hs</td>
-			</tr>
-			<tr>
-				<th>Horas Dedicadas</th>
-				<td><?php echo $stats['hs_dedicated'] ?> hs</td>
-			</tr>
-			<tr>
-				<th>Dias Transcurridos</th>
-				<td><?php echo $stats['days_lapse'] ?></td>
-			</tr>
-			<tr>
-				<th>Promedio Dedicado Semanal</th>
-				<td><?php echo $stats['weeks_lapse'] > 0 ? $stats['hs_dedicated']/$stats['weeks_lapse'] : 0 ?> hs</td>
-			</tr>
-			<tr>
-				<th>Dias para Finalizar</th>
-				<td><?php echo $stats['days_remaining'] ?></td>
-			</tr>
-			<tr>
-				<th>Horas Restantes</th>
-				<td><?php echo $stats['hs_remaining'] ?> hs</td>
-			</tr>
-			<tr>
-				<th>Esfuerzo Semanal para Finalizar en Fecha</th>
-				<td><?php echo $stats['weeks_remaining'] > 1 ? round($stats['hs_remaining']/$stats['weeks_remaining']) : $stats['hs_remaining'] ?> hs</td>
-			</tr>
-		</table>
-	</div>
-</div>
-<?php else: ?>
-	<div class="alert alert-block alert-info">
-	  <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
-	  <?php if ($seted_deadline): ?>
-	  Todavía no has accedido al curso.
-	  <?php else: ?>
-	  Todavía no has definido una fecha límite. <a href="#" class="btn btn-inverse" id="setdeadline">Definir Fecha</a><div id="datepicker"></div>
-	  <?php endif ?>
-	</div>
+	<?php else: ?>
+		<div class="alert alert-block alert-info">
+		  <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+		  <?php if ($seted_deadline): ?>
+		  Todavía no has accedido al curso.
+		  <?php else: ?>
+		  Todavía no has definido una fecha límite. <a href="#" class="btn btn-inverse" id="setdeadline">Definir Fecha</a><div id="datepicker"></div>
+		  <?php endif ?>
+		</div>
 
-	<script>
-		$("#setdeadline").click(function(){
-			$( "#datepicker" ).datepicker({
-				dateFormat: "yy-mm-dd",
-				minDate: new Date(),
-				onSelect: function(date){
-					$.ajax({
-						url: "/kuepa_api_dev.php/course/deadline",
-						data: {course_id: '<?php echo $course->getId()?>', date: date},
-						type: 'POST',
-						success: function(response){
-							location.reload();
-						}
-					});
-				}
+		<script>
+			$("#setdeadline").click(function(){
+				$( "#datepicker" ).datepicker({
+					dateFormat: "yy-mm-dd",
+					minDate: new Date(),
+					onSelect: function(date){
+						$.ajax({
+							url: "/kuepa_api_dev.php/course/deadline",
+							data: {course_id: '<?php echo $course->getId()?>', date: date},
+							type: 'POST',
+							success: function(response){
+								location.reload();
+							}
+						});
+					}
+				});
 			});
-		});
-	</script>
+		</script>
+	<?php endif; ?>
 <?php endif; ?>
 
 <h3>Unidades</h3>

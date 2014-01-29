@@ -1,0 +1,237 @@
+.btn-primary,.btn-small,.btn-large,.btn-tiny{
+  color:#fff;
+  text-align: center;
+  @include border-radius(5px);
+  border:0;
+  padding:5px 30px;
+  transition: all 0.1s  ease-in-out;
+  outline: none;
+}
+.btn-primary{
+  height: 40px;
+  font-size: 16px;
+  line-height: 30px;
+}
+.btn-large{
+  height: 52px;
+  font-size: 20px;
+  line-height: 40px;
+}
+.btn-small{
+  height: 34px;
+  line-height: 24px;
+}
+.btn-tiny{
+  height: 26px;
+  padding:1px 15px 0 15px;
+  font-size: 12px;
+  line-height: 25px;
+}
+
+.btn-inside{
+  height: 30px;
+  padding:5px 10px;
+  @include border-radius(5px);
+  border:0;
+  color:#fff;
+  text-align: center;
+  outline: none;
+}
+
+.btn-gray{
+  background-color:$btn-gray;
+  &:hover{background-color:$btn-gray-hover;}
+  &:active{background-color:$btn-gray-active;}
+}
+.btn-gray-light{
+  background-color:$btn-gray-light;
+  &:hover{background-color:$btn-gray-hover;}
+  &:active{background-color:$btn-gray-active;}
+}
+.btn-orange{
+  background-color:$orange;
+  &:hover{background-color:$orange-hover;color:#fff;}
+  &:active{background-color:$orange-active;}
+}
+
+
+
+/* --------------------------------------------------
+// ICON BUTTONS
+-------------------------------------------------- */
+.btn-icon-left,.btn-icon-right{
+  color: #fff;
+  border: 0;
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-icon-left .icon,.btn-icon-right .icon{
+  background: rgba(0,0,0,0.1);
+  display: inline-block;
+}
+.btn-icon-left .icon,
+.btn-icon-right .text{float: left;}
+
+.btn-icon-left .text,
+.btn-icon-right .icon{float: right;}
+
+.btn-icon-left i,.btn-icon-right i{margin-top:-3px;}
+
+.btn-icon-left.small,
+.btn-icon-right.small{
+  height: 34px;
+  line-height: 34px;
+  padding: 0 20px 0 0;
+}
+.btn-icon-left.small{padding: 0 20px 0 0;}
+
+.btn-icon-left.small .icon{
+  padding: 0 8px;
+  margin-right: 14px;
+}
+
+.btn-icon-left.primary,
+.btn-icon-right.primary{
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+}
+.btn-icon-left.primary{padding: 0 25px 0 0;}
+.btn-icon-right.primary{padding: 0 0 0 25px;}
+
+.btn-icon-left.primary .icon{
+  padding: 0 10px;
+  margin-right: 18px;
+}
+
+.btn-icon-left.large,
+.btn-icon-right.large{
+  height: 52px;
+  line-height: 52px;
+  font-size: 20px;
+}
+.btn-icon-left.large{padding: 0 27px 0 0;}
+.btn-icon-right.large{padding: 0 0 0 27px;}
+.btn-icon-left.large .icon{
+  padding: 0 14px;
+  margin-right: 20px;
+}
+
+.btn-icon-right .icon{float: right;}
+.btn-icon-right.small{padding: 0 0 0 20px;}
+.btn-icon-right.small .icon{
+  padding: 0 8px;
+  margin-left: 14px;
+}
+
+.btn-icon-right.primary{
+  height: 44px;
+  line-height: 44px;
+  padding: 0 0px 0 20px;
+  font-size: 16px;
+}
+.btn-icon-right.primary .icon{
+  padding: 0 10px;
+  margin-left: 18px;
+}
+
+.btn-icon-right.large{
+  height: 52px;
+  padding: 0 0px 0 27px;
+  line-height: 52px;
+  font-size: 20px;
+}
+.btn-icon-right.large .icon{
+  padding: 0 14px;
+  margin-left: 20px;
+}
+
+.dropdown-stylized.orange,
+.dropdown-stylized-list.orange li a:hover,
+.dropdown.open .dropdown-stylized-list.gray li a:hover{
+  color:#fff;
+  background: #ff671b !important;
+  background: -moz-linear-gradient(top,  #ff671b 0%, #e35722 100%) !important;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff671b), color-stop(100%,#e35722)) !important;
+  background: -webkit-linear-gradient(top,  #ff671b 0%,#e35722 100%) !important;
+  background: -o-linear-gradient(top,  #ff671b 0%,#e35722 100%) !important;
+  background: -ms-linear-gradient(top,  #ff671b 0%,#e35722 100%) !important;
+  background: linear-gradient(to bottom,  #ff671b 0%,#e35722 100%) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff671b', endColorstr='#e35722',GradientType=0 ) !important;
+}
+.dropdown-stylized.blue,
+.dropdown-stylized-list.blue li a:hover{
+  color:#fff;
+  background: #3f79fa;
+  background: -moz-linear-gradient(top,  #3f79fa 0%, #2360e7 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f79fa), color-stop(100%,#2360e7));
+  background: -webkit-linear-gradient(top,  #3f79fa 0%,#2360e7 100%);
+  background: -o-linear-gradient(top,  #3f79fa 0%,#2360e7 100%);
+  background: -ms-linear-gradient(top,  #3f79fa 0%,#2360e7 100%);
+  background: linear-gradient(to bottom,  #3f79fa 0%,#2360e7 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f79fa', endColorstr='#2360e7',GradientType=0 );
+}
+.dropdown-stylized.gray{
+  color: #fff;
+  background: #a9a9ad;
+  background: -moz-linear-gradient(top,  #a9a9ad 0%, #95959a 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a9a9ad), color-stop(100%,#95959a));
+  background: -webkit-linear-gradient(top,  #a9a9ad 0%,#95959a 100%);
+  background: -o-linear-gradient(top,  #a9a9ad 0%,#95959a 100%);
+  background: -ms-linear-gradient(top,  #a9a9ad 0%,#95959a 100%);
+  background: linear-gradient(to bottom,  #a9a9ad 0%,#95959a 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9a9ad', endColorstr='#95959a',GradientType=0 );
+}
+
+.dropdown-stylized{
+  border-radius: 4px;
+  line-height: 36px;
+  color:#fff;
+  display: inline-block;
+}
+.dropdown-stylized .text{
+  float: left;
+  display: inline-block;
+  padding: 0 10px;
+}
+.dropdown-stylized .icon{
+  background: rgba(0,0,0,0.1);
+  float: right;
+  padding: 0 5px;
+}
+.dropdown.open .dropdown-stylized.orange{background: $orange !important;}
+.dropdown.open .dropdown-stylized.blue{background: #3f7bfb;}
+
+.dropdown-stylized-list{
+  background: $dropdown-list;
+}
+.dropdown-stylized-list li a{
+  color:#fff;
+}
+.dropdown-stylized-list .divider{
+  background-color: #162230;
+}
+
+.btn-group.wide button{
+  padding: 6px 25px;
+}
+
+.btn-default.green-active.active,
+.btn-default.green-active:active,
+.btn-default.green-active:focus{
+  background: $input-success;
+  color:#fff;
+}
+
+.send-square{
+  width: 74px;
+  height: 74px;
+  color:#fff;
+  border:0;
+  font-size: 20px;
+  transition:all 0.1s ease-in-out;
+}
+.send-square.blue{background: $blue3;}
+.send-square.blue:hover{background: lighten($blue3,25%);}
+.send-square.blue:active{background: darken($blue3,15%);}
