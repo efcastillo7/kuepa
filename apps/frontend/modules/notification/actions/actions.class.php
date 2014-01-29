@@ -80,11 +80,14 @@ class notificationActions extends sfActions {
     }
 
     public function executeRefresh(sfWebRequest $r){
-
         $last = $r->getParameter("last_id");
-        $p_count = $r->getParameter("count");
+        $count = $r->getParameter("count", 10);
 
-        $count = empty($p_count) ? 10 : $p_count;
+        $response = Array(
+            'status' => "error",
+            'template' => "No se pudo marcar la notificación como interactuada",
+            'code' => 400
+        );
 
         if ($this->getUser()->isAuthenticated()) {
             $this->profile = $this->getUser()->getGuardUser()->getProfile();
@@ -92,6 +95,11 @@ class notificationActions extends sfActions {
             //get the first message
             $this->notifications = NotificationsService::getInstance()->getNotificationsForUser($this->profile->getId(),$count,$last);
             $this->count = NotificationsService::getInstance()->getUnreadNotificationsCountForUser($this->profile->getId());
+
+            $response['template'] = $this->getPartial("refresh");
+            $response['status'] = "success";
+
+            return $this->renderText(json_encode($response));
         }
 
     }

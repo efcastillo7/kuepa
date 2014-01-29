@@ -51,7 +51,7 @@ class NotificationsService {
                     ->andWhere("p.id = ?", $profile_id )
                     ->orderBy('n.created_at desc');
 
-        return count($query->execute());
+        return $query->count();
     }
 
     /**
@@ -66,11 +66,11 @@ class NotificationsService {
                     ->leftJoin("na.Profile p2")
                     ->where("p.id = ?", $profile_id );
 
-        if(!empty($limit)){
+        if($limit){
             $query->limit($limit);
         }
 
-        if(!empty($last_id)){
+        if($last_id){
             $query->andWhere("n.id > ?",$last_id)
                   ->orderBy('n.created_at asc');
         }else{

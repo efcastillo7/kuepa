@@ -1,6 +1,6 @@
 <h1><?php echo $course->getName() ?></h1>
 
-<?php if(false): ?>
+<?php if(true): ?>
 	<h3>Avance</h3>
 	<?php if($has_stats): ?>
 	<div class="row">
