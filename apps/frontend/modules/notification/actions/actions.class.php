@@ -85,7 +85,7 @@ class notificationActions extends sfActions {
 
         $response = Array(
             'status' => "error",
-            'template' => "No se pudo marcar la notificación como interactuada",
+            'template' => "No se pudo refrescar",
             'code' => 400
         );
 
