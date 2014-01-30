@@ -67,19 +67,25 @@ function refreshNotifications() {
         count: 10
     };
 
-    $.post("/notification/refresh", data, function(html) {
-        var $html = $(html);
+    //post and process json response
+    $.ajax('/notification/refresh',{
+        dataType: 'json',
+        type: 'post',
+        data: data,
+        success: function(data){
+            //avoid preprending multiple responses
+            var count = data.count;
 
-        $contNotifications.prepend($html);
+            if(count > 0){
+                $notifticationCount.text(count).show();
+                
+                //add notifications
+                $contNotifications.prepend($(data.template));
+            }else{
+                $notifticationCount.text("").hide();
+            }
 
-        var count = $("[name=notifications_count]:first").val();
-
-        if(count == "0"){
-            $notifticationCount.text("").hide();
-        }else{
-            $notifticationCount.text(count).show();
+            int_notifications = setTimeout(refreshNotifications,5000);
         }
-
-        int_notifications = setTimeout(refreshNotifications,5000);
     });
 }

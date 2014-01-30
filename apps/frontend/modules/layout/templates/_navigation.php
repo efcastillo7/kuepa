@@ -37,7 +37,6 @@
                 <li class="nmb-tut"><a href="<?php echo url_for("@video_session") ?>"><i></i>Tutorias</a></li>
             </ul>
             <ul class="nav pull-right">
-
                 <li class="dropdown">
                     <?php include_component("notification","notifications") ?>
                 </li>

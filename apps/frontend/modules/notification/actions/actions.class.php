@@ -23,6 +23,8 @@ class notificationActions extends sfActions {
             $this->notifications = NotificationsService::getInstance()->getNotificationsForUser($this->profile->getId());
             $this->count = NotificationsService::getInstance()->getUnreadNotificationsCountForUser($this->profile->getId());
         }
+
+        $this->setLayout("layout_v2");
     }
 
     /**
@@ -78,11 +80,15 @@ class notificationActions extends sfActions {
     }
 
     public function executeRefresh(sfWebRequest $r){
-
         $last = $r->getParameter("last_id");
-        $p_count = $r->getParameter("count");
+        $count = $r->getParameter("count", 10);
 
-        $count = empty($p_count) ? 10 : $p_count;
+        $response = Array(
+            'status' => "error",
+            'template' => "No se pudo refrescar",
+            'code' => 400,
+            'count' => 0
+        );
 
         if ($this->getUser()->isAuthenticated()) {
             $this->profile = $this->getUser()->getGuardUser()->getProfile();
@@ -90,6 +96,12 @@ class notificationActions extends sfActions {
             //get the first message
             $this->notifications = NotificationsService::getInstance()->getNotificationsForUser($this->profile->getId(),$count,$last);
             $this->count = NotificationsService::getInstance()->getUnreadNotificationsCountForUser($this->profile->getId());
+
+            $response['template'] = $this->getPartial("refresh");
+            $response['status'] = "success";
+            $response['count'] = $this->count;
+
+            return $this->renderText(json_encode($response));
         }
 
     }
