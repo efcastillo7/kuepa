@@ -81,7 +81,8 @@
     font-family: HelveticaRoman;
     padding: 3px 0 15px 20px;
     margin-bottom: 0;
-    font-weight: normal; }
+    font-weight: normal;
+    border-bottom: 1px solid #ccc; }
   .dropdown-menu.notifications .cont-notifications {
     height: 220px;
     position: relative;
