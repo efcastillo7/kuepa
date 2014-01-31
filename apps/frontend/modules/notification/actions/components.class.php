@@ -15,4 +15,7 @@ class notificationComponents extends kuepaComponents {
     public function executeNotification_event(){
     }
 
+    public function executeNotification_message(){
+    }
+
 }
