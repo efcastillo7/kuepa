@@ -4,9 +4,12 @@
 rendering: ~
 security:  ~
 
+# insert your own filters here
 remember_me:
   class: sfGuardRememberMeFilter
-# insert your own filters here
+
+# LocationFilter:
+ # class: LocationFilter
 
 cache:     ~
 execution: ~

@@ -51,7 +51,7 @@ class NotificationsService {
                     ->andWhere("p.id = ?", $profile_id )
                     ->orderBy('n.created_at desc');
 
-        return count($query->execute());
+        return $query->count();
     }
 
     /**
@@ -66,11 +66,11 @@ class NotificationsService {
                     ->leftJoin("na.Profile p2")
                     ->where("p.id = ?", $profile_id );
 
-        if(!empty($limit)){
+        if($limit){
             $query->limit($limit);
         }
 
-        if(!empty($last_id)){
+        if($last_id){
             $query->andWhere("n.id > ?",$last_id)
                   ->orderBy('n.created_at asc');
         }else{
@@ -155,6 +155,52 @@ class NotificationsService {
                 ->setNotificationAction($notificationAction)
                 ->setProfileId($profile)
                 ->save();
+        }
+    }
+
+    public function addMessageNotification($message_id){
+        //Gets the video session data
+        $message = Message::getRepository()->find($message_id);
+
+        if(!$message){
+            return false;
+        }
+
+        $author_id = $message->getAuthorId();
+
+        //Persists the notification action
+        $notificationAction = new NotificationAction();
+        $notificationAction
+                ->setProfile($message->getProfile())
+                ->setTermKey("new_message")
+                ->setRouteName("messages")
+                ->setType("message")
+                ->setWildcards(json_encode(
+                    array(
+                        "from"    => $message->getProfile()->getNickname(),
+                        "content" => $message->getContent()
+                    )
+                ))
+                ->save();
+
+        //And the notifications for each user
+        if($message->getParentId() != null){
+            $profiles = $message->getRoot()->getRecipients();
+        }else{
+            $profiles = $message->getRecipients();
+        }
+        
+
+        foreach($profiles as $recipient){
+            if($recipient->getRecipient()->getId() != $author_id){
+                $notification = new Notification();
+                if($recipient->getRecipient()->getCurrentModule() != "message"){
+                    $notification
+                        ->setNotificationAction($notificationAction)
+                        ->setProfileId($recipient->getRecipientId())
+                        ->save();
+                }
+            }
         }
     }
 

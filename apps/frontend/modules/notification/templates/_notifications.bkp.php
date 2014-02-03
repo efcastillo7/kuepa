@@ -3,9 +3,9 @@
     <span class="notification-count"><?php echo $count > 0 ? $count : ""; ?></span>
 </a>
 
-<!-- Notifications Dropdown -->
 <div class="dropdown-menu notifications arrow-right-img" role="menu" aria-labelledby="notifications">
-    <h1>Notificaciones</h1>
+    
+    <h5 class="text-orange">Notificaciones</h5>
     <div class="cont-notifications">
     <?php
         foreach ($notifications as $notification):
@@ -19,12 +19,12 @@
         </div>
     <?php
         endforeach;
-        if (!count($notifications)): ?>
-            No hay notificaciones nuevas
-        <?php endif ?>
-
+        if(!count($notifications)){
+            echo "No hay notificaciones";
+        }
+    ?>
     </div><!-- /cont-notifications -->
-    <div class="cont-button">
+    <div class="cont-button text-center">
         <button class="btn-tiny btn-gray view_all_notifications">Ver todas</button>
     </div>
-</div><!-- /dropdown-menu -->
+</div>
