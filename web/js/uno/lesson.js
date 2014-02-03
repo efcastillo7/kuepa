@@ -78,7 +78,7 @@ $(document).ready(function() {
       e.preventDefault();
       var link = $(this).attr('href'),
         parent = $(this).parents(".row:first"),
-        container = $(this).parents(".wrapper-aside-lesson").first(),
+        container = $(this).parents(".wrapper-aside-lesson,.wrapper-aside-exercise").first(),
         goto_dir = $(this).hasClass("navigation-menu-in"),
         from = "left",
         to = "right";

@@ -1,11 +1,10 @@
 <?php $resourceData = $resource->getResourceData()->getFirst(); ?>
 <?php $exercise = $resourceData->getExercise() ?>
 
-
 <section class="wrapper-aside-exercise clearpadding">
   <aside class="aside-exercise">
     <div class="lessons">
-      <a href="#" class="arrow-hover-left">
+      <a href="<?php echo url_for("resource/expanded2?course_id={$course->getId()}&chapter_id={$chapter->getId()}&lesson_id={$lesson->getId()}") ?>" class="arrow-hover-left navigation-menu">
         <i class="spr ico-arrow-left10"></i>
         Recursos
       </a>

@@ -22,11 +22,14 @@ class messageActions extends sfActions
 		$subject = $request->getPostParameter("subject");
 		$content = $request->getPostParameter("content");
 		$parent_id = $request->getPostParameter("thread_id");
+        $send_notification = $request->getPostParameter("send_notification", "true");
 
         if($content != ""){
             $message = MessagingService::getInstance()->sendMessage($profile_id, $recipients, $subject, $content);
 
-            NotificationMessage::add($message->getId());
+            if($send_notification == "true"){
+                NotificationMessage::add($message->getId());
+            }
 
             $response = array(
                 'id' => $message->getId(),
@@ -125,14 +128,17 @@ class messageActions extends sfActions
 
     	//TODO: check for valid parameters
 
-		$content = $request->getParameter("content");
-		$parent_id = $request->getParameter("id");
+		$content = $request->getPostParameter("content");
+		$parent_id = $request->getPostParameter("id");
+        $send_notification = $request->getPostParameter("send_notification", "true");
         $response = null;
 
         if($content != ""){
             $message = MessagingService::getInstance()->replyMessage($profile_id, $parent_id, $content);
 
-            NotificationMessage::add($message->getId());
+            if($send_notification == "true"){
+                NotificationMessage::add($message->getId());
+            }
 
             $response = array(
                 'id' => $message->getId(),
