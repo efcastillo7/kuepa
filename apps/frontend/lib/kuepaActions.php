@@ -26,4 +26,23 @@ class kuepaActions extends sfActions {
             $this->redirect("@account_expired");
         }
     }
+
+    public function preExecute() {
+        parent::preExecute();
+
+        //get context
+        $context = $this->getContext();
+        //get module name
+        $module = $context->getModuleName();
+        //get action name
+        $action = $context->getActionName();
+        
+        //update location
+        if($profile = $this->getProfile()){
+          $profile->setCurrentModule($module)
+                  ->setCurrentAction($action)
+                  ->save();
+        }
+
+      }
 }

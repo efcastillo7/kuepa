@@ -28,7 +28,7 @@ class messageActions extends sfActions
             $message = MessagingService::getInstance()->sendMessage($profile_id, $recipients, $subject, $content);
 
             if($send_notification == "true"){
-                NotificationMessage::add($message->getId());
+                NotificationsService::getInstance()->addMessageNotification($message->getId());
             }
 
             $response = array(
@@ -137,7 +137,7 @@ class messageActions extends sfActions
             $message = MessagingService::getInstance()->replyMessage($profile_id, $parent_id, $content);
 
             if($send_notification == "true"){
-                NotificationMessage::add($message->getId());
+                NotificationsService::getInstance()->addMessageNotification($message->getId());
             }
 
             $response = array(

@@ -8,10 +8,12 @@
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class messageActions extends sfActions
+class messageActions extends kuepaActions
 {
   public function preExecute()
   {
+    parent::preExecute();
+    
     $this->setLayout("layout_v2");
   }
 
