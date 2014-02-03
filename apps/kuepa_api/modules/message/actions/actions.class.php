@@ -129,7 +129,7 @@ class messageActions extends sfActions
     	//TODO: check for valid parameters
 
 		$content = $request->getPostParameter("content");
-		$parent_id = $request->getPostParameter("id");
+		$parent_id = $request->getParameter("id");
         $send_notification = $request->getPostParameter("send_notification", "true");
         $response = null;
 
