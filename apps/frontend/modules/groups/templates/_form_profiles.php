@@ -23,7 +23,7 @@ include_partial('profiles_search_form', $locals);
             <tr>
               <td>
                   <input type="checkbox" name="profile_ids[]" value="<?php echo $profile->getId(); ?>" class="checkbox">
-                  <?php echo substr($profile->getFullName(), 0,20) ?>
+                  <?php echo mb_substr($profile->getFullName(), 0, 20, 'UTF-8') ?>
               </td>
             </tr>
             <?php endforeach; ?>
