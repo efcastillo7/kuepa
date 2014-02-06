@@ -40,7 +40,7 @@
                 <li class="dropdown">
                     <?php include_component("notification","notifications") ?>
                 </li>
-                <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch"><i></i></a></li>
+                <!-- <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch"><i></i></a></li> -->
                 <li class="dropdown">
                     <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i><!--<?php echo $profile->getNickname() ?> --></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">

@@ -23,10 +23,8 @@
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
         <?php include_component("notification","notifications") ?>
-
-
       </li>
-      <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch"><i></i></a></li>
+      <!-- <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch"><i></i></a></li> -->
       <li class="dropdown">
         <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
@@ -42,13 +40,11 @@
   <?php endif; ?>
 </nav>
 
-
-
-
 <?php if($profile):?>
   <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
     <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
     <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <a href="<?php echo url_for("@video_session") ?>" class="cbp-tsk"><i></i>Tutorias</a> 
     <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
     <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
   </div>
