@@ -971,7 +971,7 @@ input.knob{ display: none;}
   
 }
 
-.resource iframe, .resource embed { 
+section.data-exercise .content iframe, .resource iframe, .resource embed { 
    max-width: 100%;
    height: 500px;
    width: 100%;
