@@ -116,8 +116,7 @@ class statsActions extends kuepaActions
 
     $profile = $this->getProfile();
     $profile_id = $profile->getId();
-    // $component_id = 692;
-
+    
     $this->li = $stats->getLearningIndex($profile_id, $component_id);
     $this->efi = $stats->getEfficiencyIndex($profile_id, $component_id);
     $this->efo = $stats->getEffortIndex($profile_id, $component_id);
@@ -126,6 +125,41 @@ class statsActions extends kuepaActions
     $this->c = $stats->getCompletitudIndex($profile_id, $component_id);
     $this->p = $stats->getPersistenceIndex($profile_id, $component_id);
 
+
+  }
+
+  public function executeTest2(sfWebRequest $request){
+    /*
+      $profile_id = 101;
+      $component_id = 692;
+      $this->component = ComponentService::getInstance()->find($component_id);
+    */
+    $component_id = $request->getParameter('id');
+    $statsObj = StatsService::getInstance();
+    ini_set('max_execution_time',60);
+    $component_id = 50;
+    $this->component = ComponentService::getInstance()->find($component_id);
+
+    $profiles = Profile::getRepository()->createQuery('p')
+                //->where('id = ?', $this->getProfile()->getId())
+                //->limit(10)
+                ->orderBy('id desc')
+                ->execute();
+    
+    $stats = array();
+    foreach ($profiles as $key => $profile) {
+      $profile_id = $profile->getId();
+      $s['profile'] = $profile;
+      $s['li'] = $statsObj->getLearningIndex($profile_id, $component_id);
+      $s['efi'] =  $statsObj->getEfficiencyIndex($profile_id, $component_id);
+      $s['efo'] = $statsObj->getEffortIndex($profile_id, $component_id);
+      $s['v'] = $statsObj->getVelocityIndex($profile_id, $component_id);
+      $s['sk'] =  $statsObj->getSkillIndex($profile_id, $component_id);
+      $s['c'] = $statsObj->getCompletitudIndex($profile_id, $component_id);
+      $s['p'] = $statsObj->getPersistenceIndex($profile_id, $component_id);
+      array_push($stats, $s);
+    }
+    $this->stats = $stats;
 
   }
 }
