@@ -54,9 +54,45 @@ class migrationActions extends sfActions
 					);
 				}
 
+				/** Parseo de imagenes */
+				$copy = true;
+				$texto = $rquestion['description'];
+				$regex = "/src=\"(.*?)\"/";
+				preg_match_all($regex, $texto, $match);
+				$urls = $match[1];
+				$base_path_relative =  "/uploads/resources/$course/images/";
+
+				//Cracion de directorios
+				$base_path =  sfConfig::get('sf_upload_dir') . "/resources";
+				if(!file_exists($base_path) && $copy){
+					mkdir($base_path);
+				}
+				$base_path .= "/$course";
+				if(!file_exists($base_path) && $copy){
+					mkdir($base_path);
+				}
+				//images path
+				if(!file_exists($base_path . "/images") && $copy){
+					mkdir($base_path . "/images");
+				}
+
+				foreach($urls as $url){
+					$pos = strrpos($url,"/");
+					$imgname = str_replace(
+						array(" ", "%", "/", "\""),
+						array("-", "-", "-", "-"), 
+						substr($url, $pos+1));
+					$texto = str_replace($url, $base_path_relative. $imgname, $texto);
+
+					if(strpos($url,"http") === false){
+						$url = "http://www.kuepa.com" . $url;
+					}
+					if(!file_exists($base_path . "/images/" . $imgname) && $copy)
+						copy($url, $base_path . "/images/" . $imgname);
+				}
 				$questions[] = array(
 					'title' => $rquestion['question'],
-					'description' => $rquestion['description'],
+					'description' => $texto,
 					'ponderation' => $rquestion['ponderation'],
 					'position' => $rquestion['position'],
 					'type' => $rquestion['type'],

@@ -21,8 +21,11 @@ class StatsService {
         //get invest time
         $invest_time = LogService::getInstance()->getTotalTime($profile_id, $component);
         $component_duration = $component->getDuration();
-
-        return $component_duration / $invest_time;
+        $v = 0;
+        if( $invest_time > 0 ){
+            $v = $component_duration / $invest_time;
+        }
+        return($v);
     }
 
     public function getCompletitudIndex($profile_id, $component_id){
@@ -75,7 +78,8 @@ class StatsService {
 
         // return $exercise_count;
         
-        return ($childs_total*$exercise_count_approved) / ($childs_viewed * $exercise_count);
+        //return ("($childs_total*$exercise_count_approved) / ($childs_viewed * $exercise_count) = ".($childs_total*$exercise_count_approved) / ($childs_viewed * $exercise_count));
+        return (($childs_total*$exercise_count_approved) / ($childs_viewed * $exercise_count));
 
     }
 
