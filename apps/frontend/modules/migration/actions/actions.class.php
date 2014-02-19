@@ -598,13 +598,16 @@ class migrationActions extends sfActions
       // Calcular los recursos
       $resources = Resource::getRepository()->createQuery('r')
                 ->where('r.duration >=  ? ','0')
-                ->limit(30)
+                ->limit(5)
                 ->offset($offset)
                 ->execute();
       foreach($resources as $key => $resource){
         ComponentService::getInstance()->updateDuration($resource->getId());
       }
       $this->resources = $resources;
+      $txt= "<script>window.location.href='/migration/CalculateTime/offset/".($offset+5)."';</script>";
+      //$this->redirect('migration/CalculateTime?offset='.($offset+30) );
+      return($this->renderText($txt));
   }
 
   public function executeRedologviewcomponent(sfWebRequest $request){

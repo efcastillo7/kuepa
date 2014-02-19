@@ -28,7 +28,11 @@
 	</tr>
 	<tr>
 		<td>Velocity</td>
-		<td><b>( Duracion Componente/ Tiempo Invertido )</b></td>
+		<td><b> Duracion Componente = <?php echo $component->getDuration(); ?> /
+			Tiempo Invertido = <?php echo LogService::getInstance()->getTotalTime($profile_id, $component); ?><br>
+
+			dist_norm_standard( M_PI / ( 2 * log( Duracion Componente/ Tiempo Invertido ) )
+		</b></td>
 	</tr>
 	<tr>
 		<td></td>

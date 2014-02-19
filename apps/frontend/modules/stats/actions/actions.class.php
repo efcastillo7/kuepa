@@ -117,6 +117,11 @@ class statsActions extends kuepaActions
     $profile = $this->getProfile();
     $profile_id = $profile->getId();
     
+    //$profile_id = 101;
+    $component_id = 692;
+    $this->component = ComponentService::getInstance()->find($component_id);
+    $this->profile_id = $profile_id;
+
     $this->li = $stats->getLearningIndex($profile_id, $component_id);
     $this->efi = $stats->getEfficiencyIndex($profile_id, $component_id);
     $this->efo = $stats->getEffortIndex($profile_id, $component_id);
@@ -134,21 +139,34 @@ class statsActions extends kuepaActions
       $component_id = 692;
       $this->component = ComponentService::getInstance()->find($component_id);
     */
-    $component_id = $request->getParameter('id');
+    $component_id = ( $request->getParameter('course_id') ) ?  $request->getParameter('course_id') : 1791 ;
+    $this->limit = ( $request->getParameter('limit') ) ?  $request->getParameter('limit') : 5 ;
+    $this->offset = ( $request->getParameter('offset') ) ?  $request->getParameter('offset') : 0 ;
     $statsObj = StatsService::getInstance();
-    ini_set('max_execution_time',60);
-    $component_id = 50;
+    ini_set('max_execution_time',90);
+    $this -> courses = Course::getRepository()
+                       ->createQuery('c')
+                       ->orderBy("c.name")
+                       ->execute();
+
+    //$component_id = 50; // Lesson
+    //$component_id = 47; // Unidad
+    //$component_id = 1791; // course
     $this->component = ComponentService::getInstance()->find($component_id);
 
     $profiles = Profile::getRepository()->createQuery('p')
-                //->where('id = ?', $this->getProfile()->getId())
-                //->limit(10)
-                ->orderBy('id desc')
+                // ->where('id = ?', $this->getProfile()->getId())
+                 ->limit($this->limit)
+                 ->offset($this->offset)
+                ->orderBy('id asc')
                 ->execute();
-    
     $stats = array();
+/*    $first_access = LogService::getInstance()->getFirstAccess($profile_id, $course_id);
+    $from_date = strtotime($first_access) - 24*3600;*/
+ 
     foreach ($profiles as $key => $profile) {
       $profile_id = $profile->getId();
+
       $s['profile'] = $profile;
       $s['li'] = $statsObj->getLearningIndex($profile_id, $component_id);
       $s['efi'] =  $statsObj->getEfficiencyIndex($profile_id, $component_id);
@@ -162,4 +180,12 @@ class statsActions extends kuepaActions
     $this->stats = $stats;
 
   }
+
+  public function executeTest3(sfWebRequest $request){
+    $st = StatsService::getInstance();
+    $di = $st->dist_norm_standard(1.33);
+    echo $di;
+    exit();
+  }
+
 }
