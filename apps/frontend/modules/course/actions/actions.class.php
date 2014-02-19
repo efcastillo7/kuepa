@@ -19,11 +19,30 @@ class courseActions extends kuepaActions {
         $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getUser()->getGuardUser()->getProfile()->getId());
     }
 
+    public function executeTest(sfWebRequest $request) {
+        $id = $request->getParameter("id");
+
+        $this->course = Course::getRepository()->createQuery("c")
+                            // ->select("*")
+                            ->leftJoin("c.Chapter ch")
+                            ->leftJoin("ch.Lesson l")
+                            ->leftJoin("l.Resource r")
+                            ->where("c.id = ?", $id)
+                            ->fetchOne();
+        // $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getUser()->getGuardUser()->getProfile()->getId());
+    }
+
     public function executeDetails(sfWebRequest $request) {
         $id = $request->getParameter("id");
 
         $this->profile = $this->getProfile();
-        $this->course = Course::getRepository()->find($id);
+        $this->course = Course::getRepository()->createQuery("c")
+                            // ->select("*")
+                            ->leftJoin("c.Chapter ch")
+                            ->leftJoin("ch.Lesson l")
+                            ->leftJoin("l.Resource r")
+                            ->where("c.id = ?", $id)
+                            ->fetchOne();
     }
 
     public function executeExpanded(sfWebRequest $request) {
