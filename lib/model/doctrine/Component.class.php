@@ -88,6 +88,7 @@ class Component extends BaseComponent {
     }
 
     public function isEnabled(){
+        return true;
         //TODO: Check because is returning first row
         $lp = $this->getLearningPath()->getFirst();
         if($lp){

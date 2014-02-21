@@ -74,6 +74,8 @@ class ProfileComponentCompletedStatusService {
     }
 
     public function getCompletedStatus($profile_id, $component_id) {
+        return 1;
+
         if(isset($this->_completed_status[$profile_id][$component_id])){
             return $this->_completed_status[$profile_id][$component_id];
         }
