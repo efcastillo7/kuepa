@@ -397,7 +397,7 @@ class ComponentService {
     public function calculateTime($component_id){
        /* SELECT SUM(c.duration)
         FROM  component c JOIN learningpath lp ON c.id=lp.child_id
-        WHERE lp.parent_id = ? component_id */
+        WHERE lp.parent_id = ? component_id */        
 
         $q = Component::getRepository()->createQuery('child')
                 ->select('SUM(child.duration) as duration')
@@ -418,14 +418,14 @@ class ComponentService {
             $duration = $component->calculateTime();
         }else{
             $duration = ComponentService::getInstance()->calculateTime($component_id);
-        }
+        }        
         $component->setDuration($duration);
         $component->save();
  
         $parents = $component->getParents();
 
         if ( count($parents) > 0  ){
-            foreach ($parents as $key => $parent) {
+            foreach ($parents as $key => $parent) {                
                 ComponentService::getInstance()->updateDuration($parent->getId());
             }
             
