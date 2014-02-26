@@ -18,10 +18,10 @@ class lessonActions extends kuepaActions {
     public function executeIndex(sfWebRequest $request) {
         $this->profile = $this->getProfile();
         $course_id = $request->getParameter('course_id');
-        $this->course = Course::getRepository()->find($course_id);
-
+        $this->course = Course::getRepository()->getById($course_id);
+        
         $chapter_id = $request->getParameter('chapter_id');
-        $this->chapter = Chapter::getRepository()->find($chapter_id);
+        $this->chapter = Chapter::getRepository()->getById($chapter_id);
 
         $lesson_id = $request->getParameter('lesson_id');
         $previous_lesson_id = $request->getParameter('previous_lesson_id');
@@ -30,7 +30,7 @@ class lessonActions extends kuepaActions {
         $resource_id = $request->getParameter('resource_id');
 
         if ($lesson_id != null) {
-            $this->lesson = Lesson::getRepository()->find($lesson_id);
+            $this->lesson = Lesson::getRepository()->getById($lesson_id);
             $this->lesson->setActualResource($resource_id);
         } else if ($previous_lesson_id != null) {
             $this->lesson = $this->chapter->getNextChild($previous_lesson_id);
@@ -46,10 +46,7 @@ class lessonActions extends kuepaActions {
             $this->lesson = $this->chapter->getChildren()->getFirst();
             $lesson_id = $this->lesson->getId();
         }
-
-        $this->has_next_lesson = ($this->chapter->getNextChild($this->lesson->getId()) != null);
-        $this->has_previous_lesson = ($this->chapter->getPreviousChild($this->lesson->getId()) != null);
-
+                
         $this->resource = Resource::getRepository()->find($this->lesson->getActualResourceId());
 
         $this->has_next_resource = ($this->lesson->getNextResourceId() != null);
@@ -58,15 +55,26 @@ class lessonActions extends kuepaActions {
         $this->is_last_resource = $this->lesson->atLastResource();
         $this->is_first_resource = $this->lesson->atFirstResource();
 
-        //test
-        ComponentService::getInstance()->updateDuration($this->resource->getId());
-
         //update log
-        LogService::getInstance()->viewResource($this->getUser()->getProfile()->getId(), 
-            Resource::TYPE, $this->course->getId(), $this->chapter->getId(), $this->lesson->getId(), $this->resource->getId());
+        LogService::getInstance()->viewResource(
+                                        $this->getUser()->getProfile()->getId(), 
+                                        Resource::TYPE,
+                                        $this->course->getId(),
+                                        $this->chapter->getId(),
+                                        $this->lesson->getId(),
+                                        $this->resource->getId()
+                                    );
 
         //set ProfileComponentCompletedStatus
-        ProfileComponentCompletedStatusService::getInstance()->add(100, $this->getProfile()->getId(), $this->resource->getId(), $this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
+        ProfileComponentCompletedStatusService::getInstance()->add(
+                                        100,
+                                        $this->getProfile()->getId(),
+                                        $this->resource->getId(),
+                                        $this->lesson->getId(),
+                                        $this->chapter->getId(),
+                                        $this->course->getId()
+                                    );
+        
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
         $this->comments = NoteService::getInstance()->getComments($resource_id);
 

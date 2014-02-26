@@ -17,11 +17,12 @@ class Lesson extends BaseLesson {
     private $_resource_list_id = array();
 
     private function initResources(){
-        $resources = $this->getResources();
-        $this->_resource_list_id = array();
-        foreach ($resources as $id => $obj) {
-            $this->_resource_list_id[] = $obj->getId();
+        
+        if ( count( $this->_resource_list_id ) ) {
+            return;
         }
+        
+        $this->_resource_list_id = $this->getResourcesIds();
     }
 
     public function setActualResource($resource_id){
@@ -80,6 +81,10 @@ class Lesson extends BaseLesson {
 
     public function getResources() {
         return LessonService::getInstance()->getResourcesList($this->getId());
+    }
+    
+    public function getResourcesIds() {
+        return LessonService::getInstance()->getResourcesListIds($this->getId());
     }
 
     public function getLastResourceViewed($profile_id){

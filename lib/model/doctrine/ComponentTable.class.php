@@ -7,6 +7,7 @@
  */
 class ComponentTable extends Doctrine_Table
 {
+    
     /**
      * Returns an instance of this class.
      *
@@ -18,6 +19,12 @@ class ComponentTable extends Doctrine_Table
     }
 
     public function getById($id){
+        return self::getInstance()->createQuery()
+                                  ->where('id = ?', $id)
+                                  ->useResultCache(true, null, 'Component_getById_' . $id )
+                                  ->fetchOne();
+    }
+    
     public function getCourses(){
     	return self::getInstance()->createQuery()->where('type = ?', Course::TYPE)->orderBy('name asc')->execute();
     }

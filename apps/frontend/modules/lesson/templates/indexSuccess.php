@@ -45,8 +45,6 @@
         'lesson' => $lesson, 
         'resource' => $resource, 
         'profile' => $profile,
-        'has_next_lesson' => $has_next_lesson,
-        'has_previous_lesson' => $has_previous_lesson,
         'has_next_resource' => $has_next_resource,
         'has_previous_resource' => $has_previous_resource,
         'is_last_resource' => $is_last_resource,
