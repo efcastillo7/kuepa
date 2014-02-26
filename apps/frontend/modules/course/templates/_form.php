@@ -1,7 +1,4 @@
-<form action="<?php echo '/kuepa_api_dev.php/course' . ($form->isNew() ? "" : "/" . $form->getObject()->getId()) ?>" method="POST" id="create-course-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>">
-    <?php if(!$form->isNew()): ?>
-    <input type="hidden" name="sf_method" value="PUT"/>
-    <?php endif; ?>
+<form action="<?php echo url_for("course/create") . ($form->isNew() ? "" : "?id=" . $form->getObject()->getId()) ?>" method="POST" id="create-course-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>" enctype='multipart/form-data'>
     <?php echo $form; ?>
     <button type="submit" class="btn">Submit</button>
 </form>

@@ -1,22 +1,36 @@
 # Main user entity, sfGuardUser is only used to store basic user data and login credentials
 Profile:
-  tableName:                   profile
+  tableName: profile
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
   columns:
-    sf_guard_user_id:          integer 
+    sf_guard_user_id:          integer
+    google_id: varchar(45)
     nickname:                  varchar(20)
     first_name:                varchar(20)
     last_name:                 varchar(20)
     birthdate:                 date
     sex:                       { type: enum, values: [male, female] }
+    valid_until:               date
+    avatar:                    varchar(100)
+    current_module:            varchar(50)
+    current_action:            varchar(50)
   relations:
-    sfGuardUser:               { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
+    sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
       class: College
       refClass: ProfileCollege
       type: many
       local: profile_id
       foreign: college_id
-      foreignType: many
+      foreignAlias: Profiles
+    Groups:
+      class: Groups
+      refClass: GroupProfile
+      type: many
+      local: profile_id
+      foreign: group_id
       foreignAlias: Profiles
     Components:
       class: Component
@@ -25,22 +39,45 @@ Profile:
       local: profile_id
       foreign: component_id
       foreignAlias: Profiles
-      
+    MailMessages:
+      class: MailMessage
+      type: many
+      local: id
+      foreign: profile_id
+      type: many
+
 ProfileLearningPath:
   columns:
     profile_id: {type: integer, primary: true}
     component_id: {type: integer, primary: true}
+    deadline: { type: date }
+    position: { type: integer, default: 0 }
 
 ProfileCollege:
   columns:
     profile_id: {type: integer, primary: true}
     college_id: {type: integer, primary: true}
 
+CollegeLearningPath:
+  columns:
+    college_id: {type: integer, primary: true}
+    component_id: {type: integer, primary: true}
+    deadline: { type: date }
+    position: { type: integer, default: 0 }
+
 College:
   tableName: college
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     name: varchar(255)
+  relations:
+    Components:
+      class: Component
+      refClass: CollegeLearningPath
+      type: many
+      local: college_id
+      foreign: component_id
+      foreignAlias: Colleges
 
 Component:
   actAs:
@@ -61,6 +98,7 @@ Component:
     profile_id: { type: integer }
     color: { type: enum, values: [green, lightgreen, violet, red, purple, blue, lightblue, darkblue, orange]}
     duration: float
+    deadline: { type: date }
   relations:
     Parents:
       class: Component
@@ -79,7 +117,7 @@ Component:
       foreign: id
       local: profile_id
       type: one
-    
+
 Resource:
   inheritance:
     extends:          Component
@@ -94,7 +132,7 @@ Resource:
       type: many
       foreignType: one
       foreignAlias: Resource
-  
+
 Course:
   inheritance:
     extends:          Component
@@ -121,6 +159,7 @@ LearningPath:
     parent_id: integer
     child_id: integer
     position: integer
+    enabled: {type: boolean, default: true}
   relations:
     Parent:
       class: Component
@@ -132,6 +171,111 @@ LearningPath:
       local: child_id
       foreign: id
       type: one
+
+PredictiveLearningPath:
+  actAs:
+    Timestampable: ~
+  columns:
+    profile_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    position: integer
+    protected: boolean
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+  indexes:
+    plp_unique_user_path_item:
+      fields: [profile_id, course_id, chapter_id, lesson_id]
+      type: unique
+
+DependencyPath:
+  columns:
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    depends_course_id: integer
+    depends_chapter_id: integer
+    depends_lesson_id: integer
+  relations:
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+    DependsCourse:
+      class: Course
+      local: depends_course_id
+      foreign: id
+      type: one
+    DependsChapter:
+      class: Chapter
+      local: depends_chapter_id
+      foreign: id
+      type: one
+    DependsLesson:
+      class: Lesson
+      local: depends_lesson_id
+      foreign: id
+      type: one
+
+DependencyExercisePath:
+  columns:
+    exercise_id: integer
+    exercise_question_id: integer
+    depends_course_id: integer
+    depends_chapter_id: integer
+    depends_lesson_id: integer
+  relations:
+    Exercise:
+      local: exercise_id
+      foreign: id
+      type: one
+    ExerciseQuestion:
+      local: exercise_question_id
+      foreign: id
+      type: one
+    DependsCourse:
+      class: Course
+      local: depends_course_id
+      foreign: id
+      type: one
+    DependsChapter:
+      class: Chapter
+      local: depends_chapter_id
+      foreign: id
+      type: one
+    DependsLesson:
+      class: Lesson
+      local: depends_lesson_id
+      foreign: id
+      type: one
+  indexes:
+    dep_exe_path_unique_pair:
+      fields: [exercise_id, exercise_question_id, depends_course_id ,depends_chapter_id, depends_lesson_id]
+      type: unique
 
 ResourceData:
   actAs:
@@ -150,9 +294,10 @@ ResourceData:
     tags: { type: string }
     profile_id: { type: integer }
     parent_id: { type: integer }
-    position: { type: integer }
     duration: float
     level: { type: enum, values: [beginner, intermediate, advance]}
+    word_count: { type: integer },
+    reading_time: { type: integer, default: 0}
   relations:
     Author:
       class: Profile
@@ -174,7 +319,7 @@ ResourceData:
 
 
 ResourceDataDocument:
-  columns: 
+  columns:
     document_type: { type: enum, values: [pdf, image, ppt] }
   inheritance:
     extends: ResourceData
@@ -190,7 +335,7 @@ ResourceDataText:
     keyValue: Text
 
 ResourceDataVideo:
-  columns: 
+  columns:
     video_type: { type: enum, values: [youtube, vimeo, embebed] }
     path: { type: string }
   inheritance:
@@ -198,7 +343,7 @@ ResourceDataVideo:
     type: column_aggregation
     keyField: type
     keyValue: Video
-    
+
 ResourceDataEmbeddedWeb:
   inheritance:
     extends: ResourceData
@@ -213,6 +358,147 @@ ResourceDataExercise:
     keyField: type
     keyValue: Exercise
 
+Exercise:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: string(200)
+    description: text
+    type: string
+    max_attemps: integer
+    start_time: datetime
+    end_time: datetime
+    expired_time: integer
+    random: integer
+    results_disabled: boolean
+  relations:
+    Questions:
+      class: ExerciseQuestion
+      refClass: ExerciseHasExerciseQuestion
+      local: exercise_id
+      foreign: exercise_question_id
+      type: many
+
+ExerciseQuestion:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: string(200)
+    description: text
+    value: integer
+    type: string
+
+ExerciseAnswer:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: text
+    comment: text
+    value: integer
+    correct: integer
+    exercise_question_id: integer
+  relations:
+    Question:
+      class: ExerciseQuestion
+      local: exercise_question_id
+      foreignAlias: Answers
+      foreign: id
+      type: one
+
+ExerciseHasExerciseQuestion:
+  columns:
+    exercise_id: integer
+    exercise_question_id: integer
+    position: { type: integer, notnull: true, default: 1}
+  relations:
+    Exercise:
+      local: exercise_id
+      foreign: id
+      type: one
+    ExerciseQuestion:
+      local: exercise_question_id
+      foreign: id
+      type: one
+
+ExerciseAttemp:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    profile_id: integer
+    exercise_id: integer
+    time_taken: timestamp
+    value: float
+    content: blob
+  relations:
+    ResourceData:
+      local: exercise_id
+      foreign: content
+      type: many
+    Exercise:
+      local: exercise_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id
+
+LogViewComponent:
+  actAs:
+    Timestampable: ~
+  columns:
+    profile_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    resource_id: integer
+    type: string
+  relations:
+    Course:
+      class: Component
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      class: Component
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      class: Component
+      local: lesson_id
+      foreign: id
+      type: one
+    Resource:
+      class: Component
+      local: resource_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id
+
+LogAccess:
+  actAs:
+    Timestampable: ~
+  columns:
+    profile_id: integer
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+
 Note:
   actAs:
     Timestampable: ~
@@ -221,6 +507,7 @@ Note:
     resource_id: integer
     profile_id: integer
     content: string
+    privacy: string(20)
   relations:
     Resource:
       local: resource_id
@@ -229,12 +516,20 @@ Note:
     Profile:
       local: profile_id
       foreign: id
-      
+
 ProfileComponentCompletedStatus:
   columns:
     profile_id: {type: integer, primary: true}
     component_id: {type: integer, primary: true}
     completed_status: {type: integer}
+    velocity_index: float
+    completitud_index: float
+    skill_index: float
+    persistence_index: float
+    effort_index: float
+    efficiency_index: float
+    learning_index: float
+    time_remaining: integer
   relations:
     Component:
       local: component_id
@@ -251,8 +546,13 @@ Message:
     id: {type: integer, primary: true, autoincrement: true}
     author_id: {type: integer, notnull: true}
     subject: {type: string(255)}
-    message: {type: string}
+    content: {type: string}
+    parent_id: {type: integer}
   relations:
+    Profile:
+      type: one
+      local: author_id
+      foreign: id
     Recipients:
       class: MessageRecipient
       type: many
@@ -260,6 +560,11 @@ Message:
       foreign: message_id
       foreignType: one
       foreignAlias: Message
+    Root:
+      class: Message
+      type: one
+      local: parent_id
+      foreign: id
 
 MessageRecipient:
   columns:
@@ -275,7 +580,7 @@ MessageRecipient:
       foreign: id
       foreignAlias: ReceivedMessages
       foreignType: many
-    
+
 CalendarEvent:
   actAs:
     Timestampable: ~
@@ -291,6 +596,225 @@ CalendarEvent:
     Profile:
       local: profile_id
       foreign: id
-    Component:
-      local: component_id
+
+RegisterCode:
+  columns:
+    id: {type: string(50), primary: true}
+    profile_id: integer
+    valid_from: date
+    valid_until: date
+    valid_days: integer
+    college_id: integer
+    active: {type: boolean, default: false, notnull: true}
+    in_use: {type: integer, default: 0, notnull: true}
+  relations:
+    Profile:
+      local: profile_id
       foreign: id
+    College:
+      local: college_id
+      foreign: id
+    Course:
+      refClass: RegisterCodeHasCourse
+      local: register_code
+      foreign: course_id
+      type: many
+
+RegisterCodeHasCourse:
+  columns:
+    register_code: {type: string(50), primary: true}
+    course_id: {type: integer, primary: true}
+
+Groups:
+  actAs:
+    Timestampable: ~
+  columns:
+    name: varchar(255)
+    description: string
+    level: integer
+    creator_id: {type: integer, notnull: true}
+  relations:
+    Parents:
+      class: Groups
+      refClass: GroupSubGroup
+      local: child_id
+      foreign: parent_id
+      type: many
+    Children:
+      class: Groups
+      refClass: GroupSubGroup
+      local: parent_id
+      foreign: child_id
+      type: many
+    Profiles:
+      class: Profile
+      refClass: GroupProfile
+      type: many
+      local: group_id
+      foreign: profile_id
+      foreignAlias: Groups
+    Author:
+      class: Profile
+      type: one
+      local: creator_id
+      foreign: id
+
+GroupSubGroup:
+  columns:
+    parent_id: integer
+    child_id: integer
+  relations:
+    Parent:
+      class: Groups
+      local: parent_id
+      foreign: id
+      type: one
+    Child:
+      class: Groups
+      local: child_id
+      foreign: id
+      type: one
+
+GroupProfile:
+  columns:
+    group_id: {type: integer, primary: true}
+    profile_id: {type: integer, primary: true}
+
+MailMessage:
+  actAs: { Timestampable: ~ }
+  columns:
+    profile_id: {type: integer}
+    subject: {type: varchar(255) }
+    email: {type: varchar(100) }
+    name:  {type: varchar(100) }
+    content: { type: clob }
+    priority: {type: integer, default: '5'}
+    status: { type: varchar(10), default: 'pending'}
+    sent_at: timestamp
+    creator_id: {type: integer}
+  relations:
+    Profile:
+      class: Profile
+      type: one
+      local: profile_id
+      foreign: id
+
+VideoSession:
+  tableName: video_session
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    profile_id: integer
+    student_profile_id: integer
+    chapter_id: integer
+    course_id: integer
+    scheduled_for: datetime
+    title: {type: string(100)}
+    description: {type: string(255)}
+    status: { type: enum, values: [pending, started,ended], default: pending }
+    url: {type: string(400)}
+    type: { type: enum, values: [class, support] }
+    visibility: { type: enum, values: [public, private], default: public }
+    platform: {type: string(50)}
+  relations:
+    Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+    Student: { class: Profile, onDelete: CASCADE, local: student_profile_id, foreign: id, foreignType: one }
+    Chapter: { class: Component, onDelete: CASCADE, local: chapter_id, foreign: id, foreignType: one }
+    Course: { class: Component, onDelete: CASCADE, local: course_id, foreign: id, foreignType: one }
+
+VideoSessionParticipant:
+  tableName: video_session_participant
+  actAs:
+    Timestampable: ~
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    video_session_id: integer
+    profile_id: integer
+    first_conection: timestamp
+    last_connection: timestamp
+    interruptions: int
+    seconds_online: int
+  relations:
+    Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+    VideoSession: { class: VideoSession, onDelete: CASCADE, local: video_session_id, foreign: id, foreignType: one }
+
+FlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    type: string
+    name: string
+    active: {type: boolean, default: false}
+    valid_from: date
+    valid_until: date
+
+ProfileViewFlashMessage:
+  actAs:
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H:i:s
+      updated:
+        disabled: true
+  columns:
+    flash_message_id: integer
+    profile_id: integer
+  relations:
+    Profile:
+      type: one
+      local: profile_id
+      foreign: id
+    FlashMessage:
+      type: one
+      local: flash_message_id
+      foreign: id
+
+NotificationAction:
+    actAs:
+        Timestampable:
+          created:
+            name: created_at
+            type: timestamp
+            format: Y-m-d H:i:s
+          updated:
+            disabled: true
+    columns:
+        id: {type: integer, primary: true, autoincrement: true}
+        term_key: string
+        profile_id: integer
+        route_name: string
+        params: {type: string(400)}
+        wildcards: {type: string(400)}
+        type: {type: string(50)}
+    relations:
+        Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+
+Notification:
+    actAs:
+        Timestampable:
+          created:
+            name: created_at
+            type: timestamp
+            format: Y-m-d H:i:s
+          updated:
+            disabled: true
+    columns:
+        id: {type: integer, primary: true, autoincrement: true}
+        notification_action_id: integer
+        profile_id: integer
+        seen: bit
+        clicked_at: timestamp
+    relations:
+        NotificationAction: { class: NotificationAction, onDelete: CASCADE, local: notification_action_id, foreign: id, foreignType: one }
+        Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
+

@@ -6,29 +6,30 @@ course_api:
   class: RESTRouteCollection
   options:
     module: course
-    
-# chapter
-chapter_api:
+
+video_session_api:
+    class: RESTRouteCollection
+    options:
+        module: video_session
+
+message_api:
   class: RESTRouteCollection
   options:
-    module: chapter
-    
-# lesson
-lesson_api:
+    module: message
+
+profile_api:
   class: RESTRouteCollection
   options:
-    module: lesson
-    
-learning_path_delete:
-  url: /learning_path/:parent_id/:child_id
-  class: sfRequestRoute
-  param: { module: learning_path, action: delete }
-  requirements:
-    parent_id: \d+
-    child_id: \d+
-    sf_method: [delete]
-    
+    module: profile
+
+learningpath_api:
+  class: RESTRouteCollection
+  options:
+    module: learningpath
+
 default:
-  url:   /*
-  params: { module: default, action: notImplemented }
-  
+  url:   /:module/:action/*
+
+# default:
+#   url:   /*
+#   params: { module: default, action: notImplemented }
