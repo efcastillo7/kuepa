@@ -243,17 +243,20 @@ class ComponentService {
     }
 
     public function getChilds($component_id, $type = null, $orderBy = 'asc') {
-        //TODO: check orderBy parameter SQLINJ
+                
+        $orderBy = DQLHelper::getInstance()->parseOrderBy($orderBy);
 
-        $q = Component::getRepository()->createQuery('child')
-                ->select('child.*')
-                ->innerJoin('child.LearningPath lp ON child.id = lp.child_id')
+        $q = Component::getRepository()->createQuery('c')
+                ->select('c.*')
+                ->innerJoin('c.LearningPath lp ON c.id = lp.child_id')
                 ->where('lp.parent_id = ?', $component_id)
                 ->orderBy("lp.position $orderBy");
 
         if ($type) {
-            $q->andWhere('child.type = ? ', $type);
+            $q->andWhere('c.type = ? ', $type);
         }
+        
+        $q->useResultCache(true, null, cacheHelper::getInstance()->genKey('Component_getChilds', array( $component_id, $orderBy, $type) ) );
 
         return $q->execute();
     }

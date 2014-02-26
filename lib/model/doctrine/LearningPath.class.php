@@ -19,5 +19,18 @@ class LearningPath extends BaseLearningPath {
     public static function getRepository() {
         return Doctrine_Core::getTable('LearningPath');
     }
+    
+    public function preSave($event)   {
+        $this->clearCache($event);
+    }
+    
+    public function preDelete($event) {
+        $this->clearCache($event);
+    }
+    
+    public function clearCache($event)
+    {
+        CacheHelper::getInstance()->deleteByPrefix('Component_getChilds', array( $this->getParentId() ));
+    }
 
 }

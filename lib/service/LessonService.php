@@ -40,19 +40,6 @@ class LessonService {
         return ComponentService::getInstance()->getChilds($lesson_id, Resource::TYPE);
     }
     
-    public function getResourcesListIds($lesson_id) {
-        
-        $q = Component::getRepository()->createQuery('r')
-                                       ->select('r.id')
-                                       ->innerJoin('r.LearningPath lp ON r.id = lp.child_id')
-                                       ->where('lp.parent_id = ?', $lesson_id)
-                                       ->andWhere('r.type = ? ', Resource::TYPE)
-                                       ->orderBy("lp.position ASC");
-        
-        return $q->execute( array(), Doctrine::HYDRATE_SINGLE_SCALAR );
-        
-    }
-
     public function getDependencyPathList($course_id, $chapter_id, $lesson_id){
         $q = DependencyPath::getRepository()->createQuery("dp");
         $q->where("course_id = ?", $course_id)

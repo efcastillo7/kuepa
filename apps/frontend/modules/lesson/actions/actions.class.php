@@ -46,9 +46,9 @@ class lessonActions extends kuepaActions {
             $this->lesson = $this->chapter->getChildren()->getFirst();
             $lesson_id = $this->lesson->getId();
         }
-                
+                        
         $this->resource = Resource::getRepository()->find($this->lesson->getActualResourceId());
-
+        
         $this->has_next_resource = ($this->lesson->getNextResourceId() != null);
         $this->has_previous_resource = ($this->lesson->getPreviousResourceId() != null);
 

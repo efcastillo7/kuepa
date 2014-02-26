@@ -25,19 +25,24 @@ class CacheHelper
 		return self::$instance;
 	}
 	
-	public function genKey($key)
+	public function genKey($key, $params = array() )
 	{
-	    return sha1($key . self::SALT);
+	    if ( $params ) {
+	        $params = implode('_', $params);
+	        return sha1($key . self::SALT) . '_' . $params;
+	    } else {
+	        return sha1($key . self::SALT);
+	    }
 	}
 	
-	public function delete($key)
-	{
-	    $this->cacheDriver->delete( cacheHelper::getInstance()->genKey( $key ) );
+	public function delete($key, $params = array() )
+	{	    
+	    $this->cacheDriver->delete( cacheHelper::getInstance()->genKey( $key, $params ) );
 	}
 	
-	public function deleteByPrefix($key)
+	public function deleteByPrefix($key, $params = array() )
 	{
-	    $this->cacheDriver->deleteByPrefix( $key );
+	    $this->cacheDriver->deleteByPrefix( cacheHelper::getInstance()->genKey( $key, $params ) );
 	}
 	
 }

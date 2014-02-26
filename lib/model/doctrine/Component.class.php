@@ -30,7 +30,12 @@ class Component extends BaseComponent {
     
     public function clearCache($event)
     {
-        CacheHelper::getInstance()->delete('Component_getById_' . $this->getId() );
+        CacheHelper::getInstance()->delete('Component_getById', array( $this->getId() ));
+        
+        $parents = $this->getParents();
+        foreach ( $parents as $parent ) {
+            CacheHelper::getInstance()->deleteByPrefix('Component_getChilds', array( $parents->getId() ));
+        }
     }
 
     public function getThumbnailPath() {
