@@ -1,4 +1,7 @@
-<form action="<?php echo url_for("chapter/create") . ($form->isNew() ? "" : "?id=" . $form->getObject()->getId()) ?>" method="POST" id="create-chapter-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>" enctype='multipart/form-data'>
+<form action="<?php echo '/kuepa_api_dev.php/chapter' . ($form->isNew() ? "" : "/" . $form->getObject()->getId()) ?>" method="POST" id="create-chapter-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>">
+    <?php if(!$form->isNew()): ?>
+    <input type="hidden" name="sf_method" value="PUT"/>
+    <?php endif; ?>
     <?php echo $form; ?>
     <button type="submit" class="btn">Submit</button>
 </form>

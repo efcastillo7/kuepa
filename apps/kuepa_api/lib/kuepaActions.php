@@ -16,14 +16,4 @@ class kuepaActions extends sfActions {
     public function getGuardUser() {
         return $this->getUser()->getGuardUser();
     }
-
-    public function checkAccountStatus(){
-        $user = $this->getUser();
-        if($user->isValidAccount()){
-            return true;
-        }else{
-            $user->signOut();
-            $this->redirect("@account_expired");
-        }
-    }
 }

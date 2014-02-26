@@ -1,32 +1,32 @@
 <?php
 
 /**
- * lesson actions.
+ * chapter actions.
  *
  * @package    kuepa
- * @subpackage lesson
+ * @subpackage chapter
  * @author     fiberbunny
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class lessonActions extends kuepaActions {
+class chapterActions extends kuepaActions {
 
     /**
-     * POST /lesson
+     * POST /chapter
      *
      * @param sfRequest $request A request object
      */
     public function executeCreate(sfWebRequest $request) {
         return $this->update($request);
     }
-    
+
     private function update(sfWebRequest $request) {
         try {
             $id = $request->getParameter("id");
             
             if(!$id) {
-                $form = new LessonForm;
+                $form = new ChapterForm;
             } else {
-                $form = new LessonForm( Lesson::getRepository()->find($id) );
+                $form = new ChapterForm( Chapter::getRepository()->find($id) );
             }
             
             $form->setValidator('_csrf_token', new sfValidatorPass);
@@ -37,18 +37,18 @@ class lessonActions extends kuepaActions {
                 throw new BadRequest;
             }
 
-            // create lesson
+            // create chapter
             // note(diego): should we move this to a service instead of using doctrine forms for the creation?
-            $lesson = $form->save();
+            $chapter = $form->save();
 
             //add to user
             if(!$id) {
-                ChapterService::getInstance()->addLessonToChapter($form->getValue('chapter_id'), $lesson->getId());
+                CourseService::getInstance()->addChapterToCourse($form->getValue('course_id'), $chapter->getId());
             }
             
             $response['status'] = 'success';
-            $response['lesson_id']  = $lesson->getId();
-            $response['uri'] = $this->getContext()->getRouting()->generate('lesson_get', Array('id' => $lesson->getId()));
+            $response['course_id']  = $chapter->getId();
+            $response['uri'] = $this->getContext()->getRouting()->generate('chapter_get', Array('id' => $chapter->getId()));
 
             $this->getResponse()->setStatusCode(201);
             
@@ -74,7 +74,7 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * GET /lesson
+     * GET /chapter
      *
      * @param sfRequest $request A request object
      */
@@ -83,19 +83,19 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * GET /lesson/{id}
+     * GET /chapter/{id}
      *
      * @param sfRequest $request A request object
      */
     public function executeGet(sfWebRequest $request) {
         try {
-            $lesson = Lesson::getRepository()->find($request->getParameter('id'));
+            $chapter = Chapter::getRepository()->find($request->getParameter('id'));
 
-            if (!$lesson) {
-                throw new LessonNotFound;
+            if (!$chapter) {
+                throw new ComponentNotFound;
             }
 
-            return $this->renderText(json_encode($lesson->toArray()));
+            return $this->renderText(json_encode($chapter->toArray()));
         } catch (ComponentNotFound $e) {
             $this->getResponse()->setStatusCode(404);
 
@@ -108,7 +108,7 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * PUT /lesson/{id}
+     * PUT /chapter/{id}
      *
      * @param sfRequest $request A request object
      */
@@ -117,12 +117,16 @@ class lessonActions extends kuepaActions {
     }
 
     /**
-     * DELETE /lesson/{id}
+     * DELETE /chapter/{id}
      *
      * @param sfRequest $request A request object
      */
     public function executeDelete(sfWebRequest $request) {
-        return $this->renderText('delete');
+        $id = $request->getParameter("id");
+        
+        $chapter = Chapter::getRepository()->find($id);
+        
+        $chapter->delete();
     }
 
 }
