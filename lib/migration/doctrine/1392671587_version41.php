@@ -9,7 +9,7 @@ class Version41 extends Doctrine_Migration_Base
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
         
         //learning path view
-        $query = "CREATE VIEW learning_path_view AS
+        $query = "CREATE VIEW view_learning_path AS
           select c1.id as course_id, c1.name as course_name, 
           c2.id as chapter_id, c2.name as chapter_name,
           c3.id as lesson_id, c3.name as lesson_name,
@@ -26,7 +26,7 @@ class Version41 extends Doctrine_Migration_Base
         $q->execute($query);
 
         //course has chapter
-        $query = "CREATE VIEW course_has_chapter_view AS
+        $query = "CREATE VIEW view_course_has_chapter AS
           SELECT c1.id AS course_id, c2.id AS chapter_id, lp1.enabled as enabled
           FROM component c1
           INNER JOIN learning_path lp1 ON c1.id = lp1.parent_id
@@ -38,7 +38,7 @@ class Version41 extends Doctrine_Migration_Base
 
         
         //chapter has lesson
-        $query = "CREATE VIEW chapter_has_lesson_view AS
+        $query = "CREATE VIEW view_chapter_has_lesson AS
           SELECT c1.id AS chapter_id, c2.id AS lesson_id, lp1.enabled as enabled
           FROM component c1
           INNER JOIN learning_path lp1 ON c1.id = lp1.parent_id
@@ -49,7 +49,7 @@ class Version41 extends Doctrine_Migration_Base
         $q->execute($query);
 
         //lesson has resource
-        $query = "CREATE VIEW lesson_has_resource_view AS
+        $query = "CREATE VIEW view_lesson_has_resource AS
           SELECT c1.id AS lesson_id, c2.id AS resource_id, lp1.enabled as enabled
           FROM component c1
           INNER JOIN learning_path lp1 ON c1.id = lp1.parent_id
@@ -63,9 +63,9 @@ class Version41 extends Doctrine_Migration_Base
     public function down()
     {
       $q = Doctrine_Manager::getInstance()->getCurrentConnection();
-      $q->execute("DROP VIEW learning_path_view");
-      $q->execute("DROP VIEW course_has_chapter_view");
-      $q->execute("DROP VIEW chapter_has_lesson_view");
-      $q->execute("DROP VIEW lesson_has_resource_view");
+      $q->execute("DROP VIEW view_learning_path");
+      $q->execute("DROP VIEW view_course_has_chapter");
+      $q->execute("DROP VIEW view_chapter_has_lesson");
+      $q->execute("DROP VIEW view_lesson_has_resource");
     }
 }

@@ -118,7 +118,8 @@ class statsActions extends kuepaActions
     $profile_id = $profile->getId();
     
     //$profile_id = 101;
-    $component_id = 692;
+    $component_id = 46;
+
     $this->component = ComponentService::getInstance()->find($component_id);
     $this->profile_id = $profile_id;
 
@@ -155,7 +156,7 @@ class statsActions extends kuepaActions
     $this->component = ComponentService::getInstance()->find($component_id);
 
     $profiles = Profile::getRepository()->createQuery('p')
-                // ->where('id = ?', $this->getProfile()->getId())
+                // ->where('id = ?', 6)
                  ->limit($this->limit)
                  ->offset($this->offset)
                 ->orderBy('id asc')
@@ -171,10 +172,26 @@ class statsActions extends kuepaActions
       $s['li'] = $statsObj->getLearningIndex($profile_id, $component_id);
       $s['efi'] =  $statsObj->getEfficiencyIndex($profile_id, $component_id);
       $s['efo'] = $statsObj->getEffortIndex($profile_id, $component_id);
+
       $s['v'] = $statsObj->getVelocityIndex($profile_id, $component_id);
+      $invest_time = LogService::getInstance()->getTotalTime($profile_id, $this->component);
+      $s['dc'] = $this->component->getDuration();
+      $s['ti'] = $invest_time;
+
       $s['sk'] =  $statsObj->getSkillIndex($profile_id, $component_id);
+
       $s['c'] = $statsObj->getCompletitudIndex($profile_id, $component_id);
-      $s['p'] = $statsObj->getPersistenceIndex($profile_id, $component_id);
+      $s['available_resources'] = ComponentService::getInstance()->getCountResources($component_id);
+      $s['viewed_resources'] = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, true);
+
+      $freq = 7;
+
+      $s['p'] = $statsObj->getPersistenceIndex($profile_id, $component_id, time(), $freq);
+      $s['needed_time'] = $statsObj->getNeededTimePerPeriod($profile_id, $this->component, $freq);
+
+      $from_ts = time() - ($freq * 24 * 60 * 60);
+      $s['invest_time'] = $statsObj->getStudiedTimePerPeriod($profile_id, $this->component, $from_ts, time());
+
       array_push($stats, $s);
     }
     $this->stats = $stats;

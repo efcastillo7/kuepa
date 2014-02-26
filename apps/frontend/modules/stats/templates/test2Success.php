@@ -77,13 +77,19 @@ Indices:
 <table class="table">
 	<tr>
 		<td colspan="2">Estudiante</td>
-		<td>Learning</td>
-		<td>Efficiency</td>
-		<td>Effort</td>
-		<td>Velocity</td>
-		<td>Skill</td>
-		<td>Completitud</td>
-		<td>Persistence</td>
+		<th>Learning</th>
+		<th>Efficiency</th>
+		<th>Effort</th>
+		<td>Duration(seg)</td>
+		<td>Invest Time</td>
+		<th>Velocity</th>
+		<th>Skill</th>
+		<td>Available Resources</td>
+		<td>Viewed Resources</td>
+		<th>Completitud</th>
+		<th>Invest Time</th>
+		<th>needed Time</th>
+		<th>Persistence</th>
 	</tr>
 
 <?php foreach ($stats as $key => $stat) { ?>
@@ -93,9 +99,15 @@ Indices:
 		<td><?php echo $stat['li'] ?></td>
 		<td><?php echo $stat['efi'] ?></td>
 		<td><?php echo $stat['efo'] ?></td>
+		<td><?php echo $stat['dc'] ?></td>
+		<td><?php echo $stat['ti'] ?></td>
 		<td><?php echo $stat['v'] ?></td>
 		<td><?php echo $stat['sk'] ?></td>
+		<td><?php echo $stat['available_resources'] ?></td>
+		<td><?php echo $stat['viewed_resources'] ?></td>
 		<td><?php echo $stat['c'] ?></td>
+		<td><?php echo $stat['invest_time'] ?></td>
+		<td><?php echo $stat['needed_time'] ?></td>
 		<td><?php echo $stat['p'] ?></td>
 	</tr>
 <?php } ?>

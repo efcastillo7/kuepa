@@ -28,22 +28,30 @@ class StatsService {
 
         //DISTR.NORM.ESTAND(PI()/2*LN(DURACIÓNCOMPONENTE/TIEMPOINVERTIDO))
         $v = $this->dist_norm_standard( M_PI /(2*log($v)) );
-
         return($v);
     }
 
     public function getCompletitudIndex($profile_id, $component_id){
         //get count component childs
-        $childs_total = ComponentService::getInstance()->getCountChilds($component_id);
+        //$childs_total = ComponentService::getInstance()->getCountChilds($component_id);
+        $childs_total = ComponentService::getInstance()->getCountResources($component_id);
 
         //get how many of that childs was seen
         //IMPORTANT! childs_viewed ALWAYS must be count of resources of that component
         // FE: if that component is a Chapter must return = SUM(count_resources(chapter.lesson))
         // TODO: make it recursive!
         $childs_viewed = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, true);
-
+ 
         //one could return the percentage of the ProfileComponentCompletedStatus
-        return $childs_viewed / $childs_total;
+        // if resources were deleted so
+        // the child viewed will be more than 100%
+        if ( $childs_viewed > $childs_total){
+            $percent = 1;
+        }else{
+            $percent  = $childs_viewed / $childs_total;
+        }
+
+        return $percent;
     }
 
     public function getSkillIndex($profile_id, $component_id){
@@ -60,33 +68,51 @@ class StatsService {
         //if component is a Course then skill is the avg of chapter notes weighted by #resources
     }
 
-    public function getPersistenceIndex($profile_id, $course_id, $start_ts = null){
+    public function getPersistenceIndex($profile_id, $course_id, $start_ts = null, $freq = 7){
         /*
          * Borrada  Manera antigua de calcular
          */
         $course = ComponentService::getInstance()->find($course_id);
-        $now = ( empty($start_date) ) ? time() : $start_ts;
-        $last_week = $now - (7 * 24 * 60 * 60);
+        $to_date = ( empty($start_ts) ) ? time() : $start_ts;
+        $from_date = $to_date - ($freq * 24 * 60 * 60); // $freq 7 weekly, 30 monthly
 
-        $hs_course = $course->getDuration() / 3600;
-
-        $first_access = LogService::getInstance()->getFirstAccess($profile_id, $course_id);
-        $dead_line = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course_id);
-        $estimated_weeks = stdDates::day_diff($first_access, $dead_line)/7;
-
+        $estimated_hours_per_period = $this->getNeededTimePerPeriod($profile_id, $course, $freq);
         // DISTR.NORM.ESTAND(PI()/2*LN(HORASDEESTUDIOESTASEMANA/HORASESTUDIORECOMENDADASESTASEMANA)             
-        if ( $estimated_weeks > 0){
-            $estimated_hours_per_week = $hs_course / $estimated_weeks;
-            $study_hs_week = round(LogService::getInstance()->getTotalTime($profile_id, $course, $last_week, $now)/3600);       
-
-            $study_hs_estimated_hs = $study_hs_week / $estimated_hours_per_week;
-            $p_index = $this->dist_norm_standard( M_PI /(2*log($study_hs_estimated_hs)) );
+        if ( $estimated_hours_per_period > 0){
+            $studied_hs_period = $this->getStudiedTimePerPeriod($profile_id, $course, $from_date, $to_date);
+            $p_index = $this->dist_norm_standard( M_PI /(2*log($studied_hs_period / $estimated_hours_per_period)) );
         }else{
             $p_index = $this->dist_norm_standard(0);
         }
 
         return ($p_index);
     }
+
+    /**
+    * @freq = frequency in days
+    */
+    public function getNeededTimePerPeriod($profile_id, $course, $freq = 7){
+
+        $hs_course = $course->getDuration() / 3600;
+        $first_access = LogService::getInstance()->getFirstAccess($profile_id, $course->getId());
+
+        $dead_line = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course->getId());
+        $estimated_time_freq = stdDates::day_diff($first_access, $dead_line)/$freq;
+        
+        if ( $estimated_time_freq > 0){
+            $estimated_hours_per_period = $hs_course / $estimated_time_freq;
+        }else{
+            $estimated_hours_per_period = 0;
+        }
+
+        return($estimated_hours_per_period);
+    } 
+
+    public function getStudiedTimePerPeriod($profile_id, $course, $from_date, $to_date){
+        $s_time = round(LogService::getInstance()->getTotalTime($profile_id, $course, $from_date, $to_date)/3600);       
+        return($s_time);
+    }
+
 
     public function getEfficiencyIndex($profile_id, $component_id){
         return $this->getVelocityIndex($profile_id, $component_id) * $this->getSkillIndex($profile_id, $component_id);

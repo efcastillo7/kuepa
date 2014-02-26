@@ -148,12 +148,12 @@ Chapter:
     keyValue: Chapter
   relations:
     Course:
-      refClass: CourseHasChapterView
+      refClass: ViewCourseHasChapter
       local: chapter_id
       foreign: course_id
       type: many
     Lesson:
-      refClass: ChapterHasLessonView
+      refClass: ViewChapterHasLesson
       local: chapter_id
       foreign: lesson_id
       type: many
@@ -166,12 +166,12 @@ Lesson:
     keyValue: Lesson
   relations:
     Resource:
-      refClass: LessonHasResourceView
+      refClass: ViewLessonHasResource
       local: lesson_id
       foreign: resource_id
       type: many
     Chapter:
-      refClass: ChapterHasLessonView
+      refClass: ViewChapterHasLesson
       local: chapter_id
       foreign: lesson_id
       type: many
@@ -194,25 +194,25 @@ LearningPath:
       foreign: id
       type: one
 
-CourseHasChapterView:
+ViewCourseHasChapter:
   columns:
     course_id: integer
     chapter_id: integer
     enabled: boolean
 
-ChapterHasLessonView:
+ViewChapterHasLesson:
   columns:
     lesson_id: integer
     chapter_id: integer
     enabled: boolean
 
-LessonHasResourceView:
+ViewLessonHasResource:
   columns:
     lesson_id: integer
     chapter_id: integer
     enabled: boolean
 
-LearningPathView:
+ViewLearningPath:
   columns:
     course_id: integer
     course_name: string

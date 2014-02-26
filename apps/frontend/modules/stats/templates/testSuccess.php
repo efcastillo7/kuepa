@@ -57,7 +57,10 @@
 
 	<tr>
 		<td>Persistence</td>
-		<td><b>( (Recursos Disponibles * Ejercitaciones Aprobadas) / ( Recursos Vistos * Ejercitaciones Disponibles) )</b></td>
+		<td><b>
+			 dist_norm_standard( M_PI / ( 2 * log( Tiempo Invertido semana /Tiempo Sugerido Semana ) )
+			</b>
+		</td>
 	</tr>
 	<tr>
 		<td></td>
