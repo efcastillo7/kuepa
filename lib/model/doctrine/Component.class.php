@@ -43,16 +43,7 @@ class Component extends BaseComponent {
     }
 
     public function getChildren($onlyEnabled = true) {
-        $query = Component::getRepository()->createQuery('c')
-                ->innerJoin('c.LearningPath lp ON c.id = lp.child_id')
-                ->where('lp.parent_id = ?', $this->getId())
-                ->orderBy("lp.position asc");
-
-        if($onlyEnabled){
-            $query->andWhere("lp.enabled = true");
-        }
-
-        return $query->execute();
+        return ComponentService::getInstance()->getChilds($this->getId(), null, 'asc', true);
     }
 
     public function __toString() {

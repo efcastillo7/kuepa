@@ -63,11 +63,10 @@ class lessonActions extends kuepaActions {
                                         $this->chapter->getId(),
                                         $this->lesson->getId(),
                                         $this->resource->getId()
-                                    );
+                                    );        
 
         //set ProfileComponentCompletedStatus
         ProfileComponentCompletedStatusService::getInstance()->add(
-                                        100,
                                         $this->getProfile()->getId(),
                                         $this->resource->getId(),
                                         $this->lesson->getId(),
@@ -79,7 +78,7 @@ class lessonActions extends kuepaActions {
         $this->comments = NoteService::getInstance()->getComments($resource_id);
 
         $this->type = $this->resource->getResourceData()->getFirst()->getType();
-
+        
         $this->setLayout("layout_v2");
     }
 

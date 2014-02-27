@@ -242,12 +242,12 @@ class ComponentService {
         return 0;
     }
 
-    public function getChilds($component_id, $type = null, $orderBy = 'asc') {
-                
+    public function getChilds($component_id, $type = null, $orderBy = 'asc', $onlyEnabled = false) {
+                        
         $orderBy = DQLHelper::getInstance()->parseOrderBy($orderBy);
 
         $q = Component::getRepository()->createQuery('c')
-                ->select('c.*')
+                ->select('c.*, lp.*')
                 ->innerJoin('c.LearningPath lp ON c.id = lp.child_id')
                 ->where('lp.parent_id = ?', $component_id)
                 ->orderBy("lp.position $orderBy");
@@ -256,8 +256,19 @@ class ComponentService {
             $q->andWhere('c.type = ? ', $type);
         }
         
-        $q->useResultCache(true, null, cacheHelper::getInstance()->genKey('Component_getChilds', array( $component_id, $orderBy, $type) ) );
-
+        if ($onlyEnabled) {
+            $q->andWhere("lp.enabled = true");
+        }
+        
+        // Gestion de Cache
+        $cacheParams = array();
+        $cacheParams[] = $component_id;
+        $cacheParams[] = (string ) $type;
+        $cacheParams[] = $orderBy;
+        $cacheParams[] = (int) $onlyEnabled;
+        
+        $q->useResultCache(true, null, cacheHelper::getInstance()->genKey('Component_getChilds', $cacheParams ) );
+        
         return $q->execute();
     }
 
