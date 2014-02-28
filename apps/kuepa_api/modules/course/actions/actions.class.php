@@ -24,7 +24,7 @@ class courseActions extends kuepaActions {
             $id = $request->getParameter("id");
         
             if( $id ) {
-                $form = new CourseForm(Course::getRepository()->find($id));
+                $form = new CourseForm(Course::getRepository()->getById($id));
             } else {
                 $form = new CourseForm;
             }
@@ -86,7 +86,7 @@ class courseActions extends kuepaActions {
      */
     public function executeGet(sfWebRequest $request) {
         try {
-            $course = Course::getRepository()->find($request->getParameter('id'));
+            $course = Course::getRepository()->getById($request->getParameter('id'));
 
             if (!$course) {
                 throw new ComponentNotFound;

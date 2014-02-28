@@ -25,9 +25,23 @@ class chapterActions extends kuepaActions {
 
         $this->profile = $this->getProfile();
 
-        $this->course = Course::getRepository()->find($course_id);
-        $this->chapter = Chapter::getRepository()->find($chapter_id);
-        $this->lessons = $this->chapter->getChildren();
+        $course = Course::getRepository()->getById($course_id);
+        $chapter = Chapter::getRepository()->getById($chapter_id);
+        $lessons = $chapter->getChildren();
+        
+        $components = array();
+        $components[] = $course;
+        $components[] = $course;
+        
+        foreach ($lessons as $lesson) {
+            $components[] = $lesson;
+        }
+        
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        
+        $this->course = $course;
+        $this->chapter = $chapter;
+        $this->lessons = $lessons;
 
         if ($request->isXmlHttpRequest()) {
             $response = Array(
@@ -48,9 +62,9 @@ class chapterActions extends kuepaActions {
 
         $this->profile = $this->getProfile();
 
-        $this->course = Course::getRepository()->find($course_id);
-        $this->chapter = Chapter::getRepository()->find($chapter_id);
-        $this->lesson = Lesson::getRepository()->find($lesson_id);
+        $this->course = Course::getRepository()->getById($course_id);
+        $this->chapter = Chapter::getRepository()->getById($chapter_id);
+        $this->lesson = Lesson::getRepository()->getById($lesson_id);
 
         if ($request->isXmlHttpRequest()) {
             $response = Array(
@@ -68,7 +82,7 @@ class chapterActions extends kuepaActions {
         $id = $request->getParameter("id");
 
         if ($id) {
-            $form = new ChapterForm(Chapter::getRepository()->find($id));
+            $form = new ChapterForm(Chapter::getRepository()->getById($id));
         } else {
             $form = new ChapterForm();
         }

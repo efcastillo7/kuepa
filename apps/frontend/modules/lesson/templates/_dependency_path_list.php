@@ -4,7 +4,7 @@
       <a href="#" onClick="return removeDependency(this, <?php echo $dependency_path->getId() ?>)" >
         <i class="icon-trash"></i>
       </a>
-       <?php echo Lesson::getRepository()->find($dependency_path->getDependsLessonId())->getName() ?> 
+       <?php echo Lesson::getRepository()->getById($dependency_path->getDependsLessonId())->getName() ?> 
     </label>
   <?php endforeach; ?>
 <?php else: ?>

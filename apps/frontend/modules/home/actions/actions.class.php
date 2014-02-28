@@ -20,6 +20,6 @@ class homeActions extends kuepaActions {
     	$this->checkAccountStatus();
 
         $this->profile = $this->getProfile();
-        $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getProfile()->getId());
+        $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getProfile()->getId());        
     }
 }

@@ -24,7 +24,7 @@ class statsActions extends kuepaActions
   {
     $course_id = $request->getParameter("id");
 
-    $this->course = Course::getRepository()->find($course_id);
+    $this->course = Course::getRepository()->getById($course_id);
     $this->chapters = $this->course->getChapters();
 
     $profile_id = $this->getProfile()->getId();
@@ -63,8 +63,8 @@ class statsActions extends kuepaActions
     $course_id = $request->getParameter("course");
     $chapter_id = $request->getParameter("chapter");
 
-    $this->course = Course::getRepository()->find($course_id);
-    $this->chapter = Chapter::getRepository()->find($chapter_id);
+    $this->course = Course::getRepository()->getById($course_id);
+    $this->chapter = Chapter::getRepository()->getById($chapter_id);
     $this->lessons = $this->chapter->getLessons();
     // $this->students = CourseService::getInstance()->getStudentsList($course_id);
   }
@@ -75,9 +75,9 @@ class statsActions extends kuepaActions
     $chapter_id = $request->getParameter("chapter");
     $lesson_id = $request->getParameter("lesson");
 
-    $this->course = Course::getRepository()->find($course_id);
-    $this->chapter = Chapter::getRepository()->find($chapter_id);
-    $this->lesson = Lesson::getRepository()->find($lesson_id);
+    $this->course = Course::getRepository()->getById($course_id);
+    $this->chapter = Chapter::getRepository()->getById($chapter_id);
+    $this->lesson = Lesson::getRepository()->getById($lesson_id);
     $this->resources = $this->lesson->getResources();
     // $this->students = CourseService::getInstance()->getStudentsList($course_id);
   }
@@ -106,7 +106,7 @@ class statsActions extends kuepaActions
   public function executeClass(sfWebRequest $request){
     $course_id = $request->getParameter("course");
 
-    $this->course = Course::getRepository()->find($course_id);
+    $this->course = Course::getRepository()->getById($course_id);
     $this->students = CourseService::getInstance()->getStudentsList($course_id);
   }
 

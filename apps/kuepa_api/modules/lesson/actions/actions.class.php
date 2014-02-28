@@ -26,7 +26,7 @@ class lessonActions extends kuepaActions {
             if(!$id) {
                 $form = new LessonForm;
             } else {
-                $form = new LessonForm( Lesson::getRepository()->find($id) );
+                $form = new LessonForm( Lesson::getRepository()->getById($id) );
             }
             
             $form->setValidator('_csrf_token', new sfValidatorPass);
@@ -89,7 +89,7 @@ class lessonActions extends kuepaActions {
      */
     public function executeGet(sfWebRequest $request) {
         try {
-            $lesson = Lesson::getRepository()->find($request->getParameter('id'));
+            $lesson = Lesson::getRepository()->getById($request->getParameter('id'));
 
             if (!$lesson) {
                 throw new LessonNotFound;

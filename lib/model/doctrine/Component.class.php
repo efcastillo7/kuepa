@@ -12,6 +12,8 @@
  */
 class Component extends BaseComponent {
 
+    protected $cacheCompletedStatus = array();
+        
     /**
      * 
      * @return ComponentTable
@@ -53,6 +55,24 @@ class Component extends BaseComponent {
     public function getNameSlug() {
         return self::slugify($this->name);
     }
+    
+    public function setCacheCompletedStatus($completedStatus, $profile_id = null)
+    {
+        if ( !$profile_id ) {
+            $profile_id = $this->getUser()->getProfile()->getId();
+        }
+        
+        $this->cacheCompletedStatus[ $profile_id ] = $completedStatus;
+    }
+    
+    public function getCacheCompletedStatus($profile_id = null)
+    {
+        if ( !$profile_id ) {            
+            $profile_id = sfContext::getInstance()->getUser()->getProfile()->getId();
+        }
+        
+        return $this->cacheCompletedStatus[ $profile_id ];
+    }
 
     public static function slugify($text) {
         // replace all non letters or digits by -
@@ -90,8 +110,12 @@ class Component extends BaseComponent {
                                          ->fetchOne();
     }
 
-    public function isEnabled(){
-        //TODO: Check because is returning first row
+    /*
+     * Esta funcion debe usarse solo si se trae en una misma consulta component y learningPath
+     * No debe utilizarse cuando se obtienen los learningPath asociados a un componente ondemand.
+     */
+    public function isEnabled(){        
+        
         $lp = $this->getLearningPath()->getFirst();
         if($lp){
             return $lp->getEnabled();

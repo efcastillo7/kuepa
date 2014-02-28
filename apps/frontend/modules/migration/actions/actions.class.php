@@ -128,7 +128,7 @@ class migrationActions extends sfActions
 
     	$profile_id = $this->getUser()->getProfile()->getId();
 
-    	$lesson = Lesson::getRepository()->find($lesson_id);
+    	$lesson = Lesson::getRepository()->getById($lesson_id);
 
     	for($i=0;$i<count($exercises);$i++){
 
@@ -569,7 +569,7 @@ class migrationActions extends sfActions
   }
 
   protected function setDuration($component_id){
-	$component = Component::getRepository()->find($component_id);
+	$component = Component::getRepository()->getById($component_id);
 	$duration = 0;
 
     if ( $component->getType() == Resource::TYPE  ){ // Resource
@@ -616,7 +616,7 @@ class migrationActions extends sfActions
 	foreach ($result as $value) {
 		$resource_id = $value['resource_id'];
 
-		$resource = Resource::getRepository()->find($resource_id);
+		$resource = Resource::getRepository()->getById($resource_id);
 
 		$lessons = ComponentService::getInstance()->getParents($resource_id);
 

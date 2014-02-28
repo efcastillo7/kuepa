@@ -9,10 +9,11 @@
                         </div>
                         <div class="subject-title">
                             <p class="st-title"><?php echo $course->getName() ?></p>
-                            <p class="st-progress"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>% Completado</p>
+                            
+                            <p class="st-progress"><?php echo $course->getCacheCompletedStatus(); ?>% Completado</p>
                         </div>
                         <div class="pbar-circle">
-                            <input class="knob" value="<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $course->getId()) ?>" data-fgColor="#fff" data-bgColor="#000" data-width="150" data-thickness=".09" data-skin="" data-readOnly=true data-displayInput=false >
+                            <input class="knob" value="<?php echo $course->getCacheCompletedStatus(); ?>" data-fgColor="#fff" data-bgColor="#000" data-width="150" data-thickness=".09" data-skin="" data-readOnly=true data-displayInput=false >
                         </div>
                     </div>
                 </a>

@@ -17,7 +17,7 @@ class CourseTable extends ComponentTable
         return Doctrine_Core::getTable('Course');
     }
     
-    public function getChaptersForUser($profile_id) {
+    public function getCoursesForUser($profile_id) {
         $query = $this->createQuery('c');
         $query->addWhere('c.Profiles.id = ?', $profile_id);
         
@@ -28,6 +28,8 @@ class CourseTable extends ComponentTable
         $query = $this->createQuery('c')
                     ->innerJoin('c.CollegeLearningPath clp')
                     ->where('clp.college_id = ?', $college_id);
+        
+        $query->useResultCache(true, null, cacheHelper::getInstance()->genKey('Course_getCoursesForCollege', array($college_id)) );
         
         return $query->execute();
     }

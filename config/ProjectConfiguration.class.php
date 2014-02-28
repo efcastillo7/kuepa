@@ -28,6 +28,9 @@ class ProjectConfiguration extends sfProjectConfiguration
         $manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $cacheDriver);
     }
     
+    // Registro de Customs Hydrators
+    $manager->registerHydrator('HYDRATE_KEY_VALUE_PAIR', 'KeyValuePairHydrator');
+    
     
   }
 }

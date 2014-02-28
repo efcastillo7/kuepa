@@ -47,7 +47,7 @@ class lessonActions extends kuepaActions {
             $lesson_id = $this->lesson->getId();
         }
                         
-        $this->resource = Resource::getRepository()->find($this->lesson->getActualResourceId());
+        $this->resource = Resource::getRepository()->getById($this->lesson->getActualResourceId());
         
         $this->has_next_resource = ($this->lesson->getNextResourceId() != null);
         $this->has_previous_resource = ($this->lesson->getPreviousResourceId() != null);
@@ -86,7 +86,7 @@ class lessonActions extends kuepaActions {
         $id = $request->getParameter("id");
 
         if ($id) {
-            $form = new LessonForm(Lesson::getRepository()->find($id));
+            $form = new LessonForm(Lesson::getRepository()->getById($id));
         } else {
             $form = new LessonForm();
         }
@@ -260,10 +260,10 @@ class lessonActions extends kuepaActions {
 
         $this->profile = $this->getProfile();
 
-        $this->course = Course::getRepository()->find($course_id);
-        $this->chapter = Chapter::getRepository()->find($chapter_id);
+        $this->course = Course::getRepository()->getById($course_id);
+        $this->chapter = Chapter::getRepository()->getById($chapter_id);
         if($lesson_id){
-            $this->lesson = Lesson::getRepository()->find($lesson_id);
+            $this->lesson = Lesson::getRepository()->getById($lesson_id);
         }else{
             $this->lesson = new Lesson();
         }

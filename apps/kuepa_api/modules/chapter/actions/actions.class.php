@@ -26,7 +26,7 @@ class chapterActions extends kuepaActions {
             if(!$id) {
                 $form = new ChapterForm;
             } else {
-                $form = new ChapterForm( Chapter::getRepository()->find($id) );
+                $form = new ChapterForm( Chapter::getRepository()->getById($id) );
             }
             
             $form->setValidator('_csrf_token', new sfValidatorPass);
@@ -89,7 +89,7 @@ class chapterActions extends kuepaActions {
      */
     public function executeGet(sfWebRequest $request) {
         try {
-            $chapter = Chapter::getRepository()->find($request->getParameter('id'));
+            $chapter = Chapter::getRepository()->getById($request->getParameter('id'));
 
             if (!$chapter) {
                 throw new ComponentNotFound;
@@ -124,7 +124,7 @@ class chapterActions extends kuepaActions {
     public function executeDelete(sfWebRequest $request) {
         $id = $request->getParameter("id");
         
-        $chapter = Chapter::getRepository()->find($id);
+        $chapter = Chapter::getRepository()->getById($id);
         
         $chapter->delete();
     }

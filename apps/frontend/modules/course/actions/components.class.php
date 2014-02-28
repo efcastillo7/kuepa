@@ -5,7 +5,7 @@ class courseComponents extends sfComponents {
     public function executeModalform() {
         $id = $this->getVar('id');
         if($id) {
-            $course = Course::getRepository()->find($id);
+            $course = Course::getRepository()->getById($id);
         } else {
             //set default values
             $course = new Course();

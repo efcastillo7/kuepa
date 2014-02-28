@@ -13,7 +13,7 @@
         </div>
         <div class="eg-details">
             <p class="title clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a></p>
-            <p class="subtitle"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
+            <p class="subtitle"><?php echo $course->getCacheCompletedStatus(); ?>% Completado</p>
             <div class="description margintop">
                 <div class="eg-description sb-alpha">
                     <?php echo $course->getRaw('description'); ?>

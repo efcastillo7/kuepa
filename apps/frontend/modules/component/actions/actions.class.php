@@ -34,7 +34,7 @@ class componentActions extends sfActions
         $new_ordered_childs_hash = array();
         $order = 1;
         foreach ($new_ordered_childs_array as $child_id) {
-            $new_ordered_childs_hash[$order] = Component::getRepository()->find($child_id);
+            $new_ordered_childs_hash[$order] = Component::getRepository()->getById($child_id);
             $order++;
         }
 

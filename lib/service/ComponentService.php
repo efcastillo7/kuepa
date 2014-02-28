@@ -11,11 +11,7 @@ class ComponentService {
 
         return self::$instance;
     }
-
-    public function find($id){
-        return Component::getRepository()->find($id);
-    }
-
+        
     public function setDeadlineForUser($profile_id, $component_id, $date){
         $date = is_int($date) ? date('Y-m-d', $date) : $date;
 
@@ -80,23 +76,13 @@ class ComponentService {
             if($college){
                 $courses = Course::getRepository()->getCoursesForCollege($college->getId());
             }else{
-                $courses = Course::getRepository()->getChaptersForUser($profile_id);
+                $courses = Course::getRepository()->getCoursesForUser($profile_id);
             }
+            
+            $this->addCompletedStatus($courses, $profile_id);
         }
 
         return $courses;
-    }
-
-    public function getLessonsForUser($profile_id) {
-        $lessons = Lessons::getRepository()->getChaptersForUser($profile_id);
-
-        return $lessons;
-    }
-
-    public function getResourcesForUser($profile_id) {
-        $lessons = Resources::getRepository()->getChaptersForUser($profile_id);
-
-        return $lessons;
     }
 
     public function create($type, $values = array()) {
@@ -132,7 +118,7 @@ class ComponentService {
     }
 
     public function edit($component_id, $values = array()) {
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         if ($component) {
             //editable fields
@@ -155,7 +141,7 @@ class ComponentService {
     }
 
     public function delete($component_id) {
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         if ($component) {
             $component->delete();
@@ -371,7 +357,7 @@ class ComponentService {
 
     public function getCountExerciseTryouts($profile_id, $component_id, $from_note = 0){
         //
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         if($component->getType() != "Lesson"){
             //
@@ -427,7 +413,7 @@ class ComponentService {
     */
     public function updateDuration($component_id){
 
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
         if ( $component->getType() == Resource::TYPE  ){ // Resource
             $duration = $component->calculateTime();
         }else{
@@ -446,4 +432,29 @@ class ComponentService {
         } 
 
     }
+    
+    
+    public function addCompletedStatus($components, $profile_id = null)
+    {
+        if ( !$profile_id ) {
+            $profile_id = $this->getUser()->getProfile()->getId();
+        }
+        
+        $components_ids = array();
+        foreach( $components as $component )
+        {
+            $components_ids[] = $component->getId();
+        }
+        
+        $completedStatusData = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $profile_id);
+        
+        foreach( $components as $component )
+        {
+            $completedStatus = ( isset( $completedStatusData[ $component->getId() ] ) ) ? $completedStatusData[ $component->getId() ] : 0;            
+            $component->setCacheCompletedStatus( $completedStatus, $profile_id );
+        }
+        
+        return $components;
+    }
+    
 }

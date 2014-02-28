@@ -82,7 +82,33 @@ class ProfileComponentCompletedStatusService {
             return $this->_completed_status[$profile_id][$component_id];
         }
         
+        /* Esta parte de codigo se deja para mantener compatibilidad, pero lo ideal es quitar las llamadas
+         * directas a getCompletedStatus cuando se muestra la completitud de varios components en una misma pantalla
+         * en favor de agruparlos en una unica llamada
+         */        
+        
+        $pccss = ProfileComponentCompletedStatus::getRepository()
+                            ->createQuery("pccs")
+                            ->where("pccs.profile_id = ?", $profile_id)
+                            ->andwhere("pccs.component_id = ?", $component_id)
+                            ->fetchOne();
+        
+        if ( $pccss ) {
+            $this->_completed_status[$profile_id][$component_id] = $pccss->getCompletedStatus();
+            return $pccss->getCompletedStatus();
+        }
+        
         return 0;
+    }
+    
+    public function getArrayCompletedStatus($component_ids, $profile_id) {
+    
+        return ProfileComponentCompletedStatus::getRepository()
+                        ->createQuery("pccs")
+                        ->select('pccs.component_id, pccs.completed_status')
+                        ->where("pccs.profile_id = ?", $profile_id)
+                        ->andWhereIn("pccs.component_id", $component_ids)
+                        ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
     }
 
 }
