@@ -12,4 +12,11 @@
  */
 class College extends BaseCollege
 {
+	  /**
+    * 
+    * @return College
+    */
+    public static function getRepository() {
+        return Doctrine_Core::getTable('College');
+    }
 }
