@@ -1,5 +1,4 @@
 <div class="container">
-<?php echo ucwords($kind) ?>
 
 	<p class="text-success">
 		<?php 
@@ -12,6 +11,18 @@
 	<form class="form" method="POST" enctype="multipart/form-data">
 		<div class="row">
 			<div class="span6">
+					<label>Tipo</label>
+					<select name="form[group_id]">
+						<?php 
+							foreach ($groups as $key => $group) { 
+								$selected = ( $group->getId() == 2 ) ? 'selected="selected"' : '';
+							?>
+
+								<option <?php echo $selected; ?> value="<?php echo $group->getId(); ?>"><?php echo $group->getName() ?></option>
+							<?php }
+						?>	
+					</select>
+
 					<label for="college"></label>
 					<select name="form[college_id]">
 						<option value="">Colegio</option>

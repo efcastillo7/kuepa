@@ -79,6 +79,7 @@ class usersActions extends sfActions
       $kind = "estudiante";
     $this->kind = $kind;
     $this->colleges = College::getRepository()->findAll();
+    $this->groups = Doctrine_Core::getTable('sfGuardGroup')->findAll();
     $this->message = '';
     if ( $request->isMethod(sfRequest::POST) ){
       $form  = $request->getParameter('form');

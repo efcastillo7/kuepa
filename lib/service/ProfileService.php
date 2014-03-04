@@ -188,6 +188,7 @@ class ProfileService {
       $college_id = $params['college_id'];
       $separator = $params['separator'];
       $skip_first_line = $params['skip_first_line'];
+      $group_id = $params['group_id'];
       $array_errors = array();
       $array_ok = array();
       foreach ($lines as $key => $user) {
@@ -228,7 +229,7 @@ class ProfileService {
                 $lastname = ucwords(strtolower($lastname));
                 $firstname = ucwords(strtolower($firstname));
                 //$user_id = UserManager :: create_user($user['FirstName'], $user['LastName'], $user['Status'], $user['Email'], $user['UserName'], $user['Password'], $user['OfficialCode'], api_get_setting('PlatformLanguage'), $user['PhoneNumber'], '', $user['AuthSource']);
-                $params = array('first_name' => ucwords(strtolower($firstname)),
+                $attrs = array('first_name' => ucwords(strtolower($firstname)),
                                 'last_name' =>  ucwords(strtolower($lastname)),
                                 'email_address' => $email,
                                 'nickname' => $username,
@@ -236,7 +237,7 @@ class ProfileService {
                                 'code' => '',
                                 'sex' => '');
 
-                $profile = $this->addNewUser($params);
+                $profile = $this->addNewUser($attrs, $group_id);
                 $array_ok[] = array($firstname,$lastname,$email,$username,$password);
                 if( (int)$college_id > 0 ){
                   CollegeService::getInstance()->addProfileToCollege($profile->getId(), $college_id);
