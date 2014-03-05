@@ -16,18 +16,20 @@ class video_sessionActions extends sfActions {
      */
     public function executeIndex(sfWebRequest $request) {
 
-        $this->profile_id                   = $this->getUser()->getGuardUser()->getProfile()->getId();
-        $this->google_id                    = $this->getUser()->getGuardUser()->getProfile()->getGoogleId();
+        $profile = $this->getUser()->getProfile();
+        
         if($this->getUser()->hasCredential("docente")){
-            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $this->profile_id );
-            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $this->profile_id );
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $this->profile_id );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $this->profile_id );
+            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $profile );
+            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $profile );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $profile );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $profile );
         }else{
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $this->profile_id );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $this->profile_id );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $profile );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $profile );
         }
-
+        
+        $this->profile_id = $profile->getId();
+        $this->google_id  = $profile->getGoogleId();
     }
 
     /**

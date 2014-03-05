@@ -46,12 +46,16 @@ class calendarActions extends sfActions {
         $end = $request->getPostParameter("end");
         $by_course = $request->getPostParameter("by_course");
 
-        if ($profile_id && $course_id)
+        if ($profile_id && $course_id) {
             $events = CalendarService::getInstance()->getEventsForUserInCourse($profile_id, $course_id, $start, $end);
-        elseif ($profile_id && $by_course)
-            $events = CalendarService::getInstance()->getUserCoursesEvents($profile_id, $start, $end);
-        elseif ($profile_id)
+        }
+        elseif ($profile_id && $by_course) {
+            $profile = Profile::getRepository()->find($profile_id);            
+            $events = CalendarService::getInstance()->getUserCoursesEvents($profile, $start, $end);
+        }
+        elseif ($profile_id) {
             $events = CalendarService::getInstance()->getUserEvents($profile_id, $start, $end);
+        }
 
         $response = array();
 

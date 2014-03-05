@@ -49,7 +49,7 @@ class calendarActions extends kuepaActions {
      */
     public function executeGetCoursesEvents(sfWebRequest $request){
 
-    	$events = CalendarService::getInstance()->getUserCoursesEvents($this->getUser()->getGuardUser()->getProfile()->getId());
+    	$events = CalendarService::getInstance()->getUserCoursesEvents( $this->getProfile() );
 
     	// Initializes a container array for all of the calendar events
 		$jsonArray = array();

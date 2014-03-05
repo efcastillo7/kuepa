@@ -45,8 +45,8 @@ class CalendarService {
         return $q->execute();
     }
 
-    public function getUserCoursesEvents($profile_id, $start_date = null, $end_date = null) {
-        $courses = ComponentService::getInstance()->getCoursesForUser($profile_id);
+    public function getUserCoursesEvents($profile, $start_date = null, $end_date = null) {
+        $courses = ComponentService::getInstance()->getCoursesForUser($profile);
 
         $events = array();
         foreach ($courses as $course) {

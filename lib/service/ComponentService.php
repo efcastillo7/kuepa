@@ -65,9 +65,14 @@ class ComponentService {
         return $deadline;
     }
 
-    public function getCoursesForUser($profile_id) {
-        //check if user has college
-        $profile = Profile::getRepository()->find($profile_id);
+    public function getCoursesForUser($profile) {
+        
+        // TODO: cuando todas las llamadas envien el objeto profile, debe eliminarse esta comprobacion
+        if ( !is_object($profile) ) {
+            $profile = Profile::getRepository()->find($profile);
+        }        
+        
+        
         $courses = array();
 
         if($profile){
@@ -76,10 +81,10 @@ class ComponentService {
             if($college){
                 $courses = Course::getRepository()->getCoursesForCollege($college->getId());
             }else{
-                $courses = Course::getRepository()->getCoursesForUser($profile_id);
+                $courses = Course::getRepository()->getCoursesForUser($profile->getId());
             }
             
-            $this->addCompletedStatus($courses, $profile_id);
+            $this->addCompletedStatus($courses, $profile->getId());
         }
 
         return $courses;
