@@ -18,6 +18,21 @@ class layoutComponents extends kuepaComponents {
         }
     }
 
+    public function executeStyles() {
+        $style = "";
+
+        if($this->getUser()->isAuthenticated()) {
+            $profile = $this->getProfile();
+            $colleges = $profile->getColleges();
+
+            if($colleges->count()){
+                $style = $colleges->getFirst()->getStyle();
+            }
+        }
+
+        $this->style = $style;
+    }
+
     public function executeMessages(){
         //get full messages
         if($this->getUser()->isAuthenticated()) {

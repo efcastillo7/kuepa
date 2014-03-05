@@ -1,0 +1,33 @@
+
+.navbar .nav-logo {
+  padding: 0px;
+  width: 50px;
+  background: url("../../img/humana-sml.png") no-repeat scroll 7px 7px transparent;
+}
+
+.container .row:first-child .span8 {
+  background: url("../../img/humana.png") no-repeat scroll 0px 0px transparent;
+  position: relative;
+  width: 780px;
+  height: 100px;
+}
+
+.container .row:first-child .span8 .title3 {
+	font-size: 11px;
+	text-transform: uppercase;;
+	font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin:0;
+}
+
+footer {
+	background-color: transparent;
+	color: #000;
+	border-top:1px solid #E5E5EB;
+}
+footer .container {
+		background: url("../../img/humana-ft.png") no-repeat scroll 0px 0px transparent;
+		height: 90px;
+}
