@@ -87,8 +87,8 @@ Indices:
 		<td>Available Resources</td>
 		<td>Viewed Resources</td>
 		<th>Completitud</th>
-		<th>Invest Time</th>
-		<th>needed Time</th>
+		<th>Invest Time for Persistence(Last Week)</th>
+		<th>needed Time for Persistence(Last Week)</th>
 		<th>Persistence</th>
 	</tr>
 
@@ -100,13 +100,13 @@ Indices:
 		<td><?php echo $stat['efi'] ?></td>
 		<td><?php echo $stat['efo'] ?></td>
 		<td><?php echo $stat['dc'] ?></td>
-		<td><?php echo $stat['ti'] ?></td>
+		<td><?php echo (int)$stat['ti'] ?></td>
 		<td><?php echo $stat['v'] ?></td>
 		<td><?php echo $stat['sk'] ?></td>
 		<td><?php echo $stat['available_resources'] ?></td>
 		<td><?php echo $stat['viewed_resources'] ?></td>
 		<td><?php echo $stat['c'] ?></td>
-		<td><?php echo $stat['invest_time'] ?></td>
+		<td><?php echo (int)$stat['invest_time'] ?></td>
 		<td><?php echo $stat['needed_time'] ?></td>
 		<td><?php echo $stat['p'] ?></td>
 	</tr>

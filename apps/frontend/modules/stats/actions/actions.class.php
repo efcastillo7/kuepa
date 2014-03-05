@@ -144,7 +144,7 @@ class statsActions extends kuepaActions
     $this->limit = ( $request->getParameter('limit') ) ?  $request->getParameter('limit') : 5 ;
     $this->offset = ( $request->getParameter('offset') ) ?  $request->getParameter('offset') : 0 ;
     $statsObj = StatsService::getInstance();
-    ini_set('max_execution_time',90);
+    ini_set('max_execution_time',180);
     $this -> courses = Course::getRepository()
                        ->createQuery('c')
                        ->orderBy("c.name")
