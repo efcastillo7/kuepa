@@ -31,15 +31,14 @@ class ComponentService {
         return;
     }
 
-    public function getDeadlineForUser($profile_id, $component_id){
+    public function getDeadlineForUser(Profile $profile, $component_id){
         //check if user has college
-        $profile = Profile::getRepository()->find($profile_id);
         $deadline = null;
 
         if($profile){
             //check if user has a deadline
             $plp = ProfileLearningPath::getRepository()->createQuery('plp')
-                        ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
+                        ->where('profile_id = ? and component_id = ?', array($profile->getId(), $component_id))
                         ->fetchOne();
 
             if($plp){
@@ -67,12 +66,6 @@ class ComponentService {
 
     public function getCoursesForUser($profile) {
         
-        // TODO: cuando todas las llamadas envien el objeto profile, debe eliminarse esta comprobacion
-        if ( !is_object($profile) ) {
-            $profile = Profile::getRepository()->find($profile);
-        }        
-        
-        
         $courses = array();
 
         if($profile){
@@ -84,7 +77,7 @@ class ComponentService {
                 $courses = Course::getRepository()->getCoursesForUser($profile->getId());
             }
             
-            $this->addCompletedStatus($courses, $profile->getId());
+            $this->addCompletedStatus($courses, $profile);
         }
 
         return $courses;
@@ -416,7 +409,8 @@ class ComponentService {
     /**
     * update de duration recursively. Courses, chapters and lessons
     */
-    public function updateDuration($component_id){
+    public function updateDuration($component_id)
+            {
 
         $component = Component::getRepository()->getById($component_id);
         if ( $component->getType() == Resource::TYPE  ){ // Resource
@@ -439,11 +433,8 @@ class ComponentService {
     }
     
     
-    public function addCompletedStatus($components, $profile_id = null)
+    public function addCompletedStatus($components, $profile = null)
     {
-        if ( !$profile_id ) {
-            $profile_id = $this->getUser()->getProfile()->getId();
-        }
         
         $components_ids = array();
         foreach( $components as $component )
@@ -451,12 +442,12 @@ class ComponentService {
             $components_ids[] = $component->getId();
         }
         
-        $completedStatusData = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $profile_id);
+        $completedStatusData = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $profile->getId());
         
         foreach( $components as $component )
         {
             $completedStatus = ( isset( $completedStatusData[ $component->getId() ] ) ) ? $completedStatusData[ $component->getId() ] : 0;            
-            $component->setCacheCompletedStatus( $completedStatus, $profile_id );
+            $component->setCacheCompletedStatus( $completedStatus, $profile->getId() );
         }
         
         return $components;

@@ -41,13 +41,14 @@ class video_sessionActions extends sfActions {
 
         $id = $request->getParameter("id");
         $students = $request->getParameter("students_ids");
-
+        $profile = $this->getUser()->getProfile();
+        
         if($id) {
             $video_session      = VideoSession::getRepository()->find($id);
         } else {
             $video_session      = new VideoSession();
-            $this->profile_id   = $this->getUser()->getGuardUser()->getProfile()->getId();
-            $video_session->setProfileId($this->profile_id);
+            $this->profile      = $profile;
+            $video_session->setProfile($profile);
         }
 
         $form = new VideoSessionForm($video_session);
@@ -302,15 +303,13 @@ class video_sessionActions extends sfActions {
      * @return type
      */
     public function executeUpdate_user_googleid(sfWebRequest $request){
-        $id         = $this->getUser()->getGuardUser()->getProfile()->getId();
+        $id         = $this->getUser()->getProfile();
         $google_id  = $request->getParameter("google_id");
         $response   = Array(
             'status'    => "error",
             'template'  => "¡El usuario #{$id} no existe!",
             'code'      => 400
         );
-
-        $profile  = Profile::getRepository()->find($id);
 
         if($profile){
             $profile->setGoogleId($google_id);

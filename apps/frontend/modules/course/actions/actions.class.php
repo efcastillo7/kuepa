@@ -39,7 +39,7 @@ class courseActions extends kuepaActions {
             }
         }
         
-        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;   
     }
@@ -60,7 +60,7 @@ class courseActions extends kuepaActions {
             $components[] = $chapter;
         }
         
-        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;
         $this->chapters = $chapters;

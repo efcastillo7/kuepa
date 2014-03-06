@@ -8,18 +8,18 @@ class statsComponents extends sfComponents
     $course = Course::getRepository()->getById($course_id);
     $count_weekends = false;
 
-    $profile_id = $this->getUser()->getProfile()->getId();
+    $profile = $this->getUser()->getProfile();
 
     $this->seted_deadline = false;
 
-    $first_access = LogService::getInstance()->getFirstAccess($profile_id, $course_id);
+    $first_access = LogService::getInstance()->getFirstAccess($profile->getId(), $course_id);
     
     if($first_access != null){
       $this->seted_deadline = true;
 
       //graph
       $from_date = strtotime($first_access);
-      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course_id);
+      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
       
       $days_remaining = stdDates::day_diff($from_date,$to_date);
       $working_days = stdDates::weekday_diff($from_date,$to_date);
@@ -27,7 +27,7 @@ class statsComponents extends sfComponents
 
       $hs_course = $course->getDuration() / 3600;
 
-      $hs_remaining = StatsService::getInstance()->getRemainingTime($profile_id, $course_id) / 3600 ;
+      $hs_remaining = StatsService::getInstance()->getRemainingTime($profile->getId(), $course_id) / 3600 ;
       $hs_per_day = $hs_course / ($count_weekends ? $working_days : $days_remaining);
 
       $hs_per_week_dedicated = ($hs_course - $hs_remaining) / $days_from_started;
@@ -56,7 +56,7 @@ class statsComponents extends sfComponents
         $ndays['estimated']['y'][] = date('d/m', $date);
 
         if($date < $today){
-          $hs_dedicated = round(LogService::getInstance()->getTotalTime($profile_id, $course, $date, $date_tomorrow)/3600);
+          $hs_dedicated = round(LogService::getInstance()->getTotalTime($profile->getId(), $course, $date, $date_tomorrow)/3600);
           $ndays['real']['x'][] = $last - $hs_dedicated;
         }else{
           $hs_dedicated = $hs_per_week_dedicated;
@@ -77,25 +77,25 @@ class statsComponents extends sfComponents
     $course = Course::getRepository()->getById($course_id);
     $count_weekends = false;
 
-    $profile_id = $this->getUser()->getProfile()->getId();
+    $profile = $this->getUser()->getProfile();
 
     $this->seted_deadline = false;
 
-    $first_access = LogService::getInstance()->getFirstAccess($profile_id, $course_id);
+    $first_access = LogService::getInstance()->getFirstAccess($profile->getId(), $course_id);
     
     if($first_access != null){
       $this->seted_deadline = true;
 
       //graph
       $from_date = strtotime($first_access) - 24*3600;
-      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course_id);
+      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
       
       $weeks_remaining = stdDates::day_diff($from_date,$to_date) / 7;
       $weeks_from_started = stdDates::day_diff($from_date,time()) / 7;
 
       $hs_course = $course->getDuration() / 3600;
 
-      $hs_remaining = StatsService::getInstance()->getRemainingTime($profile_id, $course_id) / 3600 ;
+      $hs_remaining = StatsService::getInstance()->getRemainingTime($profile->getId(), $course_id) / 3600 ;
       $hs_per_week = $hs_course / $weeks_remaining;
 
       $hs_per_week_dedicated = ($hs_course - $hs_remaining) / $weeks_from_started;
@@ -116,7 +116,7 @@ class statsComponents extends sfComponents
         $ndays['estimated']['y'][] = date('d/m', $date) . " a " . date('d/m', $date_tomorrow);
 
         if($date < $today){
-          $hs_dedicated = round(LogService::getInstance()->getTotalTime($profile_id, $course, $date, $date_tomorrow)/3600);
+          $hs_dedicated = round(LogService::getInstance()->getTotalTime($profile->getId(), $course, $date, $date_tomorrow)/3600);
           $ndays['real']['x'][] = $last - $hs_dedicated;
         }
 

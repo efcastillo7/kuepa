@@ -342,7 +342,7 @@ class VideoSessionService {
      * <ul>
      * <li><b>'next'</b> <i>boolean</i></li>
      * <li><b>'prev'</b> <i>boolean</i></li>
-     * <li><b>'profile_id'</b> <i>boolean</i></li>
+     * <li><b>'profile'</b> <i>object</i></li>
      * </ul>
      * @return \VideoSession[]
      * @throws Exception
@@ -362,8 +362,8 @@ class VideoSessionService {
             $dateOp = ">";
         }
 
-        if((int)$config["profile_id"] < 1){
-            throw new Exception("Profile ID not specified");
+        if(!$config["profile"]){
+            throw new Exception("Profile not specified");
         }
 
         $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);

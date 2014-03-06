@@ -24,26 +24,24 @@ class ProfileService {
         return $query->execute();
     }
 
-    public function addCoursesByCode($profile_id, $code){
+    public function addCoursesByCode($profile, $code){
         $rcode = RegisterCode::getRepository()->find($code);
-        $profile = Profile::getRepository()->find($profile_id);
 
         if($rcode && $profile){
 
         }
     }
 
-    public function getFriends($profile_id){
+    public function getFriends(Profile $profile){
         //fetch all users that are in any course with him
-        $profile = Profile::getRepository()->find($profile_id);
         $sql_college = "";
-
+        
         if($profile->getColleges()->count()){
             $college_id = $profile->getColleges()->getFirst()->getId();
-            $sql_college = "(select profile_id from profile_college where college_id = $college_id)";
-            $subquery = "SELECT distinct(profile_id) FROM ($sql_college UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = $profile_id)) ) t1 where profile_id != $profile_id";
+            $sql_college = sprintf('(select profile_id from profile_college where college_id = %d)',$college_id);
+            $subquery = sprintf('SELECT distinct(%1$s) FROM ($sql_college UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = %2$d)) ) t1 where profile_id != %2$d',$sql_college ,$profile->getId());
         }else{
-            $subquery = "SELECT distinct(profile_id) FROM (SELECT distinct(profile_id) FROM profile_learning_path WHERE component_id IN (SELECT component_id FROM profile_learning_path WHERE profile_id = $profile_id)) t1 where profile_id != $profile_id";
+            $subquery = sprintf('SELECT distinct(profile_id) FROM (SELECT distinct(profile_id) FROM profile_learning_path WHERE component_id IN (SELECT component_id FROM profile_learning_path WHERE profile_id = %1$d)) t1 where profile_id != %1$d',$profile->getId());
         }
         
         $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($subquery);
