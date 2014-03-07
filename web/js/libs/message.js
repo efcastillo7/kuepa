@@ -27,11 +27,10 @@ $(document).ready(function(){
   //filter contacts
   $("#prependedInput").keyup(function(e){
     var val = $(this).val();
-
     $(".inbox").hide();
 
     if(val != ""){
-      $(".inbox[data-name*='" + val + "']:hidden").show();
+      $(".inbox[data-name*='" + val.toLowerCase() + "']:hidden").show();
     }else{
       $(".inbox").show();
     }
@@ -135,7 +134,7 @@ function sendMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(data, b, c){
-      addMessageToScreen(data);
+      addMessagesToScreen(data);
       $("#send-message .input-send-message").val("");
     },
     onError: onError
@@ -152,107 +151,55 @@ function replyMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(data, b, c){
-      addMessageToScreen(data);
+      addMessagesToScreen(data);
       $("#send-message .input-send-message").val("");
     },
     onError: onError
   });
 }
 
-function addMessageToScreen(values){
-  //get values
-  var template = $(".templates #message");
-  elem = template.clone().attr("id", null),
-  date = values.created_at;
-
-  $(elem).addClass(values.in ? "in" : "out");
-  $(".chat-box", elem).addClass(values.in ? "in" : "out");
-  $(".chat-box", elem).html(values.content);
-  $(".avatar > img", elem).attr('src', values.avatar);
-
-  //mejorar
-  $(".time", elem).html(timeSince(date*1000));
-  $(".load-data").append(elem);
-
-  //update last_message date
-  last_message = values.created_at;
-
-  $('.cont-scroll').perfectScrollbar({wheelSpeed:30,wheelPropagation:true}).scrollTop($('.cont-scroll')[0].scrollHeight);
-}
-
 function setContactAsUnread(chat_id){
   var elem = $("a[data-chat='" + chat_id + "']");
-  var obj = elem;
+  if(elem.length){
+    if(!elem.hasClass('unread')){
 
-  if(!elem.hasClass('unread')){
-    var obj = elem.clone().addClass('unread');
+      elem.addClass('unread');
 
-    //remove
-    elem.remove();
-
-    //set as unread
-    obj.addClass('unread');
-    obj.hide();
-
-    //reapend
-    $(".cont-inboxes").prepend(obj);
+    }
+    //effect
+    $(elem).show("highlight", 3000 );
   }
-
-  //effect
-  $(obj).show("highlight", 3000 );
 }
 
 function addContacts(contacts){
   //clear inboxes
   $(".cont-inboxes").html("");
-
-  //foreach contact add
-  for(var i=0; i<contacts.length; i++){
-    addContact(contacts[i]);
-  }
+  // CARGO TODOS LOS CONTACTOS
+  $(".cont-inboxes").append(new EJS({url: "/js/templates/messages/contacts.ejs"}).render({contacts: contacts}));
 }
 
-function addContact(values){
-  //if is array then is null
-  if(values.last_message instanceof Array){
-    var template = $(".templates #contact").first();
-    var elem = template.clone().attr("id", null); 
-    $(".abstract", elem).html('');
-  }else{
-    var template = $(".templates #active-contact").first();
-    var elem = template.clone().attr("id", null); 
-    $(elem).attr("data-chat", values.last_message.id);
-    $(".abstract", elem).html(values.last_message.content);
+function addMessagesToScreen(messages)
+{
+  if( active_user != ""){
+      $("#" + active_user).attr("data-chat", messages[messages.length -1].id);
+      $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
+      $("#" + active_user + " .cont-text .abstract").text(messages[0].content);
   }
-  $(elem).attr("data-user", values.id);
-  (elem).attr("data-name", values.nickname);
-  $(".name span", elem).html(values.nickname);
-
-  //change bg for unread
-  if(values.new_messages){
-    $(elem).addClass('unread');
+  
+  //Elimino los mensajes que existen si es que no es el primer mensaje
+  if(chat_id != "" || messages.length > 1)
+  {
+    $(".load-data .each-message").remove();
   }
-
-  //add to screen
-  $(".cont-inboxes").append(elem);
-}
-
-function addMessagesToScreen(messages){
-  //it must have an active conversation
-
-  //add new messages to screen
+  
   if(messages.length > 0){
-    for(var i=0; i<messages.length; i++){
-      addMessageToScreen(messages[i]);
-    }
-
+    $(".load-data").append(new EJS({url: "/js/templates/messages/messages.ejs"}).render({messages: messages}));
     $('.cont-scroll').perfectScrollbar({wheelSpeed:30,wheelPropagation:true}).scrollTop($('.cont-scroll')[0].scrollHeight);
   }
-
   //hide loading
   $(".loading").fadeOut(200);
 }
 
 function onError(){
-  alert('surgió un erorr');
+  alert('surgió un error');
 }

@@ -31,7 +31,7 @@ class messageActions extends sfActions
                 NotificationsService::getInstance()->addMessageNotification($message->getId());
             }
 
-            $response = array(
+            $response[] = array(
                 'id' => $message->getId(),
                 'subject' => $message->getSubject(),
                 'content' => $message->getContent(),

@@ -19,7 +19,7 @@ class profileActions extends sfActions
 		return $this->renderText(json_encode("Success"));
 	} 
 
-	/**
+    /**
      * GET /profile/friends
      *
      * @param sfRequest $request A request object
