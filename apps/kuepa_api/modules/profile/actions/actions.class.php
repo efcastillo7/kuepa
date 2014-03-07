@@ -37,12 +37,12 @@ class profileActions extends sfActions
 
             if($i){
                 $last_message = array(
-                        'date' => $messages_q[0]->getUpdatedAt(),
-                        'content' => $messages_q[0]->getContent(),
-                        'id' => $messages_q[0]->getId()
+                        'date' => $messages_q[$i-1]->getUpdatedAt(),
+                        'content' => $messages_q[$i-1]->getContent(),
+                        'id' => $messages_q[$i-1]->getId()
                 );
 
-                $new_messages = !$messages_q[0]->getRecipients()->getFirst()->getIsRead();
+                $new_messages = !$messages_q[$i-1]->getRecipients()->getFirst()->getIsRead();
             }
 
             if($new_messages){

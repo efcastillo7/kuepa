@@ -134,8 +134,15 @@ function sendMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(data, b, c){
+      
+      $("#" + active_user).attr("data-chat", messages[messages.length -1].id);
+      $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
+      $("#" + active_user + " .cont-text .abstract").text(messages[messages.length -1].content);
+      $("#" + active_user).prependTo(".cont-inboxes");
+      
       addMessagesToScreen(data);
       $("#send-message .input-send-message").val("");
+              
     },
     onError: onError
   });
@@ -151,6 +158,8 @@ function replyMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(data, b, c){
+      $("a[data-chat='" + chat_id + "']").prependTo(".cont-inboxes");
+      $("a[data-chat='" + chat_id + "'] .cont-text .abstract").text(data.content);
       addMessagesToScreen(data);
       $("#send-message .input-send-message").val("");
     },
@@ -162,9 +171,7 @@ function setContactAsUnread(chat_id){
   var elem = $("a[data-chat='" + chat_id + "']");
   if(elem.length){
     if(!elem.hasClass('unread')){
-
       elem.addClass('unread');
-
     }
     //effect
     $(elem).show("highlight", 3000 );
@@ -180,16 +187,11 @@ function addContacts(contacts){
 
 function addMessagesToScreen(messages)
 {
-  if( active_user != ""){
-      $("#" + active_user).attr("data-chat", messages[messages.length -1].id);
-      $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
-      $("#" + active_user + " .cont-text .abstract").text(messages[0].content);
-  }
-  
+
   //Elimino los mensajes que existen si es que no es el primer mensaje
   if(chat_id != "" || messages.length > 1)
   {
-    $(".load-data .each-message").remove();
+        $(".load-data .each-message").remove();
   }
   
   if(messages.length > 0){
