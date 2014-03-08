@@ -491,6 +491,26 @@ class VideoSessionService {
     }
 
     /**
+     * Returns an array of video sessions
+     *
+     * @param mixed $id (array of ids or a id)
+     * @return array
+     */
+    public function getVideoSessionFromIdArray($id){
+        $q = VideoSession::getRepository()->createQuery("vs")
+                ->where("vs.type = ?", self::TYPE_CLASS)
+                ->orderBy("vs.id DESC");
+
+        if(is_array($id)){
+            $q->andWhereIn('id', $id);
+        }else{
+            $q->andWhere('id = ?',$id);
+        }
+
+        return $q->fetchArray();
+    }
+
+    /**
      *
      * @param string $url
      * @param string $pid

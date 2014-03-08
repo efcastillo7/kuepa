@@ -5,7 +5,7 @@
  *
  * @package    kuepa
  * @subpackage video_session
- * @author     CristalMedia
+ * @author     CristalMedia | KiBind
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class video_sessionActions extends sfActions {
@@ -63,5 +63,65 @@ class video_sessionActions extends sfActions {
 
         return $this->renderText(json_encode($response));
     }
+
+    /**
+     * GET /video_session
+     * @param sfWebRequest $request
+     * @return json response
+     * @throws BadRequest
+     */
+    public function executeList(sfWebRequest $request){
+        $profile_id = $this->getUser()->getProfile()->getId();
+
+        $id = $request->getParameter("id");
+
+        if (empty($id)) {
+            throw new BadRequest;
+        }
+
+        try {
+            $data = VideoSessionService::getInstance()->getVideoSessionFromIdArray($id);
+            
+            return $this->renderText(json_encode($data));
+        } catch (BadRequest $e) {
+            $this->getResponse()->setStatusCode(400);
+        } catch (Exception $e) {
+            $this->getResponse()->setStatusCode(500);
+        }
+
+        return $this->renderText(json_encode(array('status' => 'error')));
+    }
+
+    /**
+     * PUT /video_session/{id}
+     *
+     * @param sfRequest $request A request object
+     */
+    public function executeCreate(sfWebRequest $request) {}
+
+    /**
+     * GET /video_session/{id}
+     * GET /video_session/{ids}
+     *
+     * @param sfRequest $request A request object
+     */
+    public function executeGet(sfWebRequest $request) {
+        $profile_id = $this->getUser()->getProfile()->getId();
+
+        $id = $request->getParameter("id");
+
+        if($id){
+            $data = VideoSessionService::getInstance()->getVideoSessionFromIdArray($id);
+            
+            return $this->renderText(json_encode($data));
+        }
+    }
+
+    /**
+     * DELETE /course/{id}
+     *
+     * @param sfRequest $request A request object
+     */
+    public function executeDelete(sfWebRequest $request) {}
 
 }
