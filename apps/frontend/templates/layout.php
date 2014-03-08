@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="/styles/css/kuepa.css">
         <link rel="stylesheet" href="/styles/css/kuepa.hangouts.css">
         <link rel="stylesheet" href="/styles/css/kuepa.notifications.css">
+        <link rel="stylesheet" href="/styles/css/kuepa.exercises.css">
         <link rel="stylesheet" href="/styles/css/plataforma.css">
         <link rel="stylesheet" href="/styles/css/thumbgrid.css">
 

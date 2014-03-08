@@ -281,7 +281,7 @@ ResourceData:
     parent_id: { type: integer }
     duration: float
     level: { type: enum, values: [beginner, intermediate, advance]}
-    word_count: { type: integer },
+    word_count: { type: integer }
     reading_time: { type: integer, default: 0}
   relations:
     Author:
@@ -349,6 +349,8 @@ Exercise:
     SoftDelete: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
+    course_id: { type: integer }
+    chapter_id: { type: integer }
     title: string(200)
     description: text
     type: string
@@ -359,6 +361,8 @@ Exercise:
     random: integer
     results_disabled: boolean
   relations:
+    Chapter: { class: Component, onDelete: CASCADE, local: chapter_id, foreign: id, foreignType: one }
+    Course: { class: Component, onDelete: CASCADE, local: course_id, foreign: id, foreignType: one }
     Questions:
       class: ExerciseQuestion
       refClass: ExerciseHasExerciseQuestion
@@ -396,10 +400,35 @@ ExerciseAnswer:
       foreign: id
       type: one
 
+ExerciseAnswerItem:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: text
+    value: integer
+    exercise_answer_id: integer
+    exercise_question_id: integer
+  relations:
+    Answer:
+      class: ExerciseAnswer
+      local: exercise_answer_id
+      foreignAlias: Items
+      foreign: id
+      type: one
+    Question:
+      class: ExerciseQuestion
+      local: exercise_question_id
+      foreignAlias: Items
+      foreign: id
+      type: one
+
 ExerciseHasExerciseQuestion:
   columns:
     exercise_id: integer
     exercise_question_id: integer
+    exercise_parent_question_id: integer
     position: { type: integer, notnull: true, default: 1}
   relations:
     Exercise:
@@ -410,6 +439,7 @@ ExerciseHasExerciseQuestion:
       local: exercise_question_id
       foreign: id
       type: one
+    ExerciseParentQuestion: {class: ExerciseQuestion, local: exercise_parent_question_id, foreign: id, foreignType: one }
 
 ExerciseAttemp:
   actAs:
