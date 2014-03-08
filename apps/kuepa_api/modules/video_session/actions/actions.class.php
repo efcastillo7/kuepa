@@ -52,9 +52,6 @@ class video_sessionActions extends sfActions {
                 $response["template"] = "Sesión #{$id} editada correctamente";
             }
 
-
-
-
         } catch (BadRequest $e) {
             $this->getResponse()->setStatusCode(400);
         } catch (Exception $e) {
@@ -71,16 +68,23 @@ class video_sessionActions extends sfActions {
      * @throws BadRequest
      */
     public function executeList(sfWebRequest $request){
-        $profile_id = $this->getUser()->getProfile()->getId();
-
         $id = $request->getParameter("id");
 
         if (empty($id)) {
             throw new BadRequest;
         }
 
+        $profile_id = $this->getUser()->getProfile()->getId();
+
         try {
             $data = VideoSessionService::getInstance()->getVideoSessionFromIdArray($id);
+
+            //inject profile id
+            for($i=0; $i< count($data); $i++) {
+                if($data[$i]['platform'] == VideoSessionService::PLATFORM_HANGOUTS && $data[$i]['url'] != ""){
+                    $data[$i]['url'] = VideoSessionService::getInstance()->injectProfileId($data[$i]['url'],$profile_id);
+                }
+            }
             
             return $this->renderText(json_encode($data));
         } catch (BadRequest $e) {
@@ -112,6 +116,13 @@ class video_sessionActions extends sfActions {
 
         if($id){
             $data = VideoSessionService::getInstance()->getVideoSessionFromIdArray($id);
+
+            //inject profile id
+            foreach ($data as $video) {
+                if($video['platform'] == VideoSessionService::PLATFORM_HANGOUTS){
+                    $video['url'] = VideoSessionService::getInstance()->injectProfileId($video['url'],$profile_id);
+                }
+            }
             
             return $this->renderText(json_encode($data));
         }
