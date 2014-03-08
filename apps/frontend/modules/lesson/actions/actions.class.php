@@ -133,14 +133,14 @@ class lessonActions extends kuepaActions {
     public function executeDependencyTree(sfWebRequest $request){
         //$course
         //$chapter
-        $lesson_id = $request->getParameter('lesson_id');
-        $this -> lesson = ComponentService::getInstance()->find($lesson_id);
-        $chapter = ComponentService::getInstance()->getParents($lesson_id);
-        $this -> chapter = $chapter[0];
-        $course = ComponentService::getInstance()->getParents($this -> chapter->getId());
-        $this -> course =$course[0];
+        $lesson_id     = $request->getParameter('lesson_id');
+        $this->lesson  = ComponentService::getInstance()->find($lesson_id);
+        $chapter       = ComponentService::getInstance()->getParents($lesson_id);
+        $this->chapter = $chapter[0];
+        $course        = ComponentService::getInstance()->getParents($this -> chapter->getId());
+        $this->course  = $course[0];
 
-        $this -> courses = Course::getRepository()
+        $this->courses = Course::getRepository()
                            ->createQuery('c')
                            ->orderBy("c.name")
                            ->execute();

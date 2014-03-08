@@ -1,3 +1,4 @@
+<?php use_javascript("/js/libs/ejs/ejs_production.js"); ?>
 <?php use_javascript("/js/libs/messageService.js") ?>
 <?php use_javascript("/js/libs/datetime.js") ?>
 <?php use_javascript("/js/libs/message.js") ?>
@@ -28,6 +29,7 @@
           </form>
 
           <div class="cont-inboxes">
+              
           </div><!-- /cont-inboxes -->
         </div><!-- /col-md-4 -->
 
@@ -65,22 +67,10 @@
                   <i class="spr ico-message"><i class="spr ico-message-hover"></i></i>
                 </span>
                 <input type="text" placeholder="Escribe un mensaje" class="input-send-message" disabled>
-                <button type="button" class="btn-inside btn-gray">Enviar</button>
+                <button type="submit" class="btn-inside btn-gray">Enviar</button>
               </div>
             </form>
           </div>
-
-          <!-- <div class="send-message">
-            <form id="send-message">
-              <div class="cont-inputs">
-                <span class="add-on">
-                  <i class="spr ico-message"><i class="spr ico-message-hover"></i></i>
-                </span>
-                <input type="text" name="content" placeholder="Escribe un mensaje" class="input-send-message" disabled>
-                <input type="button" class="btn-gray" value="Enviar">
-              </div>
-            </form>
-          </div> -->
 
         </div><!-- /col-md-8 chat -->
 
@@ -88,43 +78,3 @@
     </div><!-- /container-messages -->
 
   </div><!-- /full-back-messages -->
-
-  <div class="templates" style="display: none;">
-    <a href="#" class="inbox box-data-user" data-chat="" data-user="" data-name="" id="active-contact">
-      <span class="cont-chat cont-ico">
-        <i class="spr ico-chat"></i>
-      </span>
-      <span class="cont-text">
-        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span>
-        <span class="abstract">Lorem ipsum dolor sit amet con...</span>
-        <span class="time">-</span>
-      </span>
-    </a>
-
-    <a href="#" class="inbox box-data-user" data-chat="" data-user="" data-name="" id="contact">
-      <span class="cont-chat cont-ico">
-        <!-- <i class="spr ico-chat"></i> -->
-      </span>
-      <span class="cont-text">
-        <span class="name"><span>Marcos Aurelio</span> <!-- <i class="connected"></i> --> </span>
-        <span class="abstract">Lorem ipsum dolor sit amet con...</span>
-        <span class="time">-</span>
-      </span>
-    </a>
-
-    <div class="each-message" id="message">
-      <div class="avatar">
-        <img src="">
-      </div>
-      <div class="chat-box">
-        onsectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
-      </div>
-      <div class="time">Time</div>
-    </div>
-
-  </div>
-
-  <script>
-    
-
-  </script>

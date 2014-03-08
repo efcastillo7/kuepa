@@ -17,7 +17,7 @@ class statsActions extends kuepaActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-   $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getUser()->getGuardUser()->getProfile()->getId()); 
+   $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
   }
 
   public function executeCourse(sfWebRequest $request)
@@ -27,10 +27,10 @@ class statsActions extends kuepaActions
     $this->course = Course::getRepository()->getById($course_id);
     $this->chapters = $this->course->getChapters();
 
-    $profile_id = $this->getProfile()->getId();
+    $profile = $this->getProfile();
 
-    $first_access = LogService::getInstance()->getFirstAccess($profile_id, $course_id);
-    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile_id, $course_id);
+    $first_access = LogService::getInstance()->getFirstAccess($profile->getId(), $course_id);
+    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
 
     $this->has_stats = $first_access != null && $to_date != null;
     $this->seted_deadline = $to_date != null;
@@ -44,8 +44,8 @@ class statsActions extends kuepaActions
       $days = stdDates::day_diff($from_date, $now);
 
       $this->stats = array(
-        'hs_dedicated' => round(LogService::getInstance()->getTotalTime($profile_id, $this->course, $from_date, $now)/3600),
-        'hs_remaining' => round(StatsService::getInstance()->getRemainingTime($profile_id, $course_id) / 3600),
+        'hs_dedicated' => round(LogService::getInstance()->getTotalTime($profile->getId(), $this->course, $from_date, $now)/3600),
+        'hs_remaining' => round(StatsService::getInstance()->getRemainingTime($profile->getId(), $course_id) / 3600),
         'days_lapse' => $days,
         'weeks_lapse' => floor($days/7),
         'days_remaining' => $days_remaining,

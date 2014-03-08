@@ -16,18 +16,20 @@ class video_sessionActions extends sfActions {
      */
     public function executeIndex(sfWebRequest $request) {
 
-        $this->profile_id                   = $this->getUser()->getGuardUser()->getProfile()->getId();
-        $this->google_id                    = $this->getUser()->getGuardUser()->getProfile()->getGoogleId();
+        $profile = $this->getUser()->getProfile();
+        
         if($this->getUser()->hasCredential("docente")){
-            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $this->profile_id );
-            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $this->profile_id );
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $this->profile_id );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $this->profile_id );
+            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $profile );
+            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $profile );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $profile );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $profile );
         }else{
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $this->profile_id );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $this->profile_id );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $profile );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $profile );
         }
-
+        
+        $this->profile_id = $profile->getId();
+        $this->google_id  = $profile->getGoogleId();
     }
 
     /**
@@ -39,13 +41,14 @@ class video_sessionActions extends sfActions {
 
         $id = $request->getParameter("id");
         $students = $request->getParameter("students_ids");
-
+        $profile = $this->getUser()->getProfile();
+        
         if($id) {
             $video_session      = VideoSession::getRepository()->find($id);
         } else {
             $video_session      = new VideoSession();
-            $this->profile_id   = $this->getUser()->getGuardUser()->getProfile()->getId();
-            $video_session->setProfileId($this->profile_id);
+            $this->profile      = $profile;
+            $video_session->setProfile($profile);
         }
 
         $form = new VideoSessionForm($video_session);
@@ -300,15 +303,13 @@ class video_sessionActions extends sfActions {
      * @return type
      */
     public function executeUpdate_user_googleid(sfWebRequest $request){
-        $id         = $this->getUser()->getGuardUser()->getProfile()->getId();
+        $id         = $this->getUser()->getProfile();
         $google_id  = $request->getParameter("google_id");
         $response   = Array(
             'status'    => "error",
             'template'  => "¡El usuario #{$id} no existe!",
             'code'      => 400
         );
-
-        $profile  = Profile::getRepository()->find($id);
 
         if($profile){
             $profile->setGoogleId($google_id);

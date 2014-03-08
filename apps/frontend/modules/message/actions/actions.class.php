@@ -29,10 +29,10 @@ class messageActions extends kuepaActions
   }
 
   public function executeFetch(sfWebRequest $request){
-  	// $profile_id = $this->getUser()->getProfile()->getId();
-  	$profile_id = 1;
+  	$profile_id = $this->getUser()->getProfile()->getId();
+  	//$profile_id = 2;
 
-  	$this->messages = MessagingService::getInstance()->getMessagesForUser($profile_id, array('params' => array($profile_id), 'hydration_mode' => Doctrine::HYDRATE_ARRAY));
+  	$this->messages = MessagingService::getInstance(w)->getMessagesForUser($profile_id, array('params' => array($profile_id), 'hydration_mode' => Doctrine::HYDRATE_ARRAY));
 
   	return $this->renderText(json_encode($this->messages));
 
