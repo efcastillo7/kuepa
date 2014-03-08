@@ -27,7 +27,7 @@
                 $isOwner        = $video_session->getProfileId() == $pid;
 
                 //Adds the profile_id to the url
-                $storedUrl      = VideoSessionService::getInstance()->injectProfileId($storedUrl,$pid);
+                $storedUrl      =  $video_session->getPlatform() == VideoSessionService::PLATFORM_HANGOUTS ? VideoSessionService::getInstance()->injectProfileId($storedUrl,$pid) : $storedUrl;
 
                 ?>
                 <tr class="video-session-tr" data-id="<?php echo $video_session->getId() ?>" data-scheduled_for="<?php echo $video_session->getScheduledFor() ?>">
