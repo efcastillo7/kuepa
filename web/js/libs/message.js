@@ -77,6 +77,7 @@ $(document).ready(function(){
   $("body").delegate("a.inbox","click",function(){
     //enable input
     $(".input-send-message").prop('disabled', false);
+    console.log("entro");
 
     //remove bg if has message
     $(this).removeClass('unread');
@@ -87,7 +88,8 @@ $(document).ready(function(){
 
     //fetch message
     $(".loading").fadeIn();
-    chat_id = $(this).data("chat");
+    chat_id = $(this).attr("data-chat");
+    console.log(chat_id);
     var name = $(".name",this).html();
 
     $(".load-data").html("");
@@ -114,7 +116,7 @@ $(document).ready(function(){
     ms.getUnreadMessages({
       onSuccess: function(messages){
         for(var i=0; i<messages.length; i++){
-          setContactAsUnread(messages[i].id);
+          setContactAsUnread(messages[i]);
         }
       },
       onError: onError
@@ -133,16 +135,18 @@ function sendMessage(){
     subject: "",
     content: text,
     //if ok add to screen
-    onSuccess: function(data, b, c){
-      
-      $("#" + active_user).attr("data-chat", messages[messages.length -1].id);
+    onSuccess: function(messages, b, c){
+      message = messages[0];
+      $("#" + active_user).attr("data-chat", message.id);
       $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
-      $("#" + active_user + " .cont-text .abstract").text(messages[messages.length -1].content);
+      $("#" + active_user + " .cont-text .abstract").text(message.content);
       $("#" + active_user).prependTo(".cont-inboxes");
       
-      addMessagesToScreen(data);
+      addMessagesToScreen(message);
       $("#send-message .input-send-message").val("");
-              
+
+      //set active chat
+      chat_id = message.id;
     },
     onError: onError
   });
@@ -167,14 +171,22 @@ function replyMessage(){
   });
 }
 
-function setContactAsUnread(chat_id){
-  var elem = $("a[data-chat='" + chat_id + "']");
+function setContactAsUnread(message){
+  var elem = $("a[data-chat='" + message.id + "'], a[data-user='" + message.author_id + "']");
+
   if(elem.length){
+    //set chat id if undefined
+    if(elem.data('chat') == ""){
+      elem.attr('data-chat', message.id);
+    }
+    //check for class
     if(!elem.hasClass('unread')){
       elem.addClass('unread');
     }
     //effect
     $(elem).show("highlight", 3000 );
+    //add icon if is hidden
+    $(".cont-chat.cont-ico i", elem).removeClass('hidden');
   }
 }
 
