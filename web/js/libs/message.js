@@ -37,6 +37,7 @@ $(document).ready(function(){
   });
 
   $('.cont-inboxes').perfectScrollbar({wheelSpeed:30,wheelPropagation:true}); //inicializa el scroll de los inbox (barra izquierda)
+  $('.cont-scroll').perfectScrollbar({wheelSpeed:30,wheelPropagation:true});
 
   //send
   // $('form#send-message').submit();
@@ -77,7 +78,6 @@ $(document).ready(function(){
   $("body").delegate("a.inbox","click",function(){
     //enable input
     $(".input-send-message").prop('disabled', false);
-    console.log("entro");
 
     //remove bg if has message
     $(this).removeClass('unread');
@@ -89,7 +89,6 @@ $(document).ready(function(){
     //fetch message
     $(".loading").fadeIn();
     chat_id = $(this).attr("data-chat");
-    console.log(chat_id);
     var name = $(".name",this).html();
 
     $(".load-data").html("");
@@ -112,16 +111,16 @@ $(document).ready(function(){
   });
 
   //set interval for unread messages
-  setInterval(function(){
-    ms.getUnreadMessages({
-      onSuccess: function(messages){
-        for(var i=0; i<messages.length; i++){
-          setContactAsUnread(messages[i]);
-        }
-      },
-      onError: onError
-    });
-  }, 3000);
+  // setInterval(function(){
+  //   ms.getUnreadMessages({
+  //     onSuccess: function(messages){
+  //       for(var i=0; i<messages.length; i++){
+  //         setContactAsUnread(messages[i]);
+  //       }
+  //     },
+  //     onError: onError
+  //   });
+  // }, 3000);
 });
 
 //functions for window management
@@ -142,7 +141,7 @@ function sendMessage(){
       $("#" + active_user + " .cont-text .abstract").text(message.content);
       $("#" + active_user).prependTo(".cont-inboxes");
       
-      addMessagesToScreen(message);
+      addMessagesToScreen(messages);
       $("#send-message .input-send-message").val("");
 
       //set active chat
@@ -164,7 +163,9 @@ function replyMessage(){
     onSuccess: function(data, b, c){
       $("a[data-chat='" + chat_id + "']").prependTo(".cont-inboxes");
       $("a[data-chat='" + chat_id + "'] .cont-text .abstract").text(data.content);
-      addMessagesToScreen(data);
+
+      last_message = data.created_at;
+      addMessageToScreen(data);
       $("#send-message .input-send-message").val("");
     },
     onError: onError
@@ -197,18 +198,25 @@ function addContacts(contacts){
   $(".cont-inboxes").append(new EJS({url: "/js/templates/messages/contacts.ejs"}).render({contacts: contacts}));
 }
 
+function addMessageToScreen(message){
+  $(".load-data").append(new EJS({url: "/js/templates/messages/message.ejs"}).render({message: message}));
+  $('.cont-scroll').scrollTop($('.load-data').height());
+}
+
 function addMessagesToScreen(messages)
 {
-
   //Elimino los mensajes que existen si es que no es el primer mensaje
-  if(chat_id != "" || messages.length > 1)
-  {
-        $(".load-data .each-message").remove();
-  }
+  // if(chat_id != "" || messages.length > 1)
+  // {
+  //   $(".load-data .each-message").remove();
+  // }
+
   
   if(messages.length > 0){
+    //update time
+    last_message = messages[messages.length-1].created_at;
     $(".load-data").append(new EJS({url: "/js/templates/messages/messages.ejs"}).render({messages: messages}));
-    $('.cont-scroll').perfectScrollbar({wheelSpeed:30,wheelPropagation:true}).scrollTop($('.cont-scroll')[0].scrollHeight);
+    $('.cont-scroll').scrollTop($('.load-data').height());
   }
   //hide loading
   $(".loading").fadeOut(200);
