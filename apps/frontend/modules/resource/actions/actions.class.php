@@ -143,9 +143,9 @@ class resourceActions extends kuepaActions
 
         $this->profile = $this->getProfile();
 
-        $this->course = Course::getRepository()->find($course_id);
-        $this->chapter = Chapter::getRepository()->find($chapter_id);
-        $this->lesson = Lesson::getRepository()->find($lesson_id);
+        $this->course = Course::getRepository()->getById($course_id);
+        $this->chapter = Chapter::getRepository()->getById($chapter_id);
+        $this->lesson = Lesson::getRepository()->getById($lesson_id);
         $this->resource = new Resource();
 
         if ($request->isXmlHttpRequest()) {

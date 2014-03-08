@@ -17,6 +17,11 @@ class Lesson extends BaseLesson {
     private $_resource_list_id = array();
 
     private function initResources(){
+        
+        if ( count( $this->_resource_list_id ) ) {
+            return;
+        }
+        
         $resources = $this->getResources();
         $this->_resource_list_id = array();
         foreach ($resources as $id => $obj) {

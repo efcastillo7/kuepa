@@ -21,6 +21,17 @@ class Course extends BaseCourse
     public static function getRepository() {
         return Doctrine_Core::getTable('Course');
     }
+    
+    public function clearCache($event)
+    {
+        parent::clearCache($event);
+
+        $collegeLearningPaths = CollegeLearningPath::getRepository()->findOneByComponentId( $this->getId() );
+        
+        foreach ( $collegeLearningPaths as $collegeLearningPath ) {
+            CacheHelper::getInstance()->deleteByPrefix('Course_getCoursesForCollege', array( $collegeLearningPath->getCollegeId() ));
+        }
+    }
 
     public function __toString(){
         return $this->getId() . " - " . $this->getName();

@@ -12,4 +12,5 @@
  */
 class College extends BaseCollege
 {
+
 }

@@ -160,16 +160,18 @@ CalendarEvent:
     description: Eat
     start: '2013-08-17 00:01:00'
     end: '2013-08-17 00:02:00'
-    profile_id: 1
+    profile_id: 3
+    Component: Course_3
   Calendar2:
     title: Soft
     description: Tail
     start: '2013-08-07 00:01:00'
     end: '2013-08-07 00:02:00'
-    profile_id: 1
+    profile_id: 3
+    Component: Course_3
   Calendar3:
     title: White
     description: Puffy
     start: '2013-08-08 00:01:00'
     end: '2013-08-08 00:02:00'
-    profile_id: 1
+    profile_id: 3

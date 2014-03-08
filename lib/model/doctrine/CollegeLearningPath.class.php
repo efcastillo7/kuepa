@@ -19,4 +19,18 @@ class CollegeLearningPath extends BaseCollegeLearningPath
     public static function getRepository() {
         return Doctrine_Core::getTable('CollegeLearningPath');
     }
+    
+    public function preSave($event)   {
+        $this->clearCache($event);
+    }
+    
+    public function preDelete($event) {
+        $this->clearCache($event);
+    }
+    
+    public function clearCache($event)
+    {
+        CacheHelper::getInstance()->delete('Course_getCoursesForCollege', array( $this->getCollegeId() ));
+    }
+    
 }

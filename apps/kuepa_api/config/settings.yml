@@ -24,9 +24,6 @@ test:
 
 all:
   .settings:
-    # Form security secret (CSRF protection)
-    csrf_secret:            somethingveryrandom1231231231321
-
     # Output escaping settings
     escaping_strategy:      true
     escaping_method:        ESC_SPECIALCHARS

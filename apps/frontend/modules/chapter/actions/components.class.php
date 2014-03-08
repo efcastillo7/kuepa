@@ -5,7 +5,7 @@ class chapterComponents extends sfComponents {
     public function executeModalform() {
         $id = $this->getVar('id');
         if ($id) {
-            $chapter = Chapter::getRepository()->find($id);
+            $chapter = Chapter::getRepository()->getById($id);
         } else {
             //set default values
             $chapter = new Chapter();

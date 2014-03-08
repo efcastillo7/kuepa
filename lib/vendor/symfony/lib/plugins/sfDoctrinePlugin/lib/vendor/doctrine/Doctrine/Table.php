@@ -1617,6 +1617,8 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable
             // Executing query
             $res = $q->execute($params, $hydrationMode);
         } else {
+            
+            
             // We're passing a single ID or an array of IDs
             $q = $this->createQuery('dctrn_find')
                 ->where('dctrn_find.' . implode(' = ? AND dctrn_find.', (array) $this->getIdentifier()) . ' = ?')

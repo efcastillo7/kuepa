@@ -12,7 +12,7 @@
                         <img src="<?php echo $course->getThumbnailPath() ?>">
                     </div>
                     <p class="title3 HelveticaBd clearmargin"><i class="icon-chevron-right"></i><?php echo $course->getName() ?></p>
-                    <p class="small1 HelveticaLt"><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $course->getId()) ?>% Completado</p>
+                    <p class="small1 HelveticaLt"><?php echo $course->getCacheCompletedStatus(); ?>% Completado</p>
                 </div>
             </div>
             <div class="span12">

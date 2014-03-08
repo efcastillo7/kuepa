@@ -9,7 +9,7 @@
     </ul>
     <ul class="unstyled">
         <?php foreach ($lessons as $lesson): ?>
-            <?php $current_percentage = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $lesson->getId()); ?>
+            <?php $current_percentage = $lesson->getCacheCompletedStatus(); ?>
         <li>
             <a href="<?php echo url_for("lesson/index?lesson_id=".$lesson->getId()."&chapter_id=".$chapter->getId()."&course_id=".$course->getId()) ?>">
                 <div class="lp-node">

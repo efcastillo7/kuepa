@@ -39,7 +39,7 @@ class LessonService {
     public function getResourcesList($lesson_id) {
         return ComponentService::getInstance()->getChilds($lesson_id, Resource::TYPE);
     }
-
+    
     public function getDependencyPathList($course_id, $chapter_id, $lesson_id){
         $q = DependencyPath::getRepository()->createQuery("dp");
         $q->where("course_id = ?", $course_id)

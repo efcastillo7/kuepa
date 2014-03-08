@@ -5,7 +5,7 @@ class statsComponents extends sfComponents
   public function executeBurndownChartDays()
   {
     $course_id = $this->course_id;
-    $course = Course::getRepository()->find($course_id);
+    $course = Course::getRepository()->getById($course_id);
     $count_weekends = false;
 
     $profile_id = $this->getUser()->getProfile()->getId();
@@ -74,7 +74,7 @@ class statsComponents extends sfComponents
   public function executeBurndownChartWeeks()
   {
     $course_id = $this->course_id;
-    $course = Course::getRepository()->find($course_id);
+    $course = Course::getRepository()->getById($course_id);
     $count_weekends = false;
 
     $profile_id = $this->getUser()->getProfile()->getId();

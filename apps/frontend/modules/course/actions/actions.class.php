@@ -23,7 +23,25 @@ class courseActions extends kuepaActions {
         $id = $request->getParameter("id");
 
         $this->profile = $this->getProfile();
-        $this->course = Course::getRepository()->find($id);
+        $course = Course::getRepository()->getById($id);
+                
+        
+        $components = array();
+        $components[] = $course; 
+        
+        foreach ($course->getChapters() as $chapter) {
+            $components[] = $chapter;
+            foreach ($chapter->getLessons() as $lesson){
+                $components[] = $lesson;
+                foreach ($lesson->getResources() as $resource) {
+                    $components[] = $resource;
+                }
+            }
+        }
+        
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        
+        $this->course = $course;   
     }
 
     public function executeExpanded(sfWebRequest $request) {
@@ -32,9 +50,21 @@ class courseActions extends kuepaActions {
 
         $this->profile = $this->getProfile();
 
-        $this->course = Course::getRepository()->find($course_id);
-        $this->chapters = $this->course->getChildren();
+        $course = Course::getRepository()->getById($course_id);
+        $chapters = $course->getChildren();
 
+        $components = array();
+        $components[] = $course;
+        
+        foreach ($chapters as $chapter) {
+            $components[] = $chapter;
+        }
+        
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        
+        $this->course = $course;
+        $this->chapters = $chapters;
+        
         if ($request->isXmlHttpRequest()) {
             $response = Array(
                 'status' => 'success',
@@ -52,7 +82,7 @@ class courseActions extends kuepaActions {
         $id = $request->getParameter("id");
         
         if( $id ) {
-            $form = new CourseForm(Course::getRepository()->find($id));
+            $form = new CourseForm(Course::getRepository()->getById($id));
         } else {
             $form = new CourseForm();
         }

@@ -7,6 +7,7 @@
  */
 class ComponentTable extends Doctrine_Table
 {
+    
     /**
      * Returns an instance of this class.
      *
@@ -17,6 +18,13 @@ class ComponentTable extends Doctrine_Table
         return Doctrine_Core::getTable('Component');
     }
 
+    public function getById($id){
+        return self::getInstance()->createQuery()
+                                  ->where('id = ?', $id)
+                                  ->useResultCache(true, null, cacheHelper::getInstance()->genKey('Component_getById', array($id)) )
+                                  ->fetchOne();
+    }
+    
     public function getCourses(){
     	return self::getInstance()->createQuery()->where('type = ?', Course::TYPE)->orderBy('name asc')->execute();
     }
