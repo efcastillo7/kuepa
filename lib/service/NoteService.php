@@ -50,7 +50,7 @@ class NoteService {
     
     public function getNotes($profile_id, $resource_id, $query_params = null) {
         $notes = Note::getRepository()->createQuery('n')
-                    ->select('n.content, n.created_at, p.nickname')
+                    ->select('n.*')
                     ->innerJoin('n.Profile p')
                     ->where('profile_id = ? and resource_id = ? and privacy = "private" ', array($profile_id, $resource_id))
                     ->orderBy('id desc');

@@ -243,7 +243,7 @@ class video_sessionActions extends sfActions {
      */
     public function executeGet_course_chapters(sfWebRequest $request){
         $id         = $request->getParameter("id");
-        $course     = Course::getRepository()->find($id);
+        $course     = Course::getRepository()->getById($id);
         $chapters   = $course->getChapters();
         $a_chapters = array();
 

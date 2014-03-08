@@ -5,7 +5,7 @@ class lessonComponents extends sfComponents {
     public function executeModalform() {
         $id = $this->getVar('id');
         if ($id) {
-            $lesson = Lesson::getRepository()->find($id);
+            $lesson = Lesson::getRepository()->getById($id);
         } else {
             //set default values
             $lesson = new Lesson();

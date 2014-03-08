@@ -464,7 +464,7 @@ EOF;
   top: 0px;
   opacity: 0.80;
   filter: alpha(opacity:80);
-  z-index: 10000;
+  z-index: 999999;
   white-space: nowrap;
   background-color: #ddd;
 }

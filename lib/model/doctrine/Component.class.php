@@ -12,6 +12,8 @@
  */
 class Component extends BaseComponent {
 
+    protected $cacheCompletedStatus = array();
+        
     /**
      * 
      * @return ComponentTable
@@ -19,22 +21,31 @@ class Component extends BaseComponent {
     public static function getRepository() {
         return Doctrine_Core::getTable('Component');
     }
+    
+    public function preSave($event)   {
+        $this->clearCache($event);
+    }
+    
+    public function preDelete($event) {
+        $this->clearCache($event);
+    }
+    
+    public function clearCache($event)
+    {
+        CacheHelper::getInstance()->delete('Component_getById', array( $this->getId() ));
+        
+        $parents = $this->getParents();
+        foreach ( $parents as $parent ) {
+            CacheHelper::getInstance()->deleteByPrefix('Component_getChilds', array( $parents->getId() ));
+        }
+    }
 
     public function getThumbnailPath() {
         return sfConfig::get('app_image_path_component') . $this->getThumbnail();
     }
 
     public function getChildren($onlyEnabled = true) {
-        $query = Component::getRepository()->createQuery('c')
-                ->innerJoin('c.LearningPath lp ON c.id = lp.child_id')
-                ->where('lp.parent_id = ?', $this->getId())
-                ->orderBy("lp.position asc");
-
-        if($onlyEnabled){
-            $query->andWhere("lp.enabled = true");
-        }
-
-        return $query->execute();
+        return ComponentService::getInstance()->getChilds($this->getId(), null, 'asc', true);
     }
 
     public function __toString() {
@@ -43,6 +54,24 @@ class Component extends BaseComponent {
 
     public function getNameSlug() {
         return self::slugify($this->name);
+    }
+    
+    public function setCacheCompletedStatus($completedStatus, $profile_id = null)
+    {
+        if ( !$profile_id ) {
+            $profile_id = $this->getUser()->getProfile()->getId();
+        }
+        
+        $this->cacheCompletedStatus[ $profile_id ] = $completedStatus;
+    }
+    
+    public function getCacheCompletedStatus($profile_id = null)
+    {
+        if ( !$profile_id ) {            
+            $profile_id = sfContext::getInstance()->getUser()->getProfile()->getId();
+        }
+        
+        return $this->cacheCompletedStatus[ $profile_id ];
     }
 
     public static function slugify($text) {
@@ -56,39 +85,37 @@ class Component extends BaseComponent {
     }
 
     public function getNextChild($previous_child_id) {
-        $previous_learning_path = LearningPath::getRepository()->createQuery("lp")
-                ->where("lp.parent_id = ?", $this->getId())
-                ->andWhere("lp.child_id = ?", $previous_child_id)
-                ->limit(1)
-                ->fetchOne();
-
-        return Component::getRepository()->createQuery("r")
-                        ->innerJoin("r.LearningPath lp on r.id=lp.child_id")
-                        ->where("lp.parent_id = ?", $this->getId())
-                        ->andWhere("lp.position > ?", $previous_learning_path->getPosition())
-                        ->orderBy("lp.position ASC")
-                        ->limit(1)
-                        ->fetchOne();
+        
+        return Component::getRepository()->createQuery("c")
+                                         ->select('c.*')
+                                         ->innerJoin("c.LearningPath lp on c.id = lp.child_id")
+                                         ->innerJoin("c.LearningPath lpc on ? = lpc.child_id", $previous_child_id)
+                                         ->where("lp.parent_id = ?", $this->getId())
+                                         ->andWhere("lp.position > lpc.position")
+                                         ->orderBy("lp.position ASC")
+                                         ->limit(1)
+                                         ->fetchOne();        
     }
 
     public function getPreviousChild($following_child_id) {
-        $following_learning_path = LearningPath::getRepository()->createQuery("lp")
-                ->where("lp.parent_id = ?", $this->getId())
-                ->andWhere("lp.child_id = ?", $following_child_id)
-                ->limit(1)
-                ->fetchOne();
-
-        return Component::getRepository()->createQuery("r")
-                        ->innerJoin("r.LearningPath lp on r.id=lp.child_id")
-                        ->where("lp.parent_id = ?", $this->getId())
-                        ->andWhere("lp.position < ?", $following_learning_path->getPosition())
-                        ->orderBy("lp.position DESC")
-                        ->limit(1)
-                        ->fetchOne();
+        
+        return Component::getRepository()->createQuery("c")
+                                         ->select('c.*')
+                                         ->innerJoin("c.LearningPath lp on c.id = lp.child_id")
+                                         ->innerJoin("c.LearningPath lpc on ? = lpc.child_id", $following_child_id)
+                                         ->where("lp.parent_id = ?", $this->getId())
+                                         ->andWhere("lp.position < lpc.position")
+                                         ->orderBy("lp.position DESC")
+                                         ->limit(1)
+                                         ->fetchOne();
     }
 
-    public function isEnabled(){
-        //TODO: Check because is returning first row
+    /*
+     * Esta funcion debe usarse solo si se trae en una misma consulta component y learningPath
+     * No debe utilizarse cuando se obtienen los learningPath asociados a un componente ondemand.
+     */
+    public function isEnabled(){        
+        
         $lp = $this->getLearningPath()->getFirst();
         if($lp){
             return $lp->getEnabled();

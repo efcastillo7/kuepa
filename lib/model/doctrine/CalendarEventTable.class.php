@@ -16,4 +16,15 @@ class CalendarEventTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('CalendarEvent');
     }
+
+    public function getEventsForUserByDate($profile_id, $resource_id = null, $initial_date, $final_date) {
+        $query = $this->createQuery('c');
+        $query->addWhere('c.Profile.id = ?', $profile_id);
+        if(!is_null($resource_id)){
+        	$query->addWhere('c.Component.id = ?', $resource_id);
+        }        
+        $query->addWhere('(c.start between ? and ? ) or (c.end between ? and ?)', array($initial_date, $final_date, $initial_date, $final_date));
+        
+        return $query->execute();
+    }
 }

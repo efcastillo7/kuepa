@@ -4,7 +4,7 @@
     </ul> -->
     <ul class="unstyled">
         <?php foreach ($chapters as $chapter): ?>
-            <?php $current_percentage = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $chapter->getId()) ?>
+            <?php $current_percentage = $chapter->getCacheCompletedStatus(); ?>
         <li>
             <a href="<?php echo url_for("chapter/expanded?chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId()) ?>" class="remote-link">
                 <div class="lp-node">

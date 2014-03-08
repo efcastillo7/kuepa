@@ -14,8 +14,6 @@
         <!-- Grilla -->
         <div class="main">
             <?php include_partial("views/main/grid", array('courses' => $courses)) ?>
-            <?php // include_partial("views/main/list", array('courses' => $courses)) 
-                ?>
         </div>
     </div>
 </div>

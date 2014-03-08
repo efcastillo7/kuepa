@@ -16,7 +16,7 @@ class StatsService {
 
     public function getVelocityIndex($profile_id, $component_id){
         //get component
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         //get invest time
         $invest_time = LogService::getInstance()->getTotalTime($profile_id, $component);
@@ -97,7 +97,7 @@ class StatsService {
     }
 
     public function getRemainingTime($profile_id, $component_id){
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         $time_given = $component->getDuration();
 
@@ -107,7 +107,7 @@ class StatsService {
     }
 
     public function getAvgAdvancePerDay($profile_id, $component_id, $from_date = null, $to_date = null){
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         if($from_date == null){
             //first access
@@ -131,7 +131,7 @@ class StatsService {
     }
 
     public function getRemainingPerWeek($profile_id, $component_id, $from_date = null, $to_date = null){
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         $remaining = $this->getRemainingTime($profile_id, $component_id);
 
@@ -151,7 +151,7 @@ class StatsService {
     }
 
     public function getRemainingPerDay($profile_id, $component_id, $from_date = null, $to_date = null){
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         $remaining = $this->getRemainingTime($profile_id, $component_id);
 
