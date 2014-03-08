@@ -11,7 +11,7 @@
 class calendarActions extends sfActions {
 
     public function executeCreate(sfWebRequest $request) {
-        $profile_id = $this->getUser()->getProfile()->getId();
+        $profile = $this->getUser()->getProfile();
 
         $component_id = $request->getPostParameter("component_id");
         $title = $request->getPostParameter("title");
@@ -19,7 +19,7 @@ class calendarActions extends sfActions {
         $start = $request->getPostParameter("start");
         $end = $request->getPostParameter("end");
 
-        $event = CalendarService::getInstance()->createEvent($profile_id, $component_id, $title, $description, $start, $end);
+        $event = CalendarService::getInstance()->createEvent($profile, $component_id, $title, $description, $start, $end);
 
         $response = array(
             'success' => $event ? true : false
@@ -40,18 +40,22 @@ class calendarActions extends sfActions {
     }
 
     public function executeGetevents(sfWebRequest $request) {
-        $profile_id = $request->getPostParameter("profile_id");
+        $profile = $request->getPostParameter("profile");
         $course_id = $request->getPostParameter("course_id");
         $start = $request->getPostParameter("start");
         $end = $request->getPostParameter("end");
         $by_course = $request->getPostParameter("by_course");
 
-        if ($profile_id && $course_id)
-            $events = CalendarService::getInstance()->getEventsForUserInCourse($profile_id, $course_id, $start, $end);
-        elseif ($profile_id && $by_course)
-            $events = CalendarService::getInstance()->getUserCoursesEvents($profile_id, $start, $end);
-        elseif ($profile_id)
-            $events = CalendarService::getInstance()->getUserEvents($profile_id, $start, $end);
+        if ($profile && $course_id) {
+            $events = CalendarService::getInstance()->getEventsForUserInCourse($profile, $course_id, $start, $end);
+        }
+        elseif ($profile && $by_course) {
+            $profile = Profile::getRepository()->find($profile);            
+            $events = CalendarService::getInstance()->getUserCoursesEvents($profile, $start, $end);
+        }
+        elseif ($profile) {
+            $events = CalendarService::getInstance()->getUserEvents($profile, $start, $end);
+        }
 
         $response = array();
 

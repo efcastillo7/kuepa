@@ -16,7 +16,7 @@ class courseActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
-        $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getUser()->getGuardUser()->getProfile()->getId());
+        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );        
     }
 
     public function executeDetails(sfWebRequest $request) {
@@ -39,7 +39,7 @@ class courseActions extends kuepaActions {
             }
         }
         
-        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;   
     }
@@ -60,7 +60,7 @@ class courseActions extends kuepaActions {
             $components[] = $chapter;
         }
         
-        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;
         $this->chapters = $chapters;

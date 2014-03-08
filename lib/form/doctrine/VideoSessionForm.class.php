@@ -104,7 +104,8 @@ class VideoSessionForm extends BaseVideoSessionForm {
      * @return array the list of courses for the professor formatted as assoc array.
      */
     private function getCoursesForChoiceWidget(){
-        $data       = ComponentService::getInstance()->getCoursesForUser($this->getObject()->getProfileId());
+        
+        $data       = ComponentService::getInstance()->getCoursesForUser( $this->getObject()->getProfile() );
         $as_array   = array();
 
         foreach($data as $course){

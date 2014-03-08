@@ -16,13 +16,13 @@ class messageActions extends sfActions
 	 * @param sfRequest $request A request object
 	 */
 	public function executeCreate(sfWebRequest $request) {
-		$profile_id = $this->getUser()->getProfile()->getId();
+            $profile_id = $this->getUser()->getProfile()->getId();
 
-		$recipients = $request->getPostParameter("recipients");
-		$subject = $request->getPostParameter("subject");
-		$content = $request->getPostParameter("content");
-		$parent_id = $request->getPostParameter("thread_id");
-        $send_notification = $request->getPostParameter("send_notification", "true");
+            $recipients = $request->getPostParameter("recipients");
+            $subject = $request->getPostParameter("subject");
+            $content = $request->getPostParameter("content");
+            $parent_id = $request->getPostParameter("thread_id");
+            $send_notification = $request->getPostParameter("send_notification", "true");
 
         if($content != ""){
             $message = MessagingService::getInstance()->sendMessage($profile_id, $recipients, $subject, $content);
@@ -31,7 +31,7 @@ class messageActions extends sfActions
                 NotificationsService::getInstance()->addMessageNotification($message->getId());
             }
 
-            $response = array(
+            $response[] = array(
                 'id' => $message->getId(),
                 'subject' => $message->getSubject(),
                 'content' => $message->getContent(),

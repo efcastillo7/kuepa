@@ -31,13 +31,13 @@ class chapterActions extends kuepaActions {
         
         $components = array();
         $components[] = $course;
-        $components[] = $course;
+        $components[] = $chapter;
         
         foreach ($lessons as $lesson) {
             $components[] = $lesson;
         }
         
-        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile->getId() );
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;
         $this->chapter = $chapter;
@@ -62,9 +62,24 @@ class chapterActions extends kuepaActions {
 
         $this->profile = $this->getProfile();
 
-        $this->course = Course::getRepository()->getById($course_id);
-        $this->chapter = Chapter::getRepository()->getById($chapter_id);
-        $this->lesson = Lesson::getRepository()->getById($lesson_id);
+       
+        $course = Course::getRepository()->getById($course_id);
+        $chapter = Chapter::getRepository()->getById($chapter_id);
+        $lessons = $chapter->getChildren();
+        
+        $components = array();
+        $components[] = $course;
+        $components[] = $chapter;
+        
+        foreach ($lessons as $lesson) {
+            $components[] = $lesson;
+        }
+        
+        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
+        
+        $this->course = $course;
+        $this->chapter = $chapter;
+        $this->lessons = $lessons;
 
         if ($request->isXmlHttpRequest()) {
             $response = Array(

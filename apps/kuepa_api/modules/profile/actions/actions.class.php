@@ -19,32 +19,31 @@ class profileActions extends sfActions
 		return $this->renderText(json_encode("Success"));
 	} 
 
-	/**
+    /**
      * GET /profile/friends
      *
      * @param sfRequest $request A request object
      */
 	public function executeContacts(sfWebRequest $request) {
-		$profile_id = $this->getUser()->getProfile()->getId();
-        $profile = Profile::getRepository()->find($profile_id);
+        $profile = $this->getUser()->getProfile();
 
-		$without_messages = array();
+        $without_messages = array();
         $with_messages = array();
         foreach ($profile->getFriends() as $friend) {
-        	$messages_q = MessagingService::getInstance()->getMessagesFromUsers(array($profile_id,$friend->getId()));
-        	$i = $messages_q->count();
-        	$last_message = array();
+            $messages_q = MessagingService::getInstance()->getMessagesFromUsers(array($profile->getId(),$friend->getId()));
+            $i = $messages_q->count();
+            $last_message = array();
             $new_messages = false;
 
-        	if($i){
-        		$last_message = array(
-        			'date' => $messages_q[0]->getUpdatedAt(),
-        			'content' => $messages_q[0]->getContent(),
-        			'id' => $messages_q[0]->getId()
-    			);
+            if($i){
+                $last_message = array(
+                        'date' => $messages_q[$i-1]->getUpdatedAt(),
+                        'content' => $messages_q[$i-1]->getContent(),
+                        'id' => $messages_q[$i-1]->getId()
+                );
 
-                $new_messages = !$messages_q[0]->getRecipients()->getFirst()->getIsRead();
-        	}
+                $new_messages = !$messages_q[$i-1]->getRecipients()->getFirst()->getIsRead();
+            }
 
             if($new_messages){
                 $with_messages[] = array(
@@ -83,8 +82,7 @@ class profileActions extends sfActions
      * @param sfRequest $request A request object
      */
     public function executeList(sfWebRequest $request) {
-    	$profile_id = $this->getUser()->getProfile()->getId();
-        $profile = Profile::getRepository()->find($profile_id);
+        $profile =  $this->getUser()->getProfile();
 
         //TODO
         if(!$profile){

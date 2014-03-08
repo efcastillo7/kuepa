@@ -15,11 +15,13 @@ class homeActions extends kuepaActions {
      *
      * @param sfRequest $request A request object
      */
-    public function executeIndex(sfWebRequest $request) {
+    public function executeIndex(sfWebRequest $request) {        
+                
     	//check account status
     	$this->checkAccountStatus();
 
         $this->profile = $this->getProfile();
-        $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getProfile()->getId());        
+        
+        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
     }
 }
