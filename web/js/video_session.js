@@ -31,7 +31,9 @@ $(function(){
     if(!$(".video_session-tab_container.active").length){
         $(".video_session-tab_container:first").addClass("active");
     }
-
+    
+    //auto refresh sessions to see if there are newly availables
+    setTimeout(refreshVideoSessions,5000);
 });
 
 /**
@@ -115,6 +117,16 @@ function onVideoSessionAddClicked(e){
 
     $("[name='video_session[course_id]']",$modal).unbind().bind("change", onCourseChange).trigger("change");
     $("[name='video_session[visibility]']",$modal).unbind().bind("change", onVisibilityChange).trigger("change");
+    
+    if(platform === "external") {
+        //show url
+        $("[for='video_session_url']",$modal).show();
+        $("[name='video_session[url]']",$modal).show();
+    } else {
+        //hide url
+        $("[for='video_session_url']",$modal).hide();
+        $("[name='video_session[url]']",$modal).hide();
+    }
 }
 
 /**
@@ -370,6 +382,37 @@ function getCourseStudents(course_id,$cStudents,$form){
             }else{
                 $cStudents.text("El curso seleccionado no posee alumnos activos");
             }
+        }
+    });
+}
+
+function refreshVideoSessions() {
+
+    var ids = Array();
+    $(".video-session-tr").each(function(){
+       ids.push($(this).attr("data-id")); 
+    });
+
+    //post and process json response
+    $.ajax('/kuepa_api.php/video_session',{
+        dataType: 'json',
+        type: 'get',
+        data: {id: ids},
+        success: function(data){
+            for(var i in data){
+                var id = data[i].id;
+                var status = data[i].status;
+                var url = data[i].url;
+                
+                if( status !== "started" || url === null )
+                    $(".access-button-"+id).addClass("disabled");
+                else {
+                    $(".access-button-"+id).removeClass("disabled");
+                    $(".access-button-"+id).attr("href", url);
+                }
+            }
+                    
+            setTimeout(refreshVideoSessions,5000);
         }
     });
 }
