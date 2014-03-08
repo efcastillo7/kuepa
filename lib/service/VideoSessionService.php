@@ -33,6 +33,7 @@ class VideoSessionService {
     const TYPE_SUPPORT      = "support";
 
     const PLATFORM_HANGOUTS = "hangouts";
+    const PLATFORM_EXTERNAL = "external";
 
     /**
      *

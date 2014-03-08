@@ -712,6 +712,7 @@ VideoSession:
     chapter_id: integer
     course_id: integer
     scheduled_for: datetime
+    scheduled_end: datetime
     title: {type: string(100)}
     description: {type: string(255)}
     status: { type: enum, values: [pending, started,ended], default: pending }

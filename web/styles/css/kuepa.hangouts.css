@@ -2,13 +2,13 @@ tr.warning td {
   background: #fcf8e3 !important;
   text-align: center; }
 
-[name='video_session[scheduled_for][month]'],
-[name='video_session[scheduled_for][day]'],
-[name='video_session[scheduled_for][hour]'],
-[name='video_session[scheduled_for][minute]'] {
+[name^='video_session[scheduled_'],
+[name^='video_session[scheduled_'],
+[name^='video_session[scheduled_'],
+[name^='video_session[scheduled_'] {
   width: 65px; }
 
-[name='video_session[scheduled_for][year]'] {
+[name^='video_session[scheduled_'] {
   width: 80px; }
 
 .text-red {
