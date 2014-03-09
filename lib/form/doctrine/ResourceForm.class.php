@@ -16,7 +16,7 @@ class ResourceForm extends BaseResourceForm {
     public function configure() {
         parent::configure();
 
-        unset($this['thumbnail'], $this['color']);
+        unset($this['thumbnail'], $this['color'], $this['lesson_list']);
 
         $this->setWidget('type', new sfWidgetFormInputHidden());
         $this->setWidget('lesson_id', new sfWidgetFormInputHidden());

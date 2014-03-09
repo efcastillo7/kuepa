@@ -17,7 +17,7 @@ class ChapterForm extends BaseChapterForm
   {
     parent::configure();
 
-    unset($this['thumbnail'], $this['color']);
+    unset($this['thumbnail'], $this['color'], $this['course_list'], $this['lesson_list']);
 
     $this->setWidget('type', new sfWidgetFormInputHidden());
     $this->setWidget('course_id', new sfWidgetFormInputHidden());
