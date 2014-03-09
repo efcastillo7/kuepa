@@ -35,8 +35,15 @@ abstract class BasesfGuardForgotPasswordActions extends sfActions
         $forgotPassword->unique_key = md5(rand() + time());
         $forgotPassword->expires_at = new Doctrine_Expression('NOW()');
         $forgotPassword->save();
+        
+        $mailer = MailService::getInstance();
+        $mailer->sendNow($this->form->user->email_address,
+                'Forgot Password Request for '.$this->form->user->username,
+                $this->getPartial('sfGuardForgotPassword/send_request', array('user' => $this->form->user, 'forgot_password' => $forgotPassword)),
+                "name?queonda?",
+                $this->form->user->getProfile()->getId());
 
-        $message = Swift_Message::newInstance()
+        /*$message = Swift_Message::newInstance()
           ->setFrom(sfConfig::get('app_sf_guard_plugin_default_from_email', 'from@noreply.com'))
           ->setTo($this->form->user->email_address)
           ->setSubject('Forgot Password Request for '.$this->form->user->username)
@@ -45,6 +52,8 @@ abstract class BasesfGuardForgotPasswordActions extends sfActions
         ;
 
         $this->getMailer()->send($message);
+         *
+         */
 
         $this->getUser()->setFlash('notice', 'Check your e-mail! You should receive something shortly!');
         $this->redirect('@sf_guard_signin');

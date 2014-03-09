@@ -11,3 +11,12 @@ all:
   memcache:
       ip: localhost
       port: 11211
+      
+  sf_guard_extra_plugin:
+    mail_from:        ivan@kibind.com
+    name_from:        ivan
+    subject_confirm:  Confirm Registration
+    subject_complete: Request complete
+    subject_request:  Request to reset password
+    subject_success:  Password reset successfully
+    reset_type:       set # set to `ask` for asking (see above)
