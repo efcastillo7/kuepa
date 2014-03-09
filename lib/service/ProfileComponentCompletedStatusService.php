@@ -29,10 +29,10 @@ class ProfileComponentCompletedStatusService {
             $arrPccs[ $pccs->getComponentId() ] = $pccs;
         }
         
-        $pccsResource = $arrPccs[$idResource];
-        $pccsLesson = $arrPccs[$idLesson];
-        $pccsChapter = $arrPccs[$idChapter];
-        $pccsCourse = $arrPccs[$idCourse];
+        $pccsResource = isset($arrPccs[$idResource]) ? $arrPccs[$idResource] : 0;
+        $pccsLesson = isset($arrPccs[$idLesson]) ? $arrPccs[$idLesson] : 0;
+        $pccsChapter = isset($arrPccs[$idChapter]) ? $arrPccs[$idLesson] : 0;
+        $pccsCourse = isset($arrPccs[$idCourse]) ? $arrPccs[$idLesson] : 0;
                 
         $this->doAdd($pccsResource, $idResource, $profile_id);
         $this->doAdd($pccsLesson, $idLesson, $profile_id);
@@ -77,7 +77,6 @@ class ProfileComponentCompletedStatusService {
 
 
     public function getCompletedStatus($profile_id, $component_id) {
-        
         if( isset( $this->_completed_status[$profile_id][$component_id] ) ) {
             return $this->_completed_status[$profile_id][$component_id];
         }

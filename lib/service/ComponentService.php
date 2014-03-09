@@ -432,10 +432,8 @@ class ComponentService {
 
     }
     
-    
     public function addCompletedStatus($components, $profile = null)
     {
-        
         $components_ids = array();
         foreach( $components as $component )
         {
@@ -453,4 +451,31 @@ class ComponentService {
         return $components;
     }
     
+
+    public function getCountResources($component_id){
+        $q = ViewLearningPath::getRepository()->createQuery('vlp')
+             ->select('COUNT(vlp.course_id) as total');
+        $component = ComponentService::getInstance()->find($component_id);
+
+        switch ( $component->getType() ) {
+             case Course::TYPE:
+                 $q = $q -> where('course_id = ? ',$component_id);
+                 break;
+             case Chapter::TYPE:
+                 $q = $q -> where('chapter_id = ? ',$component_id);
+                 break;
+             case Lesson::TYPE:
+                 $q = $q -> where('lesson_id = ? ',$component_id);
+                 break;
+             default:
+                 # code...
+                 break;
+         } 
+
+        $q = $q->fetchOne();
+
+         return($q->getTotal());
+
+    }
+
 }

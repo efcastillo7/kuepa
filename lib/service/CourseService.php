@@ -71,7 +71,17 @@ class CourseService {
         return $q->execute();
     }
 
-    public function getChaptersList($course_id){
+    public function getChaptersList($course_id, $deep = false){
+        if($deep){
+            $q = Doctrine::getTable("Chapter")->createQuery("ch")
+                    ->innerJoin("ch.Lesson l")
+                    ->innerJoin("ch.Course c")
+                    ->innerJoin("l.Resource r")
+                    ->where("c.id = ?", $course_id);
+
+            return $q->execute();
+        }
+
         return ComponentService::getInstance()->getChilds($course_id, Chapter::TYPE);
     }
 
