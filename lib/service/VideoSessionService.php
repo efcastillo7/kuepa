@@ -272,8 +272,8 @@ class VideoSessionService {
                 ->leftJoin('vs.Course c')
                 ->where('vs.profile_id = ?', $config["profile"]->getId() )
                 ->andWhere("vs.type = 'class'")
-                ->andWhere("vs.scheduled_for {$dateOp} NOW()")
-                ->orderBy("vs.scheduled_for DESC");
+                ->andWhere("vs.scheduled_end {$dateOp} NOW()")
+                ->orderBy("vs.scheduled_end DESC");
 
         return $q->execute();
 
@@ -422,9 +422,9 @@ class VideoSessionService {
                 ->leftJoin('vs.Course c')
                 ->where('c.id IN ('.implode(",", $courses_ids).')')
                 ->andWhere("vs.type = 'class'")
-                ->andWhere("vs.scheduled_for {$dateOp} NOW()")
+                ->andWhere("vs.scheduled_end {$dateOp} NOW()")
                 ->andWhere("vs.visibility = 'public'")
-                ->orderBy("vs.scheduled_for DESC");
+                ->orderBy("vs.scheduled_end DESC");
 
         //Private related video_session where the user is invited
         $qPrivate = VideoSession::getRepository()->createQuery("vs")
@@ -433,7 +433,7 @@ class VideoSessionService {
                 ->where('c.id IN ('.implode(",", $courses_ids).')')
                 ->andWhere("vs.type = 'class'")
                 ->andWhere("vsp.profile_id = ?", $config["profile"]->getId() )
-                ->andWhere("vs.scheduled_for {$dateOp} NOW()");
+                ->andWhere("vs.scheduled_end {$dateOp} NOW()");
 
         return $qPublic->execute()->merge($qPrivate->execute());
 
