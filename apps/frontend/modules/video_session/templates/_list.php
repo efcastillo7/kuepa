@@ -7,8 +7,8 @@
             <?php if ($sf_user->hasCredential("docente")): ?>
             <th width="12"></th>
             <?php endif; ?>
-            <th width="80">Fecha</th>
-            <th width="60">Horario</th>
+            <th width="150">Inicio</th>
+            <th width="150">Fin</th>
             <th>Título</th>
             <th>Descripción</th>
             <th>Curso - Temática</th>
@@ -27,16 +27,17 @@
                 $isOwner        = $video_session->getProfileId() == $pid;
 
                 //Adds the profile_id to the url
-                $storedUrl      = VideoSessionService::getInstance()->injectProfileId($storedUrl,$pid);
+                $storedUrl      =  $video_session->getPlatform() == VideoSessionService::PLATFORM_HANGOUTS ? VideoSessionService::getInstance()->injectProfileId($storedUrl,$pid) : $storedUrl;
 
                 ?>
-                <tr data-id="<?php echo $video_session->getId() ?>" data-scheduled_for="<?php echo $video_session->getScheduledFor() ?>">
+                <tr class="video-session-tr" data-id="<?php echo $video_session->getId() ?>" data-scheduled_for="<?php echo $video_session->getScheduledFor() ?>">
                     <td><div class="list_icon video_session_status <?php echo $video_session->getStatus(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$status_es[$video_session->getStatus()]; ?>">&nbsp;</div></td>
                     <?php if ($sf_user->hasCredential("docente")): ?>
                     <td><div class="list_icon video_session_visibility <?php echo $video_session->getVisibility(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$visibility_es[$video_session->getVisibility()]; ?>">&nbsp;</div></td>
                     <?php endif; ?>
-                    <td><?php echo format_date($video_session->getScheduledFor(), 'dd-MM-yyyy'); ?></td>
-                    <td><?php echo format_date($video_session->getScheduledFor(), 'HH:mm'); ?>hs</td>
+                    <td><?php echo format_date($video_session->getScheduledFor(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
+                    <td><?php echo format_date($video_session->getScheduledEnd(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
+                    <td></td>
                     <td><?php echo $video_session->getTitle() ?></td>
                     <td><?php echo $video_session->getDescription() ?></td>
                     <td class="text-<?php echo $color ?>"><?php echo $video_session->getCourse()->getName().(empty($chapter) ? "" : " - {$chapter}"); ?></td>
@@ -51,10 +52,10 @@
                                 <div class="g-hangout" data-render="createhangout" data-initial_apps="[{ app_id : '36700081185', start_data : {'video_session_id':'<?php echo $video_session->getId(); ?>','type':'<?php echo $video_session->getType(); ?>','profile_id':'<?php echo $pid; ?>'}, 'app_type' : 'ROOM_APP' }]" data-widget_size="72"></div>
                             </span>
                             <?php else: ?>
-                            <a target="_blank" class="btn btn-mini btn-success <?php echo $video_session->getStatus() != "started" ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>
+                            <a target="_blank" class="access-button-<?php echo $video_session->getId() ?>  btn btn-mini btn-success <?php echo $video_session->getStatus() != "started" ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>
                             <?php endif; ?>
                         <?php else: ?>
-                            <a target="_blank" class="btn btn-mini btn-success <?php echo ($video_session->getStatus() != "started" || empty($storedUrl)) ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>
+                            <a target="_blank" class="access-button-<?php echo $video_session->getId() ?> btn btn-mini btn-success <?php echo ($video_session->getStatus() != "started" || empty($storedUrl)) ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>
                         <?php endif; ?>
                         </div>
                     </td>

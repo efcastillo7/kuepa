@@ -189,6 +189,7 @@ class LogService {
 
     }
 
+    /** TODO: This method should be removed */
     public function getTotalRecourseViewed($profile_id, $component_id = null, $unique = false){
         //query
         $q = LogViewComponent::getRepository()->createQuery('lvc')
@@ -201,10 +202,28 @@ class LogService {
         }
 
         //if there is a component so get its childs
-        if($component_id){
+        // it is not working if the parent is a chapter or course
+        // also, this can be removed bacause course_id,chapter_id and lesson_id were added
+        /*if($component_id){ 
             $q->andWhere('lvc.resource_id in (select child_id from learning_path lp where parent_id = ?)', $component_id);
+        }*/
+        if($component_id){ 
+            $component = ComponentService::getInstance()->find($component_id);
+            switch ( $component->getType() ) {
+                 case Course::TYPE:
+                     $q = $q -> andWhere('course_id = ? ',$component_id);
+                     break;
+                 case Chapter::TYPE:
+                     $q = $q -> andWhere('chapter_id = ? ',$component_id);
+                     break;
+                 case Lesson::TYPE:
+                     $q = $q -> andWhere('lesson_id = ? ',$component_id);
+                     break;
+                 default:
+                     # code...
+                     break;
+             } 
         }
-
         //execute query
         $r = $q->fetchOne();
 

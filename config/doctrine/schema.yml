@@ -147,6 +147,17 @@ Chapter:
     type: column_aggregation
     keyField: type
     keyValue: Chapter
+  relations:
+    Course:
+      refClass: ViewCourseHasChapter
+      local: chapter_id
+      foreign: course_id
+      type: many
+    Lesson:
+      refClass: ViewChapterHasLesson
+      local: chapter_id
+      foreign: lesson_id
+      type: many
 
 Lesson:
   inheritance:
@@ -154,6 +165,17 @@ Lesson:
     type: column_aggregation
     keyField: type
     keyValue: Lesson
+  relations:
+    Resource:
+      refClass: ViewLessonHasResource
+      local: lesson_id
+      foreign: resource_id
+      type: many
+    Chapter:
+      refClass: ViewChapterHasLesson
+      local: chapter_id
+      foreign: lesson_id
+      type: many
 
 LearningPath:
   columns:
@@ -170,6 +192,52 @@ LearningPath:
     Child:
       class: Component
       local: child_id
+      foreign: id
+      type: one
+
+ViewCourseHasChapter:
+  columns:
+    course_id: integer
+    chapter_id: integer
+    enabled: boolean
+
+ViewChapterHasLesson:
+  columns:
+    lesson_id: integer
+    chapter_id: integer
+    enabled: boolean
+
+ViewLessonHasResource:
+  columns:
+    lesson_id: integer
+    chapter_id: integer
+    enabled: boolean
+
+ViewLearningPath:
+  columns:
+    course_id: integer
+    course_name: string
+    chapter_id: integer
+    chapter_name: string
+    lesson_id: integer
+    lesson_name: string
+    resource_id: integer
+    resource_name: string
+  relations:
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+    Resource:
+      local: resource_id
       foreign: id
       type: one
 
@@ -712,6 +780,7 @@ VideoSession:
     chapter_id: integer
     course_id: integer
     scheduled_for: datetime
+    scheduled_end: datetime
     title: {type: string(100)}
     description: {type: string(255)}
     status: { type: enum, values: [pending, started,ended], default: pending }

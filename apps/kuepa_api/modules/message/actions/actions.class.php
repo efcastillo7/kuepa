@@ -178,7 +178,8 @@ class messageActions extends sfActions
 
         foreach ($messages as $message) {
             $ret[] = array(
-                'id' => $message->getId()
+                'id' => $message->getId(),
+                'author_id' => $message->getAuthorId()
             );
         }
 

@@ -31,7 +31,7 @@
             <?php endif; ?>
 
             <!-- resources list -->
-            <?php foreach ($lesson->getResources() as $resource): ?>
+            <?php foreach ($lesson->getResource() as $resource): ?>
                 <?php if($sf_user->hasCredential("estudiante") && !$resource->isEnabled()): ?>
                 <?php include_partial("detail_courses_resource_blocked", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>    
                 <?php else: ?>
