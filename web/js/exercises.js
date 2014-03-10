@@ -165,6 +165,7 @@ function initQuestionForm($scope, $fromScope) {
     };
 
     adjustLayout();
+    initMinimizable($scope);
 
     //tinyMCE for textareas
     tinymce.init({selector: '.tinymce', width: $(".edit-question-form :text:first", $scope).width()});
@@ -235,16 +236,10 @@ function initQuestionEditor(type, $fromScope) {
     var type = $(".question_type", $scope).val();
 
     switch (type) {
-        case "complete":
-            initQuestionComplete();
-            break;
-        case "multiple-choice":
-        case "multiple-choice2":
-            initQuestionMultiple();
-            break;
-        case "relation":
-            initQuestionRelation();
-            break;
+        case "complete": initQuestionComplete(); break;
+        case "multiple-choice": case "multiple-choice2": initQuestionMultiple(); break;
+        case "relation": initQuestionRelation(); break;
+        case "interactive": initQuestionInteractive(); break;
     }
 
 }
@@ -308,6 +303,71 @@ function initQuestionRelation() {
     $(".add-relation-answer", $scope).click(onAddRelationAnswerClicked);
     $(".add-relation-item", $scope).click(onAddRelationItemClicked);
 
+}
+
+function initQuestionInteractive() {
+    var $scope = $("#questionEditor");
+    var $stage = $("#stage");
+
+    var stage = new Kinetic.Stage({
+        container: 'stage',
+        width: $stage.width(),
+        height: $stage.height()
+    });
+
+    var layer = new Kinetic.Layer();
+    stage.add(layer);
+
+    var newArc;
+    var isDown = false;
+
+    stage.on("contentMousedown", function() {
+        var mouse = stage.getMousePosition();
+        newArc = new Kinetic.Circle({
+            x: mouse.x,
+            y: mouse.y,
+            radius: .25,
+            fill: randomColor(),
+            stroke: "lightgray",
+            strokeWidth: 3
+        });
+        layer.add(newArc);
+        layer.draw();
+        isDown = true;
+    });
+
+    stage.on("contentMousemove", function() {
+        if (!isDown) {
+            return;
+        }
+        var mouse = stage.getMousePosition();
+        var dx = mouse.x - newArc.getX();
+        var dy = mouse.y - newArc.getY();
+        var radius = Math.sqrt(dx * dx + dy * dy);
+        newArc.setRadius(radius);
+        layer.draw();
+    });
+
+    $(stage.getContent()).on('mouseup', function() {
+        isDown = false;
+        newArc = null;
+    });
+
+
+    function randomColor() {
+        return ('#' + Math.floor(Math.random() * 16777215).toString(16));
+    }
+
+    layer.draw();
+}
+
+function initMinimizable($scope) {
+    $(".minimize", $scope).click(function() {
+        var $this = $(this);
+
+        $this.find("i").toggleClass("icon-chevron-up").toggleClass("icon-chevron-down");
+        $(".common-form").slideToggle(500);
+    });
 }
 
 function onAddAnswerClicked(e) {
@@ -387,13 +447,13 @@ function onAddRelationAnswerClicked(e) {
     }, "JSON");
 }
 
-function updateAnswersItemsSelects(){
-    $("select.relation",".items-container").each(function(){
+function updateAnswersItemsSelects() {
+    $("select.relation", ".items-container").each(function() {
         var $this = $(this);
         var $answerItem = $this.parents(".answer-list.relation");
         var answer_item_id = $answerItem.attr("data-id");
-        var selectedIndex = $("option:selected",$this).index();
-        var selectedValue = $("option:selected",$this).val();
+        var selectedIndex = $("option:selected", $this).index();
+        var selectedValue = $("option:selected", $this).val();
         $this.replaceWith(getUpdatedRelationSelect(answer_item_id, selectedIndex, selectedValue));
     });
 }
@@ -728,7 +788,7 @@ function updateAnswersOrderNumbers() {
     $(".answer-list.answer:not(.ignore)").each(function() {
         var $this = $(this);
         var order = $this.index();
-        $this.find(".order").text(order-1);
+        $this.find(".order").text(order - 1);
     });
 
 }

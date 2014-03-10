@@ -47,6 +47,19 @@
 .ignore {
   display: none; }
 
+.form-header {
+  background: #f7f7f7;
+  padding: 5px 10px;
+  border: solid 1px #f0f0f0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+  color: #888; }
+  .form-header .title5 {
+    margin-top: 2px; }
+
+.common-form {
+  border: solid 1px #eaeaea;
+  padding: 20px 0 0 0; }
+
 .answer-list {
   border-left: solid 5px #ddd !important; }
   .answer-list.answer .value, .answer-list.relation .value {
@@ -136,3 +149,22 @@
   border-radius: 5px; }
   .form-errors:empty {
     display: none; }
+
+#stage {
+  display: block;
+  width: 700px;
+  height: 525px;
+  border: dashed 1px #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+#image-edition {
+  margin-top: 10px; }
+  #image-edition .tool-header {
+    background: #eaeaea;
+    border: solid 1px #ccc;
+    padding: 10px;
+    color: #888;
+    text-shadow: 0 1px #fff; }
