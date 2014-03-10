@@ -6,6 +6,6 @@ index:
 
 change:
   is_secure: false
-  
+
 forgot_password:
   is_secure: false

@@ -40,20 +40,8 @@ abstract class BasesfGuardForgotPasswordActions extends sfActions
         $mailer->sendNow($this->form->user->email_address,
                 'Forgot Password Request for '.$this->form->user->username,
                 $this->getPartial('sfGuardForgotPassword/send_request', array('user' => $this->form->user, 'forgot_password' => $forgotPassword)),
-                "name?queonda?",
+                $this->user->username,
                 $this->form->user->getProfile()->getId());
-
-        /*$message = Swift_Message::newInstance()
-          ->setFrom(sfConfig::get('app_sf_guard_plugin_default_from_email', 'from@noreply.com'))
-          ->setTo($this->form->user->email_address)
-          ->setSubject('Forgot Password Request for '.$this->form->user->username)
-          ->setBody($this->getPartial('sfGuardForgotPassword/send_request', array('user' => $this->form->user, 'forgot_password' => $forgotPassword)))
-          ->setContentType('text/html')
-        ;
-
-        $this->getMailer()->send($message);
-         *
-         */
 
         $this->getUser()->setFlash('notice', 'Check your e-mail! You should receive something shortly!');
         $this->redirect('@sf_guard_signin');
@@ -78,14 +66,12 @@ abstract class BasesfGuardForgotPasswordActions extends sfActions
 
         $this->_deleteOldUserForgotPasswordRecords();
 
-        $message = Swift_Message::newInstance()
-          ->setFrom(sfConfig::get('app_sf_guard_plugin_default_from_email', 'from@noreply.com'))
-          ->setTo($this->user->email_address)
-          ->setSubject('New Password for '.$this->user->username)
-          ->setBody($this->getPartial('sfGuardForgotPassword/new_password', array('user' => $this->user, 'password' => $request['sf_guard_user']['password'])))
-        ;
-
-        $this->getMailer()->send($message);
+        $mailer = MailService::getInstance();
+        $mailer->sendNow($this->user->email_address,
+                'New Password for '.$this->user->username,
+                $this->getPartial('sfGuardForgotPassword/new_password', array('user' => $this->user, 'password' => $request['sf_guard_user']['password'])),
+                $this->user->username,
+                $this->user->getProfile()->getId());
 
         $this->getUser()->setFlash('notice', 'Password updated successfully!');
         $this->redirect('@sf_guard_signin');

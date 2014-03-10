@@ -30,6 +30,20 @@ sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
 
+sf_guard_forgot_password:
+  url:   /reestrablecer_cuenta
+  param: { module: sfGuardForgotPassword, action: index }
+
+sf_guard_forgot_password_change:
+  url:     /reestrablecer_cuenta/:unique_key
+  class:   sfDoctrineRoute
+  options:
+    model: sfGuardForgotPassword
+    type:  object
+  param:   { module: sfGuardForgotPassword, action: change }
+  requirements:
+    sf_method: [GET, POST]
+
 account_expired:
   url:  /account/expired
   param: { module: public, action: accountexpired }
