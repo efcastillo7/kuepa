@@ -23,7 +23,10 @@ $(document).ready(function(){
   $(".input-send-message").on("blur",function(){
     $(".ico-message-hover").css("opacity","0");
   });
-
+  
+  $(".cont-scroll").scrollTop($(".cont-scroll").height()*2);
+  $(".cont-scroll").perfectScrollbar('update');
+  
   //filter contacts
   $("#prependedInput").keyup(function(e){
     var val = $(this).val();
@@ -110,17 +113,17 @@ $(document).ready(function(){
     onError: onError
   });
 
-  //set interval for unread messages
-  // setInterval(function(){
-  //   ms.getUnreadMessages({
-  //     onSuccess: function(messages){
-  //       for(var i=0; i<messages.length; i++){
-  //         setContactAsUnread(messages[i]);
-  //       }
-  //     },
-  //     onError: onError
-  //   });
-  // }, 3000);
+//  set interval for unread messages
+   setInterval(function(){
+     ms.getUnreadMessages({
+       onSuccess: function(messages){
+         for(var i=0; i<messages.length; i++){
+           setContactAsUnread(messages[i]);
+         }
+       },
+       onError: onError
+     });
+  }, 3000);
 });
 
 //functions for window management
@@ -139,7 +142,6 @@ function sendMessage(){
       $("#" + active_user).attr("data-chat", message.id);
       $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
       $("#" + active_user + " .cont-text .abstract").text(message.content);
-      $("#" + active_user).prependTo(".cont-inboxes");
       
       addMessagesToScreen(messages);
       $("#send-message .input-send-message").val("");
@@ -161,7 +163,7 @@ function replyMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(data, b, c){
-      $("a[data-chat='" + chat_id + "']").prependTo(".cont-inboxes");
+        
       $("a[data-chat='" + chat_id + "'] .cont-text .abstract").text(data.content);
 
       last_message = data.created_at;
@@ -182,7 +184,8 @@ function setContactAsUnread(message){
     }
     //check for class
     if(!elem.hasClass('unread')){
-      elem.addClass('unread');
+        elem.prependTo(".cont-inboxes");
+        elem.addClass('unread');
     }
     //effect
     $(elem).show("highlight", 3000 );

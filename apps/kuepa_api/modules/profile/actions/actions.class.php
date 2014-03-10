@@ -34,15 +34,15 @@ class profileActions extends sfActions
             $i = $messages_q->count();
             $last_message = array();
             $new_messages = false;
-
             if($i){
+                $message_last = MessagingService::getInstance()->getLastMessagesFromUsers(array($profile->getId(),$friend->getId()));
                 $last_message = array(
-                        'date' => $messages_q[$i-1]->getUpdatedAt(),
-                        'content' => $messages_q[$i-1]->getContent(),
-                        'id' => $messages_q[$i-1]->getId()
+                    'date' =>  date("d/m/Y h:m:s", strtotime($message_last->getUpdatedAt())),
+                    'content' => $message_last->getContent(),
+                    'id' => $message_last->getId()
                 );
 
-                $new_messages = !$messages_q[$i-1]->getRecipients()->getFirst()->getIsRead();
+                $new_messages = !$messages_q->getLast()->getRecipients()->getLast()->getIsRead();
             }
 
             if($new_messages){
@@ -53,7 +53,7 @@ class profileActions extends sfActions
                     'nickname' => $friend->getNickname(),
                     'avatar' => '/uploads/avatars' . $friend->getAvatar(),
                     'online' => false,
-                    'last_message' => $last_message,
+                    'last_message' => $last_message->getLast(),
                     'new_messages' => $new_messages
                 );
             }else{
@@ -68,9 +68,6 @@ class profileActions extends sfActions
                     'new_messages' => $new_messages
         		);
             }
-
-
-
         }
 
         return $this->renderText(json_encode(array_merge($with_messages, $without_messages)));
