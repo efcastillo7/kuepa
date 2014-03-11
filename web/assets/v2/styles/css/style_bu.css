@@ -2223,7 +2223,7 @@ div[class^="subject-"] {
               margin-left: 17px; }
         .full-back-messages .container-messages .chat .body-message .cont-scroll {
           width: 100%;
-          height: 580px;
+          height: 98%;
           overflow: hidden;
           position: absolute; }
         .full-back-messages .container-messages .chat .body-message .sep-date {

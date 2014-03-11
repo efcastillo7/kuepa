@@ -1,9 +1,9 @@
-<div class="each-message <%= message.in ? 'in' : 'out' %>">
+<div id="<%= message.id %>" class="each-message <%= message.in ? 'in' : 'out' %>">
     <div class="avatar">
         <img src="<%= message.avatar %>">
     </div>
     <div class="chat-box <%= message.in ? 'in' : 'out' %>">
         <%= message.content %>
     </div>
-    <div class="time"><%= message.created_at %></div>
+    <div class="time"><%= message.date %></div>
 </div>

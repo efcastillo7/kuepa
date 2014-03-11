@@ -23,10 +23,10 @@ class Course extends BaseCourse
     }
     
     public function clearCache($event)
-    {
+    {        
         parent::clearCache($event);
 
-        $collegeLearningPaths = CollegeLearningPath::getRepository()->findOneByComponentId( $this->getId() );
+        $collegeLearningPaths = CollegeLearningPath::getRepository()->findByComponentId( $this->getId() );
         
         foreach ( $collegeLearningPaths as $collegeLearningPath ) {
             CacheHelper::getInstance()->deleteByPrefix('Course_getCoursesForCollege', array( $collegeLearningPath->getCollegeId() ));
