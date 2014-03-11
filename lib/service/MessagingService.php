@@ -12,11 +12,13 @@ class MessagingService {
         return self::$instance;
     }
     
-    public function getLastMessagesFromUsers(Array $profile_ids){
+    public function getLastMessagesFromUsers($remitente_id, $destinatario_id){
         $query = Message::getRepository()->createQuery('m')
-                    ->innerJoin("m.Recipients mr")
-                    ->where("mr.recipient_id = ?", $profile_ids[0])
-                    ->andWhere('EXISTS (SELECT * FROM MessageRecipient mr2 WHERE mr2.message_id = m.id AND mr2.recipient_id = ?)', $profile_ids[1])
+                    ->innerJoin("m.Recipients mr ON  m.parent_id = mr.message_id ")
+                    ->where("mr.recipient_id = ?", $destinatario_id)
+                    ->addWhere("m.author_id = ?", $remitente_id)
+                    ->orWhere("mr.recipient_id = ?", $remitente_id)
+                    ->addWhere("m.author_id = ?", $destinatario_id)
                     ->orderBy("m.updated_at desc");
         return $query->fetchOne();
     }

@@ -25,52 +25,30 @@ class profileActions extends sfActions
      * @param sfRequest $request A request object
      */
 	public function executeContacts(sfWebRequest $request) {
+        
         $profile = $this->getUser()->getProfile();
-
-        $without_messages = array();
-        $with_messages = array();
+        $messages = array();
+        
         foreach ($profile->getFriends() as $friend) {
-            $messages_q = MessagingService::getInstance()->getMessagesFromUsers(array($profile->getId(),$friend->getId()));
-            $i = $messages_q->count();
+            
+            $message_last = MessagingService::getInstance()->getLastMessagesFromUsers($profile->getId(),$friend->getId());
             $last_message = array();
-            $new_messages = false;
-            if($i){
-                $message_last = MessagingService::getInstance()->getLastMessagesFromUsers(array($profile->getId(),$friend->getId()));
+            if($message_last){
                 $last_message = array(
                     'date' =>  date("d/m/Y h:m:s", strtotime($message_last->getUpdatedAt())),
                     'content' => $message_last->getContent(),
-                    'id' => $message_last->getId()
+                    'id' => $message_last->getParentId()
                 );
-
-                $new_messages = !$messages_q->getLast()->getRecipients()->getLast()->getIsRead();
             }
-
-            if($new_messages){
-                $with_messages[] = array(
-                    'id' => $friend->getId(),
-                    'first_name' => $friend->getFirstName(),
-                    'last_name' => $friend->getLastName(),
-                    'nickname' => $friend->getNickname(),
-                    'avatar' => '/uploads/avatars' . $friend->getAvatar(),
-                    'online' => false,
-                    'last_message' => $last_message->getLast(),
-                    'new_messages' => $new_messages
-                );
-            }else{
-            	$without_messages[] = array(
-            		'id' => $friend->getId(),
-            		'first_name' => $friend->getFirstName(),
-            		'last_name' => $friend->getLastName(),
-            		'nickname' => $friend->getNickname(),
-                    'avatar' => '/uploads/avatars' . $friend->getAvatar(),
-            		'online' => false,
-            		'last_message' => $last_message,
-                    'new_messages' => $new_messages
-        		);
-            }
+            
+            $messages[] = array(
+                'id' => $friend->getId(),
+                'nickname' => $friend->getNickname(),
+                'online' => false,
+                'last_message' => $last_message,
+            );
         }
-
-        return $this->renderText(json_encode(array_merge($with_messages, $without_messages)));
+        return $this->renderText(json_encode($messages));
 	}
 
 	/**

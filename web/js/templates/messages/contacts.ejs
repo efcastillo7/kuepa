@@ -1,7 +1,7 @@
 <% for(var i=0; i < contacts.length; i++){ %>
-    <a id="<%= contacts[i].id %>" href="#" class="inbox box-data-user" data-chat="<%= contacts[i].last_message.id %>" data-user="<%= contacts[i].id %>" data-name="<%= contacts[i].nickname.toLowerCase() %>" class="<% if(!(contacts[i].last_message instanceof Array)){ %>active<% } %>" data-updated="<%= contacts[i].last_message.date %>" >
+    <a id="<%= contacts[i].id %>" href="#" class="inbox box-data-user" class="active" <% if(!$.isEmptyObject(contacts[i].last_message) ){ %> data-chat="<%= contacts[i].last_message.id %>" data-updated="<%= contacts[i].last_message.date %>" <% }else{ %>  data-chat="<%= contacts[i].id %>" <% } %> data-user="<%= contacts[i].id %>" data-name="<%= contacts[i].nickname.toLowerCase() %>"  >
       <span class="cont-chat cont-ico">
-        <i class="spr ico-chat  <% if(contacts[i].last_message instanceof Array){ %>hidden<% } %>"></i>
+        <i class="spr ico-chat <% if($.isEmptyObject(contacts[i].last_message)){ %>hidden<% } %>"></i>
       </span>
       <span class="cont-text">
         <span class="name">
@@ -10,7 +10,9 @@
             </span>
         </span>
         <span class="abstract">
-            <%= contacts[i].last_message.content %>
+            <% if(!$.isEmptyObject(contacts[i].last_message)){ %>
+                <%= contacts[i].last_message.content %>
+            <% } %>
         </span>
         <span class="time">-</span>
       </span>
