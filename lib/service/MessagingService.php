@@ -146,13 +146,14 @@ class MessagingService {
     }
 
     public function getUnreadMessages($profile_id){
+        
         $query = Message::getRepository()->createQuery('m')
-                ->innerJoin('m.Recipients mr')
+                ->innerJoin('m.Recipients mr ON  m.parent_id = mr.message_id')
                 ->where('mr.recipient_id = ?', $profile_id)
                 ->addWhere('mr.is_read = 0')
-                ->orderBy('m.created_at desc');
-
-        return $query->execute();
+                ->orderBy('m.updated_at desc');
+        
+        return $query->fetchOne();
     }
 
     public function markMessageAsRead($profile_id, $message_id, $read = true){

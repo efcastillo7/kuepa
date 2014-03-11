@@ -62,7 +62,7 @@ $(document).ready(function(){
       }else{
         sendMessage();
       }
-
+      $("#send-message .input-send-message").val("");
     return false; 
   });
 
@@ -106,11 +106,7 @@ $(document).ready(function(){
 //  set interval for unread messages
    setInterval(function(){
      ms.getUnreadMessages({
-       onSuccess: function(messages){
-         for(var i=0; i<messages.length; i++){
-           setContactAsUnread(messages[i]);
-         }
-       },
+       onSuccess: setContactAsUnread,
        onError: onError
      });
   }, 3000);
@@ -134,7 +130,6 @@ function sendMessage(){
       $("#" + active_user + " .cont-text .abstract").text(message.content);
       
       addMessagesToScreen(messages);
-      $("#send-message .input-send-message").val("");
 
       //set active chat
       chat_id = message.id;
@@ -158,20 +153,19 @@ function replyMessage(){
 
       last_message = data.created_at;
       addMessageToScreen(data);
-      $("#send-message .input-send-message").val("");
     },
     onError: onError
   });
 }
 
 function setContactAsUnread(message){
-  var elem = $("a[data-chat='" + message.id + "'], a[data-user='" + message.author_id + "']");
-
-  if(elem.length){
+  if(message.length){
+    var elem = $("#"+$.trim(message[0].author_id));
     //set chat id if undefined
     if(elem.data('chat') == ""){
-      elem.attr('data-chat', message.id);
+      elem.attr('data-chat', message[0].id);
     }
+    elem.find(".abstract").text(message[0].content);
     //check for class
     if(!elem.hasClass('unread')){
         elem.prependTo(".cont-inboxes");
@@ -192,6 +186,7 @@ function addContacts(contacts){
 }
 
 function addMessageToScreen(message){
+  $(".inbox[data-name='" + messages[messages.length-1].author.toLowerCase() + "'] .cont-text .abstract").text(messages[messages.length-1].content);
   $(".load-data").append(new EJS({url: "/js/templates/messages/message.ejs"}).render({message: message}));
   $('.cont-scroll').scrollTop($('.load-data').height());
 }
@@ -201,6 +196,7 @@ function addMessagesToScreen(messages)
   
   if(messages.length > 0){
     //update time
+    $(".inbox[data-name='" + messages[messages.length-1].author.toLowerCase() + "'] .cont-text .abstract").text(messages[messages.length-1].content);
     last_message = messages[messages.length-1].created_at;
     $(".load-data").append(new EJS({url: "/js/templates/messages/messages.ejs"}).render({messages: messages}));
     $('.cont-scroll').scrollTop($('.load-data').height());
@@ -209,6 +205,7 @@ function addMessagesToScreen(messages)
   $(".loading").fadeOut(200);
 }
 
-function onError(){
+function onError(messages){
+  console.log(messages);
   alert('surgió un error');
 }
