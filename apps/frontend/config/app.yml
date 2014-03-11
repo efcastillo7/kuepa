@@ -1,7 +1,6 @@
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/11-App
 
-# default values
 all:
   image_path_component: /uploads/component/
 
@@ -20,3 +19,5 @@ all:
     subject_request:  Pedido de Cambio de Contraseña
     subject_success:  Cambio de Contraseña realizado
     reset_type:       set # set to `ask` for asking (see above)
+    
+<?php include( dirname(__FILE__) .  "/../../../config/common.yml"); ?>
