@@ -28,7 +28,7 @@ class sfUserForm extends sfGuardUserForm
     //   $nform = new ProfileForm($nprof);
     //   $this->embedForm('new', $nform);
     // }else{
-      $this->embedRelation('Profile');  
+      // $this->embedRelation('Profile');  
     // }
   	
   }

@@ -71,10 +71,12 @@ class ComponentService {
         if($profile){
             $college = $profile->getColleges()->getFirst();
 
+            //get Courses for that user
+            $courses = Course::getRepository()->getCoursesForUser($profile->getId());
+
+            //if it has colleges then add them
             if($college){
-                $courses = Course::getRepository()->getCoursesForCollege($college->getId());
-            }else{
-                $courses = Course::getRepository()->getCoursesForUser($profile->getId());
+                $courses->merge(Course::getRepository()->getCoursesForCollege($college->getId()));
             }
             
             $this->addCompletedStatus($courses, $profile);
@@ -427,9 +429,7 @@ class ComponentService {
             foreach ($parents as $key => $parent) {                
                 ComponentService::getInstance()->updateDuration($parent->getId());
             }
-            
         } 
-
     }
     
     public function addCompletedStatus($components, $profile = null)
