@@ -1,5 +1,5 @@
 <% for(var i=0; i < contacts.length; i++){ %>
-    <a id="<%= contacts[i].id %>" href="#" class="inbox box-data-user" class="active" <% if(!$.isEmptyObject(contacts[i].last_message) ){ %> data-chat="<%= contacts[i].last_message.id %>" data-updated="<%= contacts[i].last_message.date %>" <% }else{ %>  data-chat="<%= contacts[i].id %>" <% } %> data-user="<%= contacts[i].id %>" data-name="<%= contacts[i].nickname.toLowerCase() %>"  >
+    <a id="<%= contacts[i].id %>" href="#" class="inbox box-data-user" class="active" <% if(!$.isEmptyObject(contacts[i].last_message) ){ %> data-chat="<%= contacts[i].last_message.id %>" data-updated="<%= contacts[i].last_message.date %>" <% } %> data-user="<%= contacts[i].id %>" data-name="<%= contacts[i].nickname.toLowerCase() %>"  >
       <span class="cont-chat cont-ico">
         <i class="spr ico-chat <% if($.isEmptyObject(contacts[i].last_message)){ %>hidden<% } %>"></i>
       </span>

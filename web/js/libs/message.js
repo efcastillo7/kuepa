@@ -45,22 +45,22 @@ $(document).ready(function(){
   //send
   // $('form#send-message').submit();
 
-  setInterval(function(){
-    if(chat_id != ""){
-      ms.getThread({
-        message_id: chat_id,
-        from_time: last_message,
-        onSuccess: addMessagesToScreen,
-        onError: onError
-      });
-    }
-  }, 3000);
+setInterval(function(){
+   if( typeof chat_id !== "undefined" && chat_id != ""){
+    ms.getThread({
+      message_id: chat_id,
+      from_time: last_message,
+      onSuccess: addMessagesToScreen,
+      onError: onError
+    });
+  }
+}, 3000);
 
   $('form#send-message').submit (function() { 
-    if(chat_id != ""){
-        replyMessage();
+   if(typeof chat_id !== "undefined"){
+         replyMessage();
       }else{
-        sendMessage();
+         sendMessage();
       }
       $("#send-message .input-send-message").val("");
     return false; 
@@ -87,14 +87,14 @@ $(document).ready(function(){
     $(".load-data").html("");
 
     $(".chat > .head-message > h1").html(name);
-
+    
     last_message = null;
-
-    if(chat_id === ""){
-      active_user = $(this).data("user");
+    if(typeof chat_id === "undefined"){
+      active_user = $(this).data("user");;
       //new message
       $(".loading").fadeOut(200);
     }
+    
   });
 
   //fetch all messages
@@ -116,7 +116,6 @@ $(document).ready(function(){
 function sendMessage(){
   //get values
   var text = $("#send-message .input-send-message").val();
-
   //send message
   ms.send({
     recipients: [active_user],
@@ -124,6 +123,7 @@ function sendMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(messages, b, c){
+      
       message = messages[0];
       $("#" + active_user).attr("data-chat", message.id);
       $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
@@ -141,7 +141,6 @@ function sendMessage(){
 function replyMessage(){
   //get values
   var text = $("#send-message .input-send-message").val();
-
   //reply message
   ms.reply({
     message_id: chat_id,
@@ -185,10 +184,11 @@ function addContacts(contacts){
   $(".cont-inboxes").append(new EJS({url: "/js/templates/messages/contacts.ejs"}).render({contacts: contacts}));
 }
 
-function addMessageToScreen(message){
-  $(".inbox[data-name='" + messages[messages.length-1].author.toLowerCase() + "'] .cont-text .abstract").text(messages[messages.length-1].content);
-  $(".load-data").append(new EJS({url: "/js/templates/messages/message.ejs"}).render({message: message}));
-  $('.cont-scroll').scrollTop($('.load-data').height());
+function addMessageToScreen(message)
+{
+    $(".inbox[data-name='" + message.author.toLowerCase() + "'] .cont-text .abstract").text(message.content);
+    $(".load-data").append(new EJS({url: "/js/templates/messages/message.ejs"}).render({message: message}));
+    $('.cont-scroll').scrollTop($('.load-data').height());
 }
 
 function addMessagesToScreen(messages)
@@ -206,6 +206,5 @@ function addMessagesToScreen(messages)
 }
 
 function onError(messages){
-  console.log(messages);
   alert('surgió un error');
 }

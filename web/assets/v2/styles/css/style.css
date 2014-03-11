@@ -2778,7 +2778,11 @@ div[class^="subject-"] {
         font-size: 12px;
         color: #58585c;
         font-weight: normal;
-        margin: 0; }
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 150px; }
       .full-back-messages .container-messages .inbox .time {
         font-size: 11px; }
       .full-back-messages .container-messages .inbox:hover {
@@ -2802,6 +2806,7 @@ div[class^="subject-"] {
         border-width: 8px 0px 8px 8px;
         border-color: transparent #2568fa;
         z-index: 99999; }
+        
       .full-back-messages .container-messages .inbox.active span {
         color: #fff; }
       .full-back-messages .container-messages .inbox.active span.time {

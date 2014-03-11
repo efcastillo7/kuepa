@@ -37,7 +37,8 @@ class profileActions extends sfActions
                 $last_message = array(
                     'date' =>  date("d/m/Y h:m:s", strtotime($message_last->getUpdatedAt())),
                     'content' => $message_last->getContent(),
-                    'id' => $message_last->getParentId()
+                    'id' => $message_last->getParentId(),
+                    'created_at' => $message_last->getCreatedAt()
                 );
             }
             
