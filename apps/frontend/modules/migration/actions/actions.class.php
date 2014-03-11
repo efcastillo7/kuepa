@@ -285,7 +285,7 @@ class migrationActions extends sfActions
 			$recurso_id = $trec['id'];
 
 			switch ($trec['TipoRecu']) {
-				case 3:
+				case 3: //Video
 					$query = "SELECT * FROM recurso where CodiRecu = $recurso_id";
 					$lectura = mysqli_query($mysql_conn,$query);
 					$lectura = mysqli_fetch_array($lectura);
@@ -303,7 +303,7 @@ class migrationActions extends sfActions
 
 					break;
 
-				case 9:
+				case 9: // Lectura
 					$query = "SELECT * FROM lectura where codirecu = $recurso_id and actual = 1";
 					$lectura = mysqli_query($mysql_conn,$query);
 					$lectura = mysqli_fetch_array($lectura);
@@ -334,7 +334,7 @@ class migrationActions extends sfActions
 					
 					break;
 
-				case '6':
+				case '6': // Consulta rapida	
 					$query = "SELECT * FROM consulta where codirecu = $recurso_id and actual = 1";
 					$lectura = mysqli_query($mysql_conn,$query);
 					$lectura = mysqli_fetch_array($lectura);
@@ -368,6 +368,54 @@ class migrationActions extends sfActions
 						'titulo' => $this->replaceChars($lectura['Concepto']),
 						'texto' => $texto,
 						'cantidad_palabras' => $lectura['cantidad_palabras'],
+						'links' => $match[1]
+					);
+					break;
+
+				case '5': // Ejercicios Resueltos
+					$query = "SELECT * FROM enunejerresu where codirecu = $recurso_id and actual = 1";
+					$ejer_resu = mysqli_query($mysql_conn,$query);
+					$ejer_resu = mysqli_fetch_array($ejer_resu);
+
+					$regex = "/src=\"(.*?)\"/";
+
+					$texto = "
+						<h4>Enunciado</h4>
+						<p>{$ejer_resu['enunciad']}</p>";
+					// Ejercicios
+						$query2 = "SELECT * FROM soluejerresu where codirecu = $recurso_id and codiejer ='".$ejer_resu['codiejer']."'";
+						$r_sol_eje = mysqli_query($mysql_conn,$query2);
+						$ejer_counter = 1;
+						while($sol_eje = mysqli_fetch_array($r_sol_eje) ){
+							$texto .= "<h2>Paso No. $ejer_counter </h2>";
+							$texto .= "<p>{$sol_eje['solucion']}</p>";
+							if ( $sol_eje['explicacion'] != "" ){
+								$texto .= "<i>Explicacion</i>";
+								$texto .= "<p>{$sol_eje['explicacion']}</p>";
+							}
+							$ejer_counter++;
+						}
+ 
+					preg_match_all($regex, $texto, $match);
+					$data['links'] = $match[1];
+					$base_path =  "/uploads/resources/$course_code/images/";
+					foreach($data['links'] as $link){
+						$pos = strrpos($link,"/");
+						$imgname = str_replace(
+							array(" ", "%", "/", "\""),
+							array("-", "-", "-", "-"), 
+							substr($link, $pos+1));
+						// if it has http, it could be a math formula
+						// like http://latex.codecogs.com/gif.latex?f(x)=x^{3}-3x^{2}-4x+12
+						if(strpos($link,"http") === false){
+							$texto = str_replace($link, $base_path . $imgname, $texto);
+						}
+					}
+
+					$data = array(
+						'titulo' => $this->replaceChars($ejer_resu['titulo']),
+						'texto' => $texto,
+						'cantidad_palabras' => $ejer_resu['cantidad_palabras'],
 						'links' => $match[1]
 					);
 					break;
@@ -479,6 +527,21 @@ class migrationActions extends sfActions
 
 					//set resource data
 					switch ($recurso['tipo']) {
+						case 5: 
+							foreach ($recurso['data']['links'] as $link) {
+								$pos = strrpos($link,"/");
+								$imgname = str_replace(
+									array(" ", "%", "/", "\""),
+									array("-", "-", "-", "-"), 
+									substr($link, $pos+1));
+
+								if(strpos($link,"http") === false){
+									$link = "http://www.kuepa.com" . $link;
+									if(!file_exists($base_path . "/images/" . $imgname) && $copy)
+										copy($link, $base_path . "/images/" . $imgname);
+								}
+							}
+
 						case 6:
 						case 9:
 							foreach ($recurso['data']['links'] as $link) {
