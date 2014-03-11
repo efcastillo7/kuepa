@@ -66,16 +66,6 @@ $(document).ready(function(){
     return false; 
   });
 
-  $("form#send-message input[type=button]").click(function (evt) {
-      evt.preventDefault();
-      
-      //there is an active chat
-      if(chat_id != ""){
-        replyMessage();
-      }else{
-        sendMessage();
-      }
-  });
 
   // Agrega la clase .active al box de mensajes
   $("body").delegate("a.inbox","click",function(){
@@ -208,12 +198,6 @@ function addMessageToScreen(message){
 
 function addMessagesToScreen(messages)
 {
-  //Elimino los mensajes que existen si es que no es el primer mensaje
-  // if(chat_id != "" || messages.length > 1)
-  // {
-  //   $(".load-data .each-message").remove();
-  // }
-
   
   if(messages.length > 0){
     //update time
