@@ -1,3 +1,5 @@
 <p>
-	<?php echo $resource->getRaw('content') ?>
+	<div class="resource-content settinymce" id="resource-content">
+		<?php echo $resource->getRaw('content') ?>
+	</div>
 </p>

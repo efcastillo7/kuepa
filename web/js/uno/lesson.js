@@ -1,4 +1,72 @@
 $(document).ready(function() {
+  $("#edit_resource").click(function(){
+    $("#save_resource").toggleClass('hidden');
+    $("#edit_resource").toggleClass('hidden');
+
+    //edit title
+    $("#title").html("<input type='text' value='" + $("#title").html() + "'>");
+
+    //edit content
+    tinymce_values = {
+        mode: "none",
+        plugins: [
+            "advlist autolink lists link image charmap anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste jbimages"
+        ],
+        relative_urls: false,
+        convert_urls: false,
+        remove_script_host : false,
+        menubar: "edit insert format view table",
+        toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
+        toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+        selector: "#resource-content"
+    };
+
+    tinyMCE.init(tinymce_values);
+  });
+
+  $("#save_resource").click(function(){
+    tinyMCE.triggerSave();
+
+    var ed = tinyMCE.get('resource-content');
+    var content = ed.getContent();
+    var title = $("#title input").val();
+
+    //set progress state
+    ed.setProgressState(1);
+    $.ajax({
+      url: '/kuepa_api_dev.php/resource/' + resource_id,
+      data: {
+        content: content,
+        name: title
+      },
+      dataType: 'json',
+      type: 'PUT',
+      success: function(data){
+        $("#resource-content").html(data.ResourceData[0].content);
+        $("#title").html(data.name);
+        alert('Datos guardados satisfactoriamente');
+      },
+      error: function(data){
+        $("#title").html(title);
+        alert('Error en la llamada.');
+      },
+      complete: function(data){
+        ed.setProgressState(0);
+        ed.remove();
+        $("#save_resource").toggleClass('hidden');
+        $("#edit_resource").toggleClass('hidden');
+      }
+    });
+    //ajax call
+    
+
+
+  });
+
+
+
     $("body").delegate(".input_add_note", "keyup", function(e) {
         container = $(this);
         if (e.keyCode == 13) {
@@ -223,8 +291,6 @@ $(document).ready(function(){
     }
   });
 
-/////////////////////////////////////////////////////////////////////// end ejercitacion.php
-
   // aside follow scroll
   $(document).scroll(function () {
     var altura = $("section.container section.breadcrum").height() + $(".header-two-columns").height() + 20;//20 es el padding de scroll1
@@ -236,36 +302,4 @@ $(document).ready(function(){
       $('.aside-exercise,.aside-lesson').removeClass("fija").addClass('relativa');
     }
   });
-
-/////////////////////////////////////////////////////////////////////// leccion_recurso.php
-
-  // $(function() {
-
-  //   $(".list-aside-lesson li a").each(function(){
-  //     var text = $(this).text().trim();
-  //     var len = text.length;
-
-  //     if( len > 30 ){
-  //       $(this).html("<span>" + text + "</span>");
-  //       $(this).parent("li").addClass("long");
-  //       $(this).children("span").addClass("long-text");
-
-  //       var li = $(this).parent(".long");
-  //       var altura = $(li).height();
-
-  //       $(li).find(".icon").css("top",(altura-44)/2);
-  //       $(li).find(".lp-bar-post").css({
-  //         "height":((altura-30)/2)+1,
-  //         "top":"4px"
-  //       });
-  //       $(li).find(".lp-bar-prev").css({
-  //         "height":((altura-30)/2)+2,
-  //         "bottom":0
-  //       });
-  //     }
-
-
-  //   });
-  // });
-/////////////////////////////////////////////////////////////////////// end leccion_recurso.php
 });

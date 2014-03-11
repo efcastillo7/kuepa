@@ -28,8 +28,6 @@
 
   <div class="container">
     <div class="row">
-
-      
       <?php $content = $type == "Exercise" ? "exercise" : "resources" ?>
       <?php include_partial("menu_$content", array(
         'course' => $course, 
@@ -51,6 +49,5 @@
         'is_first_resource' => $is_first_resource,
         'notes' => $notes,
         'comments' => $comments)) ?>      
-
     </div>
   </div>

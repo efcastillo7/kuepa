@@ -1,8 +1,18 @@
+<?php if ($sf_user->hasCredential("docente")): ?>
+<?php use_javascript("/assets/tinymce/tinymce.min.js") ?>
+<?php use_javascript("/assets/tinymce/jquery.tinymce.min.js") ?>
+<?php endif; ?>
 
 <section class="clearpadding data-exercise two-columns">
   <div class="main-title">
     <h1 style="">
+      <span id="title">
       <?php echo $resource->getName() ?>
+      </span>
+      <?php if ($sf_user->hasCredential("docente")): ?>
+      <a href="#" class="btn btn-primary btn-orange" id="edit_resource">Editar</a>
+      <a href="#" class="btn btn-primary btn-orange hidden" id="save_resource">Guardar Cambios</a>
+      <?php endif; ?>
     </h1>
   </div>
 
@@ -24,6 +34,7 @@
       <h2><?php echo $resource->getRaw('description') ?></h2>
   <?php endif; ?>
 
+  <!-- resource data -->
   <?php include_partial("views/resources/resource_" . $resource->getRawValue()->getResourceData()->getFirst()->getType(), array('resource' => $resource->getRawValue()->getResourceData()->getFirst())) ?>
 
   <?php if ($has_next_resource): ?>
