@@ -1,5 +1,4 @@
 <?php
-
 class ProfileComponentCompletedStatusService {
 
     private static $instance = null;
@@ -37,11 +36,11 @@ class ProfileComponentCompletedStatusService {
         $this->doAdd($pccsResource, $idResource, $profile_id);
         $this->doAdd($pccsLesson, $idLesson, $profile_id);
         $this->doAdd($pccsChapter, $idChapter, $profile_id);
-        $this->doAdd($pccsCourse, $idCourse, $profile_id);
+        $this->doAdd($pccsCourse, $idCourse, $profile_id);        
     }
     
     private function doAdd($pccs, $component_id, $profile_id) {
-        
+                
         if ($pccs == null) {
             $pccs = new ProfileComponentCompletedStatus;
             $pccs->setProfileId($profile_id);
@@ -67,12 +66,37 @@ class ProfileComponentCompletedStatusService {
         $completed_status = (($current_completed_status+$add_completed_status)*100/$total);
         
         if ($completed_status >= 0 && $completed_status <= 100) {
-            $pccs->setCompletedStatus( round($completed_status) );
-            $pccs->save();
-            
-            
+            $pccs->setCompletedStatus( round($completed_status) );            
             $this->_completed_status[$profile_id][$component_id] = $completed_status;            
         }
+        
+        
+        $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile_id, $component_id);
+        $pccs->setCompletitudIndex($completitudIndex);
+        
+        $velocityIndex = StatsService::getInstance()->getVelocityIndex($profile_id, $component_id);
+        $pccs->setVelocityIndex( $velocityIndex );
+        
+        $skillIndex = StatsService::getInstance()->getSkillIndex($profile_id, $component_id);
+        $pccs->setSkillIndex( $skillIndex );
+        
+        $persistenceIndex = StatsService::getInstance()->getPersistenceIndex($profile_id, $component_id);
+        $pccs->setPersistenceIndex( $persistenceIndex );
+        
+        $effortIndex = StatsService::getInstance()->getEffortIndex($profile_id, $component_id);
+        $pccs->setEffortIndex( $effortIndex );
+        
+        $learningIndex = StatsService::getInstance()->getLearningIndex($profile_id, $component_id);
+        $pccs->setLearningIndex( $learningIndex );
+        
+        $efficiencyIndex = StatsService::getInstance()->getEfficiencyIndex($profile_id, $component_id);
+        $pccs->setEfficiencyIndex( $efficiencyIndex );
+        
+        $remainingTime = StatsService::getInstance()->getRemainingTime($profile_id, $component_id);
+        $pccs->setTimeRemaining( ( $remainingTime > 0 ) ? $remainingTime : 0 );
+        
+        $pccs->save();
+        
     }
 
 

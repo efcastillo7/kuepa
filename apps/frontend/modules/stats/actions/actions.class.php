@@ -30,7 +30,7 @@ class statsActions extends kuepaActions
     $profile = $this->getProfile();
 
     $first_access = LogService::getInstance()->getFirstAccess($profile->getId(), $course_id);
-    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
+    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile->getId(), $course_id);
 
     $this->has_stats = $first_access != null && $to_date != null;
     $this->seted_deadline = $to_date != null;

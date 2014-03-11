@@ -72,7 +72,7 @@ class StatsService {
         /*
          * Borrada  Manera antigua de calcular
          */
-        $course = ComponentService::getInstance()->find($course_id);
+        $course = Component::getRepository()->getById($course_id);
         $to_date = ( empty($start_ts) ) ? time() : $start_ts;
         $from_date = $to_date - ($freq * 24 * 60 * 60); // $freq 7 weekly, 30 monthly
 

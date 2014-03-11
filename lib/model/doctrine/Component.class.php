@@ -36,7 +36,7 @@ class Component extends BaseComponent {
         
         $parents = $this->getParents();
         foreach ( $parents as $parent ) {
-            CacheHelper::getInstance()->deleteByPrefix('Component_getChilds', array( $parents->getId() ));
+            CacheHelper::getInstance()->deleteByPrefix('Component_getChilds', array( $parent->getId() ));
         }
     }
 
