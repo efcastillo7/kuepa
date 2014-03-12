@@ -162,6 +162,7 @@
     <button class="btn-gray-light btn-small pull-right remove">
         <i class="icon-trash"></i> Eliminar
     </button>
+    <div class="label label-info pull-right">0 punto(s)</div>
     <i class="icon-align-justify pull-left icon handle"></i>
     <div class="pull-left order"></div>
     <i class="pull-left icon hasTooltip"></i>
@@ -172,4 +173,5 @@
 <script src="/js/exercises.choice.js" type="text/javascript"></script>
 <script src="/js/exercises.relation.js" type="text/javascript"></script>
 <script src="/js/exercises.zones.js" type="text/javascript"></script>
+<script src="/js/exercises.complete.js" type="text/javascript"></script>
 <script src="/js/exercises.js" type="text/javascript"></script>

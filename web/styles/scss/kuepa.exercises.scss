@@ -118,7 +118,7 @@
 }
 
 .question-list, .answer-list, .tool-item {
-    .loading {
+    &.loading {
         opacity: 0.5;
         cursor: progress;
 

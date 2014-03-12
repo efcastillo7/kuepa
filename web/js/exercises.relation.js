@@ -31,8 +31,7 @@ function onAddRelationAnswerClicked(e) {
     $clon
             .removeClass("ignore")
             .addClass("loading")
-            .appendTo($(".answers-container", $scope))
-            .find(".title").text("Creando...");
+            .appendTo($(".answers-container", $scope));
 
     $.post("/exercise/addAnswer", params, function(data) {
 
@@ -81,8 +80,7 @@ function onAddRelationItemClicked(e) {
     $clon
             .removeClass("ignore")
             .addClass("loading")
-            .appendTo($(".items-container", $scope))
-            .find(".title").text("Creando...");
+            .appendTo($(".items-container", $scope));
 
 
 
@@ -98,6 +96,7 @@ function onAddRelationItemClicked(e) {
                     .attr("data-id", answer_item_id)
                     .find(".remove").click(onRemoveAnswerItemClicked);
             $clon.find(".relation").replaceWith(getUpdatedRelationSelect(answer_item_id));
+            $clon.find(".title").attr("name", "relation-text-related-" + answer_item_id);
             $clon.find(".value").attr("name", "relation-item-related-" + answer_item_id);
 
         } else {

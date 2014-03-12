@@ -19,6 +19,10 @@ var iniX;
 var iniY;
 var isDown = false;
 
+/**
+ * Initiates an interactive zone question
+ * @returns {undefined}
+ */
 function initQuestionInteractive() {
     var $scope = $("#questionEditor");
     var $items = $("#image-edition .tool-item", $scope);
@@ -32,6 +36,10 @@ function initQuestionInteractive() {
 
 }
 
+/**
+ * Initiates the KineticJS stage
+ * @returns {undefined}
+ */
 function initStage() {
 
     var $stage = $("#stage");
@@ -58,6 +66,12 @@ function initStage() {
 
 }
 
+/**
+ * Places a shape in the stage for the first time
+ * @param {int} i
+ * @param {string} selectedShape
+ * @returns {undefined}
+ */
 function initShape(i,selectedShape) {
     var $this = $("#image-edition .tool-item:eq("+i+")");
     var config = {"radius":10,"stroke":"lightgray","strokeWidth":1,"sides":4,"fill":colors[i],"opacity":0.6};
@@ -99,6 +113,10 @@ function initShape(i,selectedShape) {
 
 }
 
+/**
+ * Trigerred when a zone is clicked
+ * @returns {undefined}
+ */
 function onZoneClicked() {
     var $this = $(this);
     $(".tool-item.active").removeClass("active");
@@ -106,6 +124,11 @@ function onZoneClicked() {
     activeItem = $this;
 }
 
+/**
+ * Triggered when a zone is added
+ * @param {Event} e
+ * @returns {undefined}
+ */
 function onAddZoneClicked(e) {
     var $this = $(this);
     var type = $this.attr("data-type");
@@ -147,6 +170,8 @@ function onAddZoneClicked(e) {
             $clon.find("select.type")
                     .val(type)
                     .change(onShapeChange);
+            $clon.addClass("active");
+            activeItem = $clon;
 
             initShape(i,type);
         } else {
@@ -156,6 +181,10 @@ function onAddZoneClicked(e) {
 
 }
 
+/**
+ * Triggered when the user starts drawing
+ * @returns {Boolean}
+ */
 function onDrawStart() {
     var $activeZone = $(".tool-item.active");
 
@@ -175,6 +204,10 @@ function onDrawStart() {
     iniY = mouse.y;
 }
 
+/**
+ * Triggered while drawing
+ * @returns {Boolean|undefined}
+ */
 function onDraw() {
     if (!isDown) {
         return;
@@ -207,6 +240,10 @@ function onDraw() {
     layer.draw();
 }
 
+/**
+ * Triggered when the user stops drawing
+ * @returns {Boolean}
+ */
 function onDrawEnd() {
     var $activeZone = $(".tool-item.active");
     if (!$activeZone.length) {
@@ -245,6 +282,11 @@ function onDrawEnd() {
     $(".shape-data", $activeZone).val(JSON.stringify(shape_data));
 }
 
+/**
+ * Triggered when a zone is removed
+ * @param {Event} e
+ * @returns {undefined}
+ */
 function onRemoveZoneClicked(e){
     e.preventDefault();
 
@@ -280,6 +322,11 @@ function onRemoveZoneClicked(e){
     }
 }
 
+/**
+ * Triggered when a shape type is changed
+ * @param {Event} e
+ * @returns {Boolean}
+ */
 function onShapeChange(e){
     var $this = $(this);
     var $activeZone = $(".tool-item.active");

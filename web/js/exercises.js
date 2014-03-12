@@ -352,6 +352,10 @@ function addItemToExercise($scope, $clon, type, $icon) {
             .appendTo($(".container", $scope))
             .find(".title").text("Creando...");
 
+    if(type === "introduction"){
+        $("<div class='label pull-right'>0 pregunta(s)</div>").insertBefore($(".handle",$clon));
+    }
+
     //Tries to create the item
     $.post("/exercise/addItem", params, function(data) {
 

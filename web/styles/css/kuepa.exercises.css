@@ -80,10 +80,10 @@
   .answer-list select {
     margin-top: 0px; }
 
-.question-list .loading, .answer-list .loading, .tool-item .loading {
+.question-list.loading, .answer-list.loading, .tool-item.loading {
   opacity: 0.5;
   cursor: progress; }
-  .question-list .loading .title, .answer-list .loading .title, .tool-item .loading .title {
+  .question-list.loading .title, .answer-list.loading .title, .tool-item.loading .title {
     color: #ccc;
     font-style: italic; }
 
