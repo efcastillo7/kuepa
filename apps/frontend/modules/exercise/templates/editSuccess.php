@@ -169,4 +169,7 @@
     <div class="clearfix"></div>
 </div>
 
+<script src="/js/exercises.choice.js" type="text/javascript"></script>
+<script src="/js/exercises.relation.js" type="text/javascript"></script>
+<script src="/js/exercises.zones.js" type="text/javascript"></script>
 <script src="/js/exercises.js" type="text/javascript"></script>

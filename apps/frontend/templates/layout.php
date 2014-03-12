@@ -51,7 +51,7 @@
         <script type="text/javascript" src="/js/libs/learningPath.js"></script>
 
         <!-- HTML5 Canvas library -->
-        <script type="text/javascript" src="/js/libs/kinetic-v4.7.2.min.js"></script>
+        <script type="text/javascript" src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.3.min.js"></script>
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>

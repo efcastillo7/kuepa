@@ -117,9 +117,8 @@
     }
 }
 
-.question-list, .answer-list {
-
-    &.loading {
+.question-list, .answer-list, .tool-item {
+    .loading {
         opacity: 0.5;
         cursor: progress;
 
@@ -128,6 +127,9 @@
             font-style: italic;
         }
     }
+}
+
+.question-list, .answer-list {
 
     &.correct{
         border-color: #45D166;
@@ -222,8 +224,8 @@
 
 #stage {
     display: block;
-    width: 700px;
-    height: 525px;
+    width: 540px;
+    height: 405px;
     border: dashed 1px #ccc;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     box-sizing:border-box;
@@ -238,8 +240,85 @@
     .tool-header {
         background: #eaeaea;
         border: solid 1px #ccc;
-        padding: 10px;
+        padding: 5px 10px 7px;
         color: #888;
         text-shadow: 0 1px #fff;
+
+        .tool-item {
+            margin-top: 9px;
+            border: none;
+        }
+    }
+
+    .tool-item {
+        border: solid 1px #eaeaea;
+        border-radius: 5px;
+
+        &.active{
+            border-color: #45D166;
+            background: #E5FAE4;
+        }
+
+        .color, input, select {
+            margin-top: 5px;
+        }
+
+        .color{
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+
+        .value {
+            width: 20px;
+            text-align: center;
+        }
+
+        .zone-color-1{
+            background-color: #4271B5;
+        }
+
+        .zone-color-2{
+            background-color: #FE8E16;
+        }
+
+        .zone-color-3{
+            background-color: #3B3B3B;
+        }
+
+        .zone-color-4{
+            background-color: #BCD631;
+        }
+
+        .zone-color-5{
+            background-color: #D63173;
+        }
+
+        .zone-color-6{
+            background-color: #D7D7D7;
+        }
+
+        .zone-color-7{
+            background-color: #90AFDD;
+        }
+
+        .zone-color-8{
+            background-color: #AF8640;
+        }
+
+        .zone-color-9{
+            background-color: #4F9242;
+        }
+
+        .zone-color-10{
+            background-color: #F4EB24;
+        }
+
+        .zone-color-11{
+            background-color: #ED2024;
+        }
+
+        .zone-color-12{
+            background-color: #45C7F0;
+        }
     }
 }

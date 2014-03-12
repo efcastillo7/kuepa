@@ -196,6 +196,7 @@ class ExerciseService {
             case "complete": $this->saveCompleteQuestion($question, $params); break;
             case "multiple-choice": case "multiple-choice2": $this->saveMultipleQuestion($question, $params); break;
             case "relation": $this->saveRelationQuestion($params); break;
+            case "interactive": $this->saveInteractiveQuestion($params); break;
         }
     }
 
@@ -388,6 +389,50 @@ class ExerciseService {
             $answer_item = ExerciseAnswerItem::getRepository()->find($id);
             $answer_item->setTitle($relation["text"])
                     ->setExerciseAnswerId($relation["related"])
+                    ->save();
+        }
+    }
+
+    private function saveInteractiveQuestion($params) {
+
+        $updates = array();
+
+        foreach ($params as $name => $value) {
+
+            //Gets the existing answer items and saves them
+            if (preg_match_all("/zone\-value\-(\d+)/", $name, $matches)) {
+                $id = $matches[1][0];
+                if (!array_key_exists($id, $updates)) {
+                    $updates[$id] = array();
+                }
+                $updates[$id]["value"] = $value;
+            }
+
+            //Gets the existing answer items and saves them
+            if (preg_match_all("/zone\-text\-(\d+)/", $name, $matches)) {
+                $id = $matches[1][0];
+                if (!array_key_exists($id, $updates)) {
+                    $updates[$id] = array();
+                }
+                $updates[$id]["text"] = $value;
+            }
+
+            //Gets the existing answer items and saves them
+            if (preg_match_all("/zone\-type\-(\d+)/", $name, $matches)) {
+                $id = $matches[1][0];
+                if (!array_key_exists($id, $updates)) {
+                    $updates[$id] = array();
+                }
+                $updates[$id]["type"] = $value;
+            }
+
+        }
+
+        foreach ($updates as $id => $update) {
+            $answer = ExerciseAnswer::getRepository()->find($id);
+            $answer->setTitle($update["text"])
+                    ->setValue($update["value"])
+                    ->setComment($update["type"])
                     ->save();
         }
     }

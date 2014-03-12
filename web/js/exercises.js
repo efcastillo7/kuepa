@@ -1,8 +1,5 @@
 var stepLevel = 0;
-var beforeSerializeCallback = function() {
-};
-var saveCallback = function() {
-};
+var beforeSerializeCallback = saveCallback = function() {};
 var types = {
     "introduction": "Estímulo",
     "multiple-choice": "Elección múltiple",
@@ -30,7 +27,7 @@ $(function() {
 function initMainDataEdition() {
 
     //Tab navigation control
-    $("#exerciseTab li a").click(function(e) {
+    $("#exerciseTab li a").unbind().click(function(e) {
         if ($(this).attr("href") === "#exerciseQuestions" && $("#exerciseId").val() === "") {
             alert("Por favor complete los datos de la ejercitación primero y presione guardar");
             e.preventDefault();
@@ -90,16 +87,16 @@ function initQuestionListEdition() {
     });
 
     //Adds an introduction to the exercise
-    $(".addIntroduction", $scope).click(onAddItemToExerciseClicked);
+    $(".addIntroduction", $scope).unbind().click(onAddItemToExerciseClicked);
 
     //Adds a question to the exercise
-    $(".addQuestion li", $scope).click(onAddItemToExerciseClicked);
+    $(".addQuestion li", $scope).unbind().click(onAddItemToExerciseClicked);
 
     //When a question is removed from the main question list
-    $(".question-list .remove", $scope).click(onRemoveIntroductionClicked);
+    $(".question-list .remove", $scope).unbind().click(onRemoveIntroductionClicked);
 
     //When a question is editted
-    $(".question-list .edit", $scope).click(onEditExerciseClicked);
+    $(".question-list .edit", $scope).unbind().click(onEditExerciseClicked);
 
     //Adds sorting to the exercise questions
     $(".container", $scope).sortable({
@@ -126,13 +123,13 @@ function initIntroductionEditor() {
     var $fromScope = $("#mainEditor");
 
     //Adds a question to the exercise
-    $(".addQuestion li", $scope).click(onAddItemToExerciseClicked);
+    $(".addQuestion li", $scope).unbind().click(onAddItemToExerciseClicked);
 
     //When a question is removed from the main question list
-    $(".question-list .remove", $scope).click(onRemoveIntroductionClicked);
+    $(".question-list .remove", $scope).unbind().click(onRemoveIntroductionClicked);
 
     //When a question is editted
-    $(".question-list .edit", $scope).click(onEditExerciseClicked);
+    $(".question-list .edit", $scope).unbind().click(onEditExerciseClicked);
 
     //Adds sorting to the exercise questions
     $(".container", $scope).sortable({
@@ -236,131 +233,28 @@ function initQuestionEditor(type, $fromScope) {
     var type = $(".question_type", $scope).val();
 
     switch (type) {
-        case "complete": initQuestionComplete(); break;
-        case "multiple-choice": case "multiple-choice2": initQuestionMultiple(); break;
-        case "relation": initQuestionRelation(); break;
-        case "interactive": initQuestionInteractive(); break;
+        case "complete":
+            initQuestionComplete();
+            break;
+        case "multiple-choice":
+        case "multiple-choice2":
+            initQuestionMultiple();
+            break;
+        case "relation":
+            initQuestionRelation();
+            break;
+        case "interactive":
+            initQuestionInteractive();
+            break;
     }
 
 }
 
-function initQuestionComplete() {
-
-    var $scope = $("#questionEditor");
-
-    $("textarea.exercise-complete", $scope).keyup(function() {
-        var $this = $(this);
-        var text = $this.val();
-        var regExp = /\[(.*?)\]/g;
-        var matches = text.match(regExp);
-
-        if (matches) {
-            for (i in matches) {
-                var newText = matches[i].substr(1, matches[i].length - 2);
-                var $value = $(".values-container .complete-value:eq(" + i + ")");
-                if ($value.length) {
-                    $(".text", $value).text(newText);
-                    $("input:hidden", $value).val(newText);
-                } else {
-                    var $clon = $(".complete-value.ignore").clone().removeClass("ignore");
-                    $(".text", $clon).text(newText);
-                    $(".item_value", $clon).val(10).attr("name", "complete-value-new-" + i);
-                    $(".item_text", $clon).val(newText).attr("name", "complete-text-new-" + i);
-                    $clon.appendTo($(".values-container"));
-                }
-            }
-
-            $(".values-container .complete-value:gt(" + (matches.length - 1) + ")").remove();
-
-        } else {
-
-            $(".values-container .complete-value").remove();
-
-        }
-
-    });
-
-}
-
-function initQuestionMultiple() {
-
-    var $scope = $("#questionEditor");
-    var $checks = $(".answer-list .check", $scope);
-
-    $checks.click(onAnswerCheckClick);//When a question is removed from the main question list
-    $(".answer-list .remove", $scope).click(onRemoveAnswerClicked);
-    $(".add-answer", $scope).click(onAddAnswerClicked);
-
-}
-
-function initQuestionRelation() {
-
-    var $scope = $("#questionEditor");
-
-    $(".answer-list.answer .remove", $scope).click(onRemoveAnswerClicked);
-    $(".answer-list.relation .remove", $scope).click(onRemoveAnswerItemClicked);
-
-    $(".add-relation-answer", $scope).click(onAddRelationAnswerClicked);
-    $(".add-relation-item", $scope).click(onAddRelationItemClicked);
-
-}
-
-function initQuestionInteractive() {
-    var $scope = $("#questionEditor");
-    var $stage = $("#stage");
-
-    var stage = new Kinetic.Stage({
-        container: 'stage',
-        width: $stage.width(),
-        height: $stage.height()
-    });
-
-    var layer = new Kinetic.Layer();
-    stage.add(layer);
-
-    var newArc;
-    var isDown = false;
-
-    stage.on("contentMousedown", function() {
-        var mouse = stage.getMousePosition();
-        newArc = new Kinetic.Circle({
-            x: mouse.x,
-            y: mouse.y,
-            radius: .25,
-            fill: randomColor(),
-            stroke: "lightgray",
-            strokeWidth: 3
-        });
-        layer.add(newArc);
-        layer.draw();
-        isDown = true;
-    });
-
-    stage.on("contentMousemove", function() {
-        if (!isDown) {
-            return;
-        }
-        var mouse = stage.getMousePosition();
-        var dx = mouse.x - newArc.getX();
-        var dy = mouse.y - newArc.getY();
-        var radius = Math.sqrt(dx * dx + dy * dy);
-        newArc.setRadius(radius);
-        layer.draw();
-    });
-
-    $(stage.getContent()).on('mouseup', function() {
-        isDown = false;
-        newArc = null;
-    });
-
-
-    function randomColor() {
-        return ('#' + Math.floor(Math.random() * 16777215).toString(16));
-    }
-
-    layer.draw();
-}
-
+/**
+ * Adds option to minimize question content
+ * @param {jQuery} $scope
+ * @returns {undefined}
+ */
 function initMinimizable($scope) {
     $(".minimize", $scope).click(function() {
         var $this = $(this);
@@ -370,262 +264,6 @@ function initMinimizable($scope) {
     });
 }
 
-function onAddAnswerClicked(e) {
-    e.preventDefault();
-
-    var $scope = $("#questionEditor");
-    var params = {
-        question_id: $(".question_id", $scope).val()
-    };
-
-    var $clon = $(".answer-list.ignore").clone(false);
-    $clon
-            .removeClass("ignore")
-            .addClass("loading")
-            .appendTo($(".answer-container", $scope))
-            .find(".title").text("Creando...");
-
-    $.post("/exercise/addAnswer", params, function(data) {
-
-        if (data.status === "success") {
-
-            //Introduction question_id
-            var answer_id = data.answer_id;
-
-            $clon
-                    .removeClass("loading")
-                    .attr("data-id", answer_id)
-                    .find(".remove").click(onRemoveAnswerClicked);
-            $clon.find(".title")
-                    .attr("name", "answer-text-" + answer_id);
-            $clon.find(".value").attr("name", "answer-value-" + answer_id);
-            $clon.find(".isCorrect").attr("name", "answer-correct-" + answer_id);
-            $clon.find(".check").click(onAnswerCheckClick);
-
-        } else {
-            alert("Se produjo un error al crear la respuesta");
-        }
-    }, "JSON");
-}
-
-function onAddRelationAnswerClicked(e) {
-    e.preventDefault();
-
-    var $scope = $("#questionEditor");
-    var params = {
-        question_id: $(".question_id", $scope).val()
-    };
-
-    var $clon = $(".answer-list.answer.ignore").clone(false);
-    $clon
-            .removeClass("ignore")
-            .addClass("loading")
-            .appendTo($(".answers-container", $scope))
-            .find(".title").text("Creando...");
-
-    $.post("/exercise/addAnswer", params, function(data) {
-
-        if (data.status === "success") {
-
-            //Introduction question_id
-            var answer_id = data.answer_id;
-
-            $clon
-                    .removeClass("loading")
-                    .attr("data-id", answer_id)
-                    .find(".remove").click(onRemoveAnswerClicked);
-            $clon.find(".title")
-                    .attr("name", "relation-answer-text-" + answer_id);
-            $clon.find(".value").attr("name", "relation-answer-value-" + answer_id);
-
-            updateAnswersItemsSelects();
-            updateAnswersOrderNumbers();
-
-        } else {
-            alert("Se produjo un error al crear la respuesta");
-        }
-    }, "JSON");
-}
-
-function updateAnswersItemsSelects() {
-    $("select.relation", ".items-container").each(function() {
-        var $this = $(this);
-        var $answerItem = $this.parents(".answer-list.relation");
-        var answer_item_id = $answerItem.attr("data-id");
-        var selectedIndex = $("option:selected", $this).index();
-        var selectedValue = $("option:selected", $this).val();
-        $this.replaceWith(getUpdatedRelationSelect(answer_item_id, selectedIndex, selectedValue));
-    });
-}
-
-
-function onAddRelationItemClicked(e) {
-    e.preventDefault();
-
-    if (!$(".answers-container .answer-list.answer").length) {
-        alert("Primero debe crear al menos una respuesta");
-        return;
-    }
-
-    var $scope = $("#questionEditor");
-    var params = {
-        question_id: $(".question_id", $scope).val()
-    };
-
-    var $clon = $(".answer-list.relation.ignore").clone(false);
-    $clon
-            .removeClass("ignore")
-            .addClass("loading")
-            .appendTo($(".items-container", $scope))
-            .find(".title").text("Creando...");
-
-
-
-    $.post("/exercise/addAnswerItem", params, function(data) {
-
-        if (data.status === "success") {
-
-            //Introduction question_id
-            var answer_item_id = data.answer_item_id;
-
-            $clon
-                    .removeClass("loading")
-                    .attr("data-id", answer_item_id)
-                    .find(".remove").click(onRemoveAnswerItemClicked);
-            $clon.find(".relation").replaceWith(getUpdatedRelationSelect(answer_item_id));
-            $clon.find(".value").attr("name", "relation-item-related-" + answer_item_id);
-
-        } else {
-            alert("Se produjo un error al crear la relación");
-        }
-    }, "JSON");
-}
-
-function getUpdatedRelationSelect(answer_item_id, selectedIndex, selectedValue) {
-    var $answers = $(".answers-container .answer-list.answer");
-    var $select = $("<select class='pull-right span2 relation'>").attr("name", "relation-item-related-" + answer_item_id);
-
-    $answers.each(function(i) {
-        var $this = $(this);
-        $select.append("<option value='" + $this.attr("data-id") + "'>" + (i + 1) + "</option>");
-
-        if (!!selectedIndex & !selectedValue) {
-            var $option = $("option:eq(" + selectedIndex + ")", $select);
-            if ($option.length) {
-                $option.attr("selected", "selected");
-            }
-        } else if (!!selectedValue) {
-            var $option = $("option[value=" + selectedValue + "]", $select);
-            if ($option.length) {
-                $option.attr("selected", "selected");
-            }
-        } else {
-            $("option:last", $select).attr("selected", "selected");
-        }
-    });
-
-    return $select;
-}
-
-function onAnswerCheckClick(e) {
-    e.preventDefault();
-
-    var $this = $(this);
-    var $scope = $("#questionEditor");
-    var checked = $this.parents(".answer-list").is(".correct");
-    var type = $("select[name=type]", $scope).val();
-    var $answer = $this.parents(".answer-list");
-
-    if (type === "multiple-choice") {
-        $(".answer-list.correct", $scope).removeClass("correct");
-        $(".isCorrect", $scope).val(0);
-        if (!checked) {
-            $this.parents(".answer-list")
-                    .addClass("correct")
-                    .find(".isCorrect").val(1);
-        }
-    } else if (type === "multiple-choice2") {
-        $answer.toggleClass("correct");
-        if ($answer.is(".correct")) {
-            $answer.find(".isCorrect").val(1);
-        } else {
-            $answer.find(".isCorrect").val(0);
-        }
-    }
-}
-
-/**
- * Triggered when an answer is removed
- * @param {Event} e
- * @returns {void}
- */
-function onRemoveAnswerClicked(e) {
-
-    e.preventDefault();
-
-    if (window.confirm("¿Está seguro que desea remover esta respuesta?")) {
-
-        var $answer = $(this).parents(".answer-list");
-        $answer.addClass("loading");
-
-        if ($answer.attr("data-id") !== "") {
-            var params = {
-                answer_id: $answer.attr("data-id")
-            };
-
-            $.post("/exercise/removeAnswer", params, function(data) {
-
-                if (data.status === "success") {
-
-                    $answer.remove();
-                    updateAnswersItemsSelects();
-
-                } else {
-                    alert("Se produjo un error al eliminar la respuesta");
-                }
-            }, "JSON");
-        } else {
-            $answer.remove();
-        }
-
-    }
-}
-
-/**
- * Triggered when an answer is removed
- * @param {Event} e
- * @returns {void}
- */
-function onRemoveAnswerItemClicked(e) {
-
-    e.preventDefault();
-
-    if (window.confirm("¿Está seguro que desea remover esta relación?")) {
-
-        var $answer = $(this).parents(".answer-list");
-        $answer.addClass("loading");
-
-        if ($answer.attr("data-id") !== "") {
-            var params = {
-                answer_item_id: $answer.attr("data-id")
-            };
-
-            $.post("/exercise/removeAnswerItem", params, function(data) {
-
-                if (data.status === "success") {
-
-                    $answer.remove();
-
-                } else {
-                    alert("Se produjo un error al eliminar la relación");
-                }
-            }, "JSON");
-        } else {
-            $answer.remove();
-        }
-
-    }
-}
 
 /**
  * Emulates Bootstrap Affix (Missing!)
@@ -679,6 +317,8 @@ function onAddItemToExerciseClicked(e) {
     var type = $this.attr("data-type");
     var $icon = $this.find("i");
 
+    e.preventDefault();
+
     addItemToExercise($scope, $clon, type, $icon);
 }
 
@@ -708,6 +348,7 @@ function addItemToExercise($scope, $clon, type, $icon) {
             .removeClass("ignore")
             .addClass("loading")
             .addClass(type)
+            .attr("data-type",type)
             .appendTo($(".container", $scope))
             .find(".title").text("Creando...");
 
@@ -747,7 +388,7 @@ function updateExercisesCount($scope) {
     var count = $(".question-list:not(.ignore)", $scope).length;
 
     $number.text(count > 0 ? count : "");
-    $label.text(count > 0 ? count > 1 ? " ejercicios" : " ejercicio" : "Sin ejercicios");
+    $label.text(count > 0 ? count > 1 ? " ejercicios" : " ejercicio" : " Sin ejercicios");
 }
 
 /**
@@ -779,8 +420,6 @@ function updateOrderNumbers($scope, store) {
 
 /**
  * Updates the order indicators
- * @param {jQuery} $scope
- * @param {boolean} store
  * @returns {void}
  */
 function updateAnswersOrderNumbers() {
@@ -892,7 +531,7 @@ function onQuestionOrdered(event, ui) {
  * @returns {void}
  */
 function onAnswerOrdered(event, ui) {
-    //TODO from Kuepa...
+    //TODO
 }
 
 /**

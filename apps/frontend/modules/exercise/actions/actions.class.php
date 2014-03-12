@@ -42,6 +42,7 @@ class exerciseActions extends sfActions {
 
         //Gets the question
         $question = ExerciseQuestion::getRepository()->find($question_id);
+        $answers = $question->getAnswers();
 
         //Default response
         $response = Array(
@@ -67,7 +68,6 @@ class exerciseActions extends sfActions {
                 $response['status'] = "success";
                 break;
             case "multiple-choice": case "multiple-choice2":
-                $answers = $question->getAnswers();
                 $response['form'] = $this->getPartial("edit_question_form", array("form" => $form, "exercise_id" => $exercise_id));
                 $response['template'] = $this->getPartial("edit_question_choice", array("answers" => $answers, "question" => $question));
                 break;
@@ -76,19 +76,17 @@ class exerciseActions extends sfActions {
                 $response['template'] = $this->getPartial("edit_question_open", array());
                 break;
             case "complete":
-                $answers = $question->getAnswers();
                 $response['form'] = $this->getPartial("edit_question_form", array("form" => $form, "exercise_id" => $exercise_id));
                 $response['template'] = $this->getPartial("edit_question_complete", array("answer" => $answers[0]));
                 break;
             case "relation":
-                $answers = $question->getAnswers();
                 $answers_items = $question->getItems();
                 $response['form'] = $this->getPartial("edit_question_form", array("form" => $form, "exercise_id" => $exercise_id));
-                $response['template'] = $this->getPartial("edit_question_relation", array("answers" => $answers,"answers_items" => $answers_items));
+                $response['template'] = $this->getPartial("edit_question_relation", array("answers" => $answers, "answers_items" => $answers_items));
                 break;
             case "interactive":
                 $response['form'] = $this->getPartial("edit_question_form", array("form" => $form, "exercise_id" => $exercise_id));
-                $response['template'] = $this->getPartial("edit_question_interactive", array());
+                $response['template'] = $this->getPartial("edit_question_interactive", array("answers" => $answers));
                 break;
         }
 
