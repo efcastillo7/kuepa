@@ -228,7 +228,7 @@ class migrationActions extends sfActions
   	$this->setTemplate("index2");
 
   	$persist = true;
-  	$copy = false;
+  	$copy = true;
   	$copy_video = false;
 
     $mysql_conn = mysqli_connect("70.32.82.167","remote","r3m0teUS45%2","110k_dokeos_main");
@@ -343,11 +343,13 @@ class migrationActions extends sfActions
 
 					$texto = "
 						<h4>Concepto</h4>
-						<p>{$lectura['Concepto']}</p>
+						<p>".stripslashes($lectura['Concepto'])."</p>
 						<h4>Definición</h4>
-						<p>{$lectura['Definici']}</p>
+						<p>".stripslashes($lectura['Definici'])."</p>
 						<h4>Fórmulas</h4>
-						<p>{$lectura['Formulas']}</p>";
+						<p>".stripslashes($lectura['Formulas'])."</p>
+						<h4>Consejos</h4>
+						<p>".stripslashes($lectura['Tips'])."</p>";
 
 					preg_match_all($regex, $texto, $match);
 					$data['links'] = $match[1];
@@ -381,17 +383,17 @@ class migrationActions extends sfActions
 
 					$texto = "
 						<h4>Enunciado</h4>
-						<p>{$ejer_resu['enunciad']}</p>";
+						<p>".stripslashes($ejer_resu['enunciad'])."</p>";
 					// Ejercicios
 						$query2 = "SELECT * FROM soluejerresu where codirecu = $recurso_id and codiejer ='".$ejer_resu['codiejer']."'";
 						$r_sol_eje = mysqli_query($mysql_conn,$query2);
 						$ejer_counter = 1;
 						while($sol_eje = mysqli_fetch_array($r_sol_eje) ){
 							$texto .= "<h2>Paso No. $ejer_counter </h2>";
-							$texto .= "<p>{$sol_eje['solucion']}</p>";
+							$texto .= "<p>".stripslashes($sol_eje['solucion'])."</p>";
 							if ( $sol_eje['explicacion'] != "" ){
-								$texto .= "<i>Explicacion</i>";
-								$texto .= "<p>{$sol_eje['explicacion']}</p>";
+								$texto .= "<i>Explicación</i>";
+								$texto .= "<p>".stripslashes($sol_eje['explicacion'])."</p>";
 							}
 							$ejer_counter++;
 						}
