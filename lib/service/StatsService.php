@@ -5,7 +5,7 @@ class StatsService {
     private static $instance = null;
     private $_approveBar = 70;
     private $_pond = 0.35;
-
+    private $_invest_time = 0;
     public static function getInstance() {
         if (!self::$instance) {
             self::$instance = new StatsService;
@@ -13,22 +13,18 @@ class StatsService {
 
         return self::$instance;
     }
-
+    
     public function getVelocityIndex($profile_id, $component_id){
         //get component
         $component = Component::getRepository()->getById($component_id);
 
         //get invest time
-        $invest_time = LogService::getInstance()->getTotalTime($profile_id, $component);
-        $component_duration = $component->getDuration();
+        $this->_invest_time = LogService::getInstance()->getTotalTime($profile_id, $component);
         $v = 0;
-        if( $invest_time > 0 ){
-            $v = $component_duration / $invest_time;
+        if( $this->_invest_time > 0 ){
+            $v = $component->getDuration() / $this->_invest_time;
         }
-
-        //DISTR.NORM.ESTAND(PI()/2*LN(DURACIÓNCOMPONENTE/TIEMPOINVERTIDO))
-        $v = $this->dist_norm_standard( M_PI /(2*log($v)) );
-        return($v);
+        return $this->dist_norm_standard( M_PI /(2*log($v)) );
     }
 
     public function getCompletitudIndex($profile_id, $component_id){
@@ -113,18 +109,17 @@ class StatsService {
         return($s_time);
     }
 
-
-    public function getEfficiencyIndex($profile_id, $component_id){
-        return $this->getVelocityIndex($profile_id, $component_id) * $this->getSkillIndex($profile_id, $component_id);
+    public function getEfficiencyIndex($velocityIndex, $skillIndex){
+        return $velocityIndex * $skillIndex;
     }
 
-    public function getEffortIndex($profile_id, $component_id){
-        return $this->getCompletitudIndex($profile_id, $component_id) * $this->getPersistenceIndex($profile_id, $component_id);
+    public function getEffortIndex($completitudIndex, $persistenceIndex){
+        return $completitudIndex * $persistenceIndex;
     }
 
-    public function getLearningIndex($profile_id, $component_id){
-        return $this->getEffortIndex($profile_id, $component_id) * $this->_pond +
-                $this->getEfficiencyIndex($profile_id, $component_id) * (1-$this->_pond);
+    public function getLearningIndex($effortIndex, $efficiencyIndex){
+        return $effortIndex * $this->_pond +
+                $efficiencyIndex * (1-$this->_pond);
     }
 
     public function getRemainingTime($profile_id, $component_id){
@@ -132,9 +127,7 @@ class StatsService {
 
         $time_given = $component->getDuration();
 
-        $time_dedicated = LogService::getInstance()->getTotalTime($profile_id, $component);
-
-        return $time_given - $time_dedicated;
+        return $time_given - $this->_invest_time;
     }
 
     public function getAvgAdvancePerDay($profile_id, $component_id, $from_date = null, $to_date = null){
@@ -162,7 +155,6 @@ class StatsService {
     }
 
     public function getRemainingPerWeek($profile_id, $component_id, $from_date = null, $to_date = null){
-        $component = Component::getRepository()->getById($component_id);
 
         $remaining = $this->getRemainingTime($profile_id, $component_id);
 
@@ -182,7 +174,6 @@ class StatsService {
     }
 
     public function getRemainingPerDay($profile_id, $component_id, $from_date = null, $to_date = null){
-        $component = Component::getRepository()->getById($component_id);
 
         $remaining = $this->getRemainingTime($profile_id, $component_id);
 
