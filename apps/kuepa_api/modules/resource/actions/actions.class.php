@@ -28,6 +28,7 @@ class resourceActions extends sfActions
   		//get first resource (only available for now)
   		$resource_data = $resource->getResourceData()->getFirst();
 
+  		//get content
   		$content = $request->getParameter("content");
 
   		//update content

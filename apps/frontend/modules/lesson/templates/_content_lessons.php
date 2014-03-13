@@ -9,9 +9,12 @@
       <span id="title">
       <?php echo $resource->getName() ?>
       </span>
-      <?php if ($sf_user->hasCredential("docente")): ?>
-      <a href="#" class="btn btn-primary btn-orange" id="edit_resource">Editar</a>
-      <a href="#" class="btn btn-primary btn-orange hidden" id="save_resource">Guardar Cambios</a>
+      <?php if ($sf_user->hasCredential("editor")): ?>
+      <a href="#" class="btn btn-primary btn-orange" id="edit_update_resource">Editar</a>
+      <a href="#" class="btn btn-primary btn-orange hidden" id="save_update_resource">Guardar Cambios</a>
+      <a href="#" class="btn btn-primary btn-orange hidden" id="preliminar_update_resource">Vista Preliminar</a>
+      <a href="#" class="btn btn-primary btn-orange hidden" id="continue_update_resource">Seguir Editando</a>
+      <a href="#" class="btn btn-primary btn-orange hidden" id="cancel_update_resource">Cancelar</a>
       <?php endif; ?>
     </h1>
   </div>
@@ -31,7 +34,7 @@
 
   <div class="content">
   <?php if ($resource->getDescription() != ""): ?>
-      <h2><?php echo $resource->getRaw('description') ?></h2>
+      <!-- <h2><?php echo $resource->getRaw('description') ?></h2> -->
   <?php endif; ?>
 
   <!-- resource data -->

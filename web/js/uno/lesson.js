@@ -1,12 +1,47 @@
-$(document).ready(function() {
-  $("#edit_resource").click(function(){
-    $("#save_resource").toggleClass('hidden');
-    $("#edit_resource").toggleClass('hidden');
+function update_resource(values){
+  $.ajax({
+    url: '/kuepa_api_dev.php/resource/' + resource_id,
+    data: {
+      content: values.content,
+      name: values.title
+    },
+    dataType: 'json',
+    type: 'PUT',
+    success: function(data){
+      values.success(data);
+      $("#title").html(data.name);
+      alert('Datos guardados satisfactoriamente');
+    },
+    error: function(data){
+      $("#title").html(values.title);
+      alert('Error en la llamada.');
+    },
+    complete: function(data){
+      values.complete(data);
 
-    //edit title
-    $("#title").html("<input type='text' value='" + $("#title").html() + "'>");
+      //buttons
+      $("#save_update_resource").removeClass('hidden');
+      $("#edit_update_resource").addClass('hidden');
+      $("#preliminar_update_resource").removeClass('hidden');
+      $("#cancel_update_resource").removeClass('hidden');
+    }
+  });
+}
 
-    //edit content
+var resource = {title: '', content: ''};
+
+function show_edit_fields(title){
+  $("#save_update_resource").removeClass('hidden');
+  $("#edit_update_resource").addClass('hidden');
+  $("#preliminar_update_resource").removeClass('hidden');
+  $("#cancel_update_resource").removeClass('hidden');
+  $("#continue_update_resource").addClass('hidden');
+
+  //edit title
+  $("#title").html("<input type='text' value='" + title + "'>");
+
+  //edit content
+  if($("#resource-content-text").length > 0){
     tinymce_values = {
         mode: "none",
         plugins: [
@@ -20,46 +55,101 @@ $(document).ready(function() {
         menubar: "edit insert format view table",
         toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
         toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
-        selector: "#resource-content"
+        selector: "#resource-content-text"
     };
 
     tinyMCE.init(tinymce_values);
+  }else if($("#resource-video-youtube").length > 0){
+    var place = $("#resource-video-youtube");
+
+  }else if($("#resource-video-vimeo").length > 0){
+
+  }
+}
+
+$(document).ready(function() {
+  //preliminar click
+  $("#preliminar_update_resource").click(function(){
+    //remove tinymce
+    var ed = tinyMCE.get('resource-content-text');
+    ed.remove();
+
+    //set title
+    var title = $("#title input").val().trim();
+    $("#title").html(title);
+
+    $("#save_update_resource").addClass('hidden');
+    $("#edit_update_resource").addClass('hidden');
+    $("#preliminar_update_resource").addClass('hidden');
+    $("#cancel_update_resource").removeClass('hidden');
+    $("#continue_update_resource").removeClass('hidden');
   });
 
-  $("#save_resource").click(function(){
-    tinyMCE.triggerSave();
 
-    var ed = tinyMCE.get('resource-content');
-    var content = ed.getContent();
-    var title = $("#title input").val();
+  //cancel edit click
+  $("#cancel_update_resource").click(function(){
+    //remove tinymce
+    var ed = tinyMCE.get('resource-content-text');
+    if(ed != undefined){
+      ed.remove();
+    }
 
-    //set progress state
-    ed.setProgressState(1);
-    $.ajax({
-      url: '/kuepa_api_dev.php/resource/' + resource_id,
-      data: {
+    //restore title and contnet
+    $("#title").html(resource.title);
+    $("#resource-content-text").html(resource.content);
+
+    $("#save_update_resource").addClass('hidden');
+    $("#edit_update_resource").removeClass('hidden');
+    $("#preliminar_update_resource").addClass('hidden');
+    $("#continue_update_resource").addClass('hidden');
+    $("#cancel_update_resource").addClass('hidden');
+    $("#continue_update_resource").addClass('hidden');
+  });
+
+  $("#continue_update_resource").click(function(){
+    var title = $("#title").html().trim();
+    show_edit_fields(title);
+  });
+
+  //edit click
+  $("#edit_update_resource").click(function(){
+    resource.title = $("#title").html().trim();
+    resource.content = $("#resource-content-text").html();
+
+    show_edit_fields(resource.title);
+  });
+
+  //save click
+  $("#save_update_resource").click(function(){
+    var title = $("#title input").val().trim();
+
+    //if is text
+    if($("#resource-content-text").length > 0){
+      tinyMCE.triggerSave();
+
+      var ed = tinyMCE.get('resource-content-text');
+      var content = ed.getContent();
+
+      //set progress state
+      ed.setProgressState(1);
+
+      //update resource
+      update_resource({
+        title: title,
         content: content,
-        name: title
-      },
-      dataType: 'json',
-      type: 'PUT',
-      success: function(data){
-        $("#resource-content").html(data.ResourceData[0].content);
-        $("#title").html(data.name);
-        alert('Datos guardados satisfactoriamente');
-      },
-      error: function(data){
-        $("#title").html(title);
-        alert('Error en la llamada.');
-      },
-      complete: function(data){
-        ed.setProgressState(0);
-        ed.remove();
-        $("#save_resource").toggleClass('hidden');
-        $("#edit_resource").toggleClass('hidden');
-      }
-    });
-    //ajax call
+        success: function(data){
+          $("#resource-content-text").html(data.ResourceData[0].content);
+        },
+        complete: function(data){
+          ed.setProgressState(0);
+          ed.remove();
+        }
+      });
+    }else if($("#resource-video-youtube").length > 0){
+
+    }else if($("#resource-video-vimeo").length > 0){
+
+    }
     
 
 
