@@ -27,12 +27,19 @@ function initQuestionInteractive() {
     var $scope = $("#questionEditor");
     var $items = $("#image-edition .tool-item", $scope);
 
+    //Triggered when a zone is added
     $(".addZone li", $scope).click(onAddZoneClicked);
 
+    //Triggered when a zone is marked as active
     $items.click(onZoneClicked);
+
+    //Triggered when a zone is removed
     $("#image-edition .tool-item .remove").click(onRemoveZoneClicked);
 
+    //Initiates the stage
     initStage();
+
+    onTinyMCEChangeCallback = checkForImages;
 
 }
 
@@ -147,6 +154,7 @@ function onAddZoneClicked(e) {
 
     var $clon = $(".tool-item.ignore").clone(false);
 
+    modified = true;
 
     $clon
         .removeClass("ignore")
@@ -202,6 +210,7 @@ function onDrawStart() {
     isDown = true;
     iniX = mouse.x;
     iniY = mouse.y;
+    modified = true;
 }
 
 /**
@@ -296,6 +305,7 @@ function onRemoveZoneClicked(e){
         var i = $item.index();
         $item.addClass("loading");
 
+        modified = true;
 
         if ($item.attr("data-id") !== "") {
             var params = {
@@ -339,4 +349,16 @@ function onShapeChange(e){
     layer.draw();
 
     initShape(i,$this.val());
+}
+
+function checkForImages(e){
+    var $content = $(e.target.getContent());
+    var $img = $("img:first",$content);
+    var $stage = $("#stage");
+
+    if($img.length){
+        $stage.css({
+            "background-image": "url("+$img.attr("src")+")"
+        });
+    }
 }

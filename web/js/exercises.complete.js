@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @returns {undefined}
  */
 function initQuestionComplete() {
@@ -11,6 +11,8 @@ function initQuestionComplete() {
         var text = $this.val();
         var regExp = /\[(.*?)\]/g;
         var matches = text.match(regExp);
+
+        modified = true;
 
         if (matches) {
             for (i in matches) {
@@ -25,6 +27,7 @@ function initQuestionComplete() {
                     $(".item_value", $clon).val(10).attr("name", "complete-value-new-" + i);
                     $(".item_text", $clon).val(newText).attr("name", "complete-text-new-" + i);
                     $clon.appendTo($(".values-container"));
+                    $clon.find("input").change(function(){ modified = true;});
                 }
             }
 

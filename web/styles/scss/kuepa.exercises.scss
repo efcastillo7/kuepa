@@ -227,6 +227,9 @@
     width: 540px;
     height: 405px;
     border: dashed 1px #ccc;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     box-sizing:border-box;
     -moz-box-sizing:border-box;

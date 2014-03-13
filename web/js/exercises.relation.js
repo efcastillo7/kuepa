@@ -28,6 +28,9 @@ function onAddRelationAnswerClicked(e) {
     };
 
     var $clon = $(".answer-list.answer.ignore").clone(false);
+
+    modified = true;
+
     $clon
             .removeClass("ignore")
             .addClass("loading")
@@ -47,6 +50,8 @@ function onAddRelationAnswerClicked(e) {
             $clon.find(".title")
                     .attr("name", "relation-answer-text-" + answer_id);
             $clon.find(".value").attr("name", "relation-answer-value-" + answer_id);
+
+            $clon.find("input").change(function(){ modified = true;});
 
             updateAnswersItemsSelects();
             updateAnswersOrderNumbers();
@@ -77,12 +82,13 @@ function onAddRelationItemClicked(e) {
     };
 
     var $clon = $(".answer-list.relation.ignore").clone(false);
+
+    modified = true;
+
     $clon
             .removeClass("ignore")
             .addClass("loading")
             .appendTo($(".items-container", $scope));
-
-
 
     $.post("/exercise/addAnswerItem", params, function(data) {
 
@@ -98,6 +104,7 @@ function onAddRelationItemClicked(e) {
             $clon.find(".relation").replaceWith(getUpdatedRelationSelect(answer_item_id));
             $clon.find(".title").attr("name", "relation-text-related-" + answer_item_id);
             $clon.find(".value").attr("name", "relation-item-related-" + answer_item_id);
+            $clon.find("input,select").change(function(){ modified = true;});
 
         } else {
             alert("Se produjo un error al crear la relación");
@@ -167,6 +174,8 @@ function onRemoveAnswerItemClicked(e) {
 
         var $answer = $(this).parents(".answer-list");
         $answer.addClass("loading");
+
+        modified = true;
 
         if ($answer.attr("data-id") !== "") {
             var params = {

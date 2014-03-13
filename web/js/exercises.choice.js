@@ -45,6 +45,7 @@ function onAddAnswerClicked(e) {
             $clon.find(".value").attr("name", "answer-value-" + answer_id);
             $clon.find(".isCorrect").attr("name", "answer-correct-" + answer_id);
             $clon.find(".check").click(onAnswerCheckClick);
+            $clon.find("input").change(function(){ modified = true;});
 
         } else {
             alert("Se produjo un error al crear la respuesta");
@@ -65,6 +66,8 @@ function onAnswerCheckClick(e) {
     var checked = $this.parents(".answer-list").is(".correct");
     var type = $("select[name=type]", $scope).val();
     var $answer = $this.parents(".answer-list");
+
+    modified = true;
 
     if (type === "multiple-choice") {
         $(".answer-list.correct", $scope).removeClass("correct");
@@ -97,6 +100,8 @@ function onRemoveAnswerClicked(e) {
 
         var $answer = $(this).parents(".answer-list");
         $answer.addClass("loading");
+
+        modified = true;
 
         if ($answer.attr("data-id") !== "") {
             var params = {

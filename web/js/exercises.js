@@ -1,5 +1,5 @@
 var stepLevel = 0;
-var beforeSerializeCallback = saveCallback = function() {};
+var beforeSerializeCallback = saveCallback = onTinyMCEChangeCallback = function() {};
 var types = {
     "introduction": "Estímulo",
     "multiple-choice": "Elección múltiple",
@@ -9,6 +9,7 @@ var types = {
     "relation": "Relacionar",
     "interactive": "Zonas interactivas"
 };
+var modified = false;
 
 $(function() {
 
@@ -48,7 +49,22 @@ function initMainDataEdition() {
     emulateAffix($(".exercise-edit-header", $("#mainExerciseData")), {offset: 50});
 
     //tinyMCE for textareas
-    tinymce.init({selector: '.tinymce', width: $(".create-exerice-form :text:first").width()});
+    tinymce.init({
+        selector: '.tinymce',
+        width: $(".create-exerice-form :text:first").width(),
+        mode: "none",
+        plugins: [
+            "advlist autolink lists link image charmap anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste jbimages"
+        ],
+        relative_urls: false,
+        convert_urls: false,
+        remove_script_host : false,
+        menubar: "edit insert format view table",
+        toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
+        toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+    });
 
     //ajaxForm for main exercise data
     $(".create-exerice-form").ajaxForm({
@@ -104,6 +120,8 @@ function initQuestionListEdition() {
         deactivate: onQuestionOrdered
     });
 
+    modified = false;
+
     emulateAffix($(".exercise-edit-header", $scope), {offset: 50});
 
     //Update exercises count for the main exercise
@@ -156,16 +174,35 @@ function initIntroductionEditor() {
  */
 function initQuestionForm($scope, $fromScope) {
 
-    saveCallback = function() {
-    };
-    beforeSerializeCallback = function() {
-    };
+    saveCallback = beforeSerializeCallback = onTinyMCEChangeCallback = function(){};
 
     adjustLayout();
     initMinimizable($scope);
 
     //tinyMCE for textareas
-    tinymce.init({selector: '.tinymce', width: $(".edit-question-form :text:first", $scope).width()});
+    tinymce.init({
+        setup: function(editor) {
+            editor.on('change', function(e) {
+                modified = true;
+                onTinyMCEChangeCallback(e);
+            });
+        },
+        selector: '.tinymce',
+        width: $(".edit-question-form :text:first",$scope).width(),
+        mode: "none",
+        plugins: [
+            "advlist autolink lists link image charmap anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste jbimages"
+        ],
+        relative_urls: false,
+        convert_urls: false,
+        remove_script_host : false,
+        menubar: "edit insert format view table",
+        toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
+        toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+    });
+
 
     //ajaxForm for main exercise data
     $(".edit-question-form", $scope).ajaxForm({
@@ -178,7 +215,7 @@ function initQuestionForm($scope, $fromScope) {
             $(".save span", $scope).text("Guardando...");
         },
         success: function(data) {
-            if (data.status === "success") {
+            if (data.status == "success") {
                 $("#exerciseId", $scope).val(data.exercise_id);
                 $(".save span", $scope).text("Guardado!");
                 setTimeout(function() {
@@ -190,6 +227,7 @@ function initQuestionForm($scope, $fromScope) {
 
                 $(".form-errors", $scope).html("");
 
+                modified = false;
                 saveCallback();
             } else {
                 var errors = JSON.parse(data.errors);
@@ -198,18 +236,25 @@ function initQuestionForm($scope, $fromScope) {
         }
     });
 
+    $(".edit-question-form",$scope).find("input,select,textarea").change(function(){
+       modified = true;
+    });
+
     $(".back", $scope).click(function(e) {
 
         e.preventDefault();
 
-        if (window.confirm("¿Desea guardar antes de volver?")) {
+        if(modified){
 
-            $(".edit-question-form", $scope).trigger("submit");
-            saveCallback = function() {
-                gotoPanel($fromScope.index() + 1);
-            };
+            if (window.confirm("¿Desea guardar antes de volver?")) {
+
+                $(".edit-question-form", $scope).trigger("submit");
+                saveCallback = function() {
+                    gotoPanel($fromScope.index() + 1);
+                };
+            }
+
         }
-
         gotoPanel($fromScope.index() + 1);
 
     });
@@ -487,12 +532,15 @@ function onEditExerciseClicked() {
     var question_id = $question.attr("data-id");
     var exercise_id = $("#exerciseId").val();
     var type = $question.attr("data-type");
+    var $targetPane;
+    var targetPaneN;
+
     if (type === "introduction") {
-        var $targetPane = $("#exerciseEditor");
-        var targetPaneN = 2;
+        $targetPane = $("#exerciseEditor");
+        targetPaneN = 2;
     } else {
-        var $targetPane = $("#questionEditor");
-        var targetPaneN = 3;
+        $targetPane = $("#questionEditor");
+        targetPaneN = 3;
     }
 
     $question.addClass("loading");
