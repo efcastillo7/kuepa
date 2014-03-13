@@ -1,13 +1,3 @@
-<div class="control-group">
-    <label class="control-label">Tipo</label>
-    <div class="controls">
-        <select name="type">
-            <option value="multiple-choice" <?php if ($question->getType() == "multiple-choice") echo "selected"; ?>>Opción simple</option>
-            <option value="multiple-choice2" <?php if ($question->getType() == "multiple-choice2") echo "selected"; ?>>Opción múltiple</option>
-        </select>
-    </div>
-</div>
-
 <div class="instructions">
     <button class="add-answer btn btn-success btn-small pull-right">Agregar respuesta</button>
     Seleccione el tipo de pregunta múltiple. Luego, agregue las respuestas posibles para la pregunta. Para marcar la correcta presione sobre la misma.

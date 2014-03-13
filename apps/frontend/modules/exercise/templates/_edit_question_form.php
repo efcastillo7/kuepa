@@ -88,6 +88,17 @@
                 ?>
             </div>
         </div>
+        <?php if ($form->getObject()->getType() == "multiple-choice2" || $form->getObject()->getType() == "multiple-choice"): ?>
+        <div class="control-group">
+            <label class="control-label">Tipo</label>
+            <div class="controls">
+                <select name="type">
+                    <option value="multiple-choice" <?php if ($form->getObject()->getType() == "multiple-choice") echo "selected"; ?>>Opción simple</option>
+                    <option value="multiple-choice2" <?php if ($form->getObject()->getType() == "multiple-choice2") echo "selected"; ?>>Opción múltiple</option>
+                </select>
+            </div>
+        </div>
+        <?php endif; ?>
         <?php echo $form["type"]->render(); ?>
         <?php echo $form['_csrf_token']->render(); ?>
     </div>
