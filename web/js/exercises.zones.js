@@ -41,6 +41,8 @@ function initQuestionInteractive() {
 
     onTinyMCEChangeCallback = checkForImages;
 
+    checkForImages();
+
 }
 
 /**
@@ -352,7 +354,7 @@ function onShapeChange(e){
 }
 
 function checkForImages(e){
-    var $content = $(e.target.getContent());
+    var $content = $(tinymce.get($("[name='exercise[description]']").attr("id")).getContent());
     var $img = $("img:first",$content);
     var $stage = $("#stage");
 
