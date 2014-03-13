@@ -354,7 +354,8 @@ function onShapeChange(e){
 }
 
 function checkForImages(e){
-    var $content = $(tinymce.get($("[name='exercise[description]']").attr("id")).getContent());
+    var editor = tinymce.get( $("[name='exerciseQuestion[description]']").attr("id") );
+    var $content = $(editor.getContent());
     var $img = $("img:first",$content);
     var $stage = $("#stage");
 
