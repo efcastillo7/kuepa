@@ -2,7 +2,8 @@ var stepLevel = 0;
 var beforeSerializeCallback = saveCallback = onTinyMCEChangeCallback = function() {};
 var types = {
     "introduction": "Estímulo",
-    "multiple-choice": "Elección múltiple",
+    "true-false": "Verdadero/Falso",
+    "multiple-choice": "Elección simple",
     "multiple-choice2": "Elección múltiple",
     "complete": "Rellenar Espacios",
     "open": "Respuesta abierta",
@@ -281,6 +282,7 @@ function initQuestionEditor(type, $fromScope) {
         case "complete":
             initQuestionComplete();
             break;
+        case "true-false":
         case "multiple-choice":
         case "multiple-choice2":
             initQuestionMultiple();

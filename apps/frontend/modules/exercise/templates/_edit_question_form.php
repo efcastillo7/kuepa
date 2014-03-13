@@ -16,7 +16,13 @@
                 </button>
                 <ul class="dropdown-menu addQuestion">
                     <li data-type="multiple-choice">
+                        <a href="#" class="question-multiple"><i class="icon-check"></i> Elección simple</a>
+                    </li>
+                    <li data-type="multiple-choice2">
                         <a href="#" class="question-multiple"><i class="icon-check"></i> Elección múltiple</a>
+                    </li>
+                    <li data-type="true-false">
+                        <a href="#" class="question-multiple"><i class="icon-check"></i>Verdadero / Falso</a>
                     </li>
                     <li data-type="complete">
                         <a href="#" class="question-complete"><i class="icon-pencil"></i> Rellenar espacios</a>
@@ -88,18 +94,23 @@
                 ?>
             </div>
         </div>
-        <?php if ($form->getObject()->getType() == "multiple-choice2" || $form->getObject()->getType() == "multiple-choice"): ?>
-        <div class="control-group">
-            <label class="control-label">Tipo</label>
-            <div class="controls">
-                <select name="type">
-                    <option value="multiple-choice" <?php if ($form->getObject()->getType() == "multiple-choice") echo "selected"; ?>>Opción simple</option>
-                    <option value="multiple-choice2" <?php if ($form->getObject()->getType() == "multiple-choice2") echo "selected"; ?>>Opción múltiple</option>
-                </select>
+        <?php
+        $type = $form->getObject()->getType();
+        if ($type == "multiple-choice2" || $type == "multiple-choice" || $type == "true-false"): ?>
+            <div class="control-group">
+                <label class="control-label">Tipo</label>
+                <div class="controls">
+                    <select name="type">
+                        <option value="true-false" <?php if ($form->getObject()->getType() == "true-false") echo "selected"; ?>>Verdadero/Falso</option>
+                        <option value="multiple-choice" <?php if ($form->getObject()->getType() == "multiple-choice") echo "selected"; ?>>Opción simple</option>
+                        <option value="multiple-choice2" <?php if ($form->getObject()->getType() == "multiple-choice2") echo "selected"; ?>>Opción múltiple</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <?php endif; ?>
-        <?php echo $form["type"]->render(); ?>
-        <?php echo $form['_csrf_token']->render(); ?>
+        <?php
+        endif;
+        echo $form["type"]->render();
+        echo $form['_csrf_token']->render();
+        ?>
     </div>
 </form>

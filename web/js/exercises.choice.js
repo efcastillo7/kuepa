@@ -1,12 +1,28 @@
+/**
+ * Initiates the multiple question form
+ * @returns {undefined}
+ */
 function initQuestionMultiple() {
 
     var $scope = $("#questionEditor");
     var $checks = $(".answer-list .check", $scope);
+    var $tfSelects = $(".true_false", $scope);
+    var $type = $("select[name=type]");
 
-    $checks.click(onAnswerCheckClick);//When a question is removed from the main question list
+    $type.change(onQuestionTypeChanged).trigger("change");
+
+    $checks.click(onAnswerCheckClick);
+    $tfSelects.click(onAnswerTFChange);
+
+    //When a question is removed from the main question list
     $(".answer-list .remove", $scope).click(onRemoveAnswerClicked);
     $(".add-answer", $scope).click(onAddAnswerClicked);
 
+}
+
+
+function onQuestionTypeChanged(e) {
+    $(".answer-container").removeClass("true-false").removeClass("multiple-choice").removeClass("multiple-choice2").addClass($(this).val());
 }
 
 /**
@@ -45,7 +61,10 @@ function onAddAnswerClicked(e) {
             $clon.find(".value").attr("name", "answer-value-" + answer_id);
             $clon.find(".isCorrect").attr("name", "answer-correct-" + answer_id);
             $clon.find(".check").click(onAnswerCheckClick);
-            $clon.find("input").change(function(){ modified = true;});
+            $clon.find(".true_false").change(onAnswerTFChange);
+            $clon.find("input").change(function() {
+                modified = true;
+            });
 
         } else {
             alert("Se produjo un error al crear la respuesta");
@@ -69,21 +88,47 @@ function onAnswerCheckClick(e) {
 
     modified = true;
 
-    if (type === "multiple-choice") {
-        $(".answer-list.correct", $scope).removeClass("correct");
-        $(".isCorrect", $scope).val(0);
-        if (!checked) {
-            $this.parents(".answer-list")
-                    .addClass("correct")
-                    .find(".isCorrect").val(1);
-        }
-    } else if (type === "multiple-choice2") {
-        $answer.toggleClass("correct");
-        if ($answer.is(".correct")) {
-            $answer.find(".isCorrect").val(1);
-        } else {
-            $answer.find(".isCorrect").val(0);
-        }
+    switch (type) {
+        case "multiple-choice":
+            $(".answer-list.correct", $scope).removeClass("correct");
+            $(".isCorrect", $scope).val(0);
+            if (!checked) {
+                $this.parents(".answer-list")
+                        .addClass("correct")
+                        .find(".isCorrect").val(1);
+            }
+            break;
+        case "multiple-choice2": case "true-false":
+            $answer.toggleClass("correct");
+            if ($answer.is(".correct")) {
+                $answer.find(".isCorrect").val(1);
+                $answer.find(".true_false").val("true");
+            } else {
+                $answer.find(".isCorrect").val(0);
+                $answer.find(".true_false").val("false");
+            }
+            break;
+    }
+
+}
+
+/**
+ * True / False switch
+ * @param {Event} e
+ * @returns {undefined}
+ */
+function onAnswerTFChange(e){
+    var $this = $(this);
+    var $scope = $("#questionEditor");
+    var checked = $this.parents(".answer-list").is(".correct");
+    var $answer = $this.parents(".answer-list");
+
+    if($this.val() == "true"){
+        $answer.addClass("correct");
+        $answer.find(".isCorrect").val(1);
+    }else{
+        $answer.removeClass("correct");
+        $answer.find(".isCorrect").val(0);
     }
 }
 

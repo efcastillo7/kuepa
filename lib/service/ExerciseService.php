@@ -5,6 +5,7 @@ class ExerciseService {
     private static $instance = null;
     private static $ICONS = array(
         "introduction" => "icon-info-sign",
+        "true-false" => "icon-check",
         "multiple-choice" => "icon-check",
         "multiple-choice2" => "icon-check",
         "complete" => "icon-pencil",
@@ -194,7 +195,7 @@ class ExerciseService {
         switch ($question->getType()) {
             case "introduction": case "open": default: return;
             case "complete": $this->saveCompleteQuestion($question, $params); break;
-            case "multiple-choice": case "multiple-choice2": $this->saveMultipleQuestion($question, $params); break;
+            case "true-false": case "multiple-choice": case "multiple-choice2": $this->saveMultipleQuestion($question, $params); break;
             case "relation": $this->saveRelationQuestion($params); break;
             case "interactive": $this->saveInteractiveQuestion($params); break;
         }

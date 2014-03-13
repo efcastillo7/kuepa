@@ -91,7 +91,13 @@
                             </button>
                             <ul class="dropdown-menu addQuestion">
                                 <li data-type="multiple-choice">
+                                    <a href="#" class="question-multiple"><i class="icon-check"></i> Elección simple</a>
+                                </li>
+                                <li data-type="multiple-choice2">
                                     <a href="#" class="question-multiple"><i class="icon-check"></i> Elección múltiple</a>
+                                </li>
+                                <li data-type="true-false">
+                                    <a href="#" class="question-multiple"><i class="icon-check"></i>Verdadero / Falso</a>
                                 </li>
                                 <li data-type="complete">
                                     <a href="#" class="question-complete"><i class="icon-pencil"></i> Rellenar espacios</a>

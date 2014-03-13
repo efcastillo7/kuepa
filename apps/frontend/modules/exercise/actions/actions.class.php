@@ -67,7 +67,7 @@ class exerciseActions extends sfActions {
                 $response['template'] = $this->getPartial("edit_introduction", array("questions" => $subQuestions, "exercise_id" => $exercise_id));
                 $response['status'] = "success";
                 break;
-            case "multiple-choice": case "multiple-choice2":
+            case "multiple-choice": case "multiple-choice2": case "true-false":
                 $response['form'] = $this->getPartial("edit_question_form", array("form" => $form, "exercise_id" => $exercise_id));
                 $response['template'] = $this->getPartial("edit_question_choice", array("answers" => $answers, "question" => $question));
                 break;
