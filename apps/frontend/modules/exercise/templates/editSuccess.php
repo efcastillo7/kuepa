@@ -2,8 +2,6 @@
 
     <div class="title3">Creación de nuevo ejercicio</div>
 
-    <input type="hidden" id="exerciseId" value="<?php echo $exercise_id; ?>">
-
     <ul class="nav nav-tabs" id="exerciseTab">
         <li class="active"><a href="#mainExerciseData" data-toggle="tab">Datos</a></li>
         <li><a href="#exerciseQuestions" data-toggle="tab">Estímulos y preguntas</a></li>
@@ -12,6 +10,7 @@
     <div class="tab-content">
         <div class="tab-pane active" id="mainExerciseData">
             <form class="form-horizontal create-exerice-form" action="<?php echo url_for("exercise/create") . ($form->isNew() ? "" : "?id=" . $form->getObject()->getId()) ?>" method="POST" id="create-exerice-form<?php echo ($form->isNew() ? "" : "-" . $form->getObject()->getId()) ?>" enctype='multipart/form-data'>
+                <input type="hidden" id="exerciseId" name="id" value="<?php echo $exercise_id; ?>">
                 <div class="exercise-edit-header" data-spy="affix">
                     <button class="btn-gray-light btn-small btn pull-right" id="btn-save-ex-info">
                         <i class="icon-circle-arrow-up"></i> Guardar
@@ -69,7 +68,7 @@
                         <?php echo $form['end_time']->render(array("class" => "input-xxlarge")) ?>
                     </div>
                 </div>
-                <input type="hidden" name="exercise[course_id]" value="<?php echo $course_id; ?>">
+                <input type="hidden" name="lesson_id" value="<?php echo $lesson_id; ?>">
                 <?php echo $form['_csrf_token']->render(); ?>
             </form>
         </div>

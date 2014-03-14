@@ -30,7 +30,7 @@ class resourceActions extends kuepaActions
         );
 
       $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-      
+
       if($form->isValid()){
         //create lesson
         $resource = $form->save();
@@ -57,15 +57,15 @@ class resourceActions extends kuepaActions
             $resourceData->setResourceId($resource->getId());
             $form = new ResourceDataVideoForm($resourceData);
             break;
-        
+
           case 'recurse_data_embedded_web':
             $resourceData = new ResourceDataEmbeddedWeb();
             $resourceData->setResourceId($resource->getId());
             $form = new ResourceDataEmbeddedWebForm($resourceData);
             break;
-          
+
           default:
-            $resourceData = new ResourceDataText(); 
+            $resourceData = new ResourceDataText();
             $resourceData->setResourceId($resource->getId());
             $form = new ResourceDataTextForm($resourceData);
             break;
@@ -77,10 +77,10 @@ class resourceActions extends kuepaActions
         $response['template'] = $this->getPartial("form", array('form' => $form));
       }
 
-      if($request->isXmlHttpRequest()) {  
+      if($request->isXmlHttpRequest()) {
         return $this->renderText( json_encode($response) );
       }
-        
+
       return $this->renderText( $response['template'] );
   }
 
@@ -99,11 +99,11 @@ class resourceActions extends kuepaActions
         case 'recurse_data_video':
           $form = new ResourceDataVideoForm();
           break;
-      
+
         case 'recurse_data_embedded_web':
           $form = new ResourceDataEmbeddedWebForm();
           break;
-        
+
         default:
           $form = new ResourceDataTextForm();
           break;
@@ -129,10 +129,10 @@ class resourceActions extends kuepaActions
         $response['template'] = $this->getPartial("form_recurse", array('form' => $form, 'type' => $type));
       }
 
-      if($request->isXmlHttpRequest()) {  
+      if($request->isXmlHttpRequest()) {
         return $this->renderText( json_encode($response) );
       }
-        
+
       return $this->renderText( $response['template'] );
   }
 

@@ -349,8 +349,6 @@ Exercise:
     SoftDelete: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    course_id: { type: integer }
-    chapter_id: { type: integer }
     title: string(200)
     description: text
     type: string

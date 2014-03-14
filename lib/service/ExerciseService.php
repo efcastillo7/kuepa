@@ -41,6 +41,42 @@ class ExerciseService {
 
     /**
      *
+     * @param Exercise $exercise
+     */
+    public function editResource(Exercise $exercise, $lesson_id, $profile_id){
+
+        $resourceData = ResourceData::getRepository()->findBy("content", $exercise->getId());
+
+        if($resourceData->count() == 0){
+
+            //Resource
+            $resource = new Resource();
+            $resource->setName($exercise->getTitle())
+                    ->setDescription($exercise->getDescription())
+                    ->setProfileId($profile_id)
+                    ->setDuration(1)
+                    ->setType("Resource")
+                    ->save();
+
+
+            //ResourceData
+            $resourceData = new ResourceData();
+            $resourceData
+                ->setContent($exercise->getId())
+                ->setResource($resource)
+                ->setDuration(1)
+                ->setType("Exercise")
+                ->save();
+
+            //Learning path
+            $lp = new LearningPath();
+            $lp->setParentId($lesson_id)->setChildId($resource->getId())->setPosition(1)->save();
+        }
+
+    }
+
+    /**
+     *
      * @param type $exercise_id
      * @param type $type
      */

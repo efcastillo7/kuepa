@@ -19,11 +19,11 @@ exercise_list:
   param: { module: exercise, action: list}
 
 exercise_new:
-  url: /course/:course_id/exercises/new
+  url: /lesson/:lesson_id/exercises/new
   param: { module: exercise, action: edit }
 
 exercise_edit:
-  url: /course/:course_id/exercises/:exercise_id
+  url: /exercises/:exercise_id
   param: { module: exercise, action: edit }
 
 sf_guard_signin:

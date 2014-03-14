@@ -20,7 +20,7 @@ class exerciseActions extends sfActions {
     }
 
     public function executeEdit(sfWebRequest $request) {
-        $this->course_id = $request->getParameter('course_id');
+        $this->lesson_id = $request->getParameter("lesson_id");
         $this->exercise_id = $request->getParameter('exercise_id');
 
         if ($this->exercise_id) {
@@ -32,6 +32,52 @@ class exerciseActions extends sfActions {
         }
 
         $this->form = new ExerciseForm($exercise);
+    }
+
+    public function executeCreate(sfWebRequest $request) {
+        $id = $request->getParameter('id');
+
+        if (!empty($id)) {
+            $exercise = Exercise::getRepository()->find($id);
+        } else {
+            $exercise = new Exercise();
+        }
+
+        $form = new ExerciseForm($exercise);
+
+        $response = Array(
+            'status' => "error",
+            'template' => "",
+            'code' => 400
+        );
+
+        $params = $request->getParameter($form->getName());
+
+        $form->bind( $params, $request->getFiles($form->getName()) );
+
+        if ($form->isValid()) {
+
+            $exercise = $form->save();
+
+            ExerciseService::getInstance()->editResource($exercise,$request->getParameter("lesson_id"),$this->getUser()->getProfile()->getId());
+
+            $response['template'] = "Ha " . ($id ? "editado" : "creado") . " el ejercicio satisfactoriamente";
+            $response['status'] = "success";
+            $response['exercise_id'] = $exercise->getId();
+        } else {
+            $errors = array();
+            foreach ($form->getErrorSchema()->getErrors() as $error) {
+                $errors[] = $error->__toString();
+            }
+            $response["errors"] = json_encode($errors);
+            $response['template'] = $this->renderText("Error");
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
     }
 
     public function executeEditItemForm(sfWebRequest $request) {
@@ -161,51 +207,6 @@ class exerciseActions extends sfActions {
 
 
         return $this->renderText(json_encode($response));
-    }
-
-    public function executeList(sfWebRequest $request) {
-        $this->course_id = $request->getParameter('course_id');
-    }
-
-    public function executeCreate(sfWebRequest $request) {
-        $id = $request->getParameter('id');
-
-        if ($id) {
-            $exercise = Exercise::getRepository()->find($id);
-        } else {
-            $exercise = new Exercise();
-        }
-
-        $form = new ExerciseForm($exercise);
-
-        $response = Array(
-            'status' => "error",
-            'template' => "",
-            'code' => 400
-        );
-
-        $params = $request->getParameter($form->getName());
-
-        $form->bind(
-                $params, $request->getFiles($form->getName())
-        );
-
-        if ($form->isValid()) {
-
-            $exercise = $form->save();
-
-            $response['template'] = "Ha " . ($id ? "editado" : "creado") . " el ejercicio satisfactoriamente";
-            $response['status'] = "success";
-            $response['exercise_id'] = $exercise->getId();
-        } else {
-            $response['template'] = $this->renderText(json_encode($form->getGlobalErrors()));
-        }
-
-        if ($request->isXmlHttpRequest()) {
-            return $this->renderText(json_encode($response));
-        }
-
-        return $this->renderText($response['template']);
     }
 
     public function executeEditItem(sfWebRequest $request) {
