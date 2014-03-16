@@ -4,7 +4,7 @@
 
 <div id="" class="container">
     <?php if ($sf_user->hasCredential("docente")): ?>
-    <a href="#" class="pull-right btn btn-default addVideoSession-button" data-platform="external"><img src="img/hangout.png" alt="H" />Crear Tutoría Externa</a>
+    <!-- <a href="#" class="pull-right btn btn-default addVideoSession-button" data-platform="external"><img src="img/hangout.png" alt="H" />Crear Tutoría Externa</a> -->
     <a href="#" class="pull-right btn btn-default addVideoSession-button" data-platform="hangouts"><img src="img/hangout.png" alt="H" />Crear Hangout</a>
     <?php endif; ?>
     <p class="title3">Sesiones de video</p>
