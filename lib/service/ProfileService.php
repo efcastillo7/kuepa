@@ -61,7 +61,7 @@ class ProfileService {
         if($profile->getColleges()->count()){
             $college_id = $profile->getColleges()->getFirst()->getId();
             $sql_college = sprintf('(select profile_id from profile_college where college_id = %d)',$college_id);
-            $subquery = sprintf('SELECT distinct(%1$s) FROM ($sql_college UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = %2$d)) ) t1 where profile_id != %2$d',$sql_college ,$profile->getId());
+            $subquery = sprintf('SELECT distinct(profile_id) FROM (%1$s UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = %2$d)) ) t1 where profile_id != %2$d',$sql_college ,$profile->getId());
         }else{
             $subquery = sprintf('SELECT distinct(profile_id) FROM (SELECT distinct(profile_id) FROM profile_learning_path WHERE component_id IN (SELECT component_id FROM profile_learning_path WHERE profile_id = %1$d)) t1 where profile_id != %1$d',$profile->getId());
         }
