@@ -172,14 +172,14 @@ class messageActions extends sfActions
     public function executeUnreads(sfWebRequest $request) {
         $profile_id = $this->getUser()->getProfile()->getId();
 
-        $messages = MessagingService::getInstance()->getUnreadMessages($profile_id);
-
+        $message = MessagingService::getInstance()->getUnreadMessages($profile_id);
+        
         $ret = array();
-
-        foreach ($messages as $message) {
+        if($message){
             $ret[] = array(
                 'id' => $message->getId(),
-                'author_id' => $message->getAuthorId()
+                'author_id' => $message->getAuthorId(),
+                'content'   => $message->getContent(),
             );
         }
 

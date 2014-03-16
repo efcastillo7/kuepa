@@ -30,7 +30,7 @@ class statsActions extends kuepaActions
     $profile = $this->getProfile();
 
     $first_access = LogService::getInstance()->getFirstAccess($profile->getId(), $course_id);
-    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
+    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile->getId(), $course_id);
 
     $this->has_stats = $first_access != null && $to_date != null;
     $this->seted_deadline = $to_date != null;
@@ -123,13 +123,13 @@ class statsActions extends kuepaActions
     $this->component = ComponentService::getInstance()->find($component_id);
     $this->profile_id = $profile_id;
 
-    $this->li = $stats->getLearningIndex($profile_id, $component_id);
-    $this->efi = $stats->getEfficiencyIndex($profile_id, $component_id);
-    $this->efo = $stats->getEffortIndex($profile_id, $component_id);
-    $this->v = $stats->getVelocityIndex($profile_id, $component_id);
     $this->sk = $stats->getSkillIndex($profile_id, $component_id);
+    $this->v = $stats->getVelocityIndex($profile_id, $component_id);
+    $this->efi = $stats->getEfficiencyIndex($this->v, $this->sk);
     $this->c = $stats->getCompletitudIndex($profile_id, $component_id);
     $this->p = $stats->getPersistenceIndex($profile_id, $component_id);
+    $this->efo = $stats->getEffortIndex($this->c, $this->p);
+    $this->li = $stats->getLearningIndex($this->efo, $this->efi);
 
 
   }
@@ -169,24 +169,29 @@ class statsActions extends kuepaActions
       $profile_id = $profile->getId();
 
       $s['profile'] = $profile;
-      $s['li'] = $statsObj->getLearningIndex($profile_id, $component_id);
-      $s['efi'] =  $statsObj->getEfficiencyIndex($profile_id, $component_id);
-      $s['efo'] = $statsObj->getEffortIndex($profile_id, $component_id);
-
       $s['v'] = $statsObj->getVelocityIndex($profile_id, $component_id);
+      $s['sk'] =  $statsObj->getSkillIndex($profile_id, $component_id);
+      $s['c'] = $statsObj->getCompletitudIndex($profile_id, $component_id);
+      
+      $s['efi'] =  $statsObj->getEfficiencyIndex($s['v'], $s['sk']);
+       
       $invest_time = LogService::getInstance()->getTotalTime($profile_id, $this->component);
       $s['dc'] = $this->component->getDuration();
       $s['ti'] = $invest_time;
 
-      $s['sk'] =  $statsObj->getSkillIndex($profile_id, $component_id);
+   
 
-      $s['c'] = $statsObj->getCompletitudIndex($profile_id, $component_id);
       $s['available_resources'] = ComponentService::getInstance()->getCountResources($component_id);
       $s['viewed_resources'] = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, true);
 
       $freq = 7;
 
       $s['p'] = $statsObj->getPersistenceIndex($profile_id, $component_id, time(), $freq);
+      
+      $s['efo'] = $statsObj->getEffortIndex($s['c'], $s['p']);
+    
+      $s['li'] = $statsObj->getLearningIndex($s['efo'], $s['efi']);
+      
       $s['needed_time'] = $statsObj->getNeededTimePerPeriod($profile_id, $this->component, $freq);
 
       $from_ts = time() - ($freq * 24 * 60 * 60);

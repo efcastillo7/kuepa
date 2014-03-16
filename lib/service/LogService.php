@@ -208,7 +208,7 @@ class LogService {
             $q->andWhere('lvc.resource_id in (select child_id from learning_path lp where parent_id = ?)', $component_id);
         }*/
         if($component_id){ 
-            $component = ComponentService::getInstance()->find($component_id);
+            $component = Component::getRepository()->getById($component_id);
             switch ( $component->getType() ) {
                  case Course::TYPE:
                      $q = $q -> andWhere('course_id = ? ',$component_id);

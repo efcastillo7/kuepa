@@ -5,6 +5,7 @@ class myUser extends sfGuardSecurityUser {
     
     const SFGUARD_USER_ATTR = 'sfGuarUser';
     const PROFILE_ATTR = 'profile';
+    const COMPONENT_COMPLETE_STATUS  = 'ComponentCompleteStatus';
     
     public function isValidAccount() {
         //check if account is enabled - TODO: Add field
@@ -55,8 +56,9 @@ class myUser extends sfGuardSecurityUser {
     
     protected function clearCurrentUser()
     {
-        return $this->setAttribute(self::SFGUARD_USER_ATTR, null);
-        return $this->setAttribute(self::PROFILE_ATTR, null);
+        $this->setAttribute(self::SFGUARD_USER_ATTR, null);
+        $this->setAttribute(self::PROFILE_ATTR, null);
+        $this->setAttribute(self::COMPONENT_COMPLETE_STATUS, null);
     }
 
 }

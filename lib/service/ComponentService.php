@@ -31,14 +31,14 @@ class ComponentService {
         return;
     }
 
-    public function getDeadlineForUser(Profile $profile, $component_id){
+    public function getDeadlineForUser($profile_id, $component_id){
         //check if user has college
         $deadline = null;
 
-        if($profile){
+        if($profile_id){
             //check if user has a deadline
             $plp = ProfileLearningPath::getRepository()->createQuery('plp')
-                        ->where('profile_id = ? and component_id = ?', array($profile->getId(), $component_id))
+                        ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
                         ->fetchOne();
 
             if($plp){
@@ -47,7 +47,7 @@ class ComponentService {
 
             //if deadline is null
             if($deadline == null){
-                $college = $profile->getColleges()->getFirst();
+                $college = CollegeService::getInstance()->getByProfileId( $profile_id );
 
                 if($college){
                     $clp = CollegeLearningPath::getRepository()->createQuery('clp')
@@ -455,7 +455,7 @@ class ComponentService {
     public function getCountResources($component_id){
         $q = ViewLearningPath::getRepository()->createQuery('vlp')
              ->select('COUNT(vlp.course_id) as total');
-        $component = ComponentService::getInstance()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         switch ( $component->getType() ) {
              case Course::TYPE:
