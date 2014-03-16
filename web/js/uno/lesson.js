@@ -20,10 +20,12 @@ function update_resource(values){
       values.complete(data);
 
       //buttons
-      $("#save_update_resource").removeClass('hidden');
-      $("#edit_update_resource").addClass('hidden');
-      $("#preliminar_update_resource").removeClass('hidden');
-      $("#cancel_update_resource").removeClass('hidden');
+      $("#save_update_resource").addClass('hidden');
+      $("#edit_update_resource").removeClass('hidden');
+      $("#preliminar_update_resource").addClass('hidden');
+      $("#cancel_update_resource").addClass('hidden');
+      $("#continue_update_resource").addClass('hidden');
+      $("#resource-video-link-container").addClass('hidden');
     }
   });
 }
@@ -60,7 +62,13 @@ function show_edit_fields(title){
 
     tinyMCE.init(tinymce_values);
   }else if($("#resource-video-youtube").length > 0){
-    var place = $("#resource-video-youtube");
+    $("#resource-video-link-container").removeClass('hidden');
+    var parent = $("#resource-video-youtube").parent();
+
+    //remove
+    _V_("resource-video-youtube").dispose();
+
+    parent.append("<div id='resource-video-youtube' class='video-js vjs-default-skin' width='auto' height='500'>");
 
   }else if($("#resource-video-vimeo").length > 0){
 
@@ -70,28 +78,53 @@ function show_edit_fields(title){
 $(document).ready(function() {
   //preliminar click
   $("#preliminar_update_resource").click(function(){
-    //remove tinymce
-    var ed = tinyMCE.get('resource-content-text');
-    ed.remove();
+    if($("#resource-content-text").length > 0){
+      //remove tinymce
+      var ed = tinyMCE.get('resource-content-text');
+      ed.remove();
 
-    //set title
-    var title = $("#title input").val().trim();
-    $("#title").html(title);
+      //set title
+      var title = $("#title input").val().trim();
+      $("#title").html(title);
+    }else if($("#resource-video-youtube").length > 0){
+      var title = $("#title input").val().trim();
+      $("#title").html(title);
+      $("#resource-video-link-container").addClass('hidden');
+
+      var video = $("#resource-video-link").val();
+      videojs('resource-video-youtube', { "techOrder": ["youtube"], "src": video });
+    }else if($("#resource-video-vimeo").length > 0){
+
+    }
 
     $("#save_update_resource").addClass('hidden');
     $("#edit_update_resource").addClass('hidden');
     $("#preliminar_update_resource").addClass('hidden');
     $("#cancel_update_resource").removeClass('hidden');
     $("#continue_update_resource").removeClass('hidden');
+    $("#resource-video-link-container").addClass('hidden');
   });
 
 
   //cancel edit click
   $("#cancel_update_resource").click(function(){
-    //remove tinymce
-    var ed = tinyMCE.get('resource-content-text');
-    if(ed != undefined){
-      ed.remove();
+    //if text
+    if($("#resource-content-text").length > 0){
+      //remove tinymce
+      var ed = tinyMCE.get('resource-content-text');
+      if(ed != undefined){
+        ed.remove();
+      }
+      resource.content = $("#resource-content-text").html();
+    }else if($("#resource-video-youtube").length > 0){
+      //if video
+      var parent = $("#resource-video-youtube").parent();
+      _V_("resource-video-youtube").dispose();
+      parent.append("<div id='resource-video-youtube' class='video-js vjs-default-skin' width='auto' height='500'>");
+
+      videojs('resource-video-youtube', { "techOrder": ["youtube"], "src": resource.content });
+    }else if($("#resource-video-vimeo").length > 0){
+      resource.content = $("#resource-video-link").val();
     }
 
     //restore title and contnet
@@ -104,6 +137,7 @@ $(document).ready(function() {
     $("#continue_update_resource").addClass('hidden');
     $("#cancel_update_resource").addClass('hidden');
     $("#continue_update_resource").addClass('hidden');
+    $("#resource-video-link-container").addClass('hidden');
   });
 
   $("#continue_update_resource").click(function(){
@@ -114,7 +148,14 @@ $(document).ready(function() {
   //edit click
   $("#edit_update_resource").click(function(){
     resource.title = $("#title").html().trim();
-    resource.content = $("#resource-content-text").html();
+
+    if($("#resource-content-text").length > 0){
+      resource.content = $("#resource-content-text").html();
+    }else if($("#resource-video-youtube").length > 0){
+      resource.content = $("#resource-video-link").val();      
+    }else if($("#resource-video-vimeo").length > 0){
+      resource.content = $("#resource-video-link").val();
+    }
 
     show_edit_fields(resource.title);
   });
@@ -146,13 +187,27 @@ $(document).ready(function() {
         }
       });
     }else if($("#resource-video-youtube").length > 0){
+      var content = $("#resource-video-link").val();
+      var video = resource.content;
+
+      update_resource({
+        title: title,
+        content: content,
+        success: function(data){
+          video = data.ResourceData[0].content;
+        },
+        complete: function(data){
+          var parent = $("#resource-video-youtube").parent();
+          _V_("resource-video-youtube").dispose();
+          parent.append("<div id='resource-video-youtube' class='video-js vjs-default-skin' width='auto' height='500'>");
+
+          videojs('resource-video-youtube', { "techOrder": ["youtube"], "src": video });
+        }
+      });
 
     }else if($("#resource-video-vimeo").length > 0){
 
     }
-    
-
-
   });
 
 
