@@ -94,7 +94,7 @@ class Doctrine_Cache_Memcached extends Doctrine_Cache_Driver
             
             $s = @fsockopen($server['host'], $server['port']);
             if (!$s){
-                die("Cant connect to:".$server.':'.$port);
+                die("Cant connect to:".$server['host'].':'.$server['port']);
             }
         
             fwrite($s, $command."\r\n");
