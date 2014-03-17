@@ -560,6 +560,41 @@ LogViewComponent:
       local: profile_id
       foreign: id
 
+TimeViewComponentByDay:
+  columns:
+    profile_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    resource_id: integer
+    type: string
+    day: date
+    time_view: integer
+  relations:
+    Course:
+      class: Component
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      class: Component
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      class: Component
+      local: lesson_id
+      foreign: id
+      type: one
+    Resource:
+      class: Component
+      local: resource_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id
+
 LogAccess:
   actAs:
     Timestampable: ~
@@ -601,6 +636,8 @@ ProfileComponentCompletedStatus:
     efficiency_index: float
     learning_index: float
     time_remaining: integer
+    time_view: integer
+    
   relations:
     Component:
       local: component_id

@@ -32,18 +32,34 @@ class LogService {
                 ->orderBy('updated_at desc')
                 ->limit(1)
                 ->fetchOne();
-
+        
         //if exists and is at the same place
         if($last && 
             $last->resource_id == $resource_id && 
             $last->lesson_id == $lesson_id &&
             $last->chapter_id == $chapter_id && 
             $last->course_id == $course_id){
+            
+            $lastPCCS = ProfileComponentCompletedStatus::getRepository()->createQuery('pccs')
+                 ->where('time_view >= ?', $time - sfConfig::get("app_log_window"))
+                 ->andWhere('profile_id = ?', $profile_id)
+                 ->orWhere('component_id = ?', $last->resource_id)
+                 ->orWhere('component_id = ?', $last->lesson_id)
+                 ->orWhere('component_id = ?', $last->chapter_id)
+                 ->orWhere('component_id = ?', $last->course_id)
+                 ->execute();
+
+            foreach ($lastPCCS as $pccs){
+                $pccs->setTimeView($pccs->getTimeView() + ($time - strtotime($last->getUpdatedAt())))
+                     ->save();
+            }
+            
             $last->setUpdatedAt(Date('Y-m-d H:i:s', $time))
                  ->save();
+            
             return $last;
         }
-
+        
         //otherwise create
         $log = new LogViewComponent();
         $log->setType($type)
@@ -53,7 +69,7 @@ class LogService {
             ->setResourceId($resource_id)
             ->setProfileId($profile_id)
             ->save();
-
+        
         return $last;
     }
 
