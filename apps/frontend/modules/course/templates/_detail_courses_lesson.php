@@ -6,7 +6,7 @@
             <span class="lp-node-play"></span>
             <input class="knob knob-small" value="<?php echo $lesson->getCacheCompletedStatus(); ?>" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
         </div>
-        <?php echo $lesson->getName() ?> 
+        <?php echo $lesson->getName() ?>
         <?php if ($sf_user->hasCredential("docente")): ?>
         <a class="component_set_status btn btn-mini <?php echo $lesson->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>"><?php echo $lesson->isEnabled() ? "Desactivar" : "Activar" ?></a>
         <a class="component_edit_link btn btn-mini" target="modal-create-lesson-form-<?php echo $lesson->getId() ?>">Editar</a>
@@ -28,14 +28,25 @@
                 </div>
                 Agregar Recurso
             </li>
+            <li lesson="<?php echo $lesson->getId() ?>" class="addexercise-button unsortable">
+                <div class="lp-node">
+                    <div class="lp-bar-prev"></div>
+                    <div class="lp-bar-post"></div>
+                    <span class="lp-node-play"></span>
+                    <input class="knob knob-small" value="0" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
+                </div>
+                <a href="/lesson/<?php echo $lesson->getId() ?>/exercises/new">
+                    Agregar Evaluación
+                </a>
+            </li>
             <?php endif; ?>
 
             <!-- resources list -->
             <?php foreach ($lesson->getResource() as $resource): ?>
                 <?php if($sf_user->hasCredential("estudiante") && !$resource->isEnabled()): ?>
-                <?php include_partial("detail_courses_resource_blocked", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>    
+                <?php include_partial("detail_courses_resource_blocked", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>
                 <?php else: ?>
-                <?php include_partial("detail_courses_resource", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>    
+                <?php include_partial("detail_courses_resource", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'resource' => $resource, 'profile' => $profile)) ?>
                 <?php endif; ?>
             <?php endforeach ?>
         </ul>
