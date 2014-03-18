@@ -82,7 +82,12 @@ class migrationActions extends sfActions
 						array(" ", "%", "/", "\""),
 						array("-", "-", "-", "-"), 
 						substr($url, $pos+1));
-					$texto = str_replace($url, $base_path_relative. $imgname, $texto);
+
+					// Se reemplazan todas a excepcion las que sean imagenes o  links externos
+					// como las de las formulas http://latex.codecogs.com/
+					if(strpos($url,"kuepa.com") !== false){
+						$texto = str_replace($url, $base_path_relative. $imgname, $texto);
+					}
 
 					if(strpos($url,"http") === false){
 						$url = "http://www.kuepa.com" . $url;
