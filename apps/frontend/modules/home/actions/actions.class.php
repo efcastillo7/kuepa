@@ -26,20 +26,6 @@ class homeActions extends kuepaActions {
         $this->profile = $this->getProfile();
         
         //get courses for that user
-        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
-
-        //get courses ids
-        $components_ids = array();
-        foreach( $this->courses as $component )
-        {
-            $components_ids[] = $component->getId();
-        }
-
-        //set completed status for courses
-        // $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $this->profile->getId());
-        // $user->setCompletedStatus($components_ids, $values);
-
-        // cache courses
-        $user->setEnabledCourses($components_ids);
+        $this->courses = ComponentService::getInstance()->getCourses($user->getEnabledCourses());
     }
 }

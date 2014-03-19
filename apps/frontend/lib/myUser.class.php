@@ -7,6 +7,7 @@ class myUser extends sfGuardSecurityUser {
     const PROFILE_ATTR = 'profile';
     const COMPONENT_COMPLETED_STATUS  = 'CacheComponentCompleteStatus';
     const USER_COURSES_ENABLED  = 'UserCoursesEnabled';
+    const LAYOUT_STYLE  = 'CollegeLayoutStyle';
     
     public function isValidAccount() {
         //check if account is enabled - TODO: Add field
@@ -26,9 +27,12 @@ class myUser extends sfGuardSecurityUser {
         //entra cuando hay login succesfull
         //setear cultura de usuario, zona horaria, etc.
                 
-        $this->setUser($user);
-                
+        //log in        
         parent::signIn($user, $remember, $con);
+
+        $this->setUser($user);
+        $this->setCourses($this);
+        $this->setStyle($user);
     }
     
     public function signOut() {
@@ -43,6 +47,40 @@ class myUser extends sfGuardSecurityUser {
         
         $user->setProfile( $profile );
         $this->setAttribute(self::SFGUARD_USER_ATTR, $user);
+    }
+
+    protected function setCourses($user){
+        $courses = ComponentService::getInstance()->getCoursesForUser( $user->getProfile() );
+
+        //fetch ids
+        $components_ids = array();
+        foreach( $courses as $component )
+        {
+            $components_ids[] = $component->getId();
+        }
+
+        //set completed status for courses
+        $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $user->getProfile()->getId());
+        $user->setCompletedStatus($components_ids, $values);
+
+        // cache courses
+        $user->setEnabledCourses($components_ids);
+    }
+
+    protected function setStyle($user){
+        $style = "";
+
+        $colleges = $user->getProfile()->getColleges();
+
+        if($colleges->count()){
+            $style = $colleges->getFirst()->getStyle();
+        }
+
+        $this->setAttribute(self::LAYOUT_STYLE, $style);
+    }
+
+    public function getStyle(){
+        return sfContext::getInstance()->getUser()->getAttribute(self::LAYOUT_STYLE);
     }
     
     public function getGuardUser()
@@ -61,6 +99,7 @@ class myUser extends sfGuardSecurityUser {
         $this->setAttribute(self::PROFILE_ATTR, null);
         $this->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
         $this->setAttribute(self::USER_COURSES_ENABLED, null);
+        $this->setAttribute(self::LAYOUT_STYLE, null);
     }
 
 

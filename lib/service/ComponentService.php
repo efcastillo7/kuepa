@@ -64,6 +64,19 @@ class ComponentService {
         return $deadline;
     }
 
+    //mixed $course_id
+    public function getCourses($courses){
+        $query = Course::getRepository()->createQuery('c');
+
+        if(is_array($courses) && count($courses)){
+            $query->whereIn('id', $courses);
+        }else{
+            $query->where('id = ?',$courses);
+        }
+
+        return $query->execute();
+    }
+
     public function getCoursesForUser($profile) {
         
         $courses = array();

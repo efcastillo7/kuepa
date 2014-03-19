@@ -87,6 +87,8 @@ class lessonActions extends kuepaActions {
             
         }
         
+
+        // TODO: llevar a una
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
         $this->comments = NoteService::getInstance()->getComments($resource_id);
 
