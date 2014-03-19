@@ -31,8 +31,8 @@ class ProfileComponentCompletedStatusService {
         
         $pccsResource = isset($arrPccs[$resource->getId()]) ? $arrPccs[$resource->getId()] : 0;
         $pccsLesson = isset($arrPccs[$lesson->getId()]) ? $arrPccs[$lesson->getId()] : 0;
-        $pccsChapter = isset($arrPccs[$chapter->getId()]) ? $arrPccs[$lesson->getId()] : 0;
-        $pccsCourse = isset($arrPccs[$course->getId()]) ? $arrPccs[$lesson->getId()] : 0;
+        $pccsChapter = isset($arrPccs[$chapter->getId()]) ? $arrPccs[$chapter->getId()] : 0;
+        $pccsCourse = isset($arrPccs[$course->getId()]) ? $arrPccs[$course->getId()] : 0;
         
         //ComponentService::getInstance()->addCompletedStatus( $components, $profile );
         
