@@ -16,13 +16,16 @@ class Lesson extends BaseLesson {
     private $_actual_resource_position = null;
     private $_resource_list_id = array();
 
-    private function initResources(){
+    public function initResources($resources = null){
         
         if ( count( $this->_resource_list_id ) ) {
             return;
         }
-        
-        $resources = $this->getResources();
+
+        if(!$resources){
+            $resources = $this->getResources();
+        }
+
         $this->_resource_list_id = array();
         foreach ($resources as $id => $obj) {
             $this->_resource_list_id[] = $obj->getId();

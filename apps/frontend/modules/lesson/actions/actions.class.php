@@ -17,20 +17,42 @@ class lessonActions extends kuepaActions {
      */
     public function executeIndex(sfWebRequest $request) {
         $this->profile = $this->getProfile();
+
         $course_id = $request->getParameter('course_id');
-        $this->course = Course::getRepository()->getById($course_id);
-        
         $chapter_id = $request->getParameter('chapter_id');
-        $this->chapter = Chapter::getRepository()->getById($chapter_id);
-
         $lesson_id = $request->getParameter('lesson_id');
-        $previous_lesson_id = $request->getParameter('previous_lesson_id');
-        $following_lesson_id = $request->getParameter('following_lesson_id');
-
         $resource_id = $request->getParameter('resource_id');
 
+        $following_lesson_id = $request->getParameter('following_lesson_id');
+        $previous_lesson_id = $request->getParameter('previous_lesson_id');
+
+        // $this->course = Course::getRepository()->getById($course_id);
+        // $this->chapter = Chapter::getRepository()->getById($chapter_id);
+        // $this->lesson = Lesson::getRepository()->getById($lesson_id);
+
+        $components_ids = array($course_id, $chapter_id, $lesson_id);
+
+        if($resource_id != null){
+            $components_ids[] = $resource_id;
+        }
+
+        $components = ComponentService::getInstance()->getComponents($components_ids);
+        //get keys of data fliped for search
+        $keys = array_flip($components->getPrimaryKeys());
+
+        //set
+        $this->course = $components->get($keys[$course_id]);
+        $this->chapter = $components->get($keys[$chapter_id]);
+        $this->lesson = $components->get($keys[$lesson_id]);
+
+        //get resource is not in list
+        if($resource_id != null){
+            $this->resource = $components->get($keys[$resource_id]);
+        }else{
+            $this->resource = $this->lesson->getChildren()->getFirst();
+        }
+
         if ($lesson_id != null) {
-            $this->lesson = Lesson::getRepository()->getById($lesson_id);
             $this->lesson->setActualResource($resource_id);
         } else if ($previous_lesson_id != null) {
             $this->lesson = $this->chapter->getNextChild($previous_lesson_id);
@@ -47,8 +69,6 @@ class lessonActions extends kuepaActions {
             $lesson_id = $this->lesson->getId();
         }
                         
-        $this->resource = Resource::getRepository()->getById($this->lesson->getActualResourceId());
-        
         $this->has_next_resource = ($this->lesson->getNextResourceId() != null);
         $this->has_previous_resource = ($this->lesson->getPreviousResourceId() != null);
 

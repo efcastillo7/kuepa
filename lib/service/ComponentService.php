@@ -64,17 +64,29 @@ class ComponentService {
         return $deadline;
     }
 
-    //mixed $course_id
-    public function getCourses($courses){
-        $query = Course::getRepository()->createQuery('c');
+    //mixed $components_ids
+    public function getComponents($components_ids){
+        $query = Component::getRepository()->createQuery('c');
 
-        if(is_array($courses) && count($courses)){
-            $query->whereIn('id', $courses);
+        if(is_array($components_ids) && count($components_ids)){
+            $query->whereIn('id', $components_ids);
         }else{
-            $query->where('id = ?',$courses);
+            $query->where('id = ?',$components_ids);
         }
 
         return $query->execute();
+    }
+
+    public function getArrayComponents($components_ids){
+        $query = Component::getRepository()->createQuery('c');
+
+        if(is_array($components_ids) && count($components_ids)){
+            $query->whereIn('id', $components_ids);
+        }else{
+            $query->where('id = ?',$components_ids);
+        }
+
+        return $query->fetchArray();
     }
 
     public function getCoursesForUser($profile) {

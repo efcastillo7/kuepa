@@ -26,6 +26,6 @@ class homeActions extends kuepaActions {
         $this->profile = $this->getProfile();
         
         //get courses for that user
-        $this->courses = ComponentService::getInstance()->getCourses($user->getEnabledCourses());
+        $this->courses = CourseService::getInstance()->getCourses($user->getEnabledCourses());
     }
 }

@@ -92,4 +92,16 @@ class CourseService {
     public function removeChapterFromCourse($course_id, $child_id){
         return ComponentService::getInstance()->removeChildFromComponent($course_id, $child_id);
     }
+
+    public function getCourses($courses){
+        $query = Course::getRepository()->createQuery('c');
+
+        if(is_array($courses) && count($courses)){
+            $query->whereIn('id', $courses);
+        }else{
+            $query->where('id = ?',$courses);
+        }
+
+        return $query->execute();
+    }
 }
