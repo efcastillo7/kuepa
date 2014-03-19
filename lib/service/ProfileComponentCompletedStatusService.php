@@ -34,7 +34,7 @@ class ProfileComponentCompletedStatusService {
         $pccsChapter = isset($arrPccs[$chapter->getId()]) ? $arrPccs[$chapter->getId()] : 0;
         $pccsCourse = isset($arrPccs[$course->getId()]) ? $arrPccs[$course->getId()] : 0;
         
-        //ComponentService::getInstance()->addCompletedStatus( $components, $profile );
+        // ComponentService::getInstance()->addCompletedStatus( $pccss, $profile );
         
         $this->doAdd($pccsResource, $resource, $profile);
         $this->doAdd($pccsLesson, $lesson, $profile);
@@ -53,7 +53,7 @@ class ProfileComponentCompletedStatusService {
 
             $component_children = $component->getChildren();
             
-            ComponentService::getInstance()->addCompletedStatus($component_children, $profile);
+            // ComponentService::getInstance()->addCompletedStatus($component_children, $profile);
         
             if($component_children->count()>0) {
                 $add_completed_status = 0;
@@ -71,8 +71,8 @@ class ProfileComponentCompletedStatusService {
             $completed_status = (($current_completed_status+$add_completed_status)*100/$total);
 
             if ($completed_status >= 0 && $completed_status <= 100) {
-                $pccs->setCompletedStatus( round($completed_status) );            
-                $this->_completed_status[$profile->getId()][$component->getId()] = $completed_status;            
+                $pccs->setCompletedStatus( round($completed_status) );
+                sfContext::getInstance()->getUser()->setCompletedStatus($component->getId(), $completed_status);
             }
             
             // $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile->getId(), $component->getId());

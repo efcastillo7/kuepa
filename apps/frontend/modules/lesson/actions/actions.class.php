@@ -55,15 +55,15 @@ class lessonActions extends kuepaActions {
         $this->is_last_resource = $this->lesson->atLastResource();
         $this->is_first_resource = $this->lesson->atFirstResource();
 
-        //update log
-        LogService::getInstance()->viewResource(
-                                        $this->getUser()->getProfile()->getId(), 
-                                        Resource::TYPE,
-                                        $this->course->getId(),
-                                        $this->chapter->getId(),
-                                        $this->lesson->getId(),
-                                        $this->resource->getId()
-                                    );        
+        // //update log
+        // LogService::getInstance()->viewResource(
+        //                                 $this->getUser()->getProfile()->getId(), 
+        //                                 Resource::TYPE,
+        //                                 $this->course->getId(),
+        //                                 $this->chapter->getId(),
+        //                                 $this->lesson->getId(),
+        //                                 $this->resource->getId()
+        //                             );        
 
         //set ProfileComponentCompletedStatus
        if($this->getUser()->getAttribute("ComponentCompleteStatus") == null ||
