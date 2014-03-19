@@ -5,7 +5,8 @@ class myUser extends sfGuardSecurityUser {
     
     const SFGUARD_USER_ATTR = 'sfGuarUser';
     const PROFILE_ATTR = 'profile';
-    const COMPONENT_COMPLETE_STATUS  = 'ComponentCompleteStatus';
+    const COMPONENT_COMPLETED_STATUS  = 'CacheComponentCompleteStatus';
+    const USER_COURSES_ENABLED  = 'UserCoursesEnabled';
     
     public function isValidAccount() {
         //check if account is enabled - TODO: Add field
@@ -58,7 +59,67 @@ class myUser extends sfGuardSecurityUser {
     {
         $this->setAttribute(self::SFGUARD_USER_ATTR, null);
         $this->setAttribute(self::PROFILE_ATTR, null);
-        $this->setAttribute(self::COMPONENT_COMPLETE_STATUS, null);
+        $this->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
+        $this->setAttribute(self::USER_COURSES_ENABLED, null);
+    }
+
+
+    /* for cache */
+    public function getEnabledCourses(){
+        return $this->getAttribute(self::USER_COURSES_ENABLED);
+    }
+
+    public function setEnabledCourses($course_id){
+        $_courses = $this->getAttribute(self::USER_COURSES_ENABLED, array());
+
+        if(is_array($course_id)){
+            foreach ($course_id as $key => $course) {
+                if(!in_array($course, $_courses)){
+                    $_courses[] = $course;
+                }
+            }
+        }else{
+            if(!in_array($course_id, $_courses)){
+                $_courses[] = $course_id;
+            }
+        }
+
+        return $this->setAttribute(self::USER_COURSES_ENABLED, $_courses);
+    }
+
+
+    public function setCompletedStatus($component_id, $value = 0){
+        $_completed_status = $this->getAttribute(self::COMPONENT_COMPLETED_STATUS,array());
+
+        if(is_array($component_id) && is_array($value)){
+            foreach($component_id as $c_id){
+                $_completed_status[$c_id] = isset($value[$c_id]) ? $value[$c_id] : 0;
+            }
+        }else{
+            $_completed_status[$component_id] = $value;
+        }
+
+        $this->setAttribute(self::COMPONENT_COMPLETED_STATUS, $_completed_status);
+
+        return $value;
+    }
+
+    public function getCompletedStatus($component_id = null){
+        $_completed_status = $this->getAttribute(self::COMPONENT_COMPLETED_STATUS);
+
+        if($component_id == null){
+            return $_completed_status;
+        }
+
+        if(isset($_completed_status[$component_id])){
+            return $_completed_status[$component_id];
+        }
+
+        //get from db
+        $pccs = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getProfile()->getId(), $component_id);
+        // $pccs = 0;
+
+        return $this->setCompletedStatus($component_id, $pccs);
     }
 
 }

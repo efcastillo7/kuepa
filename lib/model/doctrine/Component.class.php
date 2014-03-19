@@ -63,6 +63,8 @@ class Component extends BaseComponent {
         }
         
         $this->cacheCompletedStatus[ $profile_id ] = $completedStatus;
+        //added to session
+        sfContext::getInstance()->getUser()->setCompletedStatus($this->getId(), $completedStatus);
     }
     
     public function getCacheCompletedStatus($profile_id = null)
@@ -71,7 +73,8 @@ class Component extends BaseComponent {
             $profile_id = sfContext::getInstance()->getUser()->getProfile()->getId();
         }
         
-        return $this->cacheCompletedStatus[ $profile_id ];
+        // return $this->cacheCompletedStatus[ $profile_id ];
+        return sfContext::getInstance()->getUser()->getCompletedStatus($this->getId());
     }
 
     public static function slugify($text) {

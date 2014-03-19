@@ -44,5 +44,7 @@ class kuepaActions extends sfActions {
                   ->save();
         }
 
+        // echo var_dump($this->getUser()->getCompletedStatus());
+
       }
 }

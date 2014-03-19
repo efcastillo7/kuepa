@@ -75,29 +75,29 @@ class ProfileComponentCompletedStatusService {
                 $this->_completed_status[$profile->getId()][$component->getId()] = $completed_status;            
             }
             
-            $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile->getId(), $component->getId());
-            $pccs->setCompletitudIndex($completitudIndex);
+            // $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile->getId(), $component->getId());
+            // $pccs->setCompletitudIndex($completitudIndex);
 
-            $velocityIndex = StatsService::getInstance()->getVelocityIndex($profile->getId(), $component->getId());
-            $pccs->setVelocityIndex( $velocityIndex );
+            // $velocityIndex = StatsService::getInstance()->getVelocityIndex($profile->getId(), $component->getId());
+            // $pccs->setVelocityIndex( $velocityIndex );
 
-            $skillIndex = StatsService::getInstance()->getSkillIndex($profile->getId(), $component->getId());
-            $pccs->setSkillIndex( $skillIndex );
+            // $skillIndex = StatsService::getInstance()->getSkillIndex($profile->getId(), $component->getId());
+            // $pccs->setSkillIndex( $skillIndex );
 
-            $persistenceIndex = StatsService::getInstance()->getPersistenceIndex($profile->getId(), $component->getId());
-            $pccs->setPersistenceIndex( $persistenceIndex );
+            // $persistenceIndex = StatsService::getInstance()->getPersistenceIndex($profile->getId(), $component->getId());
+            // $pccs->setPersistenceIndex( $persistenceIndex );
 
-            $effortIndex = StatsService::getInstance()->getEffortIndex($completitudIndex, $persistenceIndex);
-            $pccs->setEffortIndex( $effortIndex );
+            // $effortIndex = StatsService::getInstance()->getEffortIndex($completitudIndex, $persistenceIndex);
+            // $pccs->setEffortIndex( $effortIndex );
 
-            $efficiencyIndex = StatsService::getInstance()->getEfficiencyIndex($velocityIndex, $skillIndex);
-            $pccs->setEfficiencyIndex( $efficiencyIndex );
+            // $efficiencyIndex = StatsService::getInstance()->getEfficiencyIndex($velocityIndex, $skillIndex);
+            // $pccs->setEfficiencyIndex( $efficiencyIndex );
 
-            $learningIndex = StatsService::getInstance()->getLearningIndex($effortIndex, $efficiencyIndex);
-            $pccs->setLearningIndex( $learningIndex );
+            // $learningIndex = StatsService::getInstance()->getLearningIndex($effortIndex, $efficiencyIndex);
+            // $pccs->setLearningIndex( $learningIndex );
 
-            $remainingTime = StatsService::getInstance()->getRemainingTime($profile->getId(), $component->getId());
-            $pccs->setTimeRemaining( ( $remainingTime > 0 ) ? $remainingTime : 0 );
+            // $remainingTime = StatsService::getInstance()->getRemainingTime($profile->getId(), $component->getId());
+            // $pccs->setTimeRemaining( ( $remainingTime > 0 ) ? $remainingTime : 0 );
 
             $pccs->save();
     }

@@ -69,17 +69,15 @@ class ComponentService {
         $courses = array();
 
         if($profile){
-            $college = $profile->getColleges()->getFirst();
+            $colleges = $profile->getColleges();
 
             //get Courses for that user
             $courses = Course::getRepository()->getCoursesForUser($profile->getId());
 
             //if it has colleges then add them
-            if($college){
+            foreach ($colleges as $college) {
                 $courses->merge(Course::getRepository()->getCoursesForCollege($college->getId()));
             }
-            
-            $this->addCompletedStatus($courses, $profile);
         }
 
         return $courses;
@@ -432,15 +430,17 @@ class ComponentService {
         } 
     }
     
-    public function addCompletedStatus($components, $profile = null)
+    public function addCompletedStatus($components, $profile = null, $completedStatusData = null)
     {
-        $components_ids = array();
-        foreach( $components as $component )
-        {
-            $components_ids[] = $component->getId();
-        }
+        if(!$completedStatusData){
+            $components_ids = array();
+            foreach( $components as $component )
+            {
+                $components_ids[] = $component->getId();
+            }
         
-        $completedStatusData = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $profile->getId());
+            $completedStatusData = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $profile->getId());
+        }
         
         foreach( $components as $component )
         {

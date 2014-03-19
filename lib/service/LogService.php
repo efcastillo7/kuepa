@@ -43,10 +43,10 @@ class LogService {
             $lastPCCS = ProfileComponentCompletedStatus::getRepository()->createQuery('pccs')
                  ->where('time_view >= ?', $time - sfConfig::get("app_log_window"))
                  ->andWhere('profile_id = ?', $profile_id)
-                 ->orWhere('component_id = ?', $last->resource_id)
-                 ->orWhere('component_id = ?', $last->lesson_id)
-                 ->orWhere('component_id = ?', $last->chapter_id)
-                 ->orWhere('component_id = ?', $last->course_id)
+                 ->andWhere('component_id = ?', $last->resource_id)
+                 ->andWhere('component_id = ?', $last->lesson_id)
+                 ->andWhere('component_id = ?', $last->chapter_id)
+                 ->andWhere('component_id = ?', $last->course_id)
                  ->execute();
 
             foreach ($lastPCCS as $pccs){

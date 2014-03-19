@@ -66,26 +66,26 @@ class lessonActions extends kuepaActions {
                                     );        
 
         //set ProfileComponentCompletedStatus
-       // if($this->getUser()->getAttribute("ComponentCompleteStatus") == null ||
-       //      (
-       //       !in_array($this->resource->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
-       //       !in_array($this->lesson->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
-       //       !in_array($this->chapter->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
-       //       !in_array($this->course->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus"))
-       //      )
-       //  ){
-       //     ProfileComponentCompletedStatusService::getInstance()->add(
-       //                                      $this->getProfile(),
-       //                                      $this->resource,
-       //                                      $this->lesson,
-       //                                      $this->chapter,
-       //                                      $this->course
-       //                                  );
+       if($this->getUser()->getAttribute("ComponentCompleteStatus") == null ||
+            (
+             !in_array($this->resource->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
+             !in_array($this->lesson->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
+             !in_array($this->chapter->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
+             !in_array($this->course->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus"))
+            )
+        ){
+           ProfileComponentCompletedStatusService::getInstance()->add(
+                                            $this->getProfile(),
+                                            $this->resource,
+                                            $this->lesson,
+                                            $this->chapter,
+                                            $this->course
+                                        );
            
-       //      $ids = array($this->resource->getId(),$this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
-       //      $this->getUser()->setAttribute("ComponentCompleteStatus", $this->getUser()->getAttribute("ComponentCompleteStatus") == null ? $ids: array_merge( $this->getUser()->getAttribute("ComponentCompleteStatus"), $ids));
+            $ids = array($this->resource->getId(),$this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
+            $this->getUser()->setAttribute("ComponentCompleteStatus", $this->getUser()->getAttribute("ComponentCompleteStatus") == null ? $ids: array_merge( $this->getUser()->getAttribute("ComponentCompleteStatus"), $ids));
             
-       //  }
+        }
         
         $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
         $this->comments = NoteService::getInstance()->getComments($resource_id);

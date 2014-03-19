@@ -20,8 +20,26 @@ class homeActions extends kuepaActions {
     	//check account status
     	$this->checkAccountStatus();
 
+        //get user
+        $user = $this->getUser();
+
         $this->profile = $this->getProfile();
         
+        //get courses for that user
         $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
+
+        //get courses ids
+        $components_ids = array();
+        foreach( $this->courses as $component )
+        {
+            $components_ids[] = $component->getId();
+        }
+
+        //set completed status for courses
+        // $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $this->profile->getId());
+        // $user->setCompletedStatus($components_ids, $values);
+
+        // cache courses
+        $user->setEnabledCourses($components_ids);
     }
 }
