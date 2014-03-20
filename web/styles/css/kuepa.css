@@ -95,7 +95,7 @@ body {
 p {line-height:1.6;}
 h1,h2,h3,h4, .title1, .title2, .title3, .title4
 {line-height:1.2; font-family: AvantXLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
-h5,h6, .title5, .title6 {line-height:1.6;}
+h5,h6, .title5, .title6 {line-height:1.4;}
 
 .small1, .small2 {line-height:1.5;}
 h2, h3, h5, h6 {
@@ -114,7 +114,7 @@ h2, .title2 {font-size:42px;}
 h3, .title3 {font-size:30px;}
 h4, .title4 {font-size:22px;}
 h5, .title5 {font-size:18px;}
-h6, .title6 {font-size:15px;}
+h6, .title6 {font-size:16px;}
 
 .small1 {font-size: 12px;}
 .small2 {font-size: 11px;}
@@ -266,7 +266,10 @@ top:0%;
 }
 
 
-form select {margin-top:-4px}
+form select {
+	margin-top:-4px;
+	
+}
 
 
 .btn-xlarge {

@@ -8,7 +8,7 @@
 
   <section class="container clearpadding">
     <section class="breadcrum">
-      <div class="icon eg-thumb bg-<?php echo $course->getColor()?>-alt-1">
+      <div class="icon bg-<?php echo $course->getColor()?>-alt-1">
         <img src="<?php echo $course->getThumbnailPath() ?>">
       </div>
 
@@ -26,10 +26,7 @@
   </section>
 
 
-  <div class="container">
-    <div class="row">
-
-      
+  <div>
       <?php $content = $type == "Exercise" ? "exercise" : "resources" ?>
       <?php include_partial("menu_$content", array(
         'course' => $course, 
@@ -51,6 +48,4 @@
         'is_first_resource' => $is_first_resource,
         'notes' => $notes,
         'comments' => $comments)) ?>      
-
-    </div>
   </div>

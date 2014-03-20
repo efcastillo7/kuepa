@@ -7,10 +7,13 @@
     </div>
     <a href="<?php echo url_for("@lesson_view_resource?lesson_id=" . $lesson->getId() . "&chapter_id=" . $chapter->getId() . "&course_id=" . $course->getId() . "&resource_id=" . $resource->getId()) ?>">
     	<?php echo $resource->getName() ?>
-        <?php if ($sf_user->hasCredential("docente")): ?>
-        <a class="component_set_status btn btn-mini <?php echo $resource->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $lesson->getId() ?>" child_id="<?php echo $resource->getId() ?>"><?php echo $resource->isEnabled() ? "Desactivar" : "Activar" ?></a>
-        <a class="component_remove_link btn btn-mini" parent_id="<?php echo $lesson->getId() ?>" child_id="<?php echo $resource->getId() ?>">Remover</a>
-        <?php endif; ?>
+        
 	</a>
-    <span class="lp-time"><?php echo $resource->getDuration() ?></span>
+    <div class="unit-actions">
+        <?php if ($sf_user->hasCredential("docente")): ?>
+            <a class="component_set_status btn btn-mini <?php echo $resource->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $lesson->getId() ?>" child_id="<?php echo $resource->getId() ?>"><span class="glyphicon glyphicon-off"></span></a>
+            <a class="component_remove_link btn btn-mini" parent_id="<?php echo $lesson->getId() ?>" child_id="<?php echo $resource->getId() ?>"><span class="glyphicon glyphicon-trash"></span></a>
+        <?php endif; ?>
+    </div>
+    <!-- <span class="lp-time"><?php echo $resource->getDuration() ?></span> -->
 </li>

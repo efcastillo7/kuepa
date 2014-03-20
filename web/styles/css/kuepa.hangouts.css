@@ -65,10 +65,8 @@ tr.warning td {
   margin-bottom: 0; }
 
 .video_session-tab_container {
-  border-left: solid 1px #ddd;
-  border-right: solid 1px #ddd;
-  border-bottom: solid 1px #ddd;
-  padding: 20px; }
+  margin: 20px 0;
+}
 
 .list_icon {
   width: 12px;

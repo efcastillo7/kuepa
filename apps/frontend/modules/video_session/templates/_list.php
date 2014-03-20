@@ -1,14 +1,14 @@
 <?php use_helper('Date'); ?>
 
-<table class="table table-striped">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th width="12"></th>
+            <th></th>
             <?php if ($sf_user->hasCredential("docente")): ?>
-            <th width="12"></th>
+            <th></th>
             <?php endif; ?>
-            <th width="150">Inicio</th>
-            <th width="150">Fin</th>
+            <th>Inicio</th>
+            <th>Fin</th>
             <th>Título</th>
             <th>Descripción</th>
             <th>Curso - Temática</th>
@@ -65,10 +65,11 @@
             endforeach;
         else:
             ?>
-            <tr class="warning">
-                <td colspan="7">
-                    <span class='icon-warning-sign'></span>
-                    No se encontraron sesiones de video
+            <tr class="">
+                <td colspan="8">
+                    <div class="margintop txt-center title5">
+                        No se encontraron sesiones de video
+                    </div>
                 </td>
             </tr>
         <?php endif; ?>
