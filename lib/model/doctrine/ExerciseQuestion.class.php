@@ -55,7 +55,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                     );
 
                     $total_score += $exercise_answer->getValue() * $is_correct;
-                    $correct = $correct || $is_valid;
+                    $correct = $correct;
                 }
                 break;
             case "complete":
@@ -96,7 +96,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                         );
 
                         $total_score += $exercise_answer->getValue() * $is_correct;
-                        $correct = $correct || $is_valid;
+                        $correct = $correct;
                     }
                 }
                 break;

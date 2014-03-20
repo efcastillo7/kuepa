@@ -5,8 +5,8 @@
 
 <div class="unit-view">
     <div id="" class="container margintop60">
-        <div id="" class="row">
-            <div class="span12">
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <div class="unit-hd">
                     <div class="lv-icon bg-<?php echo $course->getColor() ?>-alt-1">
                         <img src="<?php echo $course->getThumbnailPath() ?>">
@@ -15,16 +15,19 @@
                     <p class="small1 HelveticaLt"><?php echo $course->getCacheCompletedStatus(); ?>% Completado</p>
                 </div>
             </div>
-            <div class="span12">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <div class="unit-container">
                     <p class="gray4">
                         <?php echo $course->getRaw('description'); ?>
                     </p>
                 </div>
             </div>
-
-            <!-- Lista -->
-            <div class="span12 margintop">
+        </div>
+        <!-- Lista -->
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1 margintop">
                 <div class="unit-container">
                     <ul id="myCollapsible" class="lv-container unstyled" current_id="<?php echo $course->getId() ?>">
                         <!-- Add chapter if has privilege -->
@@ -34,11 +37,13 @@
                                 <p class="title5 HelveticaMd clearmargin">+ Agrear unidad al curso</p>
                             </div>
                             <div>
-                                <div class="row-fluid">
-                                    <div class="span6">
-                                        <p class="gray4 italic">
-                                            Agregar una nueva unidad al curso
-                                        </p>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <p class="gray4 italic">
+                                                Agregar una nueva unidad al curso
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

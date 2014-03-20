@@ -10,6 +10,13 @@
  */
 class homeActions extends kuepaActions {
 
+    public function preExecute()
+  {
+    parent::preExecute();
+    
+    $this->setLayout("layout_v2");
+  }
+
     /**
      * Executes index action
      *

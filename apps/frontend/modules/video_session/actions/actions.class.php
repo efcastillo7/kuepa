@@ -10,6 +10,13 @@
  */
 class video_sessionActions extends sfActions {
 
+      public function preExecute()
+  {
+    parent::preExecute();
+    
+    $this->setLayout("layout_v2");
+  }
+  
     /**
      *
      * @param sfWebRequest $request

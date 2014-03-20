@@ -7,38 +7,24 @@
             <input class="knob knob-small" value="<?php echo $lesson->getCacheCompletedStatus(); ?>" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
         </div>
         <?php echo $lesson->getName() ?>
-        <?php if ($sf_user->hasCredential("docente")): ?>
-        <a class="component_set_status btn btn-mini <?php echo $lesson->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>"><?php echo $lesson->isEnabled() ? "Desactivar" : "Activar" ?></a>
-        <a class="component_edit_link btn btn-mini" target="modal-create-lesson-form-<?php echo $lesson->getId() ?>">Editar</a>
-        <a class="component_remove_link btn btn-mini" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>">Remover</a>
-        <a href="<?php echo url_for("lesson/dependencyTree?lesson_id=" . $lesson->getId()) ?>" class="btn btn-mini">Ver dependencias</a>
-        <span class="lp-time"><?php echo $lesson->getDuration() ?></span>
-        <?php endif; ?>
+        <div class="unit-actions"> 
+            <?php if ($sf_user->hasCredential("docente")): ?>
+                <a class="component_set_status btn btn-mini <?php echo $lesson->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>"><span class="glyphicon glyphicon-off"></span></a>
+                <a class="component_edit_link btn btn-mini" target="modal-create-lesson-form-<?php echo $lesson->getId() ?>"><span class="glyphicon glyphicon-edit"></span></a>
+                <a class="component_remove_link btn btn-mini" parent_id="<?php echo $chapter->getId() ?>" child_id="<?php echo $lesson->getId() ?>"><span class="glyphicon glyphicon-trash"></span></a>
+                <a href="<?php echo url_for("lesson/dependencyTree?lesson_id=" . $lesson->getId()) ?>" class="btn btn-mini"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <!-- <span class="lp-time"><?php echo $lesson->getDuration() ?></span> -->
+            <?php endif; ?>
+        </div>
     </div>
     <div id="lv-lesson-<?php echo $lesson->getId()?>" class="collapse">
         <ul class="lv-lvltwo unstyled" current_id="<?php echo $lesson->getId()?>">
             <!-- Add resource -->
             <?php if ($sf_user->hasCredential("docente")): ?>
-            <li lesson="<?php echo $lesson->getId() ?>" class="addresource-button unsortable">
-                <div class="lp-node">
-                    <div class="lp-bar-prev"></div>
-                    <div class="lp-bar-post"></div>
-                    <span class="lp-node-play"></span>
-                    <input class="knob knob-small" value="0" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                </div>
-                Agregar Recurso
-            </li>
-            <li lesson="<?php echo $lesson->getId() ?>" class="addexercise-button unsortable">
-                <div class="lp-node">
-                    <div class="lp-bar-prev"></div>
-                    <div class="lp-bar-post"></div>
-                    <span class="lp-node-play"></span>
-                    <input class="knob knob-small" value="0" data-fgColor="#F76E26" data-bgColor="#ddd" data-width="24" data-thickness=".24" data-skin="" data-angleOffset=-5 data-readOnly=true data-displayInput=false >
-                </div>
-                <a href="/lesson/<?php echo $lesson->getId() ?>/exercises/new">
-                    Agregar Evaluación
-                </a>
-            </li>
+            <div lesson="<?php echo $lesson->getId() ?>" class="addresource-button unsortable HelveticaMd">
+                <a class="btn btn-mini"><span class="glyphicon glyphicon-plus"></span> Agregar Recurso</a>
+            </div>
+            <a class="btn btn-mini" href="/lesson/<?php echo $lesson->getId() ?>/exercises/new"><span class="glyphicon glyphicon-plus"></span> Agregar Evaluación</a>
             <?php endif; ?>
 
             <!-- resources list -->
