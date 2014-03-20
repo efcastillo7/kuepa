@@ -71,7 +71,13 @@ function show_edit_fields(title){
     parent.append("<div id='resource-video-youtube' class='video-js vjs-default-skin' width='auto' height='500'>");
 
   }else if($("#resource-video-vimeo").length > 0){
+    $("#resource-video-link-container").removeClass('hidden');
+    var parent = $("#resource-video-vimeo").parent();
 
+    //remove
+    _V_("resource-video-vimeo").dispose();
+
+    parent.append("<div id='resource-video-vimeo' class='video-js vjs-default-skin' width='auto' height='500'>");
   }
 }
 
@@ -94,7 +100,12 @@ $(document).ready(function() {
       var video = $("#resource-video-link").val();
       videojs('resource-video-youtube', { "techOrder": ["youtube"], "src": video });
     }else if($("#resource-video-vimeo").length > 0){
+      var title = $("#title input").val().trim();
+      $("#title").html(title);
+      $("#resource-video-link-container").addClass('hidden');
 
+      var video = $("#resource-video-link").val();
+      videojs('resource-video-vimeo', { "techOrder": ["vimeo"], "src": video });
     }
 
     $("#save_update_resource").addClass('hidden');
@@ -124,7 +135,11 @@ $(document).ready(function() {
 
       videojs('resource-video-youtube', { "techOrder": ["youtube"], "src": resource.content });
     }else if($("#resource-video-vimeo").length > 0){
-      resource.content = $("#resource-video-link").val();
+      var parent = $("#resource-video-vimeo").parent();
+      _V_("resource-video-vimeo").dispose();
+      parent.append("<div id='resource-video-vimeo' class='video-js vjs-default-skin' width='auto' height='500'>");
+
+      videojs('resource-video-youtube', { "techOrder": ["vimeo"], "src": resource.content });
     }
 
     //restore title and contnet
@@ -206,7 +221,23 @@ $(document).ready(function() {
       });
 
     }else if($("#resource-video-vimeo").length > 0){
+      var content = $("#resource-video-link").val();
+      var video = resource.content;
 
+      update_resource({
+        title: title,
+        content: content,
+        success: function(data){
+          video = data.ResourceData[0].content;
+        },
+        complete: function(data){
+          var parent = $("#resource-video-vimeo").parent();
+          _V_("resource-video-vimeo").dispose();
+          parent.append("<div id='resource-video-vimeo' class='video-js vjs-default-skin' width='auto' height='500'>");
+
+          videojs('resource-video-vimeo', { "techOrder": ["vimeo"], "src": video });
+        }
+      });
     }
   });
 
