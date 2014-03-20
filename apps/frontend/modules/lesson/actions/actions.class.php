@@ -170,19 +170,50 @@ class lessonActions extends kuepaActions {
         //$course
         //$chapter
         $lesson_id     = $request->getParameter('lesson_id');
-        $this->lesson  = ComponentService::getInstance()->find($lesson_id);
+        $this->lesson  = Component::getRepository()->find($lesson_id);
         $chapter       = ComponentService::getInstance()->getParents($lesson_id);
         $this->chapter = $chapter[0];
         $course        = ComponentService::getInstance()->getParents($this -> chapter->getId());
         $this->course  = $course[0];
 
-        $this->courses = Course::getRepository()
-                           ->createQuery('c')
-                           ->orderBy("c.name")
-                           ->execute();
+        $this->courses = CourseService::getInstance()->getCourses($this->getUser()->getEnabledCourses());
         //$this -> lessons = LessonService::getInstance()->getDependencyPath($lesson_id);
  
     }
+
+    public function executeMove(sfWebRequest $request){
+        //$course
+        //$chapter
+        $lesson_id     = $request->getParameter('lesson_id');
+        $this->lesson  = Component::getRepository()->find($lesson_id);
+        $chapter       = ComponentService::getInstance()->getParents($lesson_id);
+        $this->chapter = $chapter[0];
+        $course        = ComponentService::getInstance()->getParents($this -> chapter->getId());
+        $this->course  = $course[0];
+
+        $this->courses = CourseService::getInstance()->getCourses($this->getUser()->getEnabledCourses());
+    }
+
+    public function executeSaveMove(sfWebRequest $request){
+        $depends_lesson_ids = $request->getParameter('dependency_path');
+
+        //remove from source
+        ChapterService::getInstance()->removeLessonFromChapter($depends_lesson_ids['chapter_id'], $depends_lesson_ids['lesson_id']);
+        //add to target
+        ChapterService::getInstance()->addLessonToChapter($depends_lesson_ids['depends_chapter_id'], $depends_lesson_ids['lesson_id']);
+
+        $response = Array(
+            'status' => "ok",
+            'template' => "",
+            'code' => 200
+        ); 
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
+     }
 
     /** Ajax request */
     public function executeDependencyPathList(sfWebRequest $request){
