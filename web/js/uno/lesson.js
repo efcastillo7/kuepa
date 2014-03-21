@@ -321,7 +321,7 @@ $(document).ready(function() {
     $("body").delegate(".navigation-menu", "click", function(e) {
       e.preventDefault();
       var link = $(this).attr('href'),
-        parent = $(this).parents(".row:first"),
+        parent = $(this).parents(".menu-container:first"),
         container = $(this).parents(".wrapper-aside-lesson,.wrapper-aside-exercise").first(),
         goto_dir = $(this).hasClass("navigation-menu-in"),
         from = "left",
