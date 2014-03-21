@@ -50,7 +50,7 @@
                         </li>
                         <?php endif; ?>
                         <!-- courses list    -->
-                        <?php foreach ($course->getChapters(true) as $chapter): ?>
+                        <?php foreach ($course->getChapters() as $chapter): ?>
                             <?php if($sf_user->hasCredential("estudiante") && !$chapter->isEnabled()): ?>
                             <?php include_partial("detail_courses_chapter_blocked", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
                             <?php else: ?>

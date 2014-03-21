@@ -43,7 +43,7 @@
                         </div>
                         <?php endif; ?>
                         <!-- lessons list -->
-                        <?php foreach ($chapter->getLesson() as $lesson): ?>
+                        <?php foreach ($chapter->getLessons() as $lesson): ?>
                             <?php if($sf_user->hasCredential("estudiante") && !$lesson->isEnabled()): ?>
                             <?php include_partial("detail_courses_lesson_blocked", array('course' => $course, 'chapter' => $chapter, 'lesson' => $lesson, 'profile' => $profile)) ?>
                             <?php else: ?>

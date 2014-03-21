@@ -36,8 +36,8 @@ class myUser extends sfGuardSecurityUser {
     }
     
     public function signOut() {
-        parent::signOut();
         $this->clearCurrentUser();
+        parent::signOut();
     }
     
     protected function setUser($user)
@@ -97,19 +97,19 @@ class myUser extends sfGuardSecurityUser {
     {
         $this->setAttribute(self::SFGUARD_USER_ATTR, null);
         $this->setAttribute(self::PROFILE_ATTR, null);
-        $this->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
-        $this->setAttribute(self::USER_COURSES_ENABLED, null);
-        $this->setAttribute(self::LAYOUT_STYLE, null);
+        sfContext::getInstance()->getUser()->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
+        sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, null);
+        sfContext::getInstance()->getUser()->setAttribute(self::LAYOUT_STYLE, null);
     }
 
 
     /* for cache */
     public function getEnabledCourses(){
-        return $this->getAttribute(self::USER_COURSES_ENABLED);
+        return sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED);
     }
 
     public function setEnabledCourses($course_id){
-        $_courses = $this->getAttribute(self::USER_COURSES_ENABLED, array());
+        $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED, array());
 
         if(is_array($course_id)){
             foreach ($course_id as $key => $course) {
@@ -123,7 +123,7 @@ class myUser extends sfGuardSecurityUser {
             }
         }
 
-        return $this->setAttribute(self::USER_COURSES_ENABLED, $_courses);
+        return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, $_courses);
     }
 
 

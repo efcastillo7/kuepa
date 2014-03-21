@@ -149,17 +149,17 @@ Chapter:
     type: column_aggregation
     keyField: type
     keyValue: Chapter
-  relations:
-    Course:
-      refClass: ViewCourseHasChapter
-      local: chapter_id
-      foreign: course_id
-      type: many
-    Lesson:
-      refClass: ViewChapterHasLesson
-      local: chapter_id
-      foreign: lesson_id
-      type: many
+  # relations:
+  #   Course:
+  #     refClass: ViewCourseHasChapter
+  #     local: chapter_id
+  #     foreign: course_id
+  #     type: many
+  #   Lesson:
+  #     refClass: ViewChapterHasLesson
+  #     local: chapter_id
+  #     foreign: lesson_id
+  #     type: many
 
 Lesson:
   inheritance:
@@ -167,17 +167,17 @@ Lesson:
     type: column_aggregation
     keyField: type
     keyValue: Lesson
-  relations:
-    Resource:
-      refClass: ViewLessonHasResource
-      local: lesson_id
-      foreign: resource_id
-      type: many
-    Chapter:
-      refClass: ViewChapterHasLesson
-      local: chapter_id
-      foreign: lesson_id
-      type: many
+  # relations:
+  #   Resource:
+  #     refClass: ViewLessonHasResource
+  #     local: lesson_id
+  #     foreign: resource_id
+  #     type: many
+  #   Chapter:
+  #     refClass: ViewChapterHasLesson
+  #     local: chapter_id
+  #     foreign: lesson_id
+  #     type: many
 
 LearningPath:
   columns:

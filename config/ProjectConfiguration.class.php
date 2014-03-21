@@ -26,6 +26,8 @@ class ProjectConfiguration extends sfProjectConfiguration
         $cacheDriver = new Doctrine_Cache_Memcached ( array ( 'servers' => array('host' => $memcacheIp, 'port' => $memcachePort) ) );
         $manager = Doctrine_Manager::getInstance();
         $manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $cacheDriver);
+
+        // $cacheDriver->flush();
     }
     
     // Registro de Customs Hydrators

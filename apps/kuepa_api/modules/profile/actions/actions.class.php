@@ -28,8 +28,15 @@ class profileActions extends sfActions
         
         $profile = $this->getUser()->getProfile();
         $messages = array();
+
+        $friends = $profile->getFriends();
+
+        $friends_ids = $friends->getPrimaryKeys();
+
+        // echo var_dump($friends_ids);
+        // die();
         
-        foreach ($profile->getFriends() as $friend) {
+        foreach ($friends as $friend) {
             
             $message_last = MessagingService::getInstance()->getLastMessagesFromUsers($profile->getId(),$friend->getId());
             $last_message = array();
@@ -45,6 +52,8 @@ class profileActions extends sfActions
             $messages[] = array(
                 'id' => $friend->getId(),
                 'nickname' => $friend->getNickname(),
+                'firstname' => $friend->getFirstName(),
+                'lastname' => $friend->getLastName(),
                 'online' => false,
                 'last_message' => $last_message,
             );

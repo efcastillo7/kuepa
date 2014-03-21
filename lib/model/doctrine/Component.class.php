@@ -22,7 +22,7 @@ class Component extends BaseComponent {
         return Doctrine_Core::getTable('Component');
     }
     
-    public function preSave($event)   {
+    public function postSave($event)   {
         $this->clearCache($event);
     }
     

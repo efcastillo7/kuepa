@@ -54,27 +54,27 @@ class ProfileService {
         }
     }
 
-    public function getFriends(Profile $profile){
+    public function getFriends($profile){
         //fetch all users that are in any course with him
-        $sql_college = "";
+        // $sql_college = "";
         
-        if($profile->getColleges()->count()){
-            $college_id = $profile->getColleges()->getFirst()->getId();
-            $sql_college = sprintf('(select profile_id from profile_college where college_id = %d)',$college_id);
-            $subquery = sprintf('SELECT distinct(profile_id) FROM (%1$s UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = %2$d)) ) t1 where profile_id != %2$d',$sql_college ,$profile->getId());
-        }else{
-            $subquery = sprintf('SELECT distinct(profile_id) FROM (SELECT distinct(profile_id) FROM profile_learning_path WHERE component_id IN (SELECT component_id FROM profile_learning_path WHERE profile_id = %1$d)) t1 where profile_id != %1$d',$profile->getId());
-        }
+        // if($profile->getColleges()->count()){
+        //     $college_id = $profile->getColleges()->getFirst()->getId();
+        //     $sql_college = sprintf('(select profile_id from profile_college where college_id = %d)',$college_id);
+        //     $subquery = sprintf('SELECT distinct(profile_id) FROM (%1$s UNION (SELECT distinct(profile_id) from profile_learning_path where component_id in (select component_id from profile_learning_path where profile_id = %2$d)) ) t1 where profile_id != %2$d',$sql_college ,$profile->getId());
+        // }else{
+        //     $subquery = sprintf('SELECT distinct(profile_id) FROM (SELECT distinct(profile_id) FROM profile_learning_path WHERE component_id IN (SELECT component_id FROM profile_learning_path WHERE profile_id = %1$d)) t1 where profile_id != %1$d',$profile->getId());
+        // }
         
-        $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($subquery);
-        $ids = array();
-        foreach($rs as $r){
-            $ids[] = $r['profile_id'];
-        }
+        // $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($subquery);
+        // $ids = array();
+        // foreach($rs as $r){
+        //     $ids[] = $r['profile_id'];
+        // }
 
-        //subquery
-        $q = Profile::getRepository()->createQuery('p')
-                ->whereIn('id', $ids);
+        // //subquery
+        // $q = Profile::getRepository()->createQuery('p')
+        //         ->whereIn('id', $ids);
 
         // $q = Profile::getRepository()->createQuery('p')
         //         ->innerJoin('p.ProfileLearningPath plp')
@@ -83,6 +83,12 @@ class ProfileService {
         //         ->innerJoin('sgug.Group sgg')
         //         ->where('plp.component_id = ?', $course_id)
         //         ->andWhere('sgg.name = ?', 'estudiantes');
+
+        $components = sfContext::getInstance()->getUser()->getEnabledCourses();
+
+        $q = Profile::getRepository()->createQuery('p')
+                ->innerJoin('p.ProfileLearningPath plp')
+                ->whereIn('plp.component_id', $components);
 
         return $q->execute();
     }

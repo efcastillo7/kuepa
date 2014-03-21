@@ -14,11 +14,9 @@ class MessagingService {
     
     public function getLastMessagesFromUsers($remitente_id, $destinatario_id){
         $query = Message::getRepository()->createQuery('m')
-                    ->innerJoin("m.Recipients mr ON  m.parent_id = mr.message_id ")
-                    ->where("mr.recipient_id = ?", $destinatario_id)
-                    ->addWhere("m.author_id = ?", $remitente_id)
-                    ->orWhere("mr.recipient_id = ?", $remitente_id)
-                    ->addWhere("m.author_id = ?", $destinatario_id)
+                    ->innerJoin("m.Recipients mr ON m.parent_id = mr.message_id ")
+                    ->where("(mr.recipient_id = ? and m.author_id = ?)", array($destinatario_id, $remitente_id))
+                    ->orWhere("(mr.recipient_id = ? and m.author_id = ?)", array($remitente_id, $destinatario_id))
                     ->orderBy("m.updated_at desc");
         return $query->fetchOne();
     }

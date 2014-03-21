@@ -71,8 +71,9 @@ class ProfileComponentCompletedStatusService {
             $completed_status = (($current_completed_status+$add_completed_status)*100/$total);
 
             if ($completed_status >= 0 && $completed_status <= 100) {
-                $pccs->setCompletedStatus( round($completed_status) );
-                sfContext::getInstance()->getUser()->setCompletedStatus($component->getId(), $completed_status);
+                $status = round($completed_status);
+                $pccs->setCompletedStatus( $status );
+                sfContext::getInstance()->getUser()->setCompletedStatus($component->getId(), $status);
             }
             
             // $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile->getId(), $component->getId());
