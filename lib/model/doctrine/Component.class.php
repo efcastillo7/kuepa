@@ -118,7 +118,7 @@ class Component extends BaseComponent {
      * No debe utilizarse cuando se obtienen los learningPath asociados a un componente ondemand.
      */
     public function isEnabled(){        
-        return true;
+        // return true;
         //TODO: Check because is returning first row
         $lp = $this->getLearningPath()->getFirst();
         if($lp){

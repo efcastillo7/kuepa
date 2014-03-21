@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-xs-9 col-md-5">
                     <?php if ($sf_user->hasCredential("docente")): ?>
-                        <a class="component_set_status btn btn-mini <?php echo $chapter->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>"><span class="glyphicon glyphicon-off"></span> <?php echo $chapter->isEnabled() ? "Desactivar" : "Activar" ?></a>
+                        <a class="component_set_status btn btn-mini <?php echo $chapter->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>"><span class="glyphicon glyphicon-off"></span> <span class="text"><?php echo $chapter->isEnabled() ? "Desactivar" : "Activar" ?></span></a>
                         <a class="component_edit_link btn btn-mini" target="modal-create-chapter-form-<?php echo $chapter->getId() ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a>
                         <a class="component_remove_link btn btn-mini" parent_id="<?php echo $course->getId() ?>" child_id="<?php echo $chapter->getId() ?>"><span class="glyphicon glyphicon-trash"></span> Remover</a>
                     <?php endif; ?>

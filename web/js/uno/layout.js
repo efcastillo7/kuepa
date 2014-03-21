@@ -58,11 +58,15 @@ $(function() {
             success: function(data) {
                 if (data.status === "success") {
                     obj.toggleClass('btn-success');
-                    obj.toggleClass('btn-warning');
-                    if(obj.html() == "Activar"){
-                        obj.html("Desactivar");
-                    }else{
-                        obj.html("Activar");
+                    obj.toggleClass('btn-danger');
+                    var text = $("span.text", obj);
+
+                    if(text.length){
+                        if(text.html() == "Activar"){
+                            $("span.text", obj).html("Desactivar");
+                        }else{
+                            $("span.text", obj).html("Activar");
+                        }
                     }
                 } else {
                     alert("error");
