@@ -102,6 +102,10 @@ class CourseService {
             $query->where('id = ?',$courses);
         }
 
+        if (is_array($courses) && count($courses) == 0){
+            return array();
+        }
+
         return $query->execute();
     }
 }
