@@ -195,6 +195,7 @@ class ProfileService {
       $group_id = $params['group_id'];
       $array_errors = array();
       $array_ok = array();
+
       foreach ($lines as $key => $user) {
             if ( $skip_first_line == 1 && $key == 0){ 
               next($lines);
