@@ -52,12 +52,8 @@ class myUser extends sfGuardSecurityUser {
     protected function setCourses($user){
         $courses = ComponentService::getInstance()->getCoursesForUser( $user->getProfile() );
 
-        //fetch ids
-        $components_ids = array();
-        foreach( $courses as $component )
-        {
-            $components_ids[] = $component->getId();
-        }
+        //get ids
+        $components_ids = $courses->getPrimaryKeys();
 
         //set completed status for courses
         $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $user->getProfile()->getId());
@@ -65,6 +61,11 @@ class myUser extends sfGuardSecurityUser {
 
         // cache courses
         $user->setEnabledCourses($components_ids);
+
+        // add credentials for user
+        foreach ($components_ids as $course_id) {
+            $this->addCredential("course_" . $course_id);
+        }
     }
 
     protected function setStyle($user){
