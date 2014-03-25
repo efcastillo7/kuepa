@@ -107,7 +107,7 @@
         $('[rel="tooltip"]').tooltip();
       });
       $('input, textarea').placeholder();
-      $('.selectpicker').selectpicker(); //selects
+      // $('.selectpicker').selectpicker(); //selects
       $('.cont-notifications').perfectScrollbar({wheelSpeed:30});
     });
   </script>

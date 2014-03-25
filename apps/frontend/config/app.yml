@@ -6,7 +6,12 @@ all:
 
   log:
     window: 60
-    
+
+  approval_percentage: 70
+
+  timer:
+    resource_log: 26000
+
   memcache:
       ip: localhost
       port: 11211

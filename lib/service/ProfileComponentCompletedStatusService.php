@@ -74,31 +74,35 @@ class ProfileComponentCompletedStatusService {
                 $status = round($completed_status);
                 $pccs->setCompletedStatus( $status );
                 sfContext::getInstance()->getUser()->setCompletedStatus($component->getId(), $status);
+
+                //generate stats if lesson and approved
+                if($completed_status > sfConfig::get("app_approval_percentage") && ($component->getType() == Lesson::TYPE || $component->getType() == Chapter::TYPE ) ){
+                    $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile->getId(), $component->getId());
+                    $pccs->setCompletitudIndex($completitudIndex);
+
+                    $velocityIndex = StatsService::getInstance()->getVelocityIndex($profile->getId(), $component->getId());
+                    $pccs->setVelocityIndex( $velocityIndex );
+
+                    $skillIndex = StatsService::getInstance()->getSkillIndex($profile->getId(), $component->getId());
+                    $pccs->setSkillIndex( $skillIndex );
+
+                    $persistenceIndex = StatsService::getInstance()->getPersistenceIndex($profile->getId(), $component->getId());
+                    $pccs->setPersistenceIndex( $persistenceIndex );
+
+                    $effortIndex = StatsService::getInstance()->getEffortIndex($completitudIndex, $persistenceIndex);
+                    $pccs->setEffortIndex( $effortIndex );
+
+                    $efficiencyIndex = StatsService::getInstance()->getEfficiencyIndex($velocityIndex, $skillIndex);
+                    $pccs->setEfficiencyIndex( $efficiencyIndex );
+
+                    $learningIndex = StatsService::getInstance()->getLearningIndex($effortIndex, $efficiencyIndex);
+                    $pccs->setLearningIndex( $learningIndex );
+
+                    $remainingTime = StatsService::getInstance()->getRemainingTime($profile->getId(), $component->getId());
+                    $pccs->setTimeRemaining( ( $remainingTime > 0 ) ? $remainingTime : 0 );
+                }
             }
             
-            // $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile->getId(), $component->getId());
-            // $pccs->setCompletitudIndex($completitudIndex);
-
-            // $velocityIndex = StatsService::getInstance()->getVelocityIndex($profile->getId(), $component->getId());
-            // $pccs->setVelocityIndex( $velocityIndex );
-
-            // $skillIndex = StatsService::getInstance()->getSkillIndex($profile->getId(), $component->getId());
-            // $pccs->setSkillIndex( $skillIndex );
-
-            // $persistenceIndex = StatsService::getInstance()->getPersistenceIndex($profile->getId(), $component->getId());
-            // $pccs->setPersistenceIndex( $persistenceIndex );
-
-            // $effortIndex = StatsService::getInstance()->getEffortIndex($completitudIndex, $persistenceIndex);
-            // $pccs->setEffortIndex( $effortIndex );
-
-            // $efficiencyIndex = StatsService::getInstance()->getEfficiencyIndex($velocityIndex, $skillIndex);
-            // $pccs->setEfficiencyIndex( $efficiencyIndex );
-
-            // $learningIndex = StatsService::getInstance()->getLearningIndex($effortIndex, $efficiencyIndex);
-            // $pccs->setLearningIndex( $learningIndex );
-
-            // $remainingTime = StatsService::getInstance()->getRemainingTime($profile->getId(), $component->getId());
-            // $pccs->setTimeRemaining( ( $remainingTime > 0 ) ? $remainingTime : 0 );
 
             $pccs->save();
     }

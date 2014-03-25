@@ -57,7 +57,7 @@
       <div class="input-append-pos">
         <div class="cont-inputs">
          <input class="input_add_note input-send-message span7" type="text" placeholder="Escribe un recordatorio para esta lección" resource-id="<?php echo $resource->getId() ?>" privacy="private" >
-          <button type="button" class="btn-inside btn-gray-light">Aceptar</button>
+         <button id="send_annotation" type="button" class="btn-inside btn-gray-light">Aceptar</button>
         </div>
       </div>
       <?php include_partial("views/resource/notes", array('notes' => $notes)) ?>

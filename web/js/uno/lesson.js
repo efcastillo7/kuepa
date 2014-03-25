@@ -241,45 +241,60 @@ $(document).ready(function() {
     }
   });
 
-
-
-    $("body").delegate(".input_add_note", "keyup", function(e) {
-        container = $(this);
-        if (e.keyCode == 13) {
-            e.preventDefault();
-
-            var resource_id = $(this).attr('resource-id');
-            var content = $(this).val();
-            var edit_note_id = $(this).attr('edit-note-id');
-            var privacy = $(this).attr('privacy');
-            // Define el selector para depositar el retorno de la nueva nota
-            var target =  $(this).attr('target');
-
-            $.ajax('/note/add', {
-                data: {resource_id: resource_id, content: content, edit_note_id: edit_note_id, privacy: privacy},
-                dataType: 'json',
-                type: 'POST',
-                success: function(data) {
-                    if (data.code === 201) {
-                        //new note
-                        if ( typeof(target) != "undefined"){
-                            $(target).prepend(data.template);
-                        } else {
-                            $(".notes.private").prepend(data.template);
-                        }
-                        
-                        container.val('');
-
-                        if (edit_note_id != null && edit_note_id != "")
-                            $(".li-note-" + edit_note_id + ".edit-delete-tag").remove();
-                    } else {
-                        alert('error al enviar el comentario');
-                    }
-
+  function send_note(data){
+    $.ajax('/note/add', {
+        data: {resource_id: data.resource_id, content: data.content, edit_note_id: data.edit_note_id, privacy: data.privacy},
+        dataType: 'json',
+        type: 'POST',
+        success: function(response) {
+            if (response.code === 201) {
+                //new note
+                if ( typeof(target) != "undefined"){
+                    $(target).append(response.template);
+                } else {
+                    $(".notes.private").append(response.template);
                 }
-            });
+                
+                container.val('');
+
+                if (data.edit_note_id != null && data.edit_note_id != "")
+                    $(".li-note-" + data.edit_note_id + ".edit-delete-tag").remove();
+            } else {
+                alert('error al enviar el comentario');
+            }
+
         }
     });
+  }
+
+  $("#send_annotation").click(function(){
+    var obj = $(".input_add_note");
+
+    var resource_id = obj.attr('resource-id');
+    var content = obj.val();
+    var edit_note_id = obj.attr('edit-note-id');
+    var privacy = obj.attr('privacy');
+    // Define el selector para depositar el retorno de la nueva nota
+    var target =  obj.attr('target');
+
+    send_note({resource_id: resource_id, content: content, edit_note_id: edit_note_id, privacy: privacy, target: target});
+  });
+
+  $("body").delegate(".input_add_note", "keyup", function(e) {
+      container = $(this);
+      if (e.keyCode == 13) {
+          e.preventDefault();
+
+          var resource_id = $(this).attr('resource-id');
+          var content = $(this).val();
+          var edit_note_id = $(this).attr('edit-note-id');
+          var privacy = $(this).attr('privacy');
+          // Define el selector para depositar el retorno de la nueva nota
+          var target =  $(this).attr('target');
+
+          send_note({resource_id: resource_id, content: content, edit_note_id: edit_note_id, privacy: privacy, target: target});
+      }
+  });
 
     $("body").delegate(".delete-note-link", "click", function(e) {
         var note_id = $(this).attr("target");
@@ -357,7 +372,7 @@ $(document).ready(function() {
                 // console.log(data);
             }
         });
-    }, 26000);
+    }, timer_resource_log);
 });
 
 $(window).load(function(){
