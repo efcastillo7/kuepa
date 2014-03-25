@@ -112,17 +112,11 @@ class myUser extends sfGuardSecurityUser {
     public function setEnabledCourses($course_id){
         $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED, array());
 
-        if(is_array($course_id)){
-            foreach ($course_id as $key => $course) {
-                if(!in_array($course, $_courses)){
-                    $_courses[] = $course;
-                }
-            }
-        }else{
-            if(!in_array($course_id, $_courses)){
-                $_courses[] = $course_id;
-            }
+        if(!is_array($course_id)){
+            $course_id = array($course_id);
         }
+
+        $_courses = array_unique (array_merge($_courses, $course_id));
 
         return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, $_courses);
     }
