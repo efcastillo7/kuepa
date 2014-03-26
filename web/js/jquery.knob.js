@@ -94,7 +94,7 @@
                     thickness : this.$.data('thickness') || 0.35,
                     lineCap : this.$.data('linecap') || 'butt',
                     width : this.$.data('width') || 200,
-                    height : this.$.data(',height') || 200,
+                    height : this.$.data('height') || 150,
                     displayInput : this.$.data('displayinput') == null || this.$.data('displayinput'),
                     displayPrevious : this.$.data('displayprevious'),
                     fgColor : this.$.data('fgcolor') || '#87CEEB',
