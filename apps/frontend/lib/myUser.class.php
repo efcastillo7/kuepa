@@ -98,6 +98,10 @@ class myUser extends sfGuardSecurityUser {
         return $this->getAttribute(self::CULTURE_TIMEZONE);
     }
 
+    public function resetCulture(){
+        $this->setI18N($this);
+    }
+
     public function getStyle(){
         return sfContext::getInstance()->getUser()->getAttribute(self::LAYOUT_STYLE);
     }
