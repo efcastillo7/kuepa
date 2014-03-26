@@ -17,7 +17,7 @@ Profile:
     current_module:            varchar(50)
     current_action:            varchar(50)
     culture:                   varchar(20)
-    timezone:                  varchar(20)
+    timezone:                  varchar(50)
   relations:
     sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:

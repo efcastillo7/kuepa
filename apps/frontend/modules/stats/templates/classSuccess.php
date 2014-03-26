@@ -1,4 +1,5 @@
 <?php use_helper("Date") ?>
+<?php use_helper("LocalDate") ?>
 <h2><?php echo $course->getName() ?></h2>
 
 <style>
@@ -20,13 +21,13 @@
 		<tr>
 			<td colspan="2">Fecha de Primera Conexión</td>
 			<?php foreach ($students as $student): ?>
-			<th><?php echo format_date($student->getFirstAccess(), "dd/M/yyyy H:mm") ?></th>
+			<th><?php echo utcToLocalDate($student->getFirstAccess(), "dd/M/yyyy H:mm") ?></th>
 			<?php endforeach ?>
 		</tr>
 		<tr>
 			<td colspan="2">Fecha de Última Conexión</td>
 			<?php foreach ($students as $student): ?>
-			<th><?php echo format_date($student->getLastAccess(), "dd/M/yyyy H:mm") ?></th>
+			<th><?php echo utcToLocalDate($student->getLastAccess(), "dd/M/yyyy H:mm") ?></th>
 			<?php endforeach ?>
 		</tr>
 		<tr>

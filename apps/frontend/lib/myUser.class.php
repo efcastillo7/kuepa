@@ -1,13 +1,13 @@
 <?php
 
 class myUser extends sfGuardSecurityUser {
-
-    
     const SFGUARD_USER_ATTR = 'sfGuarUser';
     const PROFILE_ATTR = 'profile';
     const COMPONENT_COMPLETED_STATUS  = 'CacheComponentCompleteStatus';
     const USER_COURSES_ENABLED  = 'UserCoursesEnabled';
     const LAYOUT_STYLE  = 'CollegeLayoutStyle';
+    const CULTURE_LANG = 'UserCultureLang';
+    const CULTURE_TIMEZONE = 'UserCultureTimezone';
     
     public function isValidAccount() {
         //check if account is enabled - TODO: Add field
@@ -33,6 +33,7 @@ class myUser extends sfGuardSecurityUser {
         $this->setUser($user);
         $this->setCourses($this);
         $this->setStyle($user);
+        $this->setI18N($user);
     }
     
     public function signOut() {
@@ -68,6 +69,19 @@ class myUser extends sfGuardSecurityUser {
         }
     }
 
+    protected function setI18N($user){
+        $profile = $user->getProfile();
+
+        if($profile->getCulture()){
+            $this->setAttribute(self::CULTURE_LANG, $profile->getCulture());
+            $this->setCulture($profile->getCulture());
+        }
+
+        if($profile->getTimezone()){
+            $this->setAttribute(self::CULTURE_TIMEZONE, $profile->getTimezone());
+        }
+    }
+
     protected function setStyle($user){
         $style = "";
 
@@ -78,6 +92,10 @@ class myUser extends sfGuardSecurityUser {
         }
 
         $this->setAttribute(self::LAYOUT_STYLE, $style);
+    }
+
+    public function getTimezone(){
+        return $this->getAttribute(self::CULTURE_TIMEZONE);
     }
 
     public function getStyle(){

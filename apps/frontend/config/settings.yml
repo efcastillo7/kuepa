@@ -35,6 +35,7 @@ all:
     i18n: true
     standard_helpers: [Partial, Cache, I18N, ImprovedUrl]
     default_culture: es_AR
+    default_timezone: UTC
 
     # Enable the database manager
     use_database:           true

@@ -1,4 +1,5 @@
 <?php use_helper('Date') ?>
+<?php use_helper('LocalDate') ?>
 
 <div class="box-annotations" id="note-<?php echo $note->getId() ?>">
     <div class="wrap wrap-arrow-gray">
@@ -10,7 +11,7 @@
         <?php echo $note->getContent() ?>
       </p>
       <p class="date">
-        El <?php echo format_date($note->getUpdatedAt(), 'dd/MM/yyyy') ?> a las <?php echo format_date($note->getUpdatedAt(), 'HH:mm') ?>hs
+        El <?php echo utcToLocalDate($note->getUpdatedAt(), 'dd/MM/yyyy') ?> a las <?php echo utcToLocalDate($note->getUpdatedAt(), 'HH:mm') ?>hs
       </p>
       <!-- <a id="edit-note-link-<?php echo $note->getId() ?>" class="edit-note-link" data-target="<?php echo $note->getId() ?>" href="javascript:void(0);">Editar Anotación »</a>  -->
       <a class="delete-note-link" target="<?php echo $note->getId() ?>" href="javascript:void(0);">Eliminar Anotación »</a>

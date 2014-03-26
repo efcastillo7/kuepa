@@ -108,7 +108,7 @@ class lessonActions extends kuepaActions {
         
 
         // TODO: llevar a una
-        $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
+        $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $this->resource->getId());
         $this->comments = array();
         // $this->comments = NoteService::getInstance()->getComments($resource_id);
 
@@ -139,8 +139,9 @@ class lessonActions extends kuepaActions {
             $lesson = $form->save();
 
             //add lesson to chapter
-            if (!$id)
+            if (!$id){
                 ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
+            }
 
             ComponentService::getInstance()->updateDuration( $lesson->getId() );
 
