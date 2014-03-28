@@ -94,25 +94,31 @@ class ComponentService {
 
         if($profile){
             //get Courses for that user
-            $courses = Course::getRepository()->getCoursesForUser($profile->getId());
+            $colleges = null; //fetch all colleges
+            $get_status = array(ProfileLearningPath::IN_PROGRESS);
+
+            $courses = Course::getRepository()->getCoursesForUser($profile->getId(), $colleges, $get_status);
         }
 
         return $courses;
     }
 
     public function getCoursesForUser($profile) {
-        
         $courses = array();
 
         if($profile){
             $colleges = $profile->getColleges();
 
-            //get Courses for that user
-            $courses = Course::getRepository()->getCoursesForUser($profile->getId());
-
             //if it has colleges then add them
             foreach ($colleges as $college) {
-                $courses->merge(Course::getRepository()->getCoursesForCollege($college->getId()));
+                $show_status = explode(",", $college->getShowStatus());
+
+                //get Courses for that user if available
+                if(!count($show_status) || in_array(ProfileLearningPath::ALL, $show_status)){
+                    $courses = Course::getRepository()->getCoursesForCollege($college->getId());
+                }else if (count($show_status)){
+                    $courses = Course::getRepository()->getCoursesForUser($profile->getId(), $college->getId(), $show_status);
+                }
             }
         }
 

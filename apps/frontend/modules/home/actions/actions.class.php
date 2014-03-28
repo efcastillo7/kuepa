@@ -27,13 +27,13 @@ class homeActions extends kuepaActions {
     	//check account status
     	$this->checkAccountStatus();
 
-        //get user
-        $user = $this->getUser();
+      //get user
+      $user = $this->getUser();
 
-        $this->profile = $this->getProfile();
-        
-        //get courses for that user
-        $this->enabled_courses = CourseService::getInstance()->getCourses($user->getEnabledCourses());
-        $this->display_courses = CourseService::getInstance()->getCourses($user->getDisplayCourses());
+      $this->profile = $this->getProfile();
+      
+      //get courses for that user
+      $this->enabled_courses = CourseService::getInstance()->getCourses($user->getEnabledCourses());
+      $this->display_courses = CourseService::getInstance()->getCourses($user->getDisplayCourses());
     }
 }

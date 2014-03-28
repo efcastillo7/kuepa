@@ -5,12 +5,12 @@ all:
   image_path_component: /uploads/component/
 
   log:
-    window: 60
+    window: 60 #in seconds
 
   approval_percentage: 70
 
   timer:
-    resource_log: 26000
+    resource_log: 15000 #in miliseconds
 
   memcache:
       ip: localhost

@@ -122,7 +122,7 @@ class CourseService {
             return array();
         }
 
-        $query->innerJoin('c.Chapter ch');
+        $query->leftJoin('c.Children ch');
 
         return $query->execute();
     }

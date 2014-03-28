@@ -85,6 +85,7 @@ College:
     id: { type: integer, primary: true, autoincrement: true }
     name: varchar(255)
     style: string
+    show_status: string
   relations:
     Components:
       class: Component

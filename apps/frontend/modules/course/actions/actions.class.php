@@ -24,7 +24,7 @@ class courseActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
-        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );        
+        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
     }
 
     public function executeTest(sfWebRequest $request) {

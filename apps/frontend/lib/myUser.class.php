@@ -64,8 +64,13 @@ class myUser extends sfGuardSecurityUser {
 
         // cache courses
         $user->setEnabledCourses($components_ids);
+
         //cache all courses
-        $user->setAllCourses($courses->getPrimaryKeys());
+        if(count($courses)){
+            $user->setAllCourses($courses->getPrimaryKeys());
+        }else{
+            $user->setAllCourses(array());
+        }
 
         // add credentials for user
         foreach ($components_ids as $course_id) {
@@ -126,7 +131,10 @@ class myUser extends sfGuardSecurityUser {
         $this->setAttribute(self::PROFILE_ATTR, null);
         sfContext::getInstance()->getUser()->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
         sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, null);
+        sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES, null);
         sfContext::getInstance()->getUser()->setAttribute(self::LAYOUT_STYLE, null);
+        sfContext::getInstance()->getUser()->setAttribute(self::CULTURE_LANG, null);
+        sfContext::getInstance()->getUser()->setAttribute(self::CULTURE_TIMEZONE, null);
     }
 
 
