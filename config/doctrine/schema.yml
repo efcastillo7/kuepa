@@ -54,6 +54,18 @@ ProfileLearningPath:
     component_id: {type: integer, primary: true}
     deadline: { type: date }
     position: { type: integer, default: 0 }
+    profile_learning_path_status_id: { type: integer }
+  relations:
+    Status:
+      class: ProfileLearningPathStatus
+      local: profile_learning_path_status_id
+      foreign: id
+      type: one
+
+ProfileLearningPathStatus:
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    name: varchar(100)
 
 ProfileCollege:
   columns:
