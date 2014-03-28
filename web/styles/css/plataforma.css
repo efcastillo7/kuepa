@@ -13,6 +13,10 @@
     John Doe Styles
 -------------------------------------------------- */
 
+.subject-item.blocked{
+  opacity: 0.5;
+}
+
 .slide{
     display: none;
     color: white;

@@ -52,21 +52,25 @@
     var options = {
         success: function(response, statusText, xhr, $form) {
             var exercise = response.data.exercise;
-            var answers = response.data.questions;
             var questions = response.data.questions;
             var total_time = new Date().getTime() - init_time;
             total_time = (total_time/60000).toFixed(1);
 
+            console.log(response);
+
             for (var key in questions){
               var objs = $("div#answer_" + exercise.id + "_" + key);
+              var span = $("span#answer_" + exercise.id + "_" + key);
 
-              $(objs).addClass(answers[key].correct ? "correct" : "incorrect");
-              $(objs).removeClass(!answers[key].correct ? "correct" : "incorrect");
+              $(objs).addClass(questions[key].correct ? "correct" : "incorrect");
+              $(objs).removeClass(!questions[key].correct ? "correct" : "incorrect");
 
-              //iterate answers for display
-              // for(var i=0;i<answers[key]['answers'].length;i++){
-              //   $(objs[i]).addClass(answers[key]['answers'][i].correct ? "correct" : "incorrect");
-              // }
+
+              //iterate answers for display (for types choose)
+              for(var i=0;i<span.length;i++){
+                $(span[i]).addClass(questions[key]['answers'][i].correct ? "correct" : "incorrect");
+                $(span[i]).removeClass(!questions[key]['answers'][i].correct ? "correct" : "incorrect");
+              }
             }
 
             var score = (exercise.score.value/exercise.score.total*100).toFixed(2);
@@ -98,10 +102,4 @@
   };
 
   $("#exercise_form").ajaxForm(options);
-
-    $(document).ready(function(){
-        
-    });
-
-
 </script>

@@ -2,8 +2,7 @@
   <?php echo $question->getTitle() ?> <br>
   <?php echo $question->getRaw('description') ?>
 </h4>
-<fieldset>
-  <div class="lssn-relation">
+<fieldset class="lssn-relation">
     <?php foreach ($question->getAnswers() as $answer): ?>
     <?php 
       preg_match_all("/\[(.*?)\]/",$answer->getTitle(),$m);
@@ -22,5 +21,4 @@
     <!-- make select -->
     <?php echo $value ?>
     <?php endforeach ?>
-  </div>
 </fieldset>

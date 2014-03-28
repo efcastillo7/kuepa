@@ -108,4 +108,22 @@ class CourseService {
 
         return $query->execute();
     }
+
+    public function getCoursesAndChapters($courses){
+        $query = Course::getRepository()->createQuery('c');
+
+        if(is_array($courses) && count($courses)){
+            $query->whereIn('id', $courses);
+        }else{
+            $query->where('id = ?',$courses);
+        }
+
+        if (is_array($courses) && count($courses) == 0){
+            return array();
+        }
+
+        $query->innerJoin('c.Chapter ch');
+
+        return $query->execute();
+    }
 }

@@ -143,4 +143,14 @@ class ProfileComponentCompletedStatusService {
                         ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
     }
 
+    public function getArrayCompletedTimes($component_ids, $profile_id) {
+    
+        return ProfileComponentCompletedStatus::getRepository()
+                        ->createQuery("pccs")
+                        ->select('pccs.component_id, pccs.time_view')
+                        ->where("pccs.profile_id = ?", $profile_id)
+                        ->andWhereIn("pccs.component_id", $component_ids)
+                        ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
+    }
+
 }

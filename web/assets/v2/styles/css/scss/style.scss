@@ -14,6 +14,7 @@
 @import 'navbar';
 @import 'sidemenu';
 @import 'homegrid';
+@import 'dashboard';
 
 
 @font-face {
@@ -582,6 +583,7 @@ section.correct{
     }
   }
   &.incorrect {
+    display:block;
     .answer-color {
       background-color:#E61515;
       padding:12px 0 12px 50px;
@@ -611,7 +613,14 @@ section.correct{
     border-bottom:1px solid #E9E9EB;
   }
   .answer-info {
-    background: url("../../img/qa_sprite.png") no-repeat -80px 0px #FAFAFC;
+    background-color:#FAFAFC;
+    i { 
+      position:absolute;
+      height:40px;
+      width:40px;
+      background: url("../../img/qa_sprite.png") no-repeat -80px 0px transparent;
+      margin:6px 0 0 10px;
+    }
     span {
       font-size:15px;
       font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -789,6 +798,12 @@ section.data-exercise{
   .lssn-refs p {
     font-size: 11px;
     color: #AFAFB3;
+  }
+  .answer {
+    border-left: 1px solid #C7C7CC;
+    border-right: 1px solid #C7C7CC;
+    border-bottom: 1px solid #C7C7CC;
+    margin:-1px 0px 10px;
   }
 }
 

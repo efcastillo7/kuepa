@@ -5,6 +5,7 @@ class myUser extends sfGuardSecurityUser {
     const PROFILE_ATTR = 'profile';
     const COMPONENT_COMPLETED_STATUS  = 'CacheComponentCompleteStatus';
     const USER_COURSES_ENABLED  = 'UserCoursesEnabled';
+    const USER_COURSES  = 'UserCourses';
     const LAYOUT_STYLE  = 'CollegeLayoutStyle';
     const CULTURE_LANG = 'UserCultureLang';
     const CULTURE_TIMEZONE = 'UserCultureTimezone';
@@ -52,9 +53,10 @@ class myUser extends sfGuardSecurityUser {
 
     protected function setCourses($user){
         $courses = ComponentService::getInstance()->getCoursesForUser( $user->getProfile() );
+        $enabled_courses = ComponentService::getInstance()->getEnabledCoursesForUser( $user->getProfile() );
 
         //get ids
-        $components_ids = $courses->getPrimaryKeys();
+        $components_ids = $enabled_courses->getPrimaryKeys();
 
         //set completed status for courses
         $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $user->getProfile()->getId());
@@ -62,6 +64,8 @@ class myUser extends sfGuardSecurityUser {
 
         // cache courses
         $user->setEnabledCourses($components_ids);
+        //cache all courses
+        $user->setAllCourses($courses->getPrimaryKeys());
 
         // add credentials for user
         foreach ($components_ids as $course_id) {
@@ -131,6 +135,17 @@ class myUser extends sfGuardSecurityUser {
         return sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED);
     }
 
+    public function getAllCourses(){
+        return sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES);
+    }
+
+    public function getDisplayCourses(){
+        $all_courses = $this->getAllCourses();
+        $enabled_courses = $this->getEnabledCourses();
+
+        return array_diff($all_courses, $enabled_courses);
+    }
+
     public function setEnabledCourses($course_id){
         $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED, array());
 
@@ -141,6 +156,18 @@ class myUser extends sfGuardSecurityUser {
         $_courses = array_unique (array_merge($_courses, $course_id));
 
         return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, $_courses);
+    }
+
+    public function setAllCourses($course_id){
+        $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES, array());
+
+        if(!is_array($course_id)){
+            $course_id = array($course_id);
+        }
+
+        $_courses = array_unique(array_merge($_courses, $course_id));
+
+        return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES, $_courses);
     }
 
 

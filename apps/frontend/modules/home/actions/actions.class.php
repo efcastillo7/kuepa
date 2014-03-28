@@ -33,6 +33,7 @@ class homeActions extends kuepaActions {
         $this->profile = $this->getProfile();
         
         //get courses for that user
-        $this->courses = CourseService::getInstance()->getCourses($user->getEnabledCourses());
+        $this->enabled_courses = CourseService::getInstance()->getCourses($user->getEnabledCourses());
+        $this->display_courses = CourseService::getInstance()->getCourses($user->getDisplayCourses());
     }
 }

@@ -403,3 +403,53 @@ i[class$="-hover"]{
   background-position: -147px -100px;
   &:first-child{margin-right: -7px;}
 }
+
+.ico-eye {
+  width: 21px;
+  height: 12px;
+  background-position: -100px -149px; }
+
+.ico-pencil {
+  width: 17px;
+  height: 16px;
+  background-position: -123px -149px; }
+
+.ico-statistics {
+  width: 21px;
+  height: 18px;
+  background-position: -141px -149px; }
+
+.arrow-dropdown {
+  width: 11px;
+  height: 6px;
+  background-position: -53px -110px;
+  display: none; }
+
+.ico-ficha1, .ico-ficha2, .ico-ficha3 {
+  width: 19px;
+  height: 19px; }
+
+.ico-ficha1 {
+  background-position: 0 -191px; }
+
+.ico-ficha2 {
+  background-position: -22px -190px; }
+
+.ico-ficha3 {
+  background-position: -42px -191px; }
+
+.ico-arrow-table {
+  width: 7px;
+  height: 12px;
+  background-position: -64px -194px; }
+  .ico-arrow-table.blank {
+    background-position: -73px -194px; }
+  .ico-arrow-table.rotate {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg); }
+
+.ico-check-dashboard {
+  width: 14px;
+  height: 12px;
+  background-position: -86px -193px; }

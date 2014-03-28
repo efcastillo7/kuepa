@@ -32,8 +32,12 @@
               $select = new sfWidgetFormChoice(array('choices' => $choices), array('class' => 'form-control lssn-select'));
               echo $select->render("exercise[". $exercise->getId() . "][" . $question->getId() . "][" . $answer->getId() ."]");
              ?>
-             <span id='answer_<?php echo $exercise->getId()?>_<?php echo $question->getId()?>'></span>
+             <div class="answer" id="answer_<?php echo $exercise->getId() ?>_<?php echo $question->getId() ?>">
+              <?php include_partial("type_choose_answer") ?>
+            </div>
+
           </div>
       </div>
+            
       <?php endforeach ?>
 </fieldset>

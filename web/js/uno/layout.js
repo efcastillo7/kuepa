@@ -1,4 +1,8 @@
 $(function() {
+    $(".blocked").click(function(){
+        alert('Materia no disponible');
+    });
+
     $(".knob").knob(knob_values);
     $(".knob-small").knob({
         height: 24

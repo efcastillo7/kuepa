@@ -25,7 +25,8 @@ class statsActions extends kuepaActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-   $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
+   $this->courses = CourseService::getInstance()->getCoursesAndChapters($this->getUser()->getEnabledCourses());
+   $this->times = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimes($this->getUser()->getEnabledCourses(), $this->getUser()->getProfile()->getId());
   }
 
   public function executeCourse(sfWebRequest $request)

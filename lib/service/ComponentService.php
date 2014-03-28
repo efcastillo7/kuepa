@@ -89,6 +89,17 @@ class ComponentService {
         return $query->fetchArray();
     }
 
+    public function getEnabledCoursesForUser($profile){
+        $courses = array();
+
+        if($profile){
+            //get Courses for that user
+            $courses = Course::getRepository()->getCoursesForUser($profile->getId());
+        }
+
+        return $courses;
+    }
+
     public function getCoursesForUser($profile) {
         
         $courses = array();

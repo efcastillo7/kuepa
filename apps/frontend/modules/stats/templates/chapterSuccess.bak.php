@@ -1,7 +1,6 @@
 <script type="text/javascript" src="/js/dashboard.js"></script>
 <script type="text/javascript" src="/js/Chart.js"></script>
 <div class="dashboard-student">
-
 		  <article class="units">
 		    <h1><?php echo $course->getName() ?> <span class="HelveticaMd"><?php echo $chapter->getName() ?></span></h1>
 		    <div class="scroleable">
