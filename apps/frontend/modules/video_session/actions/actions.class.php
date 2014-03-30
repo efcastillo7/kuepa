@@ -24,15 +24,16 @@ class video_sessionActions extends sfActions {
     public function executeIndex(sfWebRequest $request) {
 
         $profile = $this->getUser()->getProfile();
+        $courses = CourseService::getInstance()->getCourses($this->getUser()->getEnabledCourses());
         
         if($this->getUser()->hasCredential("docente")){
-            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $profile );
-            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $profile );
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $profile );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $profile );
+            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $profile, $courses );
+            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $profile, $courses );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $profile, $courses );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $profile, $courses );
         }else{
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $profile );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $profile );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $profile, $courses);
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $profile, $courses );
         }
         
         $this->profile_id = $profile->getId();

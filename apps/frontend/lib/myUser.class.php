@@ -55,6 +55,10 @@ class myUser extends sfGuardSecurityUser {
         $courses = ComponentService::getInstance()->getCoursesForUser( $user->getProfile() );
         $enabled_courses = ComponentService::getInstance()->getEnabledCoursesForUser( $user->getProfile() );
 
+        if($enabled_courses->count() == 0){
+            $enabled_courses = $courses;
+        }
+
         //get ids
         $components_ids = $enabled_courses->getPrimaryKeys();
 
