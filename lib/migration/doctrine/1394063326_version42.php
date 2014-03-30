@@ -6,8 +6,8 @@ class Version42 extends Doctrine_Migration_Base
 {
     public function up()
     {
-        $this->addColumn('college', 'style', 'string', '', array(
-             ));
+        // $this->addColumn('college', 'style', 'string', '', array(
+        //      ));
     }
 
     public function down()
