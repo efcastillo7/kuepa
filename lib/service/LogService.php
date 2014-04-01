@@ -118,6 +118,44 @@ class LogService {
         return null;
     }
 
+    public function getTotalTimeByRoute($profile_id, $route = array(), $from_date = null, $to_date = null){
+        $q = LogViewComponent::getRepository()->createQuery('lvc')
+                ->select("sum(updated_at - created_at) as total")
+                ->where("profile_id = ?", $profile_id);
+
+        if($from_date){
+            $q->andWhere("created_at >= ?", date("Y-m-d", $from_date));
+        }
+
+        if($to_date){
+            $q->andWhere("created_at < ?", date("Y-m-d", $to_date));
+        }
+
+        if(isset($route['course_id'])){
+            $q->andWhere('course_id = ?', $route['course_id']);
+        }
+
+        if(isset($route['chapter_id'])){
+            $q->andWhere('chapter_id = ?', $route['chapter_id']);
+        }
+
+        if(isset($route['lesson_id'])){
+            $q->andWhere('lesson_id = ?', $route['lesson_id']);
+        }
+
+        if(isset($route['resource_id'])){
+            $q->andWhere('resource_id = ?', $route['resource_id']);
+        }
+
+        $q = $q->fetchOne();
+
+        if($q){
+            return $q->getTotal();
+        }
+
+        return 0;
+    }
+
     public function getTotalTime($profile_id, $component = null, $from_date = null, $to_date = null){
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->select("sum(updated_at - created_at) as total")

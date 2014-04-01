@@ -59,16 +59,6 @@ class myUser extends sfGuardSecurityUser {
             $enabled_courses = $courses;
         }
 
-        //get ids
-        $components_ids = $enabled_courses->getPrimaryKeys();
-
-        //set completed status for courses
-        $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $user->getProfile()->getId());
-        $user->setCompletedStatus($components_ids, $values);
-
-        // cache courses
-        $user->setEnabledCourses($components_ids);
-
         //cache all courses
         if(count($courses)){
             $user->setAllCourses($courses->getPrimaryKeys());
@@ -76,9 +66,23 @@ class myUser extends sfGuardSecurityUser {
             $user->setAllCourses(array());
         }
 
-        // add credentials for user
-        foreach ($components_ids as $course_id) {
-            $this->addCredential("course_" . $course_id);
+        if($enabled_courses && $enabled_courses->count()){
+            //get ids
+            $components_ids = $enabled_courses->getPrimaryKeys();
+
+            //set completed status for courses
+            $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $user->getProfile()->getId());
+            $user->setCompletedStatus($components_ids, $values);
+
+            // cache courses
+            $user->setEnabledCourses($components_ids);
+
+            // add credentials for user
+            foreach ($components_ids as $course_id) {
+                $this->addCredential("course_" . $course_id);
+            }
+        }else{
+            $user->setEnabledCourses(array());            
         }
     }
 

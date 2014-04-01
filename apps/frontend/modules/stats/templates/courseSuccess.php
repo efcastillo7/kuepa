@@ -92,8 +92,8 @@
 				<?php foreach ($chapters as $chapter): ?>
 					<tr>
 						<td><a href="<?php echo url_for("stats/chapter?course=" . $course->getId() . "&chapter=" . $chapter->getId()) ?>"><?php echo $chapter->getName() ?></a></td>
-						<td><?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($sf_user->getProfile()->getId(), $chapter->getId()) ?> %</td>
-						<td><?php echo gmdate("H:i:s", $chapter->getTotalTime($sf_user->getProfile()->getId())) ?></td>
+						<td><?php echo $chapter->getCacheCompletedStatus();  ?> %</td>
+						<td><?php echo gmdate("H:i:s", LogService::getInstance()->getTotalTimeByRoute($sf_user->getProfile()->getId(), array('course_id' => $course->getId(), 'chapter_id' => $chapter->getId()))) ?></td>
 						<td><?php echo gmdate("H:i:s", $chapter->getDuration()) ?></td>
 						<td><?php echo $chapter->getLastResourceViewed($sf_user->getProfile()->getId())?></td>
 					</tr>

@@ -37,6 +37,8 @@ class statsActions extends kuepaActions
     $this->chapters = $this->course->getChapters();
 
     $profile = $this->getProfile();
+    
+    $this->viewed_times = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimes($this->chapters->getPrimaryKeys(), $profile->getId());
 
     $first_access = LogService::getInstance()->getFirstAccess($profile->getId(), $course_id);
     $to_date = ComponentService::getInstance()->getDeadlineForUser($profile->getId(), $course_id);
