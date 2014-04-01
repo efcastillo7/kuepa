@@ -119,6 +119,16 @@ class statsActions extends kuepaActions
 
     $this->course = Course::getRepository()->getById($course_id);
     $this->students = CourseService::getInstance()->getStudentsList($course_id);
+
+    $this->chapters = $this->course->getChapters();
+
+    $component_ids = $this->chapters->getPrimaryKeys();
+    $component_ids[] = $course_id;
+
+    $profiles_ids = $this->students->getPrimaryKeys();
+    $this->status = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($component_ids, $profiles_ids);
+
+    // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
   }
 
   public function executeTest(sfWebRequest $request){

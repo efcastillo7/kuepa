@@ -134,13 +134,19 @@ class ProfileComponentCompletedStatusService {
     }
     
     public function getArrayCompletedStatus($component_ids, $profile_id) {
-    
-        return ProfileComponentCompletedStatus::getRepository()
+        $query = ProfileComponentCompletedStatus::getRepository()
                         ->createQuery("pccs")
-                        ->select('pccs.component_id, pccs.completed_status')
-                        ->where("pccs.profile_id = ?", $profile_id)
-                        ->andWhereIn("pccs.component_id", $component_ids)
-                        ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
+                        ->andWhereIn("pccs.component_id", $component_ids);
+                        
+        if(is_array($profile_id)){
+            return $query->select('pccs.profile_id, pccs.component_id, pccs.completed_status')
+                         ->andWhereIn("pccs.profile_id", $profile_id)
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_TRIO' ); 
+        }
+
+        return $query->select('pccs.component_id, pccs.completed_status')
+                     ->andWhere("pccs.profile_id = ?", $profile_id)
+                     ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' ); 
     }
 
     public function getArrayCompletedTimes($component_ids, $profile_id) {
@@ -152,6 +158,7 @@ class ProfileComponentCompletedStatusService {
                         ->andWhereIn("pccs.component_id", $component_ids)
                         ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
     }
+
 
     public function getCompletedChilds($component_id, $profile_id){
         $component = Component::getRepository()->find($component_id);
@@ -179,4 +186,44 @@ class ProfileComponentCompletedStatusService {
         return 0;
     }
 
+    //TODO: armar para que permita 1 solo profile_id
+
+    public function getArrayCompletedTimesM($profiles_id, $route) {
+        $q = LogViewComponent::getRepository()->createQuery('lvc')
+                ->select("profile_id, sum(updated_at - created_at) as total");
+                
+        if(is_array($profiles_id)){
+            $q->whereIn("profile_id", $profiles_id);
+        }else{
+            $q->where("profile_id = ?", $profiles_id);
+        }
+
+        if(isset($route['course_id'])){
+            $q->andWhere('course_id = ?', $route['course_id']);
+        }
+
+        if(isset($route['chapter_id'])){
+            $q->andWhereIn('chapter_id', $route['chapter_id']);
+        }
+
+        if(isset($route['lesson_id'])){
+            $q->andWhere('lesson_id = ?', $route['lesson_id']);
+        }
+
+        if(isset($route['resource_id'])){
+            $q->andWhere('resource_id = ?', $route['resource_id']);
+        }
+        
+        $params = count($route);
+        switch ($params) {
+            case 2:
+                return $q->select("profile_id, course_id, chapter_id, sum(updated_at - created_at) as total")
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_QUAD' );   
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
 }

@@ -71,12 +71,12 @@
 			</td>
 
 			<!-- por unidad -->
-			<?php foreach ($course->getChapters() as $chapter): ?>
+			<?php foreach ($course->getChapters()	 as $chapter): ?>
 			<td class="bl">
-				<?php if ($student->getComponentStatus($chapter->getId()) == 0): ?>
+				<?php if (!isset($status[$student->getId()]) || !isset($status[$student->getId()][$chapter->getId()])): ?>
 				-
 				<?php else: ?>
-				<?php echo $student->getComponentStatus($chapter->getId()) ?> %
+				<?php echo $status[$student->getId()][$chapter->getId()] ?> %
 				<?php endif ?>
 			</td>
 			<td>

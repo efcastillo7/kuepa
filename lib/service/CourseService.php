@@ -48,15 +48,47 @@ class CourseService {
     }
 
     public function getStudentsList($course_id){
-        $q = Profile::getRepository()->createQuery('p')
-                ->innerJoin('p.ProfileLearningPath plp')
+        //colleges that has that course
+        $colleges = College::getRepository()->createQuery('c')
+                        ->innerJoin("c.Components co")
+                        ->where('co.id = ?', $course_id)
+                        ->execute();
+
+        //direct users
+        $q1 = Profile::getRepository()->createQuery('p')
+                ->innerJoin("p.ProfileLearningPath plp")
+                ->where('plp.component_id = ?', $course_id)
                 ->innerJoin('p.sfGuardUser sgu')
                 ->innerJoin('sgu.sfGuardUserGroup sgug')
                 ->innerJoin('sgug.Group sgg')
-                ->where('plp.component_id = ?', $course_id)
-                ->andWhere('sgg.name = ?', 'estudiantes');
+                ->andWhere('sgg.name = ?', 'estudiantes')
+                ->andWhere('sgu.is_active = true')
+                ->execute();
 
-        return $q->execute();
+        //users from college
+        $q2 = Profile::getRepository()->createQuery('p')
+                ->innerJoin('p.sfGuardUser sgu')
+                ->innerJoin('sgu.sfGuardUserGroup sgug')
+                ->innerJoin('sgug.Group sgg')
+                ->andWhere('sgg.name = ?', 'estudiantes')
+                ->innerJoin("p.ProfileCollege pc")
+                // ->innerJoin("pc.College c")
+                // ->innerJoin("c.CollegeLearningPath clp")
+                ->andWhere('sgu.is_active = true')
+                ->whereIn("pc.college_id", $colleges->getPrimaryKeys())
+                ->execute();
+
+        return $users = $q1->merge($q2);
+
+        // $q = Profile::getRepository()->createQuery('p')
+        //         ->innerJoin('p.ProfileLearningPath plp')
+        //         ->innerJoin('p.sfGuardUser sgu')
+        //         ->innerJoin('sgu.sfGuardUserGroup sgug')
+        //         ->innerJoin('sgug.Group sgg')
+        //         ->where('plp.component_id = ?', $course_id)
+        //         ->andWhere('sgg.name = ?', 'estudiantes');
+
+        // return $q->execute();
     }
 
     public function getTeachersList($course_id){
