@@ -56,11 +56,12 @@
 				</div>
 			</td>
 			<td>
-				<?php $time = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId()));
-				if($time == 0):?>
+				<?php 
+					$time_course = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId()));
+				if($time_course == 0):?>
 				-
 				<?php else: ?>
-				<?php echo gmdate("H:i:s", $time) ?>
+				<?php echo gmdate("H:i:s", $time_course) ?>
 				<?php endif; ?>
 			</td>
 			<td><?php echo utcToLocalDate($student->getLastAccess(), "dd/M/yyyy H:mm") ?></td>
@@ -71,16 +72,20 @@
 			</td>
 
 			<!-- por unidad -->
-			<?php foreach ($course->getChapters()	 as $chapter): ?>
+			<?php foreach ($course->getChapters() as $chapter): $get_status = ($time_course > 0);?>
 			<td class="bl">
 				<?php if (!isset($status[$student->getId()]) || !isset($status[$student->getId()][$chapter->getId()])): ?>
+				<?php $get_status = false; ?>
 				-
 				<?php else: ?>
 				<?php echo $status[$student->getId()][$chapter->getId()] ?> %
 				<?php endif ?>
 			</td>
 			<td>
-				<?php $time = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId(), 'chapter_id' => $chapter->getId())); 
+				<?php if ($get_status){
+					$time = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId(), 'chapter_id' => $chapter->getId())); 
+				}else{ $time = 0;} ?>
+				<?php 
 				if($time == 0):?>
 				-
 				<?php else: ?>
