@@ -153,4 +153,30 @@ class ProfileComponentCompletedStatusService {
                         ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
     }
 
+    public function getCompletedChilds($component_id, $profile_id){
+        $component = Component::getRepository()->find($component_id);
+
+        if($component){
+            $childrens = $component->getChildren();
+            if($childrens->count()){
+                $childs_ids = $childrens->getPrimaryKeys();
+
+                $q = ProfileComponentCompletedStatus::getRepository()->createQuery('pccs')
+                    ->select('count(component_id) as total')
+                    ->where('profile_id = ?', $profile_id)
+                    ->andWhere('completed_status >= ?', 70)
+                    ->andWhereIn('component_id', $childs_ids)
+                    ->fetchOne();
+
+                if($q){
+                    return $q->getTotal();
+                }
+            }
+
+            return 0;
+        }
+
+        return 0;
+    }
+
 }

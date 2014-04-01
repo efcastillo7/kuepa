@@ -12,7 +12,7 @@
  */
 class Profile extends BaseProfile
 {
-    private $_total_time, $_first_access, $_last_access;
+    private $_total_time, $_first_access, $_last_access, $_completed_status = array();
 
 	/**
      * 
@@ -76,7 +76,10 @@ class Profile extends BaseProfile
     }
 
     public function getComponentStatus($component_id){
-        return ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getId(), $component_id);
+        if(!isset($this->_completed_status[$component_id])){
+            $this->_completed_status[$component_id] = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getId(), $component_id);
+        }
+        return $this->_completed_status[$component_id];
     }
 
     public function getFriends(){
