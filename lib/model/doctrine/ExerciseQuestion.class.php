@@ -45,9 +45,15 @@ class ExerciseQuestion extends BaseExerciseQuestion {
             case "multiple-choice2":
                 //$answer es un array de VALUES de ExerciseAnswer
                 //get answers for question
+                $correct = true;
                 foreach($this->getAnswers() as $position => $exercise_answer){
+                    $hash = md5($exercise_answer->getTitle());
                     //if is valid
-                    $is_correct = isset($answer[$position]) == ($exercise_answer->getCorrect() == "1");
+                    if($exercise_answer->getCorrect() == "1"){
+                        $is_correct = in_array($hash, $answer);
+                    }else{
+                        $is_correct = !in_array($hash, $answer);
+                    }
                     $score[] = array(
                         "answer_id" => $exercise_answer->getId(),
                         "correct" => ($exercise_answer->getCorrect() == "1"),
@@ -55,7 +61,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                     );
 
                     $total_score += $exercise_answer->getValue() * $is_correct;
-                    $correct = $correct;
+                    $correct = $correct && $is_correct;
                 }
                 break;
             case "complete":
