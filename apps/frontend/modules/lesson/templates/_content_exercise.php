@@ -56,8 +56,6 @@
             var total_time = new Date().getTime() - init_time;
             total_time = (total_time/60000).toFixed(1);
 
-            console.log(response);
-
             for (var key in questions){
               var objs = $("div#answer_" + exercise.id + "_" + key);
               var span = $("span#answer_" + exercise.id + "_" + key);
