@@ -51,6 +51,9 @@ class lessonActions extends kuepaActions {
             $this->resource = $this->lesson->getChildren()->getFirst();
         }
 
+        //forward 404 if resource not found
+        $this->forward404Unless($this->resource);
+
         if ($lesson_id != null) {
             $this->lesson->setActualResource($resource_id);
         } else if ($previous_lesson_id != null) {

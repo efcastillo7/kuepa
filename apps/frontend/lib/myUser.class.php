@@ -137,12 +137,12 @@ class myUser extends sfGuardSecurityUser {
     {
         $this->setAttribute(self::SFGUARD_USER_ATTR, null);
         $this->setAttribute(self::PROFILE_ATTR, null);
-        sfContext::getInstance()->getUser()->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
-        sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, null);
-        sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES, null);
-        sfContext::getInstance()->getUser()->setAttribute(self::LAYOUT_STYLE, null);
-        sfContext::getInstance()->getUser()->setAttribute(self::CULTURE_LANG, null);
-        sfContext::getInstance()->getUser()->setAttribute(self::CULTURE_TIMEZONE, null);
+        $this->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
+        $this->setAttribute(self::USER_COURSES_ENABLED, null);
+        $this->setAttribute(self::USER_COURSES, null);
+        $this->setAttribute(self::LAYOUT_STYLE, null);
+        $this->setAttribute(self::CULTURE_LANG, null);
+        $this->setAttribute(self::CULTURE_TIMEZONE, null);
     }
 
 
