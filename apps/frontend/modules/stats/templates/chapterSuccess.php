@@ -1,8 +1,16 @@
-<div class="container margintop100">
+<style>
+	h5 a{
+		text-decoration: none;
+		color: black;
+	}
+</style>
+<div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<h4 class="HelveticaBd"><?php echo $course->getName() ?> &gt; <?php echo $chapter->getName() ?></h4>
-			<h2 class="HelveticaLt">Lecciones</h2>
+			<h5 class="HelveticaLt">
+				<a href="<?php echo url_for("stats/course?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a> &gt; 
+				<?php echo $chapter->getName() ?></h5>
+			<h3 class="HelveticaLt">Lecciones</h3>
 
 			<table class="table">
 				<thead>

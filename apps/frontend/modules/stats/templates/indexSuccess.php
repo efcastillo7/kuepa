@@ -1,7 +1,7 @@
-<div class="container margintop60">
+<div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="title3 HelveticaLt">Mis cursos</div>
+			<h3 class="HelveticaLt">Mis Cursos</h3>
 			<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
