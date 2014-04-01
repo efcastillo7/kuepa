@@ -629,6 +629,8 @@ section.correct{
 }
 
 
+
+
 /* --------------------------------------------------
 // Lessons
 -------------------------------------------------- */
@@ -807,12 +809,33 @@ section.data-exercise{
   }
 }
 
-.lssn-complete {
+.lssn-complete, .lssn-relation {
   font-size:16px;
   .input-small {
     margin:0px 5px;
   }
+  .answer-container {
+    display:inline-block;
+    margin-top:10px;
+  }
+  .answer-item {
+    display:none;
+    float:right;
+    width:36px;
+    height:36px;
+    margin:0px 3px 0 -5px;
+    &.correct {
+      display:inline-block;
+      background: url("../../img/qa_sprite.png") no-repeat -2px -40px #81CC47;
+    }
+    &.incorrect {
+      display:inline-block;
+      background: url("../../img/qa_sprite.png") no-repeat -42px -40px #E61515;
+    }
+  }
 }
+
+
 
 .lssn-relation {
   font-size:16px;
@@ -824,13 +847,14 @@ section.data-exercise{
     line-height: 1;
     border: 1px solid #C7C7CC;
     border-radius: 0;
-    height: 35px;
+    height: 36px;
     -webkit-appearance: none;
     box-shadow:none;
-    margin:5px;
+    margin:0 5px;
     color:$orange;
   }
 }
+
 
 /* --------------------------------------------------
 // Lecciones
