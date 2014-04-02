@@ -38,7 +38,7 @@ abstract class BasesfGuardForgotPasswordActions extends sfActions
         
         $mailer = MailService::getInstance();
         $mailer->sendNow($this->form->user->email_address,
-                'Cambio de Contraseña de '.$this->form->user->username,
+                'Cambio de Clave para '.$this->form->user->username,
                 $this->getPartial('sfGuardForgotPassword/send_request', array('user' => $this->form->user, 'forgot_password' => $forgotPassword)),
                 $this->user->username,
                 $this->form->user->getProfile()->getId());
@@ -68,7 +68,7 @@ abstract class BasesfGuardForgotPasswordActions extends sfActions
 
         $mailer = MailService::getInstance();
         $mailer->sendNow($this->user->email_address,
-                'Nueva Contraseña para '.$this->user->username,
+                'Nueva Clave para '.$this->user->username,
                 $this->getPartial('sfGuardForgotPassword/new_password', array('user' => $this->user, 'password' => $request['sf_guard_user']['password'])),
                 $this->user->username,
                 $this->user->getProfile()->getId());

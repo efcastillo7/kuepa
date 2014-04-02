@@ -135,7 +135,7 @@ class MailService {
       $mail = $this->find($id);
       if ( $mail -> getStatus() == "pending"){
         $this->initMailer();
-        $this->setTo( array( $mail->getEmail() => '' ) );
+        $this->mailer->AddAddress( $mail->getEmail(), 'Name' );
 
         $this->mailer->Subject = $mail->getSubject();//$mail->getSubject(); //Add field to store content;
         //$this->mailer->Body    = sfOutputEscaperArrayDecorator::unescape( $mail->getContent() );
@@ -147,6 +147,7 @@ class MailService {
         if(!$this->mailer->send()) {
           //TODO: ADD Field to save error
           echo $error_msg = 'Message could not be sent. Mailer Error: ' . $this->mailer->ErrorInfo;
+          die();
             return($error_msg);
          }else{
           $mail->setSentAt('NOW');
