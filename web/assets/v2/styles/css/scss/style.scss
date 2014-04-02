@@ -2070,3 +2070,36 @@ aside{
 }
 .container.ui h3{margin:50px 0 15px 0;}
 
+
+
+
+/* --------------------------------------------------
+// perfil
+-------------------------------------------------- */
+img.form-avatar {
+  display:block;
+  padding:0px;
+  width:140px;
+  height:140px;
+  background-color:transparent;
+  border-radius:70px;
+  -moz-border-radius:70px;
+  border:1px solid #c7c7cc;
+  margin-top:10px;
+}
+input.form-avatar {
+  text-indent:-9999px;
+  width:50%;
+  margin:-110px 0 0 170px;
+  position:absolute;
+}
+.nav-avatar {
+  img {
+    width:36px;
+    height:36px;
+    margin:7px;
+    border-radius:50%;
+    -moz-border-radius:50%;
+  }
+}
+

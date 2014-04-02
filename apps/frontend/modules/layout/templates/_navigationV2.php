@@ -26,7 +26,12 @@
       </li>
       <!-- <li><a href="javascript:void(0)" class="nav-btn nav-btn-srch"><i></i></a></li> -->
       <li class="dropdown">
-        <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown"><i></i></a>
+
+        <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown">
+          <span class="nav-avatar">
+            <img src="uploads/avatars/default.png" class="">
+          </span>
+        </a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
           <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('user/index') ?>">Editar perfil</a></li>
           <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo url_for('@sf_guard_signout') ?>">Log out</a></li>

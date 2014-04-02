@@ -977,6 +977,16 @@ i[class$="-hover"] {
 }
 
 /* line 1, scss/_buttons.scss */
+.btn {
+  padding: 9px 12px 6px;
+  color: #fff;
+}
+/* line 4, scss/_buttons.scss */
+.btn:hover {
+  color: #fff;
+}
+
+/* line 7, scss/_buttons.scss */
 .btn-small, .btn-large, .btn-tiny {
   color: #fff;
   text-align: center;
@@ -989,20 +999,20 @@ i[class$="-hover"] {
   outline: none;
 }
 
-/* line 11, scss/_buttons.scss */
+/* line 17, scss/_buttons.scss */
 .btn-large {
   height: 52px;
   font-size: 20px;
   line-height: 40px;
 }
 
-/* line 16, scss/_buttons.scss */
+/* line 22, scss/_buttons.scss */
 .btn-small {
   height: 34px;
   line-height: 24px;
 }
 
-/* line 20, scss/_buttons.scss */
+/* line 26, scss/_buttons.scss */
 .btn-tiny {
   height: 26px;
   padding: 1px 15px 0 15px;
@@ -1010,7 +1020,7 @@ i[class$="-hover"] {
   line-height: 25px;
 }
 
-/* line 27, scss/_buttons.scss */
+/* line 33, scss/_buttons.scss */
 .btn-inside {
   height: 30px;
   padding: 5px 10px;
@@ -1023,47 +1033,47 @@ i[class$="-hover"] {
   outline: none;
 }
 
-/* line 37, scss/_buttons.scss */
+/* line 43, scss/_buttons.scss */
 .btn-gray {
   background-color: #a9a9ad;
 }
-/* line 39, scss/_buttons.scss */
+/* line 45, scss/_buttons.scss */
 .btn-gray:hover {
   background-color: #b9b9bc;
 }
-/* line 40, scss/_buttons.scss */
+/* line 46, scss/_buttons.scss */
 .btn-gray:active {
   background-color: #7d7d83;
 }
 
-/* line 42, scss/_buttons.scss */
+/* line 48, scss/_buttons.scss */
 .btn-gray-light {
   background-color: #e3e3e3;
 }
-/* line 44, scss/_buttons.scss */
+/* line 50, scss/_buttons.scss */
 .btn-gray-light:hover {
   background-color: #b9b9bc;
 }
-/* line 45, scss/_buttons.scss */
+/* line 51, scss/_buttons.scss */
 .btn-gray-light:active {
   background-color: #7d7d83;
 }
 
-/* line 47, scss/_buttons.scss */
+/* line 53, scss/_buttons.scss */
 .btn-orange {
   background-color: #ff671b;
 }
-/* line 49, scss/_buttons.scss */
+/* line 55, scss/_buttons.scss */
 .btn-orange:hover {
   background-color: #ff7b3a;
   color: #fff;
 }
-/* line 50, scss/_buttons.scss */
+/* line 56, scss/_buttons.scss */
 .btn-orange:active {
   background-color: #fb5400;
 }
 
-/* line 58, scss/_buttons.scss */
+/* line 64, scss/_buttons.scss */
 .btn-icon-left, .btn-icon-right {
   color: #fff;
   border: 0;
@@ -1072,30 +1082,30 @@ i[class$="-hover"] {
   cursor: pointer;
 }
 
-/* line 65, scss/_buttons.scss */
+/* line 71, scss/_buttons.scss */
 .btn-icon-left .icon, .btn-icon-right .icon {
   background: rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
 
-/* line 70, scss/_buttons.scss */
+/* line 76, scss/_buttons.scss */
 .btn-icon-left .icon,
 .btn-icon-right .text {
   float: left;
 }
 
-/* line 73, scss/_buttons.scss */
+/* line 79, scss/_buttons.scss */
 .btn-icon-left .text,
 .btn-icon-right .icon {
   float: right;
 }
 
-/* line 75, scss/_buttons.scss */
+/* line 81, scss/_buttons.scss */
 .btn-icon-left i, .btn-icon-right i {
   margin-top: -3px;
 }
 
-/* line 78, scss/_buttons.scss */
+/* line 84, scss/_buttons.scss */
 .btn-icon-left.small,
 .btn-icon-right.small {
   height: 34px;
@@ -1103,18 +1113,18 @@ i[class$="-hover"] {
   padding: 0 20px 0 0;
 }
 
-/* line 83, scss/_buttons.scss */
+/* line 89, scss/_buttons.scss */
 .btn-icon-left.small {
   padding: 0 20px 0 0;
 }
 
-/* line 85, scss/_buttons.scss */
+/* line 91, scss/_buttons.scss */
 .btn-icon-left.small .icon {
   padding: 0 8px;
   margin-right: 14px;
 }
 
-/* line 91, scss/_buttons.scss */
+/* line 97, scss/_buttons.scss */
 .btn-icon-left.primary,
 .btn-icon-right.primary {
   height: 40px;
@@ -1122,23 +1132,23 @@ i[class$="-hover"] {
   font-size: 16px;
 }
 
-/* line 96, scss/_buttons.scss */
+/* line 102, scss/_buttons.scss */
 .btn-icon-left.primary {
   padding: 0 25px 0 0;
 }
 
-/* line 97, scss/_buttons.scss */
+/* line 103, scss/_buttons.scss */
 .btn-icon-right.primary {
   padding: 0 0 0 25px;
 }
 
-/* line 99, scss/_buttons.scss */
+/* line 105, scss/_buttons.scss */
 .btn-icon-left.primary .icon {
   padding: 0 10px;
   margin-right: 18px;
 }
 
-/* line 105, scss/_buttons.scss */
+/* line 111, scss/_buttons.scss */
 .btn-icon-left.large,
 .btn-icon-right.large {
   height: 52px;
@@ -1146,39 +1156,39 @@ i[class$="-hover"] {
   font-size: 20px;
 }
 
-/* line 110, scss/_buttons.scss */
+/* line 116, scss/_buttons.scss */
 .btn-icon-left.large {
   padding: 0 27px 0 0;
 }
 
-/* line 111, scss/_buttons.scss */
+/* line 117, scss/_buttons.scss */
 .btn-icon-right.large {
   padding: 0 0 0 27px;
 }
 
-/* line 112, scss/_buttons.scss */
+/* line 118, scss/_buttons.scss */
 .btn-icon-left.large .icon {
   padding: 0 14px;
   margin-right: 20px;
 }
 
-/* line 117, scss/_buttons.scss */
+/* line 123, scss/_buttons.scss */
 .btn-icon-right .icon {
   float: right;
 }
 
-/* line 118, scss/_buttons.scss */
+/* line 124, scss/_buttons.scss */
 .btn-icon-right.small {
   padding: 0 0 0 20px;
 }
 
-/* line 119, scss/_buttons.scss */
+/* line 125, scss/_buttons.scss */
 .btn-icon-right.small .icon {
   padding: 0 8px;
   margin-left: 14px;
 }
 
-/* line 124, scss/_buttons.scss */
+/* line 130, scss/_buttons.scss */
 .btn-icon-right.primary {
   height: 44px;
   line-height: 44px;
@@ -1186,13 +1196,13 @@ i[class$="-hover"] {
   font-size: 16px;
 }
 
-/* line 130, scss/_buttons.scss */
+/* line 136, scss/_buttons.scss */
 .btn-icon-right.primary .icon {
   padding: 0 10px;
   margin-left: 18px;
 }
 
-/* line 135, scss/_buttons.scss */
+/* line 141, scss/_buttons.scss */
 .btn-icon-right.large {
   height: 52px;
   padding: 0 0px 0 27px;
@@ -1200,13 +1210,13 @@ i[class$="-hover"] {
   font-size: 20px;
 }
 
-/* line 141, scss/_buttons.scss */
+/* line 147, scss/_buttons.scss */
 .btn-icon-right.large .icon {
   padding: 0 14px;
   margin-left: 20px;
 }
 
-/* line 148, scss/_buttons.scss */
+/* line 154, scss/_buttons.scss */
 .dropdown-stylized.orange,
 .dropdown-stylized-list.orange li a:hover,
 .dropdown.open .dropdown-stylized-list.gray li a:hover {
@@ -1221,7 +1231,7 @@ i[class$="-hover"] {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff671b', endColorstr='#e35722',GradientType=0 ) !important;
 }
 
-/* line 160, scss/_buttons.scss */
+/* line 166, scss/_buttons.scss */
 .dropdown-stylized.blue,
 .dropdown-stylized-list.blue li a:hover {
   color: #fff;
@@ -1235,7 +1245,7 @@ i[class$="-hover"] {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f79fa', endColorstr='#2360e7',GradientType=0 );
 }
 
-/* line 171, scss/_buttons.scss */
+/* line 177, scss/_buttons.scss */
 .dropdown-stylized.gray {
   color: #fff;
   background: #a9a9ad;
@@ -1248,7 +1258,7 @@ i[class$="-hover"] {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a9a9ad', endColorstr='#95959a',GradientType=0 );
 }
 
-/* line 183, scss/_buttons.scss */
+/* line 189, scss/_buttons.scss */
 .dropdown-stylized {
   border-radius: 4px;
   line-height: 36px;
@@ -1256,51 +1266,51 @@ i[class$="-hover"] {
   display: inline-block;
 }
 
-/* line 189, scss/_buttons.scss */
+/* line 195, scss/_buttons.scss */
 .dropdown-stylized .text {
   float: left;
   display: inline-block;
   padding: 0 10px;
 }
 
-/* line 194, scss/_buttons.scss */
+/* line 200, scss/_buttons.scss */
 .dropdown-stylized .icon {
   background: rgba(0, 0, 0, 0.1);
   float: right;
   padding: 0 5px;
 }
 
-/* line 199, scss/_buttons.scss */
+/* line 205, scss/_buttons.scss */
 .dropdown.open .dropdown-stylized.orange {
   background: #ff671b !important;
 }
 
-/* line 200, scss/_buttons.scss */
+/* line 206, scss/_buttons.scss */
 .dropdown.open .dropdown-stylized.blue {
   background: #3f7bfb;
 }
 
-/* line 202, scss/_buttons.scss */
+/* line 208, scss/_buttons.scss */
 .dropdown-stylized-list {
   background: #22344a;
 }
 
-/* line 205, scss/_buttons.scss */
+/* line 211, scss/_buttons.scss */
 .dropdown-stylized-list li a {
   color: #fff;
 }
 
-/* line 208, scss/_buttons.scss */
+/* line 214, scss/_buttons.scss */
 .dropdown-stylized-list .divider {
   background-color: #162230;
 }
 
-/* line 212, scss/_buttons.scss */
+/* line 218, scss/_buttons.scss */
 .btn-group.wide button {
   padding: 6px 25px;
 }
 
-/* line 218, scss/_buttons.scss */
+/* line 224, scss/_buttons.scss */
 .btn-default.green-active.active,
 .btn-default.green-active:active,
 .btn-default.green-active:focus {
@@ -1308,7 +1318,7 @@ i[class$="-hover"] {
   color: #fff;
 }
 
-/* line 223, scss/_buttons.scss */
+/* line 229, scss/_buttons.scss */
 .send-square {
   width: 74px;
   height: 74px;
@@ -1318,17 +1328,17 @@ i[class$="-hover"] {
   transition: all 0.1s ease-in-out;
 }
 
-/* line 231, scss/_buttons.scss */
+/* line 237, scss/_buttons.scss */
 .send-square.blue {
   background: #043cb5;
 }
 
-/* line 232, scss/_buttons.scss */
+/* line 238, scss/_buttons.scss */
 .send-square.blue:hover {
   background: #3e79fb;
 }
 
-/* line 233, scss/_buttons.scss */
+/* line 239, scss/_buttons.scss */
 .send-square.blue:active {
   background: #02236a;
 }
@@ -1466,45 +1476,49 @@ i[class$="-hover"] {
 /* line 25, scss/_forms.scss */
 .input-big {
   height: 44px;
+  width: 100%;
+  display: block;
+  padding: 10px 12px;
+  font-size: 16px;
 }
 
-/* line 26, scss/_forms.scss */
+/* line 32, scss/_forms.scss */
 .input-small {
   height: 36px;
 }
 
-/* line 27, scss/_forms.scss */
+/* line 33, scss/_forms.scss */
 .input-small.orange {
   color: #ff671b;
 }
 
-/* line 29, scss/_forms.scss */
+/* line 35, scss/_forms.scss */
 .input-success {
   border-color: #81cc47;
   color: #81cc47;
   background: url("../../img/input-succes.png") no-repeat 97% center;
 }
 
-/* line 34, scss/_forms.scss */
+/* line 40, scss/_forms.scss */
 .input-alert {
   border-color: #e61515;
   color: #e61515;
   background: url("../../img/input-alert.png") no-repeat 97% center;
 }
 
-/* line 39, scss/_forms.scss */
+/* line 45, scss/_forms.scss */
 .input-disabled {
   border-color: #e9e9eb;
   color: #e9e9eb;
 }
 
-/* line 47, scss/_forms.scss */
+/* line 53, scss/_forms.scss */
 .input-append-pos .cont-inputs {
   background: #fff;
   border: 1px solid #c7c7cc;
   padding: 0 8px;
 }
-/* line 52, scss/_forms.scss */
+/* line 58, scss/_forms.scss */
 .input-append-pos .cont-inputs input[type=text] {
   width: 80%;
   height: 45px;
@@ -1512,20 +1526,41 @@ i[class$="-hover"] {
   color: #949499;
   border: 0;
 }
-/* line 59, scss/_forms.scss */
+/* line 65, scss/_forms.scss */
 .input-append-pos .cont-inputs button {
   float: right;
   margin-top: 8px;
 }
 
-/* line 66, scss/_forms.scss */
+/* line 72, scss/_forms.scss */
+select {
+  background: url("../../img/select_arrow.png") no-repeat right transparent;
+  width: 100%;
+  padding: 0px 46px 0px 12px;
+  font-size: 16px;
+  line-height: 1;
+  border: 1px solid #C7C7CC;
+  border-radius: 0;
+  height: 44px;
+  -webkit-appearance: none;
+  box-shadow: none;
+  color: #ff671b;
+  display: block;
+}
+/* line 85, scss/_forms.scss */
+select.select-sm {
+  display: inline-block;
+  width: auto;
+}
+
+/* line 90, scss/_forms.scss */
 .styled-select {
   width: 100%;
   height: 44px;
   overflow: hidden;
   background: url("../../img/select_arrow.png") 97% 19px #f5f5f7 no-repeat;
 }
-/* line 72, scss/_forms.scss */
+/* line 96, scss/_forms.scss */
 .styled-select select {
   width: 108%;
   height: 44px;
@@ -1542,7 +1577,7 @@ i[class$="-hover"] {
   border-radius: 0;
 }
 
-/* line 89, scss/_forms.scss */
+/* line 113, scss/_forms.scss */
 .checkbox {
   width: 1px;
   height: 1px;
@@ -1554,7 +1589,7 @@ i[class$="-hover"] {
   border: 0;
 }
 
-/* line 99, scss/_forms.scss */
+/* line 123, scss/_forms.scss */
 .checkbox + label.chk-label {
   padding-left: 20px;
   display: inline-block;
@@ -1564,151 +1599,151 @@ i[class$="-hover"] {
   cursor: pointer;
 }
 
-/* line 107, scss/_forms.scss */
+/* line 131, scss/_forms.scss */
 .checkbox.checkbox-default + label.chk-label.checkbox-default {
   line-height: 20px;
   padding-left: 25px;
 }
 
-/* line 112, scss/_forms.scss */
+/* line 136, scss/_forms.scss */
 .chk-label {
   background: url("../../img/sprite-chk.png") no-repeat;
 }
 
-/* line 114, scss/_forms.scss */
+/* line 138, scss/_forms.scss */
 .checkbox.biology + label.chk-label.biology {
   background-position: 0 0;
 }
 
-/* line 115, scss/_forms.scss */
+/* line 139, scss/_forms.scss */
 .checkbox.social + label.chk-label.social {
   background-position: 0 -30px;
 }
 
-/* line 116, scss/_forms.scss */
+/* line 140, scss/_forms.scss */
 .checkbox.physics + label.chk-label.physics {
   background-position: 0 -60px;
 }
 
-/* line 117, scss/_forms.scss */
+/* line 141, scss/_forms.scss */
 .checkbox.history + label.chk-label.history {
   background-position: 0 -90px;
 }
 
-/* line 118, scss/_forms.scss */
+/* line 142, scss/_forms.scss */
 .checkbox.grammar + label.chk-label.grammar {
   background-position: 0 -120px;
 }
 
-/* line 119, scss/_forms.scss */
+/* line 143, scss/_forms.scss */
 .checkbox.math + label.chk-label.math {
   background-position: 0 -150px;
 }
 
-/* line 120, scss/_forms.scss */
+/* line 144, scss/_forms.scss */
 .checkbox.reasoning + label.chk-label.reasoning {
   background-position: 0 -180px;
 }
 
-/* line 121, scss/_forms.scss */
+/* line 145, scss/_forms.scss */
 .checkbox.simulation + label.chk-label.simulation {
   background-position: 0 -210px;
 }
 
-/* line 122, scss/_forms.scss */
+/* line 146, scss/_forms.scss */
 .checkbox.live + label.chk-label.live {
   background-position: 0 -240px;
 }
 
-/* line 123, scss/_forms.scss */
+/* line 147, scss/_forms.scss */
 .checkbox.gray + label.chk-label.gray {
   background-position: 0 -270px;
 }
 
-/* line 125, scss/_forms.scss */
+/* line 149, scss/_forms.scss */
 .checkbox.checkbox-default + label.chk-label.checkbox-default {
   background: url("../../img/chk1.png") no-repeat;
 }
 
-/* line 126, scss/_forms.scss */
+/* line 150, scss/_forms.scss */
 .checkbox.checkbox-default:hover + label.chk-label.checkbox-default:hover {
   background: url("../../img/chk2.png") no-repeat;
 }
 
-/* line 128, scss/_forms.scss */
+/* line 152, scss/_forms.scss */
 .checkbox.checkbox-default:checked:hover + label.chk-label.checkbox-default:hover,
 .checkbox.checkbox-default:checked + label.chk-label.checkbox-default {
   background: url("../../img/chk3.png") no-repeat;
 }
 
-/* line 130, scss/_forms.scss */
+/* line 154, scss/_forms.scss */
 .checkbox.checkbox-default.disabled + label.chk-label.checkbox-default {
   background: url("../../img/chk4.png") no-repeat;
   color: #e9e9eb;
   cursor: default;
 }
 
-/* line 135, scss/_forms.scss */
+/* line 159, scss/_forms.scss */
 .checkbox.checkbox-default.disabled:hover + label.chk-label.checkbox-default:hover {
   background: url("../../img/chk4.png") no-repeat;
 }
 
-/* line 138, scss/_forms.scss */
+/* line 162, scss/_forms.scss */
 .checkbox.biology:checked + label.chk-label.biology {
   background-position: 0 -15px;
 }
 
-/* line 139, scss/_forms.scss */
+/* line 163, scss/_forms.scss */
 .checkbox.social:checked + label.chk-label.social {
   background-position: 0 -45px;
 }
 
-/* line 140, scss/_forms.scss */
+/* line 164, scss/_forms.scss */
 .checkbox.physics:checked + label.chk-label.physics {
   background-position: 0 -75px;
 }
 
-/* line 141, scss/_forms.scss */
+/* line 165, scss/_forms.scss */
 .checkbox.history:checked + label.chk-label.history {
   background-position: 0 -105px;
 }
 
-/* line 142, scss/_forms.scss */
+/* line 166, scss/_forms.scss */
 .checkbox.grammar:checked + label.chk-label.grammar {
   background-position: 0 -135px;
 }
 
-/* line 143, scss/_forms.scss */
+/* line 167, scss/_forms.scss */
 .checkbox.math:checked + label.chk-label.math {
   background-position: 0 -165px;
 }
 
-/* line 144, scss/_forms.scss */
+/* line 168, scss/_forms.scss */
 .checkbox.reasoning:checked + label.chk-label.reasoning {
   background-position: 0 -195px;
 }
 
-/* line 145, scss/_forms.scss */
+/* line 169, scss/_forms.scss */
 .checkbox.simulation:checked + label.chk-label.simulation {
   background-position: 0 -225px;
 }
 
-/* line 146, scss/_forms.scss */
+/* line 170, scss/_forms.scss */
 .checkbox.live:checked + label.chk-label.live {
   background-position: 0 -255px;
 }
 
-/* line 148, scss/_forms.scss */
+/* line 172, scss/_forms.scss */
 .checkbox.gray:checked + label.chk-label.gray {
   background-position: 0 -285px;
 }
 
-/* line 150, scss/_forms.scss */
+/* line 174, scss/_forms.scss */
 .radio-default {
   display: none;
 }
 
-/* line 151, scss/_forms.scss */
+/* line 175, scss/_forms.scss */
 .radio-default + .radio-label {
   width: 20px;
   height: 20px;
@@ -1719,18 +1754,18 @@ i[class$="-hover"] {
   padding: 5px 0 0 25px;
 }
 
-/* line 161, scss/_forms.scss */
+/* line 185, scss/_forms.scss */
 .radio-default:hover + .radio-label:hover {
   background: url("../../img/radio2.png") no-repeat;
 }
 
-/* line 163, scss/_forms.scss */
+/* line 187, scss/_forms.scss */
 .radio-default:checked + .radio-label,
 .radio-default:checked:hover + .radio-label {
   background: url("../../img/radio3.png") no-repeat;
 }
 
-/* line 166, scss/_forms.scss */
+/* line 190, scss/_forms.scss */
 .radio-default.disabled + .radio-label,
 .radio-default.disabled:hover + .radio-label:hover {
   background: url("../../img/radio4.png") no-repeat;
@@ -1738,7 +1773,7 @@ i[class$="-hover"] {
   cursor: default;
 }
 
-/* line 171, scss/_forms.scss */
+/* line 195, scss/_forms.scss */
 label.radio-label {
   width: 90% !important;
 }
@@ -8001,4 +8036,34 @@ aside p {
 /* line 2071, scss/style.scss */
 .container.ui h3 {
   margin: 50px 0 15px 0;
+}
+
+/* line 2079, scss/style.scss */
+img.form-avatar {
+  display: block;
+  padding: 0px;
+  width: 140px;
+  height: 140px;
+  background-color: transparent;
+  border-radius: 70px;
+  -moz-border-radius: 70px;
+  border: 1px solid #c7c7cc;
+  margin-top: 10px;
+}
+
+/* line 2090, scss/style.scss */
+input.form-avatar {
+  text-indent: -9999px;
+  width: 50%;
+  margin: -110px 0 0 170px;
+  position: absolute;
+}
+
+/* line 2097, scss/style.scss */
+.nav-avatar img {
+  width: 36px;
+  height: 36px;
+  margin: 7px;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
 }
