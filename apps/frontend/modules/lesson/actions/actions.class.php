@@ -52,7 +52,7 @@ class lessonActions extends kuepaActions {
         }
 
         //forward 404 if resource not found
-        $this->forward404Unless($this->resource);
+        // $this->forward404Unless($this->resource);
 
         if ($lesson_id != null) {
             $this->lesson->setActualResource($resource_id);
