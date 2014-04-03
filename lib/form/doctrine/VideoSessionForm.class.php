@@ -11,6 +11,8 @@
 class VideoSessionForm extends BaseVideoSessionForm {
 
     public function configure() {
+        sfContext::getInstance()->getConfiguration()->loadHelpers(array('LocalDate'));
+
         unset(
             $this['deleted_at'],
             $this['updated_at'],
@@ -36,17 +38,19 @@ class VideoSessionForm extends BaseVideoSessionForm {
                 )
             )
             ),
-            'scheduled_for' => new sfWidgetFormDateTime(
+            'scheduled_for' => new sfWidgetFormI18nDateTime(
                 array(
+                    "culture" => sfContext::getInstance()->getUser()->getCulture(),
                     "date"  =>
                         array(
                             "format"    => '%day%/%month%/%year%',
                             'years'     => array_combine($anios, $anios)
-                        )
+                    )
                 )
             ),
-            'scheduled_end' => new sfWidgetFormDateTime(
+            'scheduled_end' => new sfWidgetFormI18nDateTime(
                 array(
+                    "culture" => sfContext::getInstance()->getUser()->getCulture(),
                     "date"  =>
                         array(
                             "format"    => '%day%/%month%/%year%',
@@ -67,8 +71,8 @@ class VideoSessionForm extends BaseVideoSessionForm {
         ));
 
         $this->setDefaults(array(
-            "scheduled_for" => date("c", time() ),
-            "scheduled_end" => date("c", strtotime("+1 hour") ),
+            "scheduled_for" => utcToLocalDate(date("c", time() ), 'yyyy-MM-dd HH:mm'),
+            "scheduled_end" => utcToLocalDate(date("c", strtotime("+1 hour") ), 'yyyy-MM-dd HH:mm'),
             'profile_id'    => $this->getObject()->getProfileId(),
             'type'          => VideoSessionService::TYPE_CLASS,
             'platform'      => VideoSessionService::PLATFORM_HANGOUTS,
@@ -87,8 +91,11 @@ class VideoSessionForm extends BaseVideoSessionForm {
             'scheduled_for' => new sfValidatorDateTime(
                 array(
                     'required'  => true,
-                    'min'       => date("c", time() ),
-                    'max'       => date("c", strtotime("+1 month"))
+                    // 'min'       => date("c", time() ),
+                    // 'max'       => date("c", strtotime("+1 month"))
+                    'min'       => utcToLocalDate(date("c", time() ), 'yyyy-MM-dd HH:mm'),
+                    'max'       => utcToLocalDate(date("c", strtotime("+1 month")), 'yyyy-MM-dd HH:mm'),
+                    
                 ),
                 array(
                     'required'  => "Ingrese la fecha y hora en la que se realizará la sesión de video",
@@ -98,8 +105,8 @@ class VideoSessionForm extends BaseVideoSessionForm {
             'scheduled_end' => new sfValidatorDateTime(
                 array(
                     'required'  => true,
-                    'min'       => date("c", strtotime("+1 hour") ),
-                    'max'       => date("c", strtotime("+1 month"))
+                    'min'       => utcToLocalDate(date("c", time() ), 'yyyy-MM-dd HH:mm'),
+                    'max'       => utcToLocalDate(date("c", strtotime("+1 month")), 'yyyy-MM-dd HH:mm'),
                 ),
                 array(
                     'required'  => "Ingrese la fecha y hora en la que se finalizará la sesión de video",
@@ -129,6 +136,14 @@ class VideoSessionForm extends BaseVideoSessionForm {
         if($taintedValues["platform"] == VideoSessionService::PLATFORM_HANGOUTS) {
             $this->getWidget("url")->setAttribute("style", "display:none;");
         }
+    }
+
+    public function save($con = null){
+        //transform date to UTC
+        $this->values['scheduled_for'] = localDateToUtc($this->values['scheduled_for']);
+        $this->values['scheduled_end'] = localDateToUtc($this->values['scheduled_end']);
+        
+        return parent::save($con);
     }
 
     /**

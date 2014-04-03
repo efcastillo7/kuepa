@@ -37,7 +37,7 @@ class userActions extends kuepaActions {
             $profile = $form->save();
 
             //reset culture
-            $this->getUser()->resetCulture();
+            $this->getUser()->resetCulture($profile);
 
             $this->redirect('user/index');
         }

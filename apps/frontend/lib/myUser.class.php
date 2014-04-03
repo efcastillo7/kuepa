@@ -86,8 +86,10 @@ class myUser extends sfGuardSecurityUser {
         }
     }
 
-    protected function setI18N($user){
-        $profile = $user->getProfile();
+    protected function setI18N($profile = null){
+        if($profile == null){
+            $profile = $this->getProfile();
+        }
 
         if($profile->getCulture()){
             $this->setAttribute(self::CULTURE_LANG, $profile->getCulture());
@@ -115,8 +117,8 @@ class myUser extends sfGuardSecurityUser {
         return $this->getAttribute(self::CULTURE_TIMEZONE);
     }
 
-    public function resetCulture(){
-        $this->setI18N($this);
+    public function resetCulture($profile){
+        $this->setI18N($profile);
     }
 
     public function getStyle(){

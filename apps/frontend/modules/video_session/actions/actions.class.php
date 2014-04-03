@@ -22,7 +22,6 @@ class video_sessionActions extends sfActions {
      * @param sfWebRequest $request
      */
     public function executeIndex(sfWebRequest $request) {
-
         $profile = $this->getUser()->getProfile();
         $courses = CourseService::getInstance()->getCourses($this->getUser()->getEnabledCourses());
         
