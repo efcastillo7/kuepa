@@ -34,7 +34,7 @@ class myUser extends sfGuardSecurityUser {
         $this->setUser($user);
         $this->setCourses($this);
         $this->setStyle($user);
-        $this->setI18N($user);
+        $this->setI18N();
     }
     
     public function signOut() {
