@@ -137,7 +137,7 @@ class VideoSessionForm extends BaseVideoSessionForm {
      */
     private function getCoursesForChoiceWidget(){
         
-        $data       = ComponentService::getInstance()->getCoursesForUser( $this->getObject()->getProfile() );
+        $data       = CourseService::getInstance()->getCourses(sfContext::getInstance()->getUser()->getEnabledCourses());
         $as_array   = array();
 
         foreach($data as $course){

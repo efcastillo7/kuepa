@@ -10,12 +10,12 @@
  */
 class video_sessionActions extends sfActions {
 
-      public function preExecute()
-  {
-    parent::preExecute();
-    
-    $this->setLayout("layout_v2");
-  }
+    public function preExecute()
+    {
+        parent::preExecute();
+        
+        $this->setLayout("layout_v2");
+    }
   
     /**
      *
@@ -311,7 +311,7 @@ class video_sessionActions extends sfActions {
      * @return type
      */
     public function executeUpdate_user_googleid(sfWebRequest $request){
-        $id         = $this->getUser()->getProfile();
+        $id         = $this->getUser()->getProfile()->getId();
         $google_id  = $request->getParameter("google_id");
         $response   = Array(
             'status'    => "error",
@@ -319,7 +319,8 @@ class video_sessionActions extends sfActions {
             'code'      => 400
         );
 
-        if($profile){
+        if($id){
+            $profile = Profile::getRepository()->find($id);
             $profile->setGoogleId($google_id);
             $profile->save();
 
