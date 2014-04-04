@@ -1,111 +1,129 @@
 <?php use_helper("Date") ?>
-<h2><?php echo $course->getName() ?></h2>
-
+<?php use_helper("LocalDate") ?>
 <style>
-	table{table-layout: fixed;}
-	table td{overflow: hidden;}
+	/*table{table-layout: fixed;}*/
+	/*table td{overflow: hidden;}*/
 	.unit {background-color: gainsboro;}
 	.bar { text-align: center}
 	.progress { margin-bottom: 0px; }
+	table td{ min-width: 100px;}
+	.bl { border-left: 1px solid #ddd;}
+	.br { border-right: 1px solid #ddd;}
+	.bt { border-top: 1px solid #ddd !important;}
 </style>
 
-<table class="table table-hover">
-	<thead>
-		<tr>
-			<td colspan="2"></td>
-			<?php foreach ($students as $student): ?>
-			<th><?php echo $student->getFullName() ?></th>
-			<?php endforeach ?>
-		</tr>
-		<tr>
-			<td colspan="2">Fecha de Primera Conexión</td>
-			<?php foreach ($students as $student): ?>
-			<th><?php echo format_date($student->getFirstAccess(), "dd/M/yyyy H:mm") ?></th>
-			<?php endforeach ?>
-		</tr>
-		<tr>
-			<td colspan="2">Fecha de Última Conexión</td>
-			<?php foreach ($students as $student): ?>
-			<th><?php echo format_date($student->getLastAccess(), "dd/M/yyyy H:mm") ?></th>
-			<?php endforeach ?>
-		</tr>
-		<tr>
-			<td colspan="2">Tiempo Total Dedicado</td>
-			<?php foreach ($students as $student): ?>
-			<th>
-				<?php if ($student->getTotalTime($sf_data->getRaw('course')) > 0): ?>
-					<?php echo gmdate("H:i:s",$student->getTotalTime($sf_data->getRaw('course'))) ?>
-				<?php else: ?>
-					-
-				<?php endif ?>
-			</th>
-			<?php endforeach ?>
-		</tr>
-		<tr>
-			<td colspan="2">Promedio de Horas por Semana</td>
-			<?php foreach ($students as $student): ?>
-			<th> 
-				<?php echo gmdate("H:i", $student->getWeekTime($sf_data->getRaw('course'))) ?> hs 
-			</th>
-			<?php endforeach ?>
-		</tr>
-		<tr>
-			<td colspan="2">Nota Promedio</td>
-			<?php foreach ($students as $student): ?>
-			<th>-</th>
-			<?php endforeach ?>
-		</tr>
-		<tr>
-			<td colspan="2">Avance General</td>
-			<?php foreach ($students as $student): ?>
-			<td>
-				<div class="progress">
-					<?php if ($student->getComponentStatus($course->getId()) < 35): ?>
-					<div class="bar bar-danger" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>	
-					<?php elseif ($student->getComponentStatus($course->getId()) < 70): ?>
-					<div class="bar bar-warning" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>
-					<?php else: ?>
-					<div class="bar bar-success" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>
-					<?php endif ?>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<h3 class="HelveticaLt"><?php echo $course->getName() ?>
+			<?php if ($groups->count() > 0): ?>
+				<div class="btn-group">
+			  		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			    	<?php if ($group): ?>
+						<?php echo $group->getName() ?>
+		  		  	<?php else: ?>
+						Todos 
+					<?php endif; ?> <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" role="menu">
+				  	<li><a href="<?php echo url_for("stats/class?course_id=" . $course->getId()) ?>">Todos</a></li>
+				    <li class="divider"></li>
+					<?php foreach ($groups as $group): ?>
+						<li><a href="<?php echo url_for("stats/class?course_id=" . $course->getId() ."&group=" . $group->getId()) ?>"><?php echo $group->getName() ?></a></li>
+					<?php endforeach ?>
+				  </ul>
 				</div>
-			</td>
-			<?php endforeach ?>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<th colspan="<?php echo 2+$students->count() ?>"><br> Detalle por Unidad</th>
-		</tr>
-		<?php foreach ($course->getChapters() as $chapter): ?>
-			<tr class="unit">
-				<td colspan="2"><b><?php echo $chapter->getName() ?></b></td>
-				<?php foreach ($students as $student): ?>
-				<td>
-					<?php if ($student->getComponentStatus($chapter->getId()) == 100): ?>
-						<span class="label label-success"><i class='icon-ok'></i></span>
-					<?php endif; ?>
-				</td>
-				<?php endforeach ?>
-			</tr>
-			<?php foreach ($chapter->getLessons() as $lesson): ?>
-			<tr>
-				<td></td><td><?php echo $lesson->getName() ?></td>	
-				<?php foreach ($students as $student): ?>
-				<td>
-					<?php if ($student->getComponentStatus($lesson->getId()) == 100): ?>
-						<i class='icon-ok'></i>
-					<?php elseif($student->getComponentStatus($lesson->getId()) > 0): ?>
-						<?php echo $student->getComponentStatus($lesson->getId()) ?> %
-					<?php else: ?>
-						-
-					<?php endif ?>
-				</td>
-				<?php endforeach ?>
-			</tr>
-			<?php endforeach ?>
+			<?php endif ?>
+			</h3>
 
-		<?php endforeach ?>
-	</tbody>
-	
-</table>
+			<table class="table table-hover table-responsive">
+				<thead>
+					<tr>
+						<td colspan="5"></td>
+						<?php foreach ($course->getChapters() as $chapter): ?>
+						<th colspan="2" class="bl bt"><?php echo $chapter->getName() ?></th>
+						<?php endforeach ?>
+					</tr>
+					<tr>
+						<th>Nombre alumno</th>
+						<th>Progreso</th>
+						<th>Tiempo dedicado</th>
+						<th>Última Conexión</th>
+						<th>Unidades Completadas</th>
+
+						<!-- por unidad -->
+						<?php foreach ($course->getChapters() as $chapter): ?>
+						<th class="bl">Progreso</th>
+						<th>Tiempo Dedicado</th>
+						<?php endforeach ?>
+						<!-- fin por unidad -->
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($students as $student): ?>
+					<tr>
+						<th><?php echo $student->getFullName() ?></th>
+						<td>
+							<div class="progress">
+								<?php if ($student->getComponentStatus($course->getId()) < 35): ?>
+								<div class="bar bar-danger" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>	
+								<?php elseif ($student->getComponentStatus($course->getId()) < 70): ?>
+								<div class="bar bar-warning" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>
+								<?php else: ?>
+								<div class="bar bar-success" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>
+								<?php endif ?>
+							</div>
+						</td>
+						<td>
+							<?php 
+								$time_course = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId()));
+							if($time_course == 0):?>
+							-
+							<?php else: ?>
+							<?php echo gmdate("H:i:s", $time_course) ?>
+							<?php endif; ?>
+						</td>
+						<td><?php echo utcToLocalDate($student->getLastAccess(), "dd/M/yyyy H:mm") ?></td>
+						<td>
+							<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedChilds($course->getId(), $student->getId()) ?>
+							/
+							<?php echo $course->getChapters()->count() ?>
+						</td>
+
+						<!-- por unidad -->
+						<?php foreach ($course->getChapters() as $chapter): $get_status = ($time_course > 0);?>
+						<td class="bl">
+							<?php if (!isset($status[$student->getId()]) || !isset($status[$student->getId()][$chapter->getId()])): ?>
+							<?php $get_status = false; ?>
+							-
+							<?php else: ?>
+							<?php echo $status[$student->getId()][$chapter->getId()] ?> %
+							<?php endif ?>
+						</td>
+						<td>
+							<?php if ($get_status){
+								$time = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId(), 'chapter_id' => $chapter->getId())); 
+							}else{ $time = 0;} ?>
+							<?php 
+							if($time == 0):?>
+							-
+							<?php else: ?>
+							<?php echo gmdate("H:i:s", $time) ?>
+							<?php endif; ?>
+						</td>
+						<?php endforeach ?>
+						<!-- fin por unidad -->
+					</tr>
+					<?php endforeach ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
 				

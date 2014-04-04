@@ -1,5 +1,5 @@
 .input-big,.input-small,.select-big,.textarea-big{
-  padding:0 15px;
+  padding:0 10px;
   border:1px solid $input-border;
   color:$input-text;
 }
@@ -7,7 +7,7 @@
   padding:10px 15px;
 }
 .input-big:focus,.input-small:focus,.select-big:focus,.textarea-big:focus{
-  border:1px solid $input-border-active;
+  border:1px solid $orange;
 }
 
 .input-big::-moz-placeholder,
@@ -150,13 +150,14 @@
 .radio-default{display:none;}
 .radio-default + .radio-label{
   width:20px;
-  height:20px;
+  min-height:20px;
   color:$input-text;
   font-size:14px;
   cursor:pointer;
   background: url("../../img/radio1.png") no-repeat;
   padding: 5px 0 0 25px;
 }
+
 .radio-default:hover + .radio-label:hover {background: url("../../img/radio2.png")  no-repeat;}
 .radio-default:checked + .radio-label,
 .radio-default:checked:hover + .radio-label{background: url("../../img/radio3.png")  no-repeat;}
@@ -167,3 +168,4 @@
   color:$input-disabled;
   cursor: default;
 }
+label.radio-label {width:90% !important;}

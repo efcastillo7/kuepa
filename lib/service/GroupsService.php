@@ -14,6 +14,19 @@ class GroupsService {
         return Groups::getRepository()->find($id);
     }
 
+    public function getGroupsByAuthor($profile_id, $levels = 0){
+        $q = Groups::getRepository()->createQuery('g')
+                ->where('creator_id = ?',$profile_id);
+
+        if(is_array($levels)){
+            $q->andWhereIn('level', $levels);
+        }else{
+            $q->andWhere('level = ?', $levels);
+        }
+
+        return $q->execute();
+    }
+
     public function getGroupsByLevel($level = 0){
         /* TODO: all infinite tree in on query
             SELECT gsg.parent_id AS level1, gsg.child_id AS level2, gsg1.child_id AS level3
@@ -117,7 +130,7 @@ class GroupsService {
         }
         // TODO: Pagination
         // 
-        $q->limit(100);
+        // $q->limit(100);
 
         return($q->execute());
     }
@@ -139,7 +152,7 @@ class GroupsService {
             }
         }
         // TODO: Pagination
-        $q->limit(100);
+        // $q->limit(100);
 
         return $q->execute();
     }

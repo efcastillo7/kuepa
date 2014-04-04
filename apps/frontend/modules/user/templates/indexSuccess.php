@@ -20,6 +20,8 @@
 	          <?php echo $form['birthdate']->renderRow(array('class' => 'selectpicker')); ?>
 	          <?php echo $form['sex']->renderRow(array('class' => 'selectpicker')); ?>
 	          <?php echo $form['avatar']->renderRow(array('class' => 'input-big')); ?>
+	          <?php echo $form['culture']->renderRow(array('class' => 'input-big')); ?>
+	          <?php echo $form['timezone']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['password']->renderRow(array('class' => 'input-big')); ?>
 	          <?php echo $form['repassword']->renderRow(array('class' => 'input-big')); ?>
 	      </div><!-- /col-md-6 -->

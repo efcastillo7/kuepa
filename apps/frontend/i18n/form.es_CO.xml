@@ -46,6 +46,10 @@
         <source>female</source>
         <target>Femenino</target>
       </trans-unit>
+      <trans-unit>
+        <source>Culture</source>
+        <target>Pais</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

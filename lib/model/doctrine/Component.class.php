@@ -22,7 +22,7 @@ class Component extends BaseComponent {
         return Doctrine_Core::getTable('Component');
     }
     
-    public function preSave($event)   {
+    public function postSave($event)   {
         $this->clearCache($event);
     }
     
@@ -36,7 +36,7 @@ class Component extends BaseComponent {
         
         $parents = $this->getParents();
         foreach ( $parents as $parent ) {
-            CacheHelper::getInstance()->deleteByPrefix('Component_getChilds', array( $parents->getId() ));
+            CacheHelper::getInstance()->deleteByPrefix('Component_getChilds', array( $parent->getId() ));
         }
     }
 
@@ -63,6 +63,8 @@ class Component extends BaseComponent {
         }
         
         $this->cacheCompletedStatus[ $profile_id ] = $completedStatus;
+        //added to session
+        sfContext::getInstance()->getUser()->setCompletedStatus($this->getId(), $completedStatus);
     }
     
     public function getCacheCompletedStatus($profile_id = null)
@@ -71,7 +73,8 @@ class Component extends BaseComponent {
             $profile_id = sfContext::getInstance()->getUser()->getProfile()->getId();
         }
         
-        return $this->cacheCompletedStatus[ $profile_id ];
+        // return $this->cacheCompletedStatus[ $profile_id ];
+        return sfContext::getInstance()->getUser()->getCompletedStatus($this->getId());
     }
 
     public static function slugify($text) {
@@ -115,7 +118,7 @@ class Component extends BaseComponent {
      * No debe utilizarse cuando se obtienen los learningPath asociados a un componente ondemand.
      */
     public function isEnabled(){        
-        return true;
+        // return true;
         //TODO: Check because is returning first row
         $lp = $this->getLearningPath()->getFirst();
         if($lp){

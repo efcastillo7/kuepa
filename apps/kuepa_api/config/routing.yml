@@ -27,6 +27,11 @@ learningpath_api:
   options:
     module: learningpath
 
+resource_api:
+  class: RESTRouteCollection
+  options:
+    module: resource
+
 default:
   url:   /:module/:action/*
 

@@ -22,12 +22,7 @@ class layoutComponents extends kuepaComponents {
         $style = "";
 
         if($this->getUser()->isAuthenticated()) {
-            $profile = $this->getProfile();
-            $colleges = $profile->getColleges();
-
-            if($colleges->count()){
-                $style = $colleges->getFirst()->getStyle();
-            }
+            $style = $this->getUser()->getStyle();
         }
 
         $this->style = $style;

@@ -55,6 +55,19 @@ class UserProfileForm extends ProfileForm
         'years' => array_combine($years, $years)
     )));
 
+    //timezone
+    $this->setWidget('timezone', new sfWidgetFormI18nChoiceTimezone());
+    $this->setValidator('timezone', new sfValidatorI18nChoiceTimezone());
+
+    //Culture
+    // $this->setWidget('culture', new sfWidgetFormI18nChoiceLanguage(array('culture' => 'es')));
+    // $this->setValidator('culture', new sfValidatorI18nChoiceLanguage());
+
+    $culture_choices = array("es_AR" => "Argentina", "es_CO" => "Colombia", "es_MX" => "México", "es_PE" => "Perú");
+
+    $this->setWidget('culture', new sfWidgetFormChoice(array('choices' => $culture_choices)));
+    $this->setValidator('culture', new sfValidatorChoice(array('choices' => array_keys($culture_choices))));
+
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'checkPassword')))
     );

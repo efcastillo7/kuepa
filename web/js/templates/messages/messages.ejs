@@ -1,11 +1,13 @@
 <% for ( var i=0; i < messages.length; i++) { %>
-    <div class="each-message <%= messages[i].in ? 'in' : 'out' %>">
+    <div id="<%= messages[i].id %>" class="each-message <%= messages[i].in ? 'in' : 'out' %>">
         <div class="avatar">
             <img src="<%= messages[i].avatar %>">
         </div>
         <div class="chat-box <%= messages[i].in ? 'in' : 'out' %>">
             <%= messages[i].content %>
         </div>
-        <div class="time"><%= messages.created_at %></div>
+        <div class="time"> 
+            <%= messages[i].date %>
+        </div>
     </div>
 <% } %>

@@ -513,6 +513,8 @@ class migrationActions extends sfActions
 
 		//add dummy user for testing
 		CourseService::getInstance()->addTeacher($course->getId(), $profile_id);
+		//add to session
+		$this->getUser()->addEnabledCourses($course->getId());
 		
 
 		foreach ($unidades as $unidad) {

@@ -10,22 +10,29 @@
  */
 class video_sessionActions extends sfActions {
 
+    public function preExecute()
+    {
+        parent::preExecute();
+        
+        $this->setLayout("layout_v2");
+    }
+  
     /**
      *
      * @param sfWebRequest $request
      */
     public function executeIndex(sfWebRequest $request) {
-
         $profile = $this->getUser()->getProfile();
+        $courses = CourseService::getInstance()->getCourses($this->getUser()->getEnabledCourses());
         
         if($this->getUser()->hasCredential("docente")){
-            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $profile );
-            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $profile );
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $profile );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $profile );
+            $this->next_own_video_sessions      = VideoSessionService::getInstance()->getNextVideoSessionsFromProfessor( $profile, $courses );
+            $this->prev_own_video_sessions      = VideoSessionService::getInstance()->getPrevVideoSessionsFromProfessor( $profile, $courses );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForProfessor( $profile, $courses );
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForProfessor( $profile, $courses );
         }else{
-            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $profile );
-            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $profile );
+            $this->next_related_video_sessions  = VideoSessionService::getInstance()->getNextVideoSessionsForUser( $profile, $courses);
+            $this->prev_related_video_sessions  = VideoSessionService::getInstance()->getPrevVideoSessionsForUser( $profile, $courses );
         }
         
         $this->profile_id = $profile->getId();
@@ -303,7 +310,7 @@ class video_sessionActions extends sfActions {
      * @return type
      */
     public function executeUpdate_user_googleid(sfWebRequest $request){
-        $id         = $this->getUser()->getProfile();
+        $id         = $this->getUser()->getProfile()->getId();
         $google_id  = $request->getParameter("google_id");
         $response   = Array(
             'status'    => "error",
@@ -311,7 +318,8 @@ class video_sessionActions extends sfActions {
             'code'      => 400
         );
 
-        if($profile){
+        if($id){
+            $profile = Profile::getRepository()->find($id);
             $profile->setGoogleId($google_id);
             $profile->save();
 

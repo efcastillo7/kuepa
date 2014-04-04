@@ -9,7 +9,7 @@ class courseComponents extends sfComponents {
         } else {
             //set default values
             $course = new Course();
-            $profile_id = $this->getUser()->getGuardUser()->getProfile()->getId();
+            $profile_id = $this->getUser()->getProfile()->getId();
             $course->setProfileId($profile_id);
         }
 

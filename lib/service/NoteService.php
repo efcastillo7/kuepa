@@ -52,8 +52,8 @@ class NoteService {
         $notes = Note::getRepository()->createQuery('n')
                     ->select('n.*')
                     ->innerJoin('n.Profile p')
-                    ->where('profile_id = ? and resource_id = ? and privacy = "private" ', array($profile_id, $resource_id))
-                    ->orderBy('id desc');
+                    ->where('profile_id = ? and resource_id = ? and privacy = ?', array($profile_id, $resource_id, "private"))
+                    ->orderBy('id asc');
 
         if($query_params){
             return $notes->execute($query_params['params'], $query_params['hydration_mode']);    

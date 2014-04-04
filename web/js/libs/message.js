@@ -23,7 +23,10 @@ $(document).ready(function(){
   $(".input-send-message").on("blur",function(){
     $(".ico-message-hover").css("opacity","0");
   });
-
+  
+  $(".cont-scroll").scrollTop($(".cont-scroll").height()*2);
+  $(".cont-scroll").perfectScrollbar('update');
+  
   //filter contacts
   $("#prependedInput").keyup(function(e){
     var val = $(this).val();
@@ -42,37 +45,27 @@ $(document).ready(function(){
   //send
   // $('form#send-message').submit();
 
-  setInterval(function(){
-    if(chat_id != ""){
-      ms.getThread({
-        message_id: chat_id,
-        from_time: last_message,
-        onSuccess: addMessagesToScreen,
-        onError: onError
-      });
-    }
-  }, 3000);
+setInterval(function(){
+   if( typeof chat_id !== "undefined" && chat_id != ""){
+    ms.getThread({
+      message_id: chat_id,
+      from_time: last_message,
+      onSuccess: addMessagesToScreen,
+      onError: onError
+    });
+  }
+}, 3000);
 
   $('form#send-message').submit (function() { 
-    if(chat_id != ""){
-        replyMessage();
+   if(typeof chat_id !== "undefined"){
+         replyMessage();
       }else{
-        sendMessage();
+         sendMessage();
       }
-
+      $("#send-message .input-send-message").val("");
     return false; 
   });
 
-  $("form#send-message input[type=button]").click(function (evt) {
-      evt.preventDefault();
-      
-      //there is an active chat
-      if(chat_id != ""){
-        replyMessage();
-      }else{
-        sendMessage();
-      }
-  });
 
   // Agrega la clase .active al box de mensajes
   $("body").delegate("a.inbox","click",function(){
@@ -94,14 +87,14 @@ $(document).ready(function(){
     $(".load-data").html("");
 
     $(".chat > .head-message > h1").html(name);
-
+    
     last_message = null;
-
-    if(chat_id === ""){
-      active_user = $(this).data("user");
+    if(typeof chat_id === "undefined"){
+      active_user = $(this).data("user");;
       //new message
       $(".loading").fadeOut(200);
     }
+    
   });
 
   //fetch all messages
@@ -110,24 +103,19 @@ $(document).ready(function(){
     onError: onError
   });
 
-  //set interval for unread messages
-  // setInterval(function(){
-  //   ms.getUnreadMessages({
-  //     onSuccess: function(messages){
-  //       for(var i=0; i<messages.length; i++){
-  //         setContactAsUnread(messages[i]);
-  //       }
-  //     },
-  //     onError: onError
-  //   });
-  // }, 3000);
+//  set interval for unread messages
+   setInterval(function(){
+     ms.getUnreadMessages({
+       onSuccess: setContactAsUnread,
+       onError: onError
+     });
+  }, 3000);
 });
 
 //functions for window management
 function sendMessage(){
   //get values
   var text = $("#send-message .input-send-message").val();
-
   //send message
   ms.send({
     recipients: [active_user],
@@ -135,14 +123,13 @@ function sendMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(messages, b, c){
+      
       message = messages[0];
       $("#" + active_user).attr("data-chat", message.id);
       $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
       $("#" + active_user + " .cont-text .abstract").text(message.content);
-      $("#" + active_user).prependTo(".cont-inboxes");
       
       addMessagesToScreen(messages);
-      $("#send-message .input-send-message").val("");
 
       //set active chat
       chat_id = message.id;
@@ -154,35 +141,34 @@ function sendMessage(){
 function replyMessage(){
   //get values
   var text = $("#send-message .input-send-message").val();
-
   //reply message
   ms.reply({
     message_id: chat_id,
     content: text,
     //if ok add to screen
     onSuccess: function(data, b, c){
-      $("a[data-chat='" + chat_id + "']").prependTo(".cont-inboxes");
+        
       $("a[data-chat='" + chat_id + "'] .cont-text .abstract").text(data.content);
 
       last_message = data.created_at;
       addMessageToScreen(data);
-      $("#send-message .input-send-message").val("");
     },
     onError: onError
   });
 }
 
 function setContactAsUnread(message){
-  var elem = $("a[data-chat='" + message.id + "'], a[data-user='" + message.author_id + "']");
-
-  if(elem.length){
+  if(message.length){
+    var elem = $("#"+$.trim(message[0].author_id));
     //set chat id if undefined
     if(elem.data('chat') == ""){
-      elem.attr('data-chat', message.id);
+      elem.attr('data-chat', message[0].id);
     }
+    elem.find(".abstract").text(message[0].content);
     //check for class
     if(!elem.hasClass('unread')){
-      elem.addClass('unread');
+        elem.prependTo(".cont-inboxes");
+        elem.addClass('unread');
     }
     //effect
     $(elem).show("highlight", 3000 );
@@ -198,22 +184,19 @@ function addContacts(contacts){
   $(".cont-inboxes").append(new EJS({url: "/js/templates/messages/contacts.ejs"}).render({contacts: contacts}));
 }
 
-function addMessageToScreen(message){
-  $(".load-data").append(new EJS({url: "/js/templates/messages/message.ejs"}).render({message: message}));
-  $('.cont-scroll').scrollTop($('.load-data').height());
+function addMessageToScreen(message)
+{
+    $(".inbox[data-name='" + message.author.toLowerCase() + "'] .cont-text .abstract").text(message.content);
+    $(".load-data").append(new EJS({url: "/js/templates/messages/message.ejs"}).render({message: message}));
+    $('.cont-scroll').scrollTop($('.load-data').height());
 }
 
 function addMessagesToScreen(messages)
 {
-  //Elimino los mensajes que existen si es que no es el primer mensaje
-  // if(chat_id != "" || messages.length > 1)
-  // {
-  //   $(".load-data .each-message").remove();
-  // }
-
   
   if(messages.length > 0){
     //update time
+    $(".inbox[data-name='" + messages[messages.length-1].author.toLowerCase() + "'] .cont-text .abstract").text(messages[messages.length-1].content);
     last_message = messages[messages.length-1].created_at;
     $(".load-data").append(new EJS({url: "/js/templates/messages/messages.ejs"}).render({messages: messages}));
     $('.cont-scroll').scrollTop($('.load-data').height());
@@ -222,6 +205,6 @@ function addMessagesToScreen(messages)
   $(".loading").fadeOut(200);
 }
 
-function onError(){
+function onError(messages){
   alert('surgió un error');
 }

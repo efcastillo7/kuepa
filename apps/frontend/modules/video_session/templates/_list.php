@@ -1,14 +1,15 @@
 <?php use_helper('Date'); ?>
+<?php use_helper('LocalDate') ?>
 
-<table class="table table-striped">
+<table class="table table-hover">
     <thead>
         <tr>
-            <th width="12"></th>
+            <th></th>
             <?php if ($sf_user->hasCredential("docente")): ?>
-            <th width="12"></th>
+            <th></th>
             <?php endif; ?>
-            <th width="150">Inicio</th>
-            <th width="150">Fin</th>
+            <th>Inicio</th>
+            <th>Fin</th>
             <th>Título</th>
             <th>Descripción</th>
             <th>Curso - Temática</th>
@@ -35,8 +36,8 @@
                     <?php if ($sf_user->hasCredential("docente")): ?>
                     <td><div class="list_icon video_session_visibility <?php echo $video_session->getVisibility(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$visibility_es[$video_session->getVisibility()]; ?>">&nbsp;</div></td>
                     <?php endif; ?>
-                    <td><?php echo format_date($video_session->getScheduledFor(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
-                    <td><?php echo format_date($video_session->getScheduledEnd(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
+                    <td><?php echo utcToLocalDate($video_session->getScheduledFor(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
+                    <td><?php echo utcToLocalDate($video_session->getScheduledEnd(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
                     <td></td>
                     <td><?php echo $video_session->getTitle() ?></td>
                     <td><?php echo $video_session->getDescription() ?></td>
@@ -65,10 +66,11 @@
             endforeach;
         else:
             ?>
-            <tr class="warning">
-                <td colspan="7">
-                    <span class='icon-warning-sign'></span>
-                    No se encontraron sesiones de video
+            <tr class="">
+                <td colspan="8">
+                    <div class="margintop txt-center title5">
+                        No se encontraron sesiones de video
+                    </div>
                 </td>
             </tr>
         <?php endif; ?>

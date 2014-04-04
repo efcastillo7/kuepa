@@ -1,4 +1,5 @@
 <?php use_helper('Date'); ?>
+<?php use_helper("LocalDate") ?>
 
 <table class="table table-striped">
     <thead>
@@ -23,7 +24,7 @@
                 ?>
                 <tr data-id="<?php echo $video_session->getId() ?>" data-scheduled_for="<?php echo $video_session->getScheduledFor() ?>">
                     <td><div class="video_session_status <?php echo $video_session->getStatus(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$status_es[$video_session->getStatus()]; ?>">&nbsp;</div></td>
-                    <td><?php echo format_date($video_session->getScheduledFor(), 'dd-MM-yyyy, HH:mm'); ?>hs</td>
+                    <td><?php echo utcToLocalDate($video_session->getScheduledFor(), 'dd-MM-yyyy, HH:mm'); ?>hs</td>
                     <td><?php echo $video_session->getStudent()->getLastName()." ".$video_session->getStudent()->getFirstName() ?></td>
                     <td><?php echo empty($supportName) ? "Sin ateneder" : $supportName; ?></td>
                     <?php if($type==="pending"): ?>

@@ -10,13 +10,21 @@
  */
 class courseActions extends kuepaActions {
 
+
+    public function preExecute()
+  {
+    parent::preExecute();
+    
+    $this->setLayout("layout_v2");
+  }
+  
     /**
      * Executes index action
      *
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
-        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );        
+        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
     }
 
     public function executeTest(sfWebRequest $request) {
@@ -50,7 +58,7 @@ class courseActions extends kuepaActions {
                 }
             }
         }
-        
+
         ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;   
@@ -72,7 +80,7 @@ class courseActions extends kuepaActions {
             $components[] = $chapter;
         }
         
-        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
+        // ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;
         $this->chapters = $chapters;
@@ -112,8 +120,10 @@ class courseActions extends kuepaActions {
             $course = $form->save();
 
             //add to user
-            if(!$id)
+            if(!$id){
                 CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
+                $this->getUser()->addEnabledCourses($course->getId());
+            }
 
             ComponentService::getInstance()->updateDuration( $course->getId() );
 

@@ -127,6 +127,10 @@
 
 .dropdown-menu.notifications.arrow-right-img::after{right: 22px;}
 
+.navbar-nav.navbar-right:last-child {
+  margin-right:0px;
+}
+
 .navbar-nav.navbar-right > li > .dropdown-menu.notifications{
   width: 420px;
   right: -1px;

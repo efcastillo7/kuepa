@@ -80,9 +80,13 @@ class video_sessionActions extends sfActions {
             $data = VideoSessionService::getInstance()->getVideoSessionFromIdArray($id);
 
             //inject profile id
-            for($i=0; $i< count($data); $i++) {
-                if($data[$i]['platform'] == VideoSessionService::PLATFORM_HANGOUTS && $data[$i]['url'] != ""){
-                    $data[$i]['url'] = VideoSessionService::getInstance()->injectProfileId($data[$i]['url'],$profile_id);
+            foreach ($data as $video) {
+                if($video['platform'] == VideoSessionService::PLATFORM_HANGOUTS){
+                    $video['url'] = VideoSessionService::getInstance()->injectProfileId($video['url'],$profile_id);
+                }else if($video['platform'] == VideoSessionService::PLATFORM_EXTERNAL && $video['url'] != "" && $video['status'] == VideoSessionService::STATUS_PENDING){
+                    if(strtotime($video['scheduled_for']) > time()){
+                        VideoSessionService::getInstance()->startVideoSession($video['id']);
+                    }
                 }
             }
             
@@ -111,6 +115,7 @@ class video_sessionActions extends sfActions {
      */
     public function executeGet(sfWebRequest $request) {
         $profile_id = $this->getUser()->getProfile()->getId();
+        die();
 
         $id = $request->getParameter("id");
 
@@ -121,6 +126,10 @@ class video_sessionActions extends sfActions {
             foreach ($data as $video) {
                 if($video['platform'] == VideoSessionService::PLATFORM_HANGOUTS){
                     $video['url'] = VideoSessionService::getInstance()->injectProfileId($video['url'],$profile_id);
+                }else if($video['platform'] == VideoSessionService::PLATFORM_EXTERNAL){
+                    if(strtotime($video['scheduled_for']) > time()){
+                        VideoSessionService::getInstance()->startVideoSession($video['id']);
+                    }
                 }
             }
             

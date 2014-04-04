@@ -5,8 +5,8 @@
 
 <div class="unit-view">
     <div id="" class="container margintop60">
-        <div id="" class="row">
-            <div class="span12">
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <div class="unit-hd">
                     <div class="lv-icon bg-<?php echo $course->getColor() ?>-alt-1">
                         <img src="<?php echo $course->getThumbnailPath() ?>">
@@ -15,37 +15,42 @@
                     <p class="small1 HelveticaLt"><?php echo $course->getCacheCompletedStatus(); ?>% Completado</p>
                 </div>
             </div>
-            <div class="span12">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <div class="unit-container">
                     <p class="gray4">
                         <?php echo $course->getRaw('description'); ?>
                     </p>
                 </div>
             </div>
-
-            <!-- Lista -->
-            <div class="span12 margintop">
+        </div>
+        <!-- Lista -->
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1 margintop">
                 <div class="unit-container">
                     <ul id="myCollapsible" class="lv-container unstyled" current_id="<?php echo $course->getId() ?>">
                         <!-- Add chapter if has privilege -->
-                        <?php if ($sf_user->hasCredential("docente")): ?>
+                        <?php if ($sf_user->hasCredential("editor")): ?>
                         <li class="subject-item addchapter-button unsortable">
                             <div id="" class="black" type="button">
                                 <p class="title5 HelveticaMd clearmargin">+ Agrear unidad al curso</p>
                             </div>
                             <div>
-                                <div class="row-fluid">
-                                    <div class="span6">
-                                        <p class="gray4 italic">
-                                            Agregar una nueva unidad al curso
-                                        </p>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <p class="gray4 italic">
+                                                Agregar una nueva unidad al curso
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <?php endif; ?>
                         <!-- courses list    -->
-                        <?php foreach ($course->getChapters(true) as $chapter): ?>
+                        <?php foreach ($course->getChapters() as $chapter): ?>
                             <?php if($sf_user->hasCredential("estudiante") && !$chapter->isEnabled()): ?>
                             <?php include_partial("detail_courses_chapter_blocked", array('course' => $course, 'chapter' => $chapter, 'profile' => $profile)) ?>
                             <?php else: ?>
@@ -59,7 +64,7 @@
     </div><!-- /container -->
 </div>
 
-<?php if ($sf_user->hasCredential("docente")): ?>
+<?php if ($sf_user->hasCredential("editor")): ?>
 <?php include_component('chapter', 'Modalform', array('course_id' => $course->getId())) ?>
 <?php include_component('lesson', 'Modalform') ?>
 <?php include_component('resource', 'Modalform') ?>

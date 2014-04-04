@@ -18,5 +18,13 @@ class CollegeService {
            ->setCollegeId($college_id)
            ->save();
     }
+    
+    public function getByProfileId($profile_id){
+        return College::getRepository()
+                    ->createQuery('c')
+                    ->innerJoin('c.ProfileCollege pc')
+                    ->where('pc.profile_id = ?', $profile_id)
+                    ->fetchOne();
+    }
 
 }

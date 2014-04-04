@@ -32,18 +32,34 @@ class LogService {
                 ->orderBy('updated_at desc')
                 ->limit(1)
                 ->fetchOne();
-
+        
         //if exists and is at the same place
         if($last && 
             $last->resource_id == $resource_id && 
             $last->lesson_id == $lesson_id &&
             $last->chapter_id == $chapter_id && 
             $last->course_id == $course_id){
+            
+            $lastPCCS = ProfileComponentCompletedStatus::getRepository()->createQuery('pccs')
+                 ->where('time_view >= ?', $time - sfConfig::get("app_log_window"))
+                 ->andWhere('profile_id = ?', $profile_id)
+                 ->andWhere('component_id = ?', $last->resource_id)
+                 ->andWhere('component_id = ?', $last->lesson_id)
+                 ->andWhere('component_id = ?', $last->chapter_id)
+                 ->andWhere('component_id = ?', $last->course_id)
+                 ->execute();
+
+            foreach ($lastPCCS as $pccs){
+                $pccs->setTimeView($pccs->getTimeView() + ($time - strtotime($last->getUpdatedAt())))
+                     ->save();
+            }
+            
             $last->setUpdatedAt(Date('Y-m-d H:i:s', $time))
                  ->save();
+            
             return $last;
         }
-
+        
         //otherwise create
         $log = new LogViewComponent();
         $log->setType($type)
@@ -53,7 +69,7 @@ class LogService {
             ->setResourceId($resource_id)
             ->setProfileId($profile_id)
             ->save();
-
+        
         return $last;
     }
 
@@ -100,6 +116,44 @@ class LogService {
         }
 
         return null;
+    }
+
+    public function getTotalTimeByRoute($profile_id, $route = array(), $from_date = null, $to_date = null){
+        $q = LogViewComponent::getRepository()->createQuery('lvc')
+                ->select("sum(updated_at - created_at) as total")
+                ->where("profile_id = ?", $profile_id);
+
+        if($from_date){
+            $q->andWhere("created_at >= ?", date("Y-m-d", $from_date));
+        }
+
+        if($to_date){
+            $q->andWhere("created_at < ?", date("Y-m-d", $to_date));
+        }
+
+        if(isset($route['course_id'])){
+            $q->andWhere('course_id = ?', $route['course_id']);
+        }
+
+        if(isset($route['chapter_id'])){
+            $q->andWhere('chapter_id = ?', $route['chapter_id']);
+        }
+
+        if(isset($route['lesson_id'])){
+            $q->andWhere('lesson_id = ?', $route['lesson_id']);
+        }
+
+        if(isset($route['resource_id'])){
+            $q->andWhere('resource_id = ?', $route['resource_id']);
+        }
+
+        $q = $q->fetchOne();
+
+        if($q){
+            return $q->getTotal();
+        }
+
+        return 0;
     }
 
     public function getTotalTime($profile_id, $component = null, $from_date = null, $to_date = null){
@@ -208,7 +262,7 @@ class LogService {
             $q->andWhere('lvc.resource_id in (select child_id from learning_path lp where parent_id = ?)', $component_id);
         }*/
         if($component_id){ 
-            $component = ComponentService::getInstance()->find($component_id);
+            $component = Component::getRepository()->getById($component_id);
             switch ( $component->getType() ) {
                  case Course::TYPE:
                      $q = $q -> andWhere('course_id = ? ',$component_id);

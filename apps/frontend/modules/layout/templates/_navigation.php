@@ -1,23 +1,4 @@
-<!-- MENU -->
-<?php if ($profile): ?>
-    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
-        <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
-        <!-- <a href="#" class="cbp-cal"><i></i>Calendario</a> -->
-        <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
-        <a href="<?php echo url_for("@video_session") ?>" class="cbp-tsk"><i></i>Tutorias</a>
-        <!-- <a href="#" class="cbp-tsk"><i></i>Tareas</a> -->
-        <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
-        <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
-        <!-- <a href="#myModal" role="button" class="cbp-set" data-toggle="modal"><i></i>modal 1</a> -->
-    </nav>
 
-    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
-
-        <div class="title">Camino de Aprendizaje <span id="edit-learning-path"><i class="icon-edit"></i></span></div>
-        <?php include_partial("layout/learning_path_item_template") ?>
-
-    </nav>
-<?php endif; ?>
 
 <!-- navbar -->
 <div class="plataforma-nav navbar navbar-fixed-top">

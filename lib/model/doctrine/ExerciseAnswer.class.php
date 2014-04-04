@@ -16,4 +16,8 @@ class ExerciseAnswer extends BaseExerciseAnswer {
         return Doctrine_Core::getTable('ExerciseAnswer');
     }
 
+    public function getHash(){
+    	return md5($this->getTitle());
+    }
+
 }

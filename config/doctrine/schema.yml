@@ -16,6 +16,8 @@ Profile:
     avatar:                    varchar(100)
     current_module:            varchar(50)
     current_action:            varchar(50)
+    culture:                   varchar(20)
+    timezone:                  varchar(50)
   relations:
     sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
@@ -52,6 +54,18 @@ ProfileLearningPath:
     component_id: {type: integer, primary: true}
     deadline: { type: date }
     position: { type: integer, default: 0 }
+    profile_learning_path_status_id: { type: integer }
+  relations:
+    Status:
+      class: ProfileLearningPathStatus
+      local: profile_learning_path_status_id
+      foreign: id
+      type: one
+
+ProfileLearningPathStatus:
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    name: varchar(100)
 
 ProfileCollege:
   columns:
@@ -71,6 +85,7 @@ College:
     id: { type: integer, primary: true, autoincrement: true }
     name: varchar(255)
     style: string
+    show_status: string
   relations:
     Components:
       class: Component
@@ -147,17 +162,17 @@ Chapter:
     type: column_aggregation
     keyField: type
     keyValue: Chapter
-  relations:
-    Course:
-      refClass: ViewCourseHasChapter
-      local: chapter_id
-      foreign: course_id
-      type: many
-    Lesson:
-      refClass: ViewChapterHasLesson
-      local: chapter_id
-      foreign: lesson_id
-      type: many
+  # relations:
+  #   Course:
+  #     refClass: ViewCourseHasChapter
+  #     local: chapter_id
+  #     foreign: course_id
+  #     type: many
+  #   Lesson:
+  #     refClass: ViewChapterHasLesson
+  #     local: chapter_id
+  #     foreign: lesson_id
+  #     type: many
 
 Lesson:
   inheritance:
@@ -165,17 +180,17 @@ Lesson:
     type: column_aggregation
     keyField: type
     keyValue: Lesson
-  relations:
-    Resource:
-      refClass: ViewLessonHasResource
-      local: lesson_id
-      foreign: resource_id
-      type: many
-    Chapter:
-      refClass: ViewChapterHasLesson
-      local: chapter_id
-      foreign: lesson_id
-      type: many
+  # relations:
+  #   Resource:
+  #     refClass: ViewLessonHasResource
+  #     local: lesson_id
+  #     foreign: resource_id
+  #     type: many
+  #   Chapter:
+  #     refClass: ViewChapterHasLesson
+  #     local: chapter_id
+  #     foreign: lesson_id
+  #     type: many
 
 LearningPath:
   columns:
@@ -365,7 +380,7 @@ ResourceData:
     parent_id: { type: integer }
     duration: float
     level: { type: enum, values: [beginner, intermediate, advance]}
-    word_count: { type: integer },
+    word_count: { type: integer }
     reading_time: { type: integer, default: 0}
   relations:
     Author:
@@ -443,6 +458,8 @@ Exercise:
     random: integer
     results_disabled: boolean
   relations:
+    Chapter: { class: Component, onDelete: CASCADE, local: chapter_id, foreign: id, foreignType: one }
+    Course: { class: Component, onDelete: CASCADE, local: course_id, foreign: id, foreignType: one }
     Questions:
       class: ExerciseQuestion
       refClass: ExerciseHasExerciseQuestion
@@ -480,10 +497,35 @@ ExerciseAnswer:
       foreign: id
       type: one
 
+ExerciseAnswerItem:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: text
+    value: integer
+    exercise_answer_id: integer
+    exercise_question_id: integer
+  relations:
+    Answer:
+      class: ExerciseAnswer
+      local: exercise_answer_id
+      foreignAlias: Items
+      foreign: id
+      type: one
+    Question:
+      class: ExerciseQuestion
+      local: exercise_question_id
+      foreignAlias: Items
+      foreign: id
+      type: one
+
 ExerciseHasExerciseQuestion:
   columns:
     exercise_id: integer
     exercise_question_id: integer
+    exercise_parent_question_id: integer
     position: { type: integer, notnull: true, default: 1}
   relations:
     Exercise:
@@ -494,6 +536,7 @@ ExerciseHasExerciseQuestion:
       local: exercise_question_id
       foreign: id
       type: one
+    ExerciseParentQuestion: {class: ExerciseQuestion, local: exercise_parent_question_id, foreign: id, foreignType: one }
 
 ExerciseAttemp:
   actAs:
@@ -533,6 +576,41 @@ LogViewComponent:
     lesson_id: integer
     resource_id: integer
     type: string
+  relations:
+    Course:
+      class: Component
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      class: Component
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      class: Component
+      local: lesson_id
+      foreign: id
+      type: one
+    Resource:
+      class: Component
+      local: resource_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id
+
+TimeViewComponentByDay:
+  columns:
+    profile_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    resource_id: integer
+    type: string
+    day: date
+    time_view: integer
   relations:
     Course:
       class: Component
@@ -599,6 +677,8 @@ ProfileComponentCompletedStatus:
     efficiency_index: float
     learning_index: float
     time_remaining: integer
+    time_view: integer
+    
   relations:
     Component:
       local: component_id
