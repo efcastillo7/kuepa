@@ -120,8 +120,10 @@ class courseActions extends kuepaActions {
             $course = $form->save();
 
             //add to user
-            if(!$id)
+            if(!$id){
                 CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
+                $this->getUser()->addEnabledCourses($course->getId());
+            }
 
             ComponentService::getInstance()->updateDuration( $course->getId() );
 
