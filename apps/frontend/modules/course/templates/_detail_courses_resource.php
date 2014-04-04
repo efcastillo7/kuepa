@@ -10,7 +10,7 @@
         
 	</a>
     <div class="unit-actions">
-        <?php if ($sf_user->hasCredential("docente")): ?>
+        <?php if ($sf_user->hasCredential("editor")): ?>
             <a class="component_set_status btn btn-mini <?php echo $resource->isEnabled() ? "btn-success" : "btn-danger" ?>" parent_id="<?php echo $lesson->getId() ?>" child_id="<?php echo $resource->getId() ?>"><span class="glyphicon glyphicon-off"></span></a>
             <a class="component_remove_link btn btn-mini" parent_id="<?php echo $lesson->getId() ?>" child_id="<?php echo $resource->getId() ?>"><span class="glyphicon glyphicon-trash"></span></a>
         <?php endif; ?>
