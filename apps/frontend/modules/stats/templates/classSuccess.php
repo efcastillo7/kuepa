@@ -62,9 +62,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php $i=0; foreach ($students as $student): ?>
+					<?php foreach ($students as $student): ?>
 					<tr>
-						<th><?php echo ++$i . " " . $student->getFullName() ?></th>
+						<th><?php echo $student->getFullName() ?></th>
 						<td>
 							<div class="progress">
 								<?php if ($student->getComponentStatus($course->getId()) < 35): ?>
