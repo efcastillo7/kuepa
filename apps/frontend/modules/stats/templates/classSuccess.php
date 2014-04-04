@@ -17,25 +17,26 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12">
-			<h5 class="HelveticaLt"><?php echo $course->getName() ?></h5>
-			<h3 class="HelveticaLt">
-			<?php if ($group): ?>
-				<?php echo $group->getName() ?>
-			<?php else: ?>
-				Todos
-			<?php endif; ?>
-			</h3>
-
-			<?php if ($groups): ?>
-			<div>
-				<h5 class="HelveticaLt">Ver por Grupo</h5>
-					<div><a href="<?php echo url_for("stats/class?course_id=" . $course->getId()) ?>">Todos</a></div>
+			<h3 class="HelveticaLt"><?php echo $course->getName() ?>
+			<?php if ($groups->count() > 0): ?>
+				<div class="btn-group">
+			  		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			    	<?php if ($group): ?>
+						<?php echo $group->getName() ?>
+		  		  	<?php else: ?>
+						Todos 
+					<?php endif; ?> <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" role="menu">
+				  	<li><a href="<?php echo url_for("stats/class?course_id=" . $course->getId()) ?>">Todos</a></li>
+				    <li class="divider"></li>
 					<?php foreach ($groups as $group): ?>
-						<div><a href="<?php echo url_for("stats/class?course_id=" . $course->getId() ."&group=" . $group->getId()) ?>"><?php echo $group->getName() ?></a></div>
+						<li><a href="<?php echo url_for("stats/class?course_id=" . $course->getId() ."&group=" . $group->getId()) ?>"><?php echo $group->getName() ?></a></li>
 					<?php endforeach ?>
-			</div>
+				  </ul>
+				</div>
 			<?php endif ?>
-
+			</h3>
 
 			<table class="table table-hover table-responsive">
 				<thead>
