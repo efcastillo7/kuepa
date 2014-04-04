@@ -130,7 +130,7 @@ class GroupsService {
         }
         // TODO: Pagination
         // 
-        $q->limit(100);
+        // $q->limit(100);
 
         return($q->execute());
     }
@@ -152,7 +152,7 @@ class GroupsService {
             }
         }
         // TODO: Pagination
-        $q->limit(100);
+        // $q->limit(100);
 
         return $q->execute();
     }
