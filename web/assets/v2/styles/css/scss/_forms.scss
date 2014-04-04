@@ -150,7 +150,7 @@
 .radio-default{display:none;}
 .radio-default + .radio-label{
   width:20px;
-  height:20px;
+  min-height:20px;
   color:$input-text;
   font-size:14px;
   cursor:pointer;

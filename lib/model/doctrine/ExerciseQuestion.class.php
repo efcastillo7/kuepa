@@ -47,7 +47,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 //get answers for question
                 $correct = true;
                 foreach($this->getAnswers() as $position => $exercise_answer){
-                    $hash = md5($exercise_answer->getTitle());
+                    $hash = $exercise_answer->getHash();
                     //if is valid
                     if($exercise_answer->getCorrect() == "1"){
                         $is_correct = in_array($hash, $answer);
@@ -56,7 +56,7 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                     }
                     $score[] = array(
                         "answer_id" => $exercise_answer->getId(),
-                        "correct" => ($exercise_answer->getCorrect() == "1"),
+                        "correct" => $is_correct,
                         "score" => $exercise_answer->getValue() * $is_correct
                     );
 

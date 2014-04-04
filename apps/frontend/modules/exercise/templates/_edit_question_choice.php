@@ -44,6 +44,6 @@
     </select>
     <input type="hidden" class="isCorrect pull-right" value="0">
     <input type="text" class="value pull-right span1" value="10">
-    <input type="text" class="title pull-left span8" placeholder="Ingrese aquí el texto">
+    <input type="text" class="title pull-left span8 tinymce" placeholder="Ingrese aquí el texto">
     <div class="clearfix"></div>
 </div>

@@ -3,7 +3,7 @@
   <ul>
     <?php foreach ($question->getAnswers() as $answer): ?>
     <li>
-      <input id="exercise_<?php echo $question->getId() ?>_<?php echo $answer->getId() ?>"  class="checkbox checkbox-default" type="checkbox" name="exercise[<?php echo $exercise->getId() ?>][<?php echo $question->getId() ?>][]" value="<?php echo md5($answer->getTitle()) ?>" />
+      <input id="exercise_<?php echo $question->getId() ?>_<?php echo $answer->getId() ?>"  class="checkbox checkbox-default" type="checkbox" name="exercise[<?php echo $exercise->getId() ?>][<?php echo $question->getId() ?>][]" value="<?php echo $answer->getHash() ?>" />
       <label for="exercise_<?php echo $question->getId() ?>_<?php echo $answer->getId() ?>" class="chk-label checkbox-default">
         <?php echo $answer->getRaw('title') ?>
       </label>
