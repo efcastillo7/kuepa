@@ -24,7 +24,7 @@
             </select>
             <input type="hidden" class="isCorrect pull-right" value="<?php echo $answer->getCorrect(); ?>" name="answer-correct-<?php echo $answer->getId(); ?>">
             <input type="text" name="answer-value-<?php echo $answer->getId(); ?>" class="value pull-right span1" value="<?php echo empty($value) ? "10" : $value; ?>">
-            <input type="text" name="answer-text-<?php echo $answer->getId(); ?>" class="title pull-left span8" value="<?php echo $title; ?>" placeholder="Ingrese aquí el texto">
+            <input type="text" name="answer-text-<?php echo $answer->getId(); ?>" class="title pull-left span8 tinymce" value="<?php echo $title; ?>" placeholder="Ingrese aquí el texto">
             <div class="clearfix"></div>
         </div>
     <?php endforeach; ?>
