@@ -158,4 +158,179 @@ class CourseService {
 
         return $query->execute();
     }
+
+    public function getCourseTree($course_id){
+        $fields = array(
+            "c.id", "c.name", "c.thumbnail", "c.level", "c.color", "c.duration", //"c.description",
+            "ch.id", "ch.name", "ch.thumbnail", "ch.level", "ch.color", "ch.duration", //"ch.description",
+            "l.id", "l.name", "l.thumbnail", "l.level", "l.color", "l.duration", //"l.description",
+            "r.id", "r.name", "r.thumbnail", "r.level", "r.color", "r.duration", //"r.description",
+        );
+
+        $course = Course::getRepository()->createQuery("c")
+                            ->select(implode(",", $fields))
+                            ->leftJoin("c.Chapter ch")
+                            ->leftJoin("ch.Lesson l")
+                            ->leftJoin("l.Resource r")
+                            ->where("c.id = ?", $course_id)
+                            ->fetchArray();
+
+        return $course;
+    }
+
+    public function getCourseAndChaptersAndLessonsAndRresourcesArray($course_id){
+        //get course content
+        $course_db = Doctrine::getTable("Course")->createQuery("c")
+                    ->leftJoin("c.LearningPath lp1")
+                    ->leftJoin("lp1.Child chap")
+                    ->leftJoin("chap.LearningPath lp2")
+                    ->leftJoin("lp2.Child les")
+                    ->leftJoin("les.LearningPath lp3")
+                    ->leftJoin("lp3.Child res")
+                    ->where("c.id = ?", $course_id)
+                    ->orderBy("lp1.position asc, lp2.position asc, lp3.position asc")
+                    ->fetchArray();
+
+        //set array
+        $course = array();
+        $component_properties = array('id', 'name', 'thumbnail', 'level', 'color', 'duration', 'deadline', 'description');
+
+        $course_db = $course_db[0];
+
+        //copy course values
+        //copy default values
+        foreach($component_properties as $comp_prop){
+            $course[$comp_prop] = $course_db[$comp_prop];
+        }
+        $course['chapters'] = array();
+
+        //foreach chapter
+        foreach($course_db['LearningPath'] as $key => $ar_chap){
+            //copy default values
+            $nchapter = array();
+            foreach($component_properties as $comp_prop){
+                $nchapter[$comp_prop] = $ar_chap['Child'][$comp_prop];
+            }
+            //get enabled
+            $nchapter['enabled'] = $ar_chap['enabled'];
+            $nchapter['position'] = $ar_chap['position'];
+            $nchapter['lessons'] = array();
+
+            //foreach lessons
+            foreach ($ar_chap['Child']['LearningPath'] as $key => $ar_les) {
+                $nlesson = array();
+
+                //copy default values
+                foreach($component_properties as $comp_prop){
+                    $nlesson[$comp_prop] = $ar_les['Child'][$comp_prop];
+                }
+
+                $nlesson['enabled'] = $ar_les['enabled'];
+                $nlesson['position'] = $ar_les['position'];
+                $nlesson['resources'] = array();
+
+                //foreach resource
+                foreach($ar_les['Child']['LearningPath'] as $key => $ar_res){
+                    $nresource = array();
+
+                    //copy default values
+                    foreach($component_properties as $comp_prop){
+                        $nresource[$comp_prop] = $ar_res['Child'][$comp_prop];
+                    }
+
+                    $nresource['enabled'] = $ar_res['enabled'];
+                    $nresource['position'] = $ar_res['position'];
+                    $nresource['data'] = array();
+
+                    //get ResourceData manually (Child is not Resource)
+                    $resources_data = ResourceData::getRepository()->createQuery("r")->where("resource_id = ?", $ar_res['Child']['id'])->fetchArray();
+
+                    //if is exercise then moveit to
+                    for ($i=0; $i<count($resources_data);$i++) {
+                        if($resources_data[$i]['type'] == ResourceDataExercise::TYPE){
+                            $exercise = Exercise::getRepository()->createQuery('ex')
+                                            ->innerJoin('ex.Questions q')
+                                            ->innerJoin('q.Answers a')
+                                            ->where('ex.id = ?',$resources_data[$i]['content'])
+                                            ->fetchArray();
+                            
+                            $resources_data[$i]['exercise'] = $exercise;
+                        }
+                    }
+
+                    $nresource['data'] = $resources_data;
+
+                    //add resource to lesson
+                    $nlesson['resources'][] = $nresource;
+                }
+
+                //add lesson to chapter
+                $nchapter['lessons'][] = $nlesson;
+            }
+
+            //add chapter to course
+            $course['chapters'][] = $nchapter;
+        }
+
+        return $course;
+    }
+
+    public function getCourseAndChaptersAndLessonsArray($course_id){
+        //get course content
+        $course_db = Doctrine::getTable("Course")->createQuery("c")
+                    ->leftJoin("c.LearningPath lp1")
+                    ->leftJoin("lp1.Child chap")
+                    ->leftJoin("chap.LearningPath lp2")
+                    ->leftJoin("lp2.Child les")
+                    ->where("c.id = ?", $course_id)
+                    ->orderBy("lp1.position asc, lp2.position asc, lp3.position asc")
+                    ->fetchArray();
+
+        //set array
+        $course = array();
+        $component_properties = array('id', 'name', 'thumbnail', 'level', 'color', 'duration', 'deadline', 'description');
+
+        $course_db = $course_db[0];
+
+        //copy course values
+        //copy default values
+        foreach($component_properties as $comp_prop){
+            $course[$comp_prop] = $course_db[$comp_prop];
+        }
+        $course['chapters'] = array();
+
+        //foreach chapter
+        foreach($course_db['LearningPath'] as $key => $ar_chap){
+            //copy default values
+            $nchapter = array();
+            foreach($component_properties as $comp_prop){
+                $nchapter[$comp_prop] = $ar_chap['Child'][$comp_prop];
+            }
+            //get enabled
+            $nchapter['enabled'] = $ar_chap['enabled'];
+            $nchapter['position'] = $ar_chap['position'];
+            $nchapter['lessons'] = array();
+
+            //foreach lessons
+            foreach ($ar_chap['Child']['LearningPath'] as $key => $ar_les) {
+                $nlesson = array();
+
+                //copy default values
+                foreach($component_properties as $comp_prop){
+                    $nlesson[$comp_prop] = $ar_les['Child'][$comp_prop];
+                }
+
+                $nlesson['enabled'] = $ar_les['enabled'];
+                $nlesson['position'] = $ar_les['position'];
+
+                //add lesson to chapter
+                $nchapter['lessons'][] = $nlesson;
+            }
+
+            //add chapter to course
+            $course['chapters'][] = $nchapter;
+        }
+
+        return $course;
+    }
 }
