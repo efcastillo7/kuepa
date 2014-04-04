@@ -10,9 +10,7 @@
 	.bl { border-left: 1px solid #ddd;}
 	.br { border-right: 1px solid #ddd;}
 	.bt { border-top: 1px solid #ddd !important;}
-
 </style>
-
 
 <div class="container-fluid">
 	<div class="row">
