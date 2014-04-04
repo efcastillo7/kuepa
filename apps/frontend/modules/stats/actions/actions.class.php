@@ -115,10 +115,29 @@ class statsActions extends kuepaActions
   }
 
   public function executeClass(sfWebRequest $request){
-    $course_id = $request->getParameter("course");
+    $course_id = $request->getParameter("course_id");
+    $group_id = $request->getParameter("group");
 
     $this->course = Course::getRepository()->getById($course_id);
-    $this->students = CourseService::getInstance()->getStudentsList($course_id);
+    $this->group = null;
+    
+    $this->groups = GroupsService::getInstance()->getGroupsByAuthor($this->getUser()->getProfile()->getId());
+
+    if($group_id){
+      //check user has that group
+      $this->forward404Unless(in_array($group_id, $this->groups->getPrimaryKeys()));
+
+      //get Group
+      $this->group = GroupsService::getInstance()->find($group_id);
+      $this->forward404Unless($this->group);
+    }
+
+    if($this->group){
+      $this->students = GroupsService::getInstance()->getProfilesInGroup($group_id);
+    }else{
+      $this->students = CourseService::getInstance()->getStudentsList($course_id);
+    }
+
 
     $this->chapters = $this->course->getChapters();
 

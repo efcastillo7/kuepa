@@ -63,6 +63,7 @@ class CourseService {
                 ->innerJoin('sgug.Group sgg')
                 ->andWhere('sgg.name = ?', 'estudiantes')
                 ->andWhere('sgu.is_active = true')
+                ->limit(20)
                 ->execute();
 
         //users from college
@@ -76,6 +77,7 @@ class CourseService {
                 // ->innerJoin("c.CollegeLearningPath clp")
                 ->andWhere('sgu.is_active = true')
                 ->whereIn("pc.college_id", $colleges->getPrimaryKeys())
+                ->limit(20)
                 ->execute();
 
         return $users = $q1->merge($q2);

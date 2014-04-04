@@ -1,6 +1,20 @@
 <?php use_helper("Date") ?>
 <?php use_helper("LocalDate") ?>
-<h2><?php echo $course->getName() ?></h2>
+<h2>
+	<?php echo $course->getName() ?>
+	<?php if ($group): ?>
+		> <?php echo $group->getName() ?>
+	<?php endif ?>
+</h2>
+<?php if ($groups): ?>
+<div>
+	<h4>Ver por Grupo</h4>
+		<div><a href="<?php echo url_for("stats/class?course_id=" . $course->getId()) ?>">Todos</a></div>
+		<?php foreach ($groups as $group): ?>
+			<div><a href="<?php echo url_for("stats/class?course_id=" . $course->getId() ."&group=" . $group->getId()) ?>"><?php echo $group->getName() ?></a></div>
+		<?php endforeach ?>
+</div>
+<?php endif ?>
 
 <style>
 	/*table{table-layout: fixed;}*/
@@ -41,9 +55,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($students as $student): ?>
+		<?php $i=0; foreach ($students as $student): ?>
 		<tr>
-			<th><?php echo $student->getFullName() ?></th>
+			<th><?php echo ++$i . " " . $student->getFullName() ?></th>
 			<td>
 				<div class="progress">
 					<?php if ($student->getComponentStatus($course->getId()) < 35): ?>

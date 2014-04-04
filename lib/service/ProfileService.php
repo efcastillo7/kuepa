@@ -90,6 +90,17 @@ class ProfileService {
                 ->innerJoin('p.ProfileLearningPath plp')
                 ->whereIn('plp.component_id', $components);
 
+        $colleges = $profile->getColleges()->getPrimaryKeys();
+
+        if(count($colleges)){
+          $q2 = Profile::getRepository()->createQuery('p')
+                  ->innerJoin('p.ProfileCollege pc')
+                  ->whereIn('pc.college_id', $colleges);
+
+          return $q->execute()->merge($q2->execute());
+        }
+
+
         return $q->execute();
     }
 
