@@ -23,10 +23,10 @@ class Course extends BaseCourse
     }
     
     public function clearCache($event)
-    {
+    {        
         parent::clearCache($event);
 
-        $collegeLearningPaths = CollegeLearningPath::getRepository()->findOneByComponentId( $this->getId() );
+        $collegeLearningPaths = CollegeLearningPath::getRepository()->findByComponentId( $this->getId() );
         
         foreach ( $collegeLearningPaths as $collegeLearningPath ) {
             CacheHelper::getInstance()->deleteByPrefix('Course_getCoursesForCollege', array( $collegeLearningPath->getCollegeId() ));
@@ -37,8 +37,8 @@ class Course extends BaseCourse
         return $this->getId() . " - " . $this->getName();
     }
 
-    public function getChapters(){
-    	return CourseService::getInstance()->getChaptersList($this->getId());
+    public function getChapters($deep = false){
+    	return CourseService::getInstance()->getChaptersList($this->getId(), $deep);
     }
 
     public function getThumbnailPath(){

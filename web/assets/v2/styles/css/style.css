@@ -1746,7 +1746,7 @@ select.select-sm {
 /* line 175, scss/_forms.scss */
 .radio-default + .radio-label {
   width: 20px;
-  height: 20px;
+  min-height: 20px;
   color: #58585c;
   font-size: 14px;
   cursor: pointer;

@@ -103,12 +103,12 @@
   <?php include_partial('global/analytics') ?>
   <script language="javascript">
     $(document).ready(function(){
-      // $(function(){
-      //   $('[rel="tooltip"]').tooltip();
-      // });
-      // $('input, textarea').placeholder();
+      $(function(){
+        $('[rel="tooltip"]').tooltip();
+      });
+      $('input, textarea').placeholder();
       // $('.selectpicker').selectpicker(); //selects
-      // $('.cont-notifications').perfectScrollbar({wheelSpeed:30});
+      $('.cont-notifications').perfectScrollbar({wheelSpeed:30});
     });
   </script>
 

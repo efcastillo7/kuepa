@@ -5,7 +5,7 @@
  *
  * @package    kuepa
  * @subpackage form
- * @author     fiberbunny
+ * @author     KiBind
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class ResourceForm extends BaseResourceForm {
@@ -16,7 +16,7 @@ class ResourceForm extends BaseResourceForm {
     public function configure() {
         parent::configure();
 
-        unset($this['thumbnail'], $this['color']);
+        unset($this['thumbnail'], $this['color'], $this['lesson_list']);
 
         $this->setWidget('type', new sfWidgetFormInputHidden());
         $this->setWidget('lesson_id', new sfWidgetFormInputHidden());

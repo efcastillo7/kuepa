@@ -13,7 +13,7 @@
         </div> -->
     </div>
     <div class="row mrg-btm-40">
-        <?php include_partial("views/main/grid", array('courses' => $courses)) ?>
+        <?php include_partial("views/main/grid", array('enabled_courses' => $enabled_courses, 'display_courses' => $display_courses)) ?>
     </div>
 </div>
 

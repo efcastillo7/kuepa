@@ -19,6 +19,8 @@
 			        <?php echo $form['first_name']->renderRow(array('class' => 'input-big')); ?>
 			        <?php echo $form['last_name']->renderRow(array('class' => 'input-big')); ?>
 			        <?php echo $form['email_address']->renderRow(array('class' => 'input-big')); ?>
+			        <?php echo $form['culture']->renderRow(array('class' => 'input-big')); ?>
+			        <?php echo $form['timezone']->renderRow(array('class' => 'input-big')); ?>
 			    </div><!-- /col-md-6 -->
 				<div class="col-xs-12 col-md-6">
 			        <?php echo $form['password']->renderRow(array('class' => 'input-big')); ?>

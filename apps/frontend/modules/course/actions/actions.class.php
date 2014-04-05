@@ -24,7 +24,20 @@ class courseActions extends kuepaActions {
      * @param sfRequest $request A request object
      */
     public function executeIndex(sfWebRequest $request) {
-        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );        
+        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
+    }
+
+    public function executeTest(sfWebRequest $request) {
+        $id = $request->getParameter("id");
+
+        $this->course = Course::getRepository()->createQuery("c")
+                            // ->select("*")
+                            ->leftJoin("c.Chapter ch")
+                            ->leftJoin("ch.Lesson l")
+                            ->leftJoin("l.Resource r")
+                            ->where("c.id = ?", $id)
+                            ->fetchOne();
+        // $this->courses = ComponentService::getInstance()->getCoursesForUser($this->getUser()->getGuardUser()->getProfile()->getId());
     }
 
     public function executeDetails(sfWebRequest $request) {
@@ -32,7 +45,6 @@ class courseActions extends kuepaActions {
 
         $this->profile = $this->getProfile();
         $course = Course::getRepository()->getById($id);
-                
         
         $components = array();
         $components[] = $course; 
@@ -46,7 +58,7 @@ class courseActions extends kuepaActions {
                 }
             }
         }
-        
+
         ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;   
@@ -68,7 +80,7 @@ class courseActions extends kuepaActions {
             $components[] = $chapter;
         }
         
-        ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
+        // ComponentService::getInstance()->addCompletedStatus( $components, $this->profile );
         
         $this->course = $course;
         $this->chapters = $chapters;
@@ -108,8 +120,10 @@ class courseActions extends kuepaActions {
             $course = $form->save();
 
             //add to user
-            if(!$id)
+            if(!$id){
                 CourseService::getInstance()->addTeacher($course->getId(), $this->getProfile()->getId());
+                $this->getUser()->addEnabledCourses($course->getId());
+            }
 
             ComponentService::getInstance()->updateDuration( $course->getId() );
 

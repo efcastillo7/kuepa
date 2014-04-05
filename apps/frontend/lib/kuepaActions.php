@@ -37,12 +37,19 @@ class kuepaActions extends sfActions {
         //get action name
         $action = $context->getActionName();
         
-        //update location
+        //update user location
         if($profile = $this->getProfile()){
           $profile->setCurrentModule($module)
                   ->setCurrentAction($action)
                   ->save();
         }
 
-      }
+        //check for course credentials
+        $request = $this->getRequest();
+
+        if(($course_id = $request->getParameter('course_id'))){
+            $this->forward404Unless($this->getUser()->hasCredential('course_' . $course_id));
+        }
+
+    }
 }

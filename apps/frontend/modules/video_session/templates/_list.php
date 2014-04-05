@@ -1,4 +1,5 @@
 <?php use_helper('Date'); ?>
+<?php use_helper('LocalDate') ?>
 
 <table class="table table-hover">
     <thead>
@@ -35,8 +36,8 @@
                     <?php if ($sf_user->hasCredential("docente")): ?>
                     <td><div class="list_icon video_session_visibility <?php echo $video_session->getVisibility(); ?>" data-toggle="tooltip" title="<?php echo VideoSessionService::$visibility_es[$video_session->getVisibility()]; ?>">&nbsp;</div></td>
                     <?php endif; ?>
-                    <td><?php echo format_date($video_session->getScheduledFor(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
-                    <td><?php echo format_date($video_session->getScheduledEnd(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
+                    <td><?php echo utcToLocalDate($video_session->getScheduledFor(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
+                    <td><?php echo utcToLocalDate($video_session->getScheduledEnd(), 'dd-MM-yyyy HH:mm'); ?> hs</td>
                     <td></td>
                     <td><?php echo $video_session->getTitle() ?></td>
                     <td><?php echo $video_session->getDescription() ?></td>

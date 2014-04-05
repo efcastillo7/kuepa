@@ -3,7 +3,7 @@
   <ul>
     <?php foreach ($question->getAnswers() as $answer): ?>
     <li>
-      <input id="exercise_<?php echo $question->getId() ?>_<?php echo $answer->getId() ?>"  class="checkbox checkbox-default" type="checkbox" name="exercise[<?php echo $exercise->getId() ?>][<?php echo $question->getId() ?>][]" value="<?php echo md5($answer->getTitle()) ?>" />
+      <input id="exercise_<?php echo $question->getId() ?>_<?php echo $answer->getId() ?>"  class="checkbox checkbox-default" type="checkbox" name="exercise[<?php echo $exercise->getId() ?>][<?php echo $question->getId() ?>][]" value="<?php echo $answer->getHash() ?>" />
       <label for="exercise_<?php echo $question->getId() ?>_<?php echo $answer->getId() ?>" class="chk-label checkbox-default">
         <?php echo $answer->getRaw('title') ?>
       </label>
@@ -17,13 +17,13 @@
       <div class='answer-ok'><i></i> Correcto</div>
       <div class='answer-error'><i></i> Incorrecto</div>
     </div>
-    <div class="answer-show">
+    <div class="answer-show none">
       <p class="title6">
         La respuesta correcta es:<br>
         <span class="cyan">B. Opción 2 Hover Item</span>
       </p>
     </div>
-    <div class="answer-info">
+    <div class="answer-info none">
       <i></i>
       <p class="title6">
         A. Opción 3 Uncheked Item<br>

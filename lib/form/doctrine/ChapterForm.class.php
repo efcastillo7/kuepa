@@ -5,7 +5,7 @@
  *
  * @package    kuepa
  * @subpackage form
- * @author     fiberbunny
+ * @author     KiBind
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class ChapterForm extends BaseChapterForm
@@ -17,7 +17,7 @@ class ChapterForm extends BaseChapterForm
   {
     parent::configure();
 
-    unset($this['thumbnail'], $this['color']);
+    unset($this['thumbnail'], $this['color'], $this['course_list'], $this['lesson_list']);
 
     $this->setWidget('type', new sfWidgetFormInputHidden());
     $this->setWidget('course_id', new sfWidgetFormInputHidden());

@@ -77,7 +77,7 @@ var url_remove_dp = "<?php echo url_for('lesson/DeleteDependency') ?>";
 var url_get_childs = '<?php echo url_for("component/getChilds")  ?>';
 var dp_defaults = {'course_id' : '<?php echo $course->getId(); ?>',
                 'chapter_id' : '<?php echo $chapter->getId(); ?>',
-                'lesson_id' : '<?php echo $lesson->getId(); ?>'};
+                'lesson_id' : '<?php echo ($lesson) ? $lesson->getId() : ""; ?>'};
 
 </script>
- <script type="text/javascript" src="/js/uno/lesson_dependency.js"></script>
+<script type="text/javascript" src="/js/uno/lesson_dependency.js"></script>

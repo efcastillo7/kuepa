@@ -215,11 +215,12 @@ class VideoSessionService {
      * @param type $profile
      * @return array of \VideoSession
      */
-    public function getNextVideoSessionsFromProfessor($profile) {
+    public function getNextVideoSessionsFromProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsFromProfessor(array(
             "next"    => true,
-            "profile" => $profile
+            "profile" => $profile,
+            "courses" => $courses
         ));
 
     }
@@ -230,11 +231,12 @@ class VideoSessionService {
      * @param type $profile
      * @return \VideoSession
      */
-    public function getPrevVideoSessionsFromProfessor($profile) {
+    public function getPrevVideoSessionsFromProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsFromProfessor(array(
             "prev"      => true,
-            "profile"   => $profile
+            "profile"   => $profile,
+            "courses" => $courses
         ));
     }
 
@@ -272,8 +274,8 @@ class VideoSessionService {
                 ->leftJoin('vs.Course c')
                 ->where('vs.profile_id = ?', $config["profile"]->getId() )
                 ->andWhere("vs.type = 'class'")
-                ->andWhere("vs.scheduled_for {$dateOp} NOW()")
-                ->orderBy("vs.scheduled_for DESC");
+                ->andWhere("vs.scheduled_end {$dateOp} NOW()")
+                ->orderBy("vs.scheduled_end DESC");
 
         return $q->execute();
 
@@ -285,11 +287,12 @@ class VideoSessionService {
      * @param type $profile
      * @return array of \VideoSession
      */
-    public function getNextVideoSessionsForProfessor($profile) {
+    public function getNextVideoSessionsForProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsForProfessor(array(
             "next"       => true,
-            "profile"    => $profile
+            "profile"    => $profile,
+            "courses"    => $courses
         ));
 
     }
@@ -300,11 +303,12 @@ class VideoSessionService {
      * @param type $profile
      * @return \VideoSession
      */
-    public function getPrevVideoSessionsForProfessor($profile) {
+    public function getPrevVideoSessionsForProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsForProfessor(array(
             "prev"      => true,
-            "profile"   => $profile
+            "profile"   => $profile,
+            "courses"    => $courses
         ));
     }
 
@@ -314,11 +318,12 @@ class VideoSessionService {
      * @param type $profile
      * @return array of \VideoSession
      */
-    public function getNextVideoSessionsForUser($profile) {
+    public function getNextVideoSessionsForUser($profile, $courses = null) {
 
         return $this->getVideoSessionsForUser(array(
             "next"       => true,
-            "profile"    => $profile
+            "profile"    => $profile,
+            "courses"    => $courses
         ));
 
     }
@@ -329,11 +334,12 @@ class VideoSessionService {
      * @param type $profile
      * @return \VideoSession
      */
-    public function getPrevVideoSessionsForUser($profile) {
+    public function getPrevVideoSessionsForUser($profile, $courses = null) {
 
         return $this->getVideoSessionsForUser(array(
             "prev"       => true,
-            "profile"    => $profile
+            "profile"    => $profile,
+            "courses"    => $courses
         ));
     }
 
@@ -367,9 +373,13 @@ class VideoSessionService {
             throw new Exception("Profile not specified");
         }
 
-        $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        if(!isset($config["courses"]) || $config["courses"] == null){
+            $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        }else{
+            $courses = $config["courses"];
+        }
 
-        foreach($courses as $course){ $ids[] = $course->getId(); }
+        $ids = $courses->getPrimaryKeys();
 
 
         $q = VideoSession::getRepository()->createQuery("vs")
@@ -413,7 +423,12 @@ class VideoSessionService {
             throw new Exception("Profile not specified");
         }
 
-        $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        if(!isset($config["courses"]) || $config["courses"] == null){
+            $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        }else{
+            $courses = $config["courses"];
+        }
+
 
         foreach($courses as $course){ $courses_ids[]=$course->getId(); }
 
@@ -422,9 +437,9 @@ class VideoSessionService {
                 ->leftJoin('vs.Course c')
                 ->where('c.id IN ('.implode(",", $courses_ids).')')
                 ->andWhere("vs.type = 'class'")
-                ->andWhere("vs.scheduled_for {$dateOp} NOW()")
+                ->andWhere("vs.scheduled_end {$dateOp} NOW()")
                 ->andWhere("vs.visibility = 'public'")
-                ->orderBy("vs.scheduled_for DESC");
+                ->orderBy("vs.scheduled_end DESC");
 
         //Private related video_session where the user is invited
         $qPrivate = VideoSession::getRepository()->createQuery("vs")
@@ -433,7 +448,7 @@ class VideoSessionService {
                 ->where('c.id IN ('.implode(",", $courses_ids).')')
                 ->andWhere("vs.type = 'class'")
                 ->andWhere("vsp.profile_id = ?", $config["profile"]->getId() )
-                ->andWhere("vs.scheduled_for {$dateOp} NOW()");
+                ->andWhere("vs.scheduled_end {$dateOp} NOW()");
 
         return $qPublic->execute()->merge($qPrivate->execute());
 

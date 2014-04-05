@@ -1,4 +1,5 @@
 <?php use_helper("Date") ?>
+<?php use_helper("LocalDate") ?>
 <?php 
 $resource = $log->getComponent();
 $lesson = $resource->getParents()->getFirst();
@@ -6,7 +7,7 @@ $chapter = $lesson->getParents()->getFirst();
 $course = $chapter->getParents()->getFirst();
 ?>
 <li class="<?php echo $log->isSkim() ? "skim-resource" : "" ?>">
-	<time class="cbp_tmtime" datetime="<?php echo $log->getCreatedAt() ?>"><span><?php echo format_date($log->getCreatedAt(), "d") ?></span> <span><?php echo format_date($log->getCreatedAt(), "t") ?></span></time>
+	<time class="cbp_tmtime" datetime="<?php echo $log->getCreatedAt() ?>"><span><?php echo utcToLocalDate($log->getCreatedAt(), "d") ?></span> <span><?php echo utcToLocalDate($log->getCreatedAt(), "t") ?></span></time>
 	<div class="cbp_tmicon cbp_tmicon-phone"></div>
 	<div class="cbp_tmlabel bg-<?php echo $course->getColor()?>">
 		<div class="row-fluid">

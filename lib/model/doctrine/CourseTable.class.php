@@ -17,13 +17,24 @@ class CourseTable extends ComponentTable
         return Doctrine_Core::getTable('Course');
     }
     
-    public function getCoursesForUser($profile_id) {
-        
-        $query = $this->createQuery('c');
-        $query->addWhere('c.Profiles.id = ?', $profile_id);
-        
+    public function getCoursesForUser($profile_id, $college_id = null, $status = array()) {
+        $query = $this->createQuery('c')
+                      ->innerJoin('c.ProfileLearningPath plp')
+                      ->where('plp.profile_id = ?', $profile_id);
+
+        if($college_id){
+            $query->innerJoin("c.CollegeLearningPath clp")
+                  ->andWhere("clp.college_id = ?", $college_id);
+        }
+
+        if(count($status)){
+            $query->andWhereIn("plp.profile_learning_path_status_id",$status);
+        }
+
         return $query->execute();
     }
+
+    
     public function getCoursesForCollege($college_id) {
         
         $query = $this->createQuery('c')

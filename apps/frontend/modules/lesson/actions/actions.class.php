@@ -9,9 +9,6 @@
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class lessonActions extends kuepaActions {
-
-    
-
     /**
      * Executes index action
      *
@@ -19,20 +16,45 @@ class lessonActions extends kuepaActions {
      */
     public function executeIndex(sfWebRequest $request) {
         $this->profile = $this->getProfile();
+
         $course_id = $request->getParameter('course_id');
-        $this->course = Course::getRepository()->getById($course_id);
-        
         $chapter_id = $request->getParameter('chapter_id');
-        $this->chapter = Chapter::getRepository()->getById($chapter_id);
-
         $lesson_id = $request->getParameter('lesson_id');
-        $previous_lesson_id = $request->getParameter('previous_lesson_id');
-        $following_lesson_id = $request->getParameter('following_lesson_id');
-
         $resource_id = $request->getParameter('resource_id');
 
+        $following_lesson_id = $request->getParameter('following_lesson_id');
+        $previous_lesson_id = $request->getParameter('previous_lesson_id');
+
+        // $this->course = Course::getRepository()->getById($course_id);
+        // $this->chapter = Chapter::getRepository()->getById($chapter_id);
+        // $this->lesson = Lesson::getRepository()->getById($lesson_id);
+
+        $components_ids = array($course_id, $chapter_id, $lesson_id);
+
+        if($resource_id != null){
+            $components_ids[] = $resource_id;
+        }
+
+        $components = ComponentService::getInstance()->getComponents($components_ids);
+        //get keys of data fliped for search
+        $keys = array_flip($components->getPrimaryKeys());
+
+        //set
+        $this->course = $components->get($keys[$course_id]);
+        $this->chapter = $components->get($keys[$chapter_id]);
+        $this->lesson = $components->get($keys[$lesson_id]);
+
+        //get resource is not in list
+        if($resource_id != null){
+            $this->resource = $components->get($keys[$resource_id]);
+        }else{
+            $this->resource = $this->lesson->getChildren()->getFirst();
+        }
+
+        //forward 404 if resource not found
+        // $this->forward404Unless($this->resource);
+
         if ($lesson_id != null) {
-            $this->lesson = Lesson::getRepository()->getById($lesson_id);
             $this->lesson->setActualResource($resource_id);
         } else if ($previous_lesson_id != null) {
             $this->lesson = $this->chapter->getNextChild($previous_lesson_id);
@@ -49,15 +71,13 @@ class lessonActions extends kuepaActions {
             $lesson_id = $this->lesson->getId();
         }
                         
-        $this->resource = Resource::getRepository()->getById($this->lesson->getActualResourceId());
-        
         $this->has_next_resource = ($this->lesson->getNextResourceId() != null);
         $this->has_previous_resource = ($this->lesson->getPreviousResourceId() != null);
 
         $this->is_last_resource = $this->lesson->atLastResource();
         $this->is_first_resource = $this->lesson->atFirstResource();
 
-        //update log
+        // //update log
         LogService::getInstance()->viewResource(
                                         $this->getUser()->getProfile()->getId(), 
                                         Resource::TYPE,
@@ -68,16 +88,32 @@ class lessonActions extends kuepaActions {
                                     );        
 
         //set ProfileComponentCompletedStatus
-        ProfileComponentCompletedStatusService::getInstance()->add(
-                                        $this->getProfile()->getId(),
-                                        $this->resource->getId(),
-                                        $this->lesson->getId(),
-                                        $this->chapter->getId(),
-                                        $this->course->getId()
-                                    );
+       if($this->getUser()->getAttribute("ComponentCompleteStatus") == null ||
+            (
+             !in_array($this->resource->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
+             !in_array($this->lesson->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
+             !in_array($this->chapter->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus")) || 
+             !in_array($this->course->getId(),$this->getUser()->getAttribute("ComponentCompleteStatus"))
+            )
+        ){
+           ProfileComponentCompletedStatusService::getInstance()->add(
+                                            $this->getProfile(),
+                                            $this->resource,
+                                            $this->lesson,
+                                            $this->chapter,
+                                            $this->course
+                                        );
+           
+            $ids = array($this->resource->getId(),$this->lesson->getId(), $this->chapter->getId(), $this->course->getId());
+            $this->getUser()->setAttribute("ComponentCompleteStatus", $this->getUser()->getAttribute("ComponentCompleteStatus") == null ? $ids: array_merge( $this->getUser()->getAttribute("ComponentCompleteStatus"), $ids));
+            
+        }
         
-        $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $resource_id);
-        $this->comments = NoteService::getInstance()->getComments($resource_id);
+
+        // TODO: llevar a una
+        $this->notes = NoteService::getInstance()->getNotes($this->getProfile()->getId(), $this->resource->getId());
+        $this->comments = array();
+        // $this->comments = NoteService::getInstance()->getComments($resource_id);
 
         $this->type = $this->resource->getResourceData()->getFirst()->getType();
         
@@ -106,8 +142,9 @@ class lessonActions extends kuepaActions {
             $lesson = $form->save();
 
             //add lesson to chapter
-            if (!$id)
+            if (!$id){
                 ChapterService::getInstance()->addLessonToChapter($values['chapter_id'], $lesson->getId());
+            }
 
             ComponentService::getInstance()->updateDuration( $lesson->getId() );
 
@@ -136,19 +173,50 @@ class lessonActions extends kuepaActions {
         //$course
         //$chapter
         $lesson_id     = $request->getParameter('lesson_id');
-        $this->lesson  = ComponentService::getInstance()->find($lesson_id);
+        $this->lesson  = Component::getRepository()->find($lesson_id);
         $chapter       = ComponentService::getInstance()->getParents($lesson_id);
         $this->chapter = $chapter[0];
         $course        = ComponentService::getInstance()->getParents($this -> chapter->getId());
         $this->course  = $course[0];
 
-        $this->courses = Course::getRepository()
-                           ->createQuery('c')
-                           ->orderBy("c.name")
-                           ->execute();
+        $this->courses = CourseService::getInstance()->getCourses($this->getUser()->getEnabledCourses());
         //$this -> lessons = LessonService::getInstance()->getDependencyPath($lesson_id);
  
     }
+
+    public function executeMove(sfWebRequest $request){
+        //$course
+        //$chapter
+        $lesson_id     = $request->getParameter('lesson_id');
+        $this->lesson  = Component::getRepository()->find($lesson_id);
+        $chapter       = ComponentService::getInstance()->getParents($lesson_id);
+        $this->chapter = $chapter[0];
+        $course        = ComponentService::getInstance()->getParents($this -> chapter->getId());
+        $this->course  = $course[0];
+
+        $this->courses = CourseService::getInstance()->getCourses($this->getUser()->getEnabledCourses());
+    }
+
+    public function executeSaveMove(sfWebRequest $request){
+        $depends_lesson_ids = $request->getParameter('dependency_path');
+
+        //remove from source
+        ChapterService::getInstance()->removeLessonFromChapter($depends_lesson_ids['chapter_id'], $depends_lesson_ids['lesson_id']);
+        //add to target
+        ChapterService::getInstance()->addLessonToChapter($depends_lesson_ids['depends_chapter_id'], $depends_lesson_ids['lesson_id']);
+
+        $response = Array(
+            'status' => "ok",
+            'template' => "",
+            'code' => 200
+        ); 
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->renderText(json_encode($response));
+        }
+
+        return $this->renderText($response['template']);
+     }
 
     /** Ajax request */
     public function executeDependencyPathList(sfWebRequest $request){
