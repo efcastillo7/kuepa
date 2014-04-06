@@ -979,11 +979,11 @@ i[class$="-hover"] {
 /* line 1, scss/_buttons.scss */
 .btn {
   padding: 9px 12px 6px;
-  color: #fff;
+  /*color: #fff;*/
 }
 /* line 4, scss/_buttons.scss */
 .btn:hover {
-  color: #fff;
+  /*color: #fff;*/
 }
 
 /* line 7, scss/_buttons.scss */
