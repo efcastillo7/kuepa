@@ -67,6 +67,10 @@ class Profile extends BaseProfile
         return "/uploads/avatars/";
     }
 
+    public function getAvatarImage(){
+        return $this->getAvatarPath() . $this->getAvatar();
+    }
+
     public function getTotalRecourseViewed(){
     	return LogService::getInstance()->getTotalRecourseViewed($this->getId());
     }
