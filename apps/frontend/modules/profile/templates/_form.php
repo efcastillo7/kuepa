@@ -20,62 +20,25 @@
     </tfoot>
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
-      <tr>
-        <th><?php echo $form['nickname']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['nickname']->renderError() ?>
-          <?php echo $form['nickname'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['first_name']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['first_name']->renderError() ?>
-          <?php echo $form['first_name'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['last_name']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['last_name']->renderError() ?>
-          <?php echo $form['last_name'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['birthdate']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['birthdate']->renderError() ?>
-          <?php echo $form['birthdate'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['sex']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['sex']->renderError() ?>
-          <?php echo $form['sex'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['valid_until']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['valid_until']->renderError() ?>
-          <?php echo $form['valid_until'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['colleges_list']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['colleges_list']->renderError() ?>
-          <?php echo $form['colleges_list'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['components_list']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['components_list']->renderError() ?>
-          <?php echo $form['components_list'] ?>
-        </td>
-      </tr>
+      <?php echo $form ?>
     </tbody>
   </table>
 </form>
+
+<script>
+  $(document).ready(function(){
+    $("#profile_colleges_list").change(function(){ 
+      var val = $(this).val();
+      var parent = $(".checkbox_list").parent();
+
+      $.ajax('<?php echo url_for("profile/getCourses") ?>', {
+            data: {course_id: val},
+            dataType: 'html',
+            type: 'GET',
+            success: function(data) {
+                parent.html(data);
+            }
+        });
+    });
+  });
+</script>

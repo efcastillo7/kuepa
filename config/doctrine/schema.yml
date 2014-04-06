@@ -54,7 +54,7 @@ ProfileLearningPath:
     component_id: {type: integer, primary: true}
     deadline: { type: date }
     position: { type: integer, default: 0 }
-    profile_learning_path_status_id: { type: integer }
+    profile_learning_path_status_id: { type: integer, default: 1 }
   relations:
     Status:
       class: ProfileLearningPathStatus

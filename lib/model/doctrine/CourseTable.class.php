@@ -37,12 +37,16 @@ class CourseTable extends ComponentTable
     
     public function getCoursesForCollege($college_id) {
         
+        return $this->getCoursesForCollegeQuery($college_id)->execute();
+    }
+
+    public function getCoursesForCollegeQuery($college_id) {
         $query = $this->createQuery('c')
                     ->innerJoin('c.CollegeLearningPath clp')
                     ->where('clp.college_id = ?', $college_id);
         
         $query->useResultCache(true, null, cacheHelper::getInstance()->genKey('Course_getCoursesForCollege', array($college_id)) );
         
-        return $query->execute();
+        return $query;
     }
 }

@@ -3,8 +3,12 @@
   <file original="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit>
-        <source>Nickname</source>
+        <source>Username</source>
         <target>Nombre de Usuario</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Nickname</source>
+        <target>Sobrenombre</target>
       </trans-unit>
       <trans-unit>
         <source>First name</source>

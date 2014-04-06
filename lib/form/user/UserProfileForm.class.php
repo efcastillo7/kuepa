@@ -60,9 +60,6 @@ class UserProfileForm extends ProfileForm
     $this->setValidator('timezone', new sfValidatorI18nChoiceTimezone());
 
     //Culture
-    // $this->setWidget('culture', new sfWidgetFormI18nChoiceLanguage(array('culture' => 'es')));
-    // $this->setValidator('culture', new sfValidatorI18nChoiceLanguage());
-
     $culture_choices = array("es_AR" => "Argentina", "es_CO" => "Colombia", "es_MX" => "México", "es_PE" => "Perú");
 
     $this->setWidget('culture', new sfWidgetFormChoice(array('choices' => $culture_choices)));

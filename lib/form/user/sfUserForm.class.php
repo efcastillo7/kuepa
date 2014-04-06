@@ -18,6 +18,11 @@ class sfUserForm extends sfGuardUserForm
   		  $this['last_login'], $this['is_super_admin']
   	);
 
+    $decorator = new sfWidgetFormSchemaFormatterLocal($this->getWidgetSchema(), $this->getValidatorSchema());
+    $this->widgetSchema->addFormFormatter('custom', $decorator);
+    $this->widgetSchema->setFormFormatterName('custom');
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form');
+
   	$this->setWidget("password", new sfWidgetFormInputPassword());
 
   	$this->widgetSchema['groups_list']->addOption('expanded', true);
