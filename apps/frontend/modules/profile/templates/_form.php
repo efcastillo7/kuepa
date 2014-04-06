@@ -30,9 +30,10 @@
     $("#profile_colleges_list").change(function(){ 
       var val = $(this).val();
       var parent = $(".checkbox_list").parent();
+      var profile_id = <?php echo $form->getObject()->isNew() ? "null" : $form->getObject()->getId() ?>;
 
       $.ajax('<?php echo url_for("profile/getCourses") ?>', {
-            data: {course_id: val},
+            data: {course_id: val, id: profile_id},
             dataType: 'html',
             type: 'GET',
             success: function(data) {
