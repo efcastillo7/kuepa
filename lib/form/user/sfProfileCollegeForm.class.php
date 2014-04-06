@@ -33,10 +33,15 @@ class sfProfileCollegeForm extends BaseProfileForm
         'years' => array_combine($years, $years)
     )));
 
-    if(!$this->isNew() && ($college = $this->getObject()->getColleges()->getFirst())){
+    $college_id = $this->getOption('college_id');
+
+    if(!$this->isNew() && !$college_id && ($college = $this->getObject()->getColleges()->getFirst())){
       $component_widget = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'expanded' => true, 'model' => 'Component', 'query' => CourseTable::getInstance()->getCoursesForCollegeQuery($college->getId())));
     }else{
-      $component_widget = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'expanded' => true, 'model' => 'Component', 'query' => CourseTable::getInstance()->getCoursesForCollegeQuery(2)));
+      if(!$college_id){
+        $college_id = 2;
+      }
+      $component_widget = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'expanded' => true, 'model' => 'Component', 'query' => CourseTable::getInstance()->getCoursesForCollegeQuery($college_id)));
     }
 
     $this->setWidget('components_list', $component_widget);

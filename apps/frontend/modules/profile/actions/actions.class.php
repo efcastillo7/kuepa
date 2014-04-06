@@ -11,16 +11,16 @@
 class profileActions extends sfActions
 {
   public function executeGetCourses(sfWebRequest $request){
-    $course_id = $request->getParameter("course_id");
+    $college_id = $request->getParameter("college_id");
 
     if($request->getParameter('id')){
       $this->forward404Unless($profile = Doctrine_Core::getTable('profile')->find(array($request->getParameter('id'))), sprintf('Object profile does not exist (%s).', $request->getParameter('id')));
-      $form = new sfProfileCollegeForm($profile);
+      $form = new sfProfileCollegeForm($profile, array('college_id' => $college_id));
 
       return $this->renderText($form['components_list']);
     }
 
-    $form = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'expanded' => true, 'model' => 'Component', 'query' => CourseTable::getInstance()->getCoursesForCollegeQuery($course_id)));
+    $form = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'expanded' => true, 'model' => 'Component', 'query' => CourseTable::getInstance()->getCoursesForCollegeQuery($college_id)));
 
     return $this->renderText($form->render("profile[colleges_list]"));
   }
