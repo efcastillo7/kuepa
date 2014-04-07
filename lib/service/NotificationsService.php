@@ -26,17 +26,7 @@ class NotificationsService {
      * @return Doctrine_Collection
      */
     public function getUnreadNotificationsForUser($profile_id,$limit=null){
-        $query = Notification::getRepository()->createQuery('n')
-                    ->innerJoin("n.Profile p")
-                    ->innerJoin("n.NotificationAction na")
-                    ->leftJoin("na.Profile p2")
-                    ->where('n.clicked_at IS NULL')
-                    ->andWhere("n.seen !=1")
-                    ->andWhere("p.id = ?", $profile_id )
-                    ->orderBy('n.created_at desc')
-                    ->limit($limit);
-
-        return $query->execute();
+        return Notification::getRepository()->getUnreadNotificationsForUser($profile_id, $limit);
     }
 
     /**
@@ -45,13 +35,7 @@ class NotificationsService {
      * @return Doctrine_Collection
      */
     public function getUnreadNotificationsCountForUser($profile_id){
-        $query = Notification::getRepository()->createQuery('n')
-                    ->innerJoin("n.Profile p")
-                    ->andWhere("n.seen IS NULL")
-                    ->andWhere("p.id = ?", $profile_id )
-                    ->orderBy('n.created_at desc');
-
-        return $query->count();
+        return Notification::getRepository()->getUnreadNotificationsCountForUser($profile_id);
     }
 
     /**
@@ -60,24 +44,7 @@ class NotificationsService {
      * @return Doctrine_Collection
      */
     public function getNotificationsForUser($profile_id,$limit=null,$last_id=null){
-        $query = Notification::getRepository()->createQuery('n')
-                    ->innerJoin("n.Profile p")
-                    ->innerJoin("n.NotificationAction na")
-                    ->leftJoin("na.Profile p2")
-                    ->where("p.id = ?", $profile_id );
-
-        if($limit){
-            $query->limit($limit);
-        }
-
-        if($last_id){
-            $query->andWhere("n.id > ?",$last_id)
-                  ->orderBy('n.created_at asc');
-        }else{
-            $query->orderBy('n.created_at desc');
-        }
-
-        return $query->execute();
+        return Notification::getRepository()->getNotificationsForUser($profile_id, $limit, $last_id);
     }
 
     /**
@@ -96,6 +63,9 @@ class NotificationsService {
             ->andWhere('profile_id = ?', $profile_id)
             ->execute();
 
+        //clear cache
+        Notification::clearCache($profile_id);
+
         return $this;
     }
 
@@ -113,6 +83,8 @@ class NotificationsService {
             ->set('seen', $read)
             ->where('profile_id = ?', $profile_id)
             ->execute();
+
+        Notification::clearCache($profile_id);
 
         return $this;
     }

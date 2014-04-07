@@ -29,7 +29,7 @@
 
         <a id="drop1" href="#" role="button" class="nav-btn nav-btn-prfl dropdown-toggle" data-toggle="dropdown">
           <span class="nav-avatar">
-            <img src="uploads/avatars/default.png" class="">
+            <img src="<?php echo $profile->getAvatarImage() ?>" class="">
           </span>
         </a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">

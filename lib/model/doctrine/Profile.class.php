@@ -7,12 +7,12 @@
  * 
  * @package    kuepa
  * @subpackage model
- * @author     fiberbunny
+ * @author     KiBind
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 class Profile extends BaseProfile
 {
-    private $_total_time, $_first_access, $_last_access;
+    private $_total_time, $_first_access, $_last_access, $_completed_status = array();
 
 	/**
      * 
@@ -67,6 +67,10 @@ class Profile extends BaseProfile
         return "/uploads/avatars/";
     }
 
+    public function getAvatarImage(){
+        return $this->getAvatarPath() . $this->getAvatar();
+    }
+
     public function getTotalRecourseViewed(){
     	return LogService::getInstance()->getTotalRecourseViewed($this->getId());
     }
@@ -76,7 +80,10 @@ class Profile extends BaseProfile
     }
 
     public function getComponentStatus($component_id){
-        return ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getId(), $component_id);
+        if(!isset($this->_completed_status[$component_id])){
+            $this->_completed_status[$component_id] = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getId(), $component_id);
+        }
+        return $this->_completed_status[$component_id];
     }
 
     public function getFriends(){

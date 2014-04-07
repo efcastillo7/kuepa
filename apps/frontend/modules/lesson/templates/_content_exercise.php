@@ -8,7 +8,12 @@
   <section class="data-exercise two-columns clearpadding" data-spy="scroll" data-target="#navbar-scroll">
 
     <div class="content margintop100">
-      <h2><?php echo $exercise->getTitle() ?></h2>
+    <?php if ($sf_user->hasCredential("editor")): ?>
+    <a href="<?php echo url_for("@exercise_edit?exercise_id=" . $exercise->getId()) ?>" class="btn btn-primary btn-orange">Editar</a>
+    <?php endif; ?>
+      <h2>
+        <?php echo $exercise->getTitle() ?>
+      </h2>
       <section class="breadcrum gray">
         <div class="icon bg-<?php echo $course->getColor()?>-alt-1">
           <img src="<?php echo $course->getThumbnailPath() ?>">
@@ -50,8 +55,6 @@
             var questions = response.data.questions;
             var total_time = new Date().getTime() - init_time;
             total_time = (total_time/60000).toFixed(1);
-
-            console.log(response);
 
             for (var key in questions){
               var objs = $("div#answer_" + exercise.id + "_" + key);

@@ -1,0 +1,344 @@
+[name='exercise[start_time][month]'],
+[name='exercise[start_time][day]'],
+[name='exercise[start_time][hour]'],
+[name='exercise[start_time][minute]'],
+[name='exercise[end_time][month]'],
+[name='exercise[end_time][day]'],
+[name='exercise[end_time][hour]'],
+[name='exercise[end_time][minute]']{
+    width: 65px;
+}
+
+
+[name='exercise[start_time][year]'],
+[name='exercise[end_time][year]']{
+    width:80px;
+}
+
+.actions-bar{
+    .container {
+        background: #f5f5f5;
+        border-radius: 3px;
+        border: solid 1px #f0f0f0;
+        margin-bottom: 20px;
+        padding:5px;
+    }
+}
+
+.exercises.container{
+    .title3{
+        margin-bottom:20px;
+    }
+}
+
+.exercise-edit-header{
+    .count, .question-type {
+        font-size: 24px;
+        color: #cccccc;
+        line-height: 35px;
+
+        .number{
+            color: #888;
+            margin-right: 5px;
+
+            &:empty{
+                margin-right: 0px;
+            }
+        }
+    }
+
+    &.affix{
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        margin-left: -470px;
+        width: 920px;
+        background: rgba(255,255,255,0.9);
+        border: solid 1px #eee;
+        padding: 10px;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        z-index: 2;
+    }
+}
+
+.ignore{
+    display:none;
+}
+
+.form-header {
+    background: #f7f7f7;
+    padding: 5px 10px;
+    border: solid 1px #f0f0f0;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    color: #888;
+
+    .title5 {
+        margin-top: 2px;
+    }
+}
+
+.common-form {
+    border: solid 1px #eaeaea;
+    padding: 20px 0 0 0;
+}
+
+.answer-container{
+    &.true-false{
+        .check{
+            display:none;
+        }
+
+        .true_false{
+            display:block !important;
+            margin: 5px 5px 0 0;
+        }
+    }
+}
+
+.true_false{
+    display:none !important;
+}
+
+.answer-list{
+    border-left: solid 5px #ddd !important;
+
+    &.answer, &.relation{
+
+        .value {
+            width: 20px;
+            text-align: center;
+        }
+
+        select {
+            margin-top: 4px;
+            margin-right: 10px;
+        }
+    }
+
+    .title, .value {
+        font-size: 16px !important;
+        border: solid 1px #ddd;
+        padding: 5px 10px;
+        margin: 4px 10px 0px 0px;
+        border-radius: 5px;
+        line-height: normal !important;
+    }
+
+    .order {
+        margin-top: 5px;
+    }
+
+    select {
+        margin-top: 0px;
+    }
+}
+
+.question-list, .answer-list, .tool-item {
+    &.loading {
+        opacity: 0.5;
+        cursor: progress;
+
+        .title {
+            color: #ccc;
+            font-style: italic;
+        }
+    }
+}
+
+.question-list, .answer-list {
+
+    &.correct{
+        border-color: #45D166;
+        border-left: solid 5px #45D166 !important;
+        background: #E5FAE4;
+    }
+
+    background: #fff;
+    border: solid 1px #ddd;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 10px 0;
+
+    .title {
+        font-size: 20px;
+        line-height: 38px;
+        color: #555;
+    }
+
+    .icon{
+        margin: 12px 10px 0 5px;
+        opacity: 0.2;
+    }
+
+    .handle{
+        cursor: n-resize;
+    }
+
+    .order {
+        color: #ccc;
+        font-size: 18px;
+        margin: 10px 10px 0 5px;
+    }
+
+    .label {
+        margin: 12px 10px 0 0;
+    }
+
+    [contenteditable] {
+        padding: 0 10px;
+        background: rgba(255,255,255,0.8);
+        border-radius: 5px;
+        border: solid 1px #ddd;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.1) inset;
+    }
+
+}
+
+
+#exerciseQuestions{
+
+    overflow-x: hidden;
+    min-height: 400px;
+
+    .scroll > div{
+        float:left;
+    }
+
+}
+
+.exercise-edit-header {
+    margin-bottom: 20px;
+}
+
+.btn-small{
+    padding:0 10px !important;
+    font-weight: normal !important;
+    text-transform: none !important;
+}
+
+.instructions {
+    padding: 10px;
+    border: solid 1px #ECE6A3;
+    background: #FEFFF9;
+    border-radius: 0px 5px 5px 0px;
+    margin: 10px 0;
+    text-align: center;
+    border-left: solid 10px #ece6a3;
+}
+
+.form-errors {
+    padding: 10px;
+    border: solid 1px #E46666;
+    background: #FFF2F2;
+    margin: 10px 0 20px;
+    border-radius: 5px;
+
+    &:empty{
+        display:none;
+    }
+}
+
+#stage {
+    display: block;
+    width: 540px;
+    height: 405px;
+    border: dashed 1px #ccc;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+
+#image-edition{
+
+    margin-top:10px;
+
+    .tool-header {
+        background: #eaeaea;
+        border: solid 1px #ccc;
+        padding: 5px 10px 7px;
+        color: #888;
+        text-shadow: 0 1px #fff;
+
+        .tool-item {
+            margin-top: 9px;
+            border: none;
+        }
+    }
+
+    .tool-item {
+        border: solid 1px #eaeaea;
+        border-radius: 5px;
+
+        &.active{
+            border-color: #45D166;
+            background: #E5FAE4;
+        }
+
+        .color, input, select {
+            margin-top: 5px;
+        }
+
+        .color{
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+
+        .value {
+            width: 20px;
+            text-align: center;
+        }
+
+        .zone-color-1{
+            background-color: #4271B5;
+        }
+
+        .zone-color-2{
+            background-color: #FE8E16;
+        }
+
+        .zone-color-3{
+            background-color: #3B3B3B;
+        }
+
+        .zone-color-4{
+            background-color: #BCD631;
+        }
+
+        .zone-color-5{
+            background-color: #D63173;
+        }
+
+        .zone-color-6{
+            background-color: #D7D7D7;
+        }
+
+        .zone-color-7{
+            background-color: #90AFDD;
+        }
+
+        .zone-color-8{
+            background-color: #AF8640;
+        }
+
+        .zone-color-9{
+            background-color: #4F9242;
+        }
+
+        .zone-color-10{
+            background-color: #F4EB24;
+        }
+
+        .zone-color-11{
+            background-color: #ED2024;
+        }
+
+        .zone-color-12{
+            background-color: #45C7F0;
+        }
+    }
+}

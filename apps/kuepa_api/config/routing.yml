@@ -27,6 +27,19 @@ learningpath_api:
   options:
     module: learningpath
 
+learningpath_delete:
+  url: /learning_path/:parent_id/:child_id
+  params: {module: learning_path, action: delete}
+  requirements:
+    parent_id: \d+
+    child_id: \d+
+    sf_method: [delete]
+
+resource_api:
+  class: RESTRouteCollection
+  options:
+    module: resource
+
 default:
   url:   /:module/:action/*
 

@@ -28,7 +28,7 @@ class MailService {
 
 
   public function save($params = array()){
-     if( (int)$params['id'] > 0 ) {
+     if( isset($params['id']) && (int)$params['id'] > 0 ) {
        $mail_message = self::find($params['id']);
      }else{
        $mail_message = new MailMessage();
@@ -50,13 +50,13 @@ class MailService {
     $mail->delete();
   }
 
-  public function setTransport(){
+  public function setTransport($send_protocol = ""){
     /**
      *  We can set the mail smtp server dinaamically
      *  Using db params. Multiple SMTP servers
      */
-      $send_protocol = ""; //specific smtp configuration Configure in db on yml
-      if( $send_protocol == "smpt" ){
+      //specific smtp configuration Configure in db on yml
+      if( $send_protocol == "smtp" ){
         $this->mailer->isSMTP();      // Set mailer to use SMTP
         $this->mailer->Host = 'smtp.gmail.com';  // Specify main and backup server
         $this->mailer->Port = 587;
@@ -135,7 +135,7 @@ class MailService {
       $mail = $this->find($id);
       if ( $mail -> getStatus() == "pending"){
         $this->initMailer();
-        $this->setTo( array( $mail->getEmail() => '' ) );
+        $this->mailer->AddAddress( $mail->getEmail(), 'Name' );
 
         $this->mailer->Subject = $mail->getSubject();//$mail->getSubject(); //Add field to store content;
         //$this->mailer->Body    = sfOutputEscaperArrayDecorator::unescape( $mail->getContent() );
@@ -147,6 +147,7 @@ class MailService {
         if(!$this->mailer->send()) {
           //TODO: ADD Field to save error
           echo $error_msg = 'Message could not be sent. Mailer Error: ' . $this->mailer->ErrorInfo;
+          die();
             return($error_msg);
          }else{
           $mail->setSentAt('NOW');

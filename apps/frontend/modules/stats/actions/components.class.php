@@ -19,7 +19,7 @@ class statsComponents extends sfComponents
 
       //graph
       $from_date = strtotime($first_access);
-      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
+      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile->getId(), $course_id);
       
       $days_remaining = stdDates::day_diff($from_date,$to_date);
       $working_days = stdDates::weekday_diff($from_date,$to_date);
@@ -88,7 +88,7 @@ class statsComponents extends sfComponents
 
       //graph
       $from_date = strtotime($first_access) - 24*3600;
-      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
+      $to_date = ComponentService::getInstance()->getDeadlineForUser($profile->getId(), $course_id);
       
       $weeks_remaining = stdDates::day_diff($from_date,$to_date) / 7;
       $weeks_from_started = stdDates::day_diff($from_date,time()) / 7;

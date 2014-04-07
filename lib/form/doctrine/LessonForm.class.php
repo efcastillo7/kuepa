@@ -5,7 +5,7 @@
  *
  * @package    kuepa
  * @subpackage form
- * @author     fiberbunny
+ * @author     KiBind
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class LessonForm extends BaseLessonForm
@@ -17,7 +17,8 @@ class LessonForm extends BaseLessonForm
   {
     parent::configure();
 
-    unset($this['thumbnail'], $this['color'], $this['description']);
+    unset($this['thumbnail'], $this['color'], $this['description'], $this['resource_list'], $this['chapter_list']);
+
 
     $this->setWidget('type', new sfWidgetFormInputHidden());
     $this->setWidget('chapter_id', new sfWidgetFormInputHidden());

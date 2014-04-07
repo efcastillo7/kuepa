@@ -1,4 +1,8 @@
 $(function() {
+    $(".blocked").click(function(){
+        alert('Materia no disponible');
+    });
+
     $(".knob").knob(knob_values);
     $(".knob-small").knob({
         height: 24
@@ -28,7 +32,7 @@ $(function() {
         container.hide("blind");
 
         // ajax
-        $.ajax('/kuepa_api_dev.php/learning_path/' + parent_id + '/' + child_id, {
+        $.ajax('/kuepa_api.php/learning_path/' + parent_id + '/' + child_id, {
             dataType: 'json',
             type: 'DELETE',
             success: function(data) {
@@ -58,11 +62,15 @@ $(function() {
             success: function(data) {
                 if (data.status === "success") {
                     obj.toggleClass('btn-success');
-                    obj.toggleClass('btn-warning');
-                    if(obj.html() == "Activar"){
-                        obj.html("Desactivar");
-                    }else{
-                        obj.html("Activar");
+                    obj.toggleClass('btn-danger');
+                    var text = $("span.text", obj);
+
+                    if(text.length){
+                        if(text.html() == "Activar"){
+                            $("span.text", obj).html("Desactivar");
+                        }else{
+                            $("span.text", obj).html("Activar");
+                        }
                     }
                 } else {
                     alert("error");

@@ -21,7 +21,7 @@ class ComponentTable extends Doctrine_Table
     public function getById($id){
         return self::getInstance()->createQuery()
                                   ->where('id = ?', $id)
-                                  ->useResultCache(true, null, cacheHelper::getInstance()->genKey('Component_getById', array($id)) )
+                                  ->useResultCache(true, null, CacheHelper::getInstance()->genKey('Component_getById', array($id)) )
                                   ->fetchOne();
     }
     

@@ -389,7 +389,9 @@ function getCourseStudents(course_id,$cStudents,$form){
 function refreshVideoSessions() {
 
     var ids = Array();
-    $(".video-session-tr").each(function(){
+    
+    //get only next courses
+    $("#pane-own_video_sessions_next .video-session-tr, #pane-related_video_sessions_next .video-session-tr").each(function(){
        ids.push($(this).attr("data-id")); 
     });
 
@@ -407,6 +409,7 @@ function refreshVideoSessions() {
                 if( status !== "started" || url === null )
                     $(".access-button-"+id).addClass("disabled");
                 else {
+                    $(".access-button-"+id).unbind("click");
                     $(".access-button-"+id).removeClass("disabled");
                     $(".access-button-"+id).attr("href", url);
                 }

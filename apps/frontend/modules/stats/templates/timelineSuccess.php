@@ -1,5 +1,6 @@
 <?php use_stylesheet("/assets/timeline/css/default.css") ?>
 <?php use_stylesheet("/assets/timeline/css/component.css") ?>
+<?php use_stylesheet("/styles/css/bootstrap-pres.css") ?>
 <h1>Camino de Aprendizaje</h1>
 <div class="row-fluid">
 	<div class="main span10">

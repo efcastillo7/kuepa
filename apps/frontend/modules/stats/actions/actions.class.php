@@ -25,7 +25,8 @@ class statsActions extends kuepaActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-   $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
+   $this->courses = CourseService::getInstance()->getCoursesAndChapters($this->getUser()->getEnabledCourses());
+   $this->times = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimes($this->getUser()->getEnabledCourses(), $this->getUser()->getProfile()->getId());
   }
 
   public function executeCourse(sfWebRequest $request)
@@ -36,9 +37,11 @@ class statsActions extends kuepaActions
     $this->chapters = $this->course->getChapters();
 
     $profile = $this->getProfile();
+    
+    $this->viewed_times = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimes($this->chapters->getPrimaryKeys(), $profile->getId());
 
     $first_access = LogService::getInstance()->getFirstAccess($profile->getId(), $course_id);
-    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile, $course_id);
+    $to_date = ComponentService::getInstance()->getDeadlineForUser($profile->getId(), $course_id);
 
     $this->has_stats = $first_access != null && $to_date != null;
     $this->seted_deadline = $to_date != null;
@@ -112,10 +115,39 @@ class statsActions extends kuepaActions
   }
 
   public function executeClass(sfWebRequest $request){
-    $course_id = $request->getParameter("course");
+    $course_id = $request->getParameter("course_id");
+    $group_id = $request->getParameter("group");
 
     $this->course = Course::getRepository()->getById($course_id);
-    $this->students = CourseService::getInstance()->getStudentsList($course_id);
+    $this->group = null;
+    
+    $this->groups = GroupsService::getInstance()->getGroupsByAuthor($this->getUser()->getProfile()->getId());
+
+    if($group_id){
+      //check user has that group
+      $this->forward404Unless(in_array($group_id, $this->groups->getPrimaryKeys()));
+
+      //get Group
+      $this->group = GroupsService::getInstance()->find($group_id);
+      $this->forward404Unless($this->group);
+    }
+
+    if($this->group){
+      $this->students = GroupsService::getInstance()->getProfilesInGroup($group_id);
+    }else{
+      $this->students = CourseService::getInstance()->getStudentsList($course_id);
+    }
+
+
+    $this->chapters = $this->course->getChapters();
+
+    $component_ids = $this->chapters->getPrimaryKeys();
+    $component_ids[] = $course_id;
+
+    $profiles_ids = $this->students->getPrimaryKeys();
+    $this->status = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($component_ids, $profiles_ids);
+
+    // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
   }
 
   public function executeTest(sfWebRequest $request){
@@ -125,13 +157,19 @@ class statsActions extends kuepaActions
     $profile = $this->getProfile();
     $profile_id = $profile->getId();
     
-    $this->li = $stats->getLearningIndex($profile_id, $component_id);
-    $this->efi = $stats->getEfficiencyIndex($profile_id, $component_id);
-    $this->efo = $stats->getEffortIndex($profile_id, $component_id);
-    $this->v = $stats->getVelocityIndex($profile_id, $component_id);
+    //$profile_id = 101;
+    $component_id = 46;
+
+    $this->component = ComponentService::getInstance()->find($component_id);
+    $this->profile_id = $profile_id;
+
     $this->sk = $stats->getSkillIndex($profile_id, $component_id);
+    $this->v = $stats->getVelocityIndex($profile_id, $component_id);
+    $this->efi = $stats->getEfficiencyIndex($this->v, $this->sk);
     $this->c = $stats->getCompletitudIndex($profile_id, $component_id);
     $this->p = $stats->getPersistenceIndex($profile_id, $component_id);
+    $this->efo = $stats->getEffortIndex($this->c, $this->p);
+    $this->li = $stats->getLearningIndex($this->efo, $this->efi);
 
 
   }
@@ -142,32 +180,74 @@ class statsActions extends kuepaActions
       $component_id = 692;
       $this->component = ComponentService::getInstance()->find($component_id);
     */
-    $component_id = $request->getParameter('id');
+    $component_id = ( $request->getParameter('course_id') ) ?  $request->getParameter('course_id') : 1791 ;
+    $this->limit = ( $request->getParameter('limit') ) ?  $request->getParameter('limit') : 5 ;
+    $this->offset = ( $request->getParameter('offset') ) ?  $request->getParameter('offset') : 0 ;
     $statsObj = StatsService::getInstance();
-    ini_set('max_execution_time',60);
-    $component_id = 50;
+    ini_set('max_execution_time',180);
+    $this -> courses = Course::getRepository()
+                       ->createQuery('c')
+                       ->orderBy("c.name")
+                       ->execute();
+
+    //$component_id = 50; // Lesson
+    //$component_id = 47; // Unidad
+    //$component_id = 1791; // course
     $this->component = ComponentService::getInstance()->find($component_id);
 
     $profiles = Profile::getRepository()->createQuery('p')
-                //->where('id = ?', $this->getProfile()->getId())
-                //->limit(10)
-                ->orderBy('id desc')
+                // ->where('id = ?', 6)
+                 ->limit($this->limit)
+                 ->offset($this->offset)
+                ->orderBy('id asc')
                 ->execute();
-    
     $stats = array();
+/*    $first_access = LogService::getInstance()->getFirstAccess($profile_id, $course_id);
+    $from_date = strtotime($first_access) - 24*3600;*/
+ 
     foreach ($profiles as $key => $profile) {
       $profile_id = $profile->getId();
+
       $s['profile'] = $profile;
-      $s['li'] = $statsObj->getLearningIndex($profile_id, $component_id);
-      $s['efi'] =  $statsObj->getEfficiencyIndex($profile_id, $component_id);
-      $s['efo'] = $statsObj->getEffortIndex($profile_id, $component_id);
       $s['v'] = $statsObj->getVelocityIndex($profile_id, $component_id);
       $s['sk'] =  $statsObj->getSkillIndex($profile_id, $component_id);
       $s['c'] = $statsObj->getCompletitudIndex($profile_id, $component_id);
-      $s['p'] = $statsObj->getPersistenceIndex($profile_id, $component_id);
+      
+      $s['efi'] =  $statsObj->getEfficiencyIndex($s['v'], $s['sk']);
+       
+      $invest_time = LogService::getInstance()->getTotalTime($profile_id, $this->component);
+      $s['dc'] = $this->component->getDuration();
+      $s['ti'] = $invest_time;
+
+   
+
+      $s['available_resources'] = ComponentService::getInstance()->getCountResources($component_id);
+      $s['viewed_resources'] = LogService::getInstance()->getTotalRecourseViewed($profile_id, $component_id, true);
+
+      $freq = 7;
+
+      $s['p'] = $statsObj->getPersistenceIndex($profile_id, $component_id, time(), $freq);
+      
+      $s['efo'] = $statsObj->getEffortIndex($s['c'], $s['p']);
+    
+      $s['li'] = $statsObj->getLearningIndex($s['efo'], $s['efi']);
+      
+      $s['needed_time'] = $statsObj->getNeededTimePerPeriod($profile_id, $this->component, $freq);
+
+      $from_ts = time() - ($freq * 24 * 60 * 60);
+      $s['invest_time'] = $statsObj->getStudiedTimePerPeriod($profile_id, $this->component, $from_ts, time());
+
       array_push($stats, $s);
     }
     $this->stats = $stats;
 
   }
+
+  public function executeTest3(sfWebRequest $request){
+    $st = StatsService::getInstance();
+    $di = $st->dist_norm_standard(1.33);
+    echo $di;
+    exit();
+  }
+
 }

@@ -69,7 +69,76 @@ class usersActions extends sfActions
     {
       $sf_guard_user = $form->save();
 
-      $this->redirect('users/edit?id='.$sf_guard_user->getId());
+      $this->redirect('profile/edit?id='.$sf_guard_user->getProfile()->getId());
     }
   }
+
+  public function executeCreateMultiple(sfWebRequest $request){
+    $kind = $request->getParameter("kind");
+    if ( $kind == "")
+      $kind = "estudiante";
+    $this->kind = $kind;
+    $this->colleges = College::getRepository()->findAll();
+    $this->groups = Doctrine_Core::getTable('sfGuardGroup')->findAll();
+    $this->message = '';
+    if ( $request->isMethod(sfRequest::POST) ){
+      $form  = $request->getParameter('form');
+      $file = $_FILES['import_file']['tmp_name'];
+      $response = ProfileService::getInstance() -> importFromFile($file, $form);
+      $this->message = $response['message'];
+      $this->getUser()->setAttribute('success', $response['success']);
+      $this->getUser()->setAttribute('errors', $response['errors']);
+    }
+
+
+  }
+
+  public function executeDownloadImportFileExample(){
+
+     $module_path = sfContext::getInstance()->getModuleDirectory().'/templates/';
+     $file_path = $module_path.'example.csv'; 
+     $this->getResponse()->clearHttpHeaders();
+     $this->getResponse()->setHttpHeader('Pragma: public', true);
+     $this->getResponse()->setContentType('octet/stream');
+     $this->getResponse()->setHttpHeader('Content-Disposition',
+                            'attachment; filename=example.csv');
+     $this->getResponse()->sendHttpHeaders();
+     $this->getResponse()->setContent(readfile($file_path));
+     return sfView::NONE;
+  }
+
+  public function executeViewExportResults(){
+    $data = "";
+    $success = $this->getUser()->getAttribute('success');
+    $errors = $this->getUser()->getAttribute('errors');
+    if ( count( $errors ) > 0 ){
+      $header="Errores \t";
+      $data = $header."\n";
+      $data .= implode("\n",  $errors);
+      $data .= "\n\n\n";
+    }
+  
+    $header="Usuarios Almacenados \t\n";
+    $header.="Nombres\tApellidos\tEmail\tNombre Usuario\tPassword\t";
+    $data .= $header."\n";
+    foreach ( $success as $key => $user){
+      $data .= implode("\t", $user)."\n";
+    }
+
+    $this->getResponse()->clearHttpHeaders();
+    $this->getResponse()->setHttpHeader("Pragma", "no-cache");
+    $this->getResponse()->setContentType('x-msdownload');
+    $this->getResponse()->setHttpHeader('Content-Disposition',
+                          'attachment; filename=import_results.xls');
+    $this->getResponse()->sendHttpHeaders();
+    $this->getResponse()->setContent($data);
+
+    //$this->getUser()->getAttributeHolder()->remove('array_ok');
+    //$this->getUser()->getAttributeHolder()->remove('array_errors');
+
+    return sfView::NONE;
+
+  }
+
+
 }

@@ -19,10 +19,6 @@ class userActions extends kuepaActions {
         $this->user = $this->getUser();
         $this->form = new UserProfileForm($this->getProfile());
         
-        //$this->getUser()->setCulture('');
-        //$this->getUser()->getAttributeHolder()->clear();
-        //die("AVER:".$this->getUser()->getCulture());
-
         $this->setLayout("layout_v2");
     }
 
@@ -30,8 +26,8 @@ class userActions extends kuepaActions {
         $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
         $this->form = new UserProfileForm($this->getProfile());
         $this->processForm($request, $this->form);
-        $this->setTemplate('index');
 
+        $this->setTemplate('index');
         $this->setLayout("layout_v2");
     }
 
@@ -39,6 +35,9 @@ class userActions extends kuepaActions {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
             $profile = $form->save();
+
+            //reset culture
+            $this->getUser()->resetCulture($profile);
 
             $this->redirect('user/index');
         }

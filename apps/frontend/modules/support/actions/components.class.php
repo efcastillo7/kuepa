@@ -8,7 +8,7 @@ class supportComponents extends sfComponents {
             $video_session      = VideoSession::getRepository()->find($id);
         } else {
             $video_session      = new VideoSession();
-            $this->profile_id   = $this->getUser()->getGuardUser()->getProfile()->getId();
+            $this->profile_id   = $this->getUser()->getProfile()->getId();
             $video_session->setProfileId($this->profile_id);
         }
 
@@ -18,7 +18,7 @@ class supportComponents extends sfComponents {
     public function executeModalurl() {
 
         if($this->getUser()->getGuardUser()){
-            $this->profile_id = $this->getUser()->getGuardUser()->getProfile()->getId();
+            $this->profile_id = $this->getUser()->getProfile()->getId();
         }
 
     }

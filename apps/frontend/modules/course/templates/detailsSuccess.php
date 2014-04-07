@@ -31,7 +31,7 @@
                 <div class="unit-container">
                     <ul id="myCollapsible" class="lv-container unstyled" current_id="<?php echo $course->getId() ?>">
                         <!-- Add chapter if has privilege -->
-                        <?php if ($sf_user->hasCredential("docente")): ?>
+                        <?php if ($sf_user->hasCredential("editor")): ?>
                         <li class="subject-item addchapter-button unsortable">
                             <div id="" class="black" type="button">
                                 <p class="title5 HelveticaMd clearmargin">+ Agrear unidad al curso</p>
@@ -64,7 +64,7 @@
     </div><!-- /container -->
 </div>
 
-<?php if ($sf_user->hasCredential("docente")): ?>
+<?php if ($sf_user->hasCredential("editor")): ?>
 <?php include_component('chapter', 'Modalform', array('course_id' => $course->getId())) ?>
 <?php include_component('lesson', 'Modalform') ?>
 <?php include_component('resource', 'Modalform') ?>

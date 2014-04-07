@@ -13,7 +13,7 @@
       </li>
       
       <?php $previous_percentage = 0; foreach ($chapter->getChildren() as $child): ?>
-          <?php $current_percentage = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($profile->getId(), $child->getId()); ?>
+          <?php $current_percentage = $child->getCacheCompletedStatus(); ?>
           <li>
             <div class="icon">
               <?php if($current_percentage == 100): ?>
