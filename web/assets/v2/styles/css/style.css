@@ -3883,27 +3883,26 @@ ul.lv-lvlone {
 /*DASHBOARD*/
 /* line 2, scss/_dashboard.scss */
 .dashboard-left {
-  width: 560px;
   float: left;
   margin-top: 30px;
 }
 
-/* line 6, scss/_dashboard.scss */
+/* line 5, scss/_dashboard.scss */
 .dashboard-left .nav-dashboard {
   float: left;
 }
 
-/* line 8, scss/_dashboard.scss */
+/* line 7, scss/_dashboard.scss */
 .dashboard-left .nav-dashboard ul {
   padding-left: 0;
 }
 
-/* line 10, scss/_dashboard.scss */
+/* line 9, scss/_dashboard.scss */
 .dashboard-left .nav-dashboard li {
   display: inline-block;
 }
 
-/* line 12, scss/_dashboard.scss */
+/* line 11, scss/_dashboard.scss */
 .dashboard-left .nav-dashboard li a {
   border: 1px solid #ccc;
   padding: 10px 15px;
@@ -3911,31 +3910,30 @@ ul.lv-lvlone {
   margin-right: -5px;
 }
 
-/* line 17, scss/_dashboard.scss */
+/* line 16, scss/_dashboard.scss */
 .dashboard-left .nav-dashboard li a.first {
   border-radius: 5px 0 0 5px;
 }
 
-/* line 19, scss/_dashboard.scss */
+/* line 18, scss/_dashboard.scss */
 .dashboard-left .nav-dashboard li a.last {
   border-radius: 0 5px 5px 0;
 }
 
-/* line 21, scss/_dashboard.scss */
+/* line 20, scss/_dashboard.scss */
 .dashboard-left .order {
   width: 230px;
   float: right;
   margin-top: -10px;
 }
 
-/* line 26, scss/_dashboard.scss */
+/* line 25, scss/_dashboard.scss */
 .dashboard-right {
-  width: 400px;
   float: right;
   margin-top: 20px;
 }
 
-/* line 30, scss/_dashboard.scss */
+/* line 28, scss/_dashboard.scss */
 .dashboard-right nav a {
   width: 115px;
   height: 40px;
@@ -3950,17 +3948,17 @@ ul.lv-lvlone {
   text-align: center;
 }
 
-/* line 42, scss/_dashboard.scss */
+/* line 40, scss/_dashboard.scss */
 .dashboard-right nav a:last-child {
   margin-left: -5px;
 }
 
-/* line 44, scss/_dashboard.scss */
+/* line 42, scss/_dashboard.scss */
 .dashboard-right nav a.active {
   background: #fff;
 }
 
-/* line 46, scss/_dashboard.scss */
+/* line 44, scss/_dashboard.scss */
 .dashboard-right .header-summary {
   height: 40px;
   padding: 8px;
@@ -3971,38 +3969,38 @@ ul.lv-lvlone {
   color: #fff;
 }
 
-/* line 54, scss/_dashboard.scss */
+/* line 52, scss/_dashboard.scss */
 .dashboard-right .header-summary span {
   float: right;
   font-size: 25px;
 }
 
-/* line 57, scss/_dashboard.scss */
+/* line 55, scss/_dashboard.scss */
 .dashboard-right .box-summary {
   border: 1px solid #ccc;
   border-top: 0;
 }
 
-/* line 60, scss/_dashboard.scss */
+/* line 58, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-big {
   height: 190px;
 }
 
-/* line 62, scss/_dashboard.scss */
+/* line 60, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-big .left {
   padding: 35px 10px 0 39px;
   float: left;
   position: relative;
 }
 
-/* line 66, scss/_dashboard.scss */
+/* line 64, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-big .right {
   padding: 35px 39px 0 10px;
   float: right;
   position: relative;
 }
 
-/* line 70, scss/_dashboard.scss */
+/* line 68, scss/_dashboard.scss */
 .dashboard-right .box-summary hgroup {
   width: 125px;
   position: absolute;
@@ -4011,46 +4009,46 @@ ul.lv-lvlone {
   margin: 23% 0 0 7%;
 }
 
-/* line 76, scss/_dashboard.scss */
+/* line 74, scss/_dashboard.scss */
 .dashboard-right .box-summary hgroup h3, .dashboard-right .box-summary hgroup h4 {
   margin: 0;
 }
 
-/* line 78, scss/_dashboard.scss */
+/* line 76, scss/_dashboard.scss */
 .dashboard-right .box-summary hgroup h4 {
   font-size: 14px;
   font-family: HelveticaMd;
 }
 
-/* line 81, scss/_dashboard.scss */
+/* line 79, scss/_dashboard.scss */
 .dashboard-right .box-summary hgroup small {
   font-size: 12px;
 }
 
-/* line 83, scss/_dashboard.scss */
+/* line 81, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-small {
   height: 75px;
   padding-top: 10px;
 }
 
-/* line 86, scss/_dashboard.scss */
+/* line 84, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-small .left, .dashboard-right .box-summary .circles-small .right {
   width: 190px;
   height: 75px;
   position: relative;
 }
 
-/* line 90, scss/_dashboard.scss */
+/* line 88, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-small .left {
   padding: 0 0 0 39px;
 }
 
-/* line 92, scss/_dashboard.scss */
+/* line 90, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-small .right {
   padding: 0 39px 0 0;
 }
 
-/* line 94, scss/_dashboard.scss */
+/* line 92, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-small .inside, .dashboard-right .box-summary .circles-small .outside {
   position: absolute;
   top: 50%;
@@ -4059,31 +4057,31 @@ ul.lv-lvlone {
   font-size: 20px;
 }
 
-/* line 100, scss/_dashboard.scss */
+/* line 98, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-small .inside {
   width: 60px;
   text-align: center;
   font-weight: bold;
 }
 
-/* line 104, scss/_dashboard.scss */
+/* line 102, scss/_dashboard.scss */
 .dashboard-right .box-summary .circles-small .outside {
   margin-left: 7px;
   font-size: 12px;
 }
 
-/* line 107, scss/_dashboard.scss */
+/* line 105, scss/_dashboard.scss */
 .dashboard-right .box-summary .percents {
   clear: both;
   color: #999;
 }
 
-/* line 110, scss/_dashboard.scss */
+/* line 108, scss/_dashboard.scss */
 .dashboard-right .box-summary .percents ul {
   padding: 0;
 }
 
-/* line 112, scss/_dashboard.scss */
+/* line 110, scss/_dashboard.scss */
 .dashboard-right .box-summary .percents li {
   width: 24%;
   display: inline-block;
@@ -4091,30 +4089,30 @@ ul.lv-lvlone {
   text-align: center;
 }
 
-/* line 117, scss/_dashboard.scss */
+/* line 115, scss/_dashboard.scss */
 .dashboard-right .box-summary .percents li span {
   font-size: 12px;
   font-weight: bold;
   color: #666;
 }
 
-/* line 122, scss/_dashboard.scss */
+/* line 120, scss/_dashboard.scss */
 .box-list header ul {
   margin: 0;
 }
 
-/* line 124, scss/_dashboard.scss */
+/* line 122, scss/_dashboard.scss */
 .box-list header ul li:first-child {
   border-top: 0;
 }
 
-/* line 126, scss/_dashboard.scss */
+/* line 124, scss/_dashboard.scss */
 .box-list header ul li > div {
   font-size: 10px;
   color: #999999;
 }
 
-/* line 129, scss/_dashboard.scss */
+/* line 127, scss/_dashboard.scss */
 .box-list header ul li > div.text {
   color: #4d4d4d;
   padding-left: 10px;
@@ -4122,13 +4120,13 @@ ul.lv-lvlone {
   font-weight: bold;
 }
 
-/* line 134, scss/_dashboard.scss */
+/* line 132, scss/_dashboard.scss */
 .box-list ul {
   padding: 0;
   margin-top: -1px;
 }
 
-/* line 137, scss/_dashboard.scss */
+/* line 135, scss/_dashboard.scss */
 .box-list ul li {
   width: 400px;
   border: 1px solid #ccc;
@@ -4137,7 +4135,7 @@ ul.lv-lvlone {
   cursor: pointer;
 }
 
-/* line 143, scss/_dashboard.scss */
+/* line 141, scss/_dashboard.scss */
 .box-list ul li > div {
   display: table-cell;
   color: #4d4d4d;
@@ -4147,56 +4145,56 @@ ul.lv-lvlone {
   vertical-align: top;
 }
 
-/* line 150, scss/_dashboard.scss */
+/* line 148, scss/_dashboard.scss */
 .box-list ul li > div.text {
   width: 168px;
   padding-left: 40px;
   text-align: left;
 }
 
-/* line 154, scss/_dashboard.scss */
+/* line 152, scss/_dashboard.scss */
 .box-list ul li > div.percent {
   width: 50px;
 }
 
-/* line 156, scss/_dashboard.scss */
+/* line 154, scss/_dashboard.scss */
 .box-list ul li > div.time {
   width: 50px;
 }
 
-/* line 158, scss/_dashboard.scss */
+/* line 156, scss/_dashboard.scss */
 .box-list ul li > div.date {
   width: 60px;
 }
 
-/* line 160, scss/_dashboard.scss */
+/* line 158, scss/_dashboard.scss */
 .box-list ul li > div.note {
   width: 35px;
 }
 
-/* line 162, scss/_dashboard.scss */
+/* line 160, scss/_dashboard.scss */
 .box-list ul li > div:last-child {
   background: #f2f2f2;
 }
 
-/* line 164, scss/_dashboard.scss */
+/* line 162, scss/_dashboard.scss */
 .box-list ul li .lp-node {
   margin: -4px 0 0 10px;
 }
 
-/* line 166, scss/_dashboard.scss */
+/* line 164, scss/_dashboard.scss */
 .box-list ul li .lp-node .lp-bar-post {
   height: 8px;
   margin-top: 22px;
 }
 
-/* line 169, scss/_dashboard.scss */
+/* line 167, scss/_dashboard.scss */
 .box-list ul li .lp-bar-post {
   margin-top: 0;
   height: 100%;
 }
 
-/* line 172, scss/_dashboard.scss */
+/* line 170, scss/_dashboard.scss */
 .box-list ul li .full-circle {
   width: 10px;
   height: 20px;
@@ -4206,14 +4204,14 @@ ul.lv-lvlone {
   left: 9px;
 }
 
-/* line 179, scss/_dashboard.scss */
+/* line 177, scss/_dashboard.scss */
 .box-list ul .sublesson {
   width: 400px;
   border: 1px solid #ccc;
   border-top: 0;
 }
 
-/* line 183, scss/_dashboard.scss */
+/* line 181, scss/_dashboard.scss */
 .box-list ul .sublesson li {
   width: 370px;
   border-left: 0;
@@ -4222,52 +4220,52 @@ ul.lv-lvlone {
   margin-top: -1px;
 }
 
-/* line 189, scss/_dashboard.scss */
+/* line 187, scss/_dashboard.scss */
 .box-list ul .sublesson li:last-child {
   border-bottom: 0;
 }
 
-/* line 191, scss/_dashboard.scss */
+/* line 189, scss/_dashboard.scss */
 .box-list ul .sublesson li > div.text {
   width: 138px;
   padding-left: 30px;
 }
 
-/* line 194, scss/_dashboard.scss */
+/* line 192, scss/_dashboard.scss */
 .box-list ul .sublesson li .lp-node {
   margin-left: 0;
 }
 
-/* line 196, scss/_dashboard.scss */
+/* line 194, scss/_dashboard.scss */
 .box-list ul.list-units li.level1 .lp-bar-post {
   margin-left: 21px;
 }
 
-/* line 201, scss/_dashboard.scss */
+/* line 199, scss/_dashboard.scss */
 .list-units .lp-bar-post,
 .list-units .lp-bar-prev {
   display: none;
 }
 
 /* ***VISTA DE LISTA*** */
-/* line 207, scss/_dashboard.scss */
+/* line 205, scss/_dashboard.scss */
 .table-dashboard {
   width: 560px;
   position: relative;
   clear: both;
 }
 
-/* line 211, scss/_dashboard.scss */
+/* line 209, scss/_dashboard.scss */
 .table-dashboard header {
   height: 30px;
 }
 
-/* line 213, scss/_dashboard.scss */
+/* line 211, scss/_dashboard.scss */
 .table-dashboard header ul {
   padding: 0;
 }
 
-/* line 215, scss/_dashboard.scss */
+/* line 213, scss/_dashboard.scss */
 .table-dashboard header div {
   width: 75px;
   height: 30px;
@@ -4278,17 +4276,17 @@ ul.lv-lvlone {
   float: left;
 }
 
-/* line 223, scss/_dashboard.scss */
+/* line 221, scss/_dashboard.scss */
 .table-dashboard header div:first-child {
   margin-left: 260px;
 }
 
-/* line 225, scss/_dashboard.scss */
+/* line 223, scss/_dashboard.scss */
 .table-dashboard ul.body {
   padding: 0;
 }
 
-/* line 227, scss/_dashboard.scss */
+/* line 225, scss/_dashboard.scss */
 .table-dashboard ul.body li {
   height: 30px;
   background-color: #f2f2f2;
@@ -4296,7 +4294,7 @@ ul.lv-lvlone {
   position: relative;
 }
 
-/* line 232, scss/_dashboard.scss */
+/* line 230, scss/_dashboard.scss */
 .table-dashboard ul.body span {
   width: 75px;
   height: 30px;
@@ -4307,7 +4305,7 @@ ul.lv-lvlone {
   padding-top: 5px;
 }
 
-/* line 240, scss/_dashboard.scss */
+/* line 238, scss/_dashboard.scss */
 .table-dashboard ul.body span.name {
   width: 260px;
   text-align: left;
@@ -4315,7 +4313,7 @@ ul.lv-lvlone {
   font-size: 14px;
 }
 
-/* line 245, scss/_dashboard.scss */
+/* line 243, scss/_dashboard.scss */
 .table-dashboard ul.body span.name .triangle {
   width: 0;
   height: 0;
@@ -4326,27 +4324,27 @@ ul.lv-lvlone {
   bottom: 0;
 }
 
-/* line 253, scss/_dashboard.scss */
+/* line 251, scss/_dashboard.scss */
 .table-dashboard ul.body span.name .triangle.green {
   border-bottom: 20px solid #8dd100;
 }
 
-/* line 255, scss/_dashboard.scss */
+/* line 253, scss/_dashboard.scss */
 .table-dashboard ul.body span.name .triangle.orange {
   border-bottom: 20px solid #ffda00;
 }
 
-/* line 257, scss/_dashboard.scss */
+/* line 255, scss/_dashboard.scss */
 .table-dashboard ul.body span.name .triangle.red {
   border-bottom: 20px solid #df3400;
 }
 
-/* line 259, scss/_dashboard.scss */
+/* line 257, scss/_dashboard.scss */
 .table-dashboard ul.body span small {
   font-size: 10px;
 }
 
-/* line 261, scss/_dashboard.scss */
+/* line 259, scss/_dashboard.scss */
 .table-dashboard ul.body .indicator {
   height: 1px;
   background: #ff671b;
@@ -4354,41 +4352,41 @@ ul.lv-lvlone {
   position: absolute;
 }
 
-/* line 267, scss/_dashboard.scss */
+/* line 265, scss/_dashboard.scss */
 .comparative-table {
   display: inline-block;
   float: left;
   border-left: 1px solid #ccc;
 }
 
-/* line 271, scss/_dashboard.scss */
+/* line 269, scss/_dashboard.scss */
 .comparative-table ul {
   margin-bottom: 0;
 }
 
-/* line 273, scss/_dashboard.scss */
+/* line 271, scss/_dashboard.scss */
 .comparative-table.general-data {
   margin-top: 81px;
 }
 
-/* line 275, scss/_dashboard.scss */
+/* line 273, scss/_dashboard.scss */
 .comparative-table.general-data .renglon span {
   height: 30px;
   padding: 4px 0 0 0;
 }
 
-/* line 278, scss/_dashboard.scss */
+/* line 276, scss/_dashboard.scss */
 .comparative-table.general-data .title-level-3 span:first-child {
   padding-left: 283px;
 }
 
-/* line 280, scss/_dashboard.scss */
+/* line 278, scss/_dashboard.scss */
 .comparative-table.general-data span {
   border-right: 1px solid #fff;
   border-bottom: 1px solid #fff;
 }
 
-/* line 283, scss/_dashboard.scss */
+/* line 281, scss/_dashboard.scss */
 .comparative-table.general-data span.name {
   width: 300px;
   text-align: left !important;
@@ -4400,7 +4398,7 @@ ul.lv-lvlone {
   font-weight: bold;
 }
 
-/* line 292, scss/_dashboard.scss */
+/* line 290, scss/_dashboard.scss */
 .comparative-table.general-data span.name .indicator {
   height: 1px;
   background: #ff671b;
@@ -4410,7 +4408,7 @@ ul.lv-lvlone {
   left: 0;
 }
 
-/* line 299, scss/_dashboard.scss */
+/* line 297, scss/_dashboard.scss */
 .comparative-table.general-data span.name .triangle {
   width: 0;
   height: 0;
@@ -4421,44 +4419,44 @@ ul.lv-lvlone {
   bottom: 2px;
 }
 
-/* line 307, scss/_dashboard.scss */
+/* line 305, scss/_dashboard.scss */
 .comparative-table.general-data span.name .triangle.green {
   border-bottom: 20px solid #8dd100;
 }
 
-/* line 309, scss/_dashboard.scss */
+/* line 307, scss/_dashboard.scss */
 .comparative-table.general-data span.name .triangle.orange {
   border-bottom: 20px solid #ffda00;
 }
 
-/* line 311, scss/_dashboard.scss */
+/* line 309, scss/_dashboard.scss */
 .comparative-table.general-data span.name .triangle.red {
   border-bottom: 20px solid #df3400;
 }
 
-/* line 313, scss/_dashboard.scss */
+/* line 311, scss/_dashboard.scss */
 .comparative-table.specific-data {
   border: 1px solid #ccc;
   padding-bottom: 1px;
 }
 
-/* line 316, scss/_dashboard.scss */
+/* line 314, scss/_dashboard.scss */
 .comparative-table.specific-data span {
   border-right: 1px solid #fff;
   border-bottom: 1px solid #fff;
 }
 
-/* line 319, scss/_dashboard.scss */
+/* line 317, scss/_dashboard.scss */
 .comparative-table.specific-data .column {
   border-left: 1px solid #ccc;
 }
 
-/* line 321, scss/_dashboard.scss */
+/* line 319, scss/_dashboard.scss */
 .comparative-table ul {
   padding: 0;
 }
 
-/* line 323, scss/_dashboard.scss */
+/* line 321, scss/_dashboard.scss */
 .comparative-table .title-level-1 {
   height: 40px;
   background: #595959;
@@ -4469,7 +4467,7 @@ ul.lv-lvlone {
   padding-top: 10px;
 }
 
-/* line 331, scss/_dashboard.scss */
+/* line 329, scss/_dashboard.scss */
 .comparative-table .title-level-1 span.btn-lessons {
   width: 20px;
   height: 100%;
@@ -4480,7 +4478,7 @@ ul.lv-lvlone {
   padding-top: 8px;
 }
 
-/* line 339, scss/_dashboard.scss */
+/* line 337, scss/_dashboard.scss */
 .comparative-table .title-level-2 span {
   width: 140px;
   height: 40px;
@@ -4495,19 +4493,19 @@ ul.lv-lvlone {
   font-weight: bold;
 }
 
-/* line 351, scss/_dashboard.scss */
+/* line 349, scss/_dashboard.scss */
 .comparative-table .title-level-2 span.displayed {
   min-width: 340px;
 }
 
-/* line 353, scss/_dashboard.scss */
+/* line 351, scss/_dashboard.scss */
 .comparative-table .title-level-3 {
   background: #fff;
   font-size: 11px;
   color: #a9a9a9;
 }
 
-/* line 357, scss/_dashboard.scss */
+/* line 355, scss/_dashboard.scss */
 .comparative-table .title-level-3 span {
   width: 85px;
   padding: 5px;
@@ -4517,12 +4515,12 @@ ul.lv-lvlone {
   line-height: 13px;
 }
 
-/* line 364, scss/_dashboard.scss */
+/* line 362, scss/_dashboard.scss */
 .comparative-table .title-level-3 span.displayed {
   min-width: 340px;
 }
 
-/* line 366, scss/_dashboard.scss */
+/* line 364, scss/_dashboard.scss */
 .comparative-table span.button, .comparative-table span.btn-lessons {
   width: 20px;
   height: 100%;
@@ -4537,7 +4535,7 @@ ul.lv-lvlone {
   padding-right: 0;
 }
 
-/* line 378, scss/_dashboard.scss */
+/* line 376, scss/_dashboard.scss */
 .comparative-table span.button i, .comparative-table span.btn-lessons i {
   position: absolute;
   top: 50%;
@@ -4545,18 +4543,18 @@ ul.lv-lvlone {
   right: 50%;
 }
 
-/* line 383, scss/_dashboard.scss */
+/* line 381, scss/_dashboard.scss */
 .comparative-table .renglon {
   height: 30px;
   background: #f2f2f2;
 }
 
-/* line 386, scss/_dashboard.scss */
+/* line 384, scss/_dashboard.scss */
 .comparative-table .renglon.darker {
   background: #ebebeb;
 }
 
-/* line 388, scss/_dashboard.scss */
+/* line 386, scss/_dashboard.scss */
 .comparative-table .renglon span {
   width: 85px;
   padding: 4px 0 5px 0;
@@ -4566,17 +4564,17 @@ ul.lv-lvlone {
   font-size: 12px;
 }
 
-/* line 395, scss/_dashboard.scss */
+/* line 393, scss/_dashboard.scss */
 .comparative-table .renglon span.displayed {
   min-width: 85px;
 }
 
-/* line 397, scss/_dashboard.scss */
+/* line 395, scss/_dashboard.scss */
 .comparative-table .none {
   display: none !important;
 }
 
-/* line 400, scss/_dashboard.scss */
+/* line 398, scss/_dashboard.scss */
 .ficha-dashboard {
   width: 180px;
   height: 270px;
@@ -4585,12 +4583,12 @@ ul.lv-lvlone {
   display: inline-block;
 }
 
-/* line 406, scss/_dashboard.scss */
+/* line 404, scss/_dashboard.scss */
 .ficha-dashboard.middle {
   margin: 0 6px 12px 6px;
 }
 
-/* line 408, scss/_dashboard.scss */
+/* line 406, scss/_dashboard.scss */
 .ficha-dashboard .grafica {
   width: 140px;
   height: 140px;
@@ -4598,76 +4596,76 @@ ul.lv-lvlone {
   position: relative;
 }
 
-/* line 413, scss/_dashboard.scss */
+/* line 411, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica1, .ficha-dashboard .grafica .grafica2, .ficha-dashboard .grafica .grafica3 {
   background: url(../../img/sprite-ficha.png);
   position: absolute;
 }
 
-/* line 416, scss/_dashboard.scss */
+/* line 414, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica1 {
   width: 66px;
   height: 104px;
 }
 
-/* line 419, scss/_dashboard.scss */
+/* line 417, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica1.one {
   background-position: -264px 0;
 }
 
-/* line 421, scss/_dashboard.scss */
+/* line 419, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica1.two {
   background-position: -198px 0;
 }
 
-/* line 423, scss/_dashboard.scss */
+/* line 421, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica1.three {
   background-position: -132px 0;
 }
 
-/* line 425, scss/_dashboard.scss */
+/* line 423, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica1.four {
   background-position: -66px 0;
 }
 
-/* line 427, scss/_dashboard.scss */
+/* line 425, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica1.five {
   background-position: -264px 0;
 }
 
-/* line 429, scss/_dashboard.scss */
+/* line 427, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica2 {
   width: 69px;
   height: 101px;
   right: 0;
 }
 
-/* line 433, scss/_dashboard.scss */
+/* line 431, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica2.one {
   background-position: -11px -155px;
 }
 
-/* line 435, scss/_dashboard.scss */
+/* line 433, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica2.two {
   background-position: -81px -155px;
 }
 
-/* line 437, scss/_dashboard.scss */
+/* line 435, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica2.three {
   background-position: -152px -155px;
 }
 
-/* line 439, scss/_dashboard.scss */
+/* line 437, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica2.four {
   background-position: -223px -155px;
 }
 
-/* line 441, scss/_dashboard.scss */
+/* line 439, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica2.five {
   background-position: -294px -155px;
 }
 
-/* line 443, scss/_dashboard.scss */
+/* line 441, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica3 {
   width: 118px;
   height: 40px;
@@ -4675,54 +4673,54 @@ ul.lv-lvlone {
   left: 12px;
 }
 
-/* line 448, scss/_dashboard.scss */
+/* line 446, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica3.one {
   background-position: 0 -113px;
 }
 
-/* line 450, scss/_dashboard.scss */
+/* line 448, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica3.two {
   background-position: -119px -113px;
 }
 
-/* line 452, scss/_dashboard.scss */
+/* line 450, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica3.three {
   background-position: -238px -113px;
 }
 
-/* line 454, scss/_dashboard.scss */
+/* line 452, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica3.four {
   background-position: -356px -113px;
 }
 
-/* line 456, scss/_dashboard.scss */
+/* line 454, scss/_dashboard.scss */
 .ficha-dashboard .grafica .grafica3.five {
   background-position: -474px -113px;
 }
 
-/* line 458, scss/_dashboard.scss */
+/* line 456, scss/_dashboard.scss */
 .ficha-dashboard .grafica .ico-ficha1, .ficha-dashboard .grafica .ico-ficha2, .ficha-dashboard .grafica .ico-ficha3 {
   position: absolute;
 }
 
-/* line 460, scss/_dashboard.scss */
+/* line 458, scss/_dashboard.scss */
 .ficha-dashboard .grafica .ico-ficha1 {
   top: 33px;
 }
 
-/* line 462, scss/_dashboard.scss */
+/* line 460, scss/_dashboard.scss */
 .ficha-dashboard .grafica .ico-ficha2 {
   top: 33px;
   right: 4px;
 }
 
-/* line 465, scss/_dashboard.scss */
+/* line 463, scss/_dashboard.scss */
 .ficha-dashboard .grafica .ico-ficha3 {
   bottom: -3px;
   left: 61px;
 }
 
-/* line 468, scss/_dashboard.scss */
+/* line 466, scss/_dashboard.scss */
 .ficha-dashboard .grafica img {
   position: absolute;
   top: 18px;
@@ -4732,7 +4730,7 @@ ul.lv-lvlone {
   border-radius: 100px;
 }
 
-/* line 475, scss/_dashboard.scss */
+/* line 473, scss/_dashboard.scss */
 .ficha-dashboard p.text {
   margin-left: 20px;
   line-height: 20px;
@@ -4742,14 +4740,14 @@ ul.lv-lvlone {
   font-size: 13px;
 }
 
-/* line 482, scss/_dashboard.scss */
+/* line 480, scss/_dashboard.scss */
 .ficha-dashboard section {
   position: absolute;
   bottom: 0;
   color: #999;
 }
 
-/* line 486, scss/_dashboard.scss */
+/* line 484, scss/_dashboard.scss */
 .ficha-dashboard section div {
   width: 59px;
   height: 60px;
@@ -4757,13 +4755,13 @@ ul.lv-lvlone {
   float: left;
 }
 
-/* line 491, scss/_dashboard.scss */
+/* line 489, scss/_dashboard.scss */
 .ficha-dashboard section div.middle {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
 }
 
-/* line 494, scss/_dashboard.scss */
+/* line 492, scss/_dashboard.scss */
 .ficha-dashboard section div p:first-child {
   font-size: 10px;
   margin: 10px 0 0 5px;
@@ -4771,7 +4769,7 @@ ul.lv-lvlone {
   font-weight: normal;
 }
 
-/* line 499, scss/_dashboard.scss */
+/* line 497, scss/_dashboard.scss */
 .ficha-dashboard section div p:last-child {
   font-size: 15px;
   font-weight: bold;
@@ -4779,34 +4777,34 @@ ul.lv-lvlone {
   margin: 5px 0 0 5px;
 }
 
-/* line 504, scss/_dashboard.scss */
+/* line 502, scss/_dashboard.scss */
 .ficha-dashboard section div p:last-child small {
   font-size: 10px;
 }
 
-/* line 507, scss/_dashboard.scss */
+/* line 505, scss/_dashboard.scss */
 .dashboard-student {
   padding: 0;
 }
 
-/* line 509, scss/_dashboard.scss */
+/* line 507, scss/_dashboard.scss */
 .dashboard-student h1 {
   font-size: 18px;
   font-family: HelveticaLt;
   text-align: center;
 }
 
-/* line 513, scss/_dashboard.scss */
+/* line 511, scss/_dashboard.scss */
 .dashboard-student h1 strong {
   font-family: HelveticaMd;
 }
 
-/* line 515, scss/_dashboard.scss */
+/* line 513, scss/_dashboard.scss */
 .dashboard-student > h1 {
   margin: 30px 0;
 }
 
-/* line 517, scss/_dashboard.scss */
+/* line 515, scss/_dashboard.scss */
 .dashboard-student .way {
   width: 100%;
   height: 130px;
@@ -4815,7 +4813,7 @@ ul.lv-lvlone {
   position: relative;
 }
 
-/* line 523, scss/_dashboard.scss */
+/* line 521, scss/_dashboard.scss */
 .dashboard-student .way .line {
   width: 939px;
   height: 16px;
@@ -4826,7 +4824,7 @@ ul.lv-lvlone {
   margin: -8px 0 0 -470px;
 }
 
-/* line 531, scss/_dashboard.scss */
+/* line 529, scss/_dashboard.scss */
 .dashboard-student .way .bubble {
   width: 35px;
   height: 39px;
@@ -4835,35 +4833,35 @@ ul.lv-lvlone {
   padding-top: 7px;
 }
 
-/* line 537, scss/_dashboard.scss */
+/* line 535, scss/_dashboard.scss */
 .dashboard-student .way .bubble small {
   font-size: 10px;
 }
 
-/* line 539, scss/_dashboard.scss */
+/* line 537, scss/_dashboard.scss */
 .dashboard-student .way .should {
   position: absolute;
   top: 21px;
 }
 
-/* line 542, scss/_dashboard.scss */
+/* line 540, scss/_dashboard.scss */
 .dashboard-student .way .should .bubble {
   background-position: -263px -176px;
 }
 
-/* line 544, scss/_dashboard.scss */
+/* line 542, scss/_dashboard.scss */
 .dashboard-student .way .here {
   position: absolute;
   bottom: 21px;
 }
 
-/* line 547, scss/_dashboard.scss */
+/* line 545, scss/_dashboard.scss */
 .dashboard-student .way .here .bubble {
   background-position: -299px -176px;
   padding-top: 10px;
 }
 
-/* line 550, scss/_dashboard.scss */
+/* line 548, scss/_dashboard.scss */
 .dashboard-student .units {
   width: 100%;
   border-bottom: 1px solid #e9e9eb;
@@ -4871,14 +4869,14 @@ ul.lv-lvlone {
   overflow: hidden;
 }
 
-/* line 556, scss/_dashboard.scss */
+/* line 554, scss/_dashboard.scss */
 .dashboard-student .units .scroleable {
   position: relative;
   overflow: auto;
   padding: 0px 30px;
 }
 
-/* line 561, scss/_dashboard.scss */
+/* line 559, scss/_dashboard.scss */
 .dashboard-student .units .scroleable .ps-scrollbar-x-rail,
 .dashboard-student .units .scroleable .ps-scrollbar-y-rail {
   opacity: 1;
@@ -4887,20 +4885,20 @@ ul.lv-lvlone {
   display: none;
 }
 
-/* line 567, scss/_dashboard.scss */
+/* line 565, scss/_dashboard.scss */
 .dashboard-student .units .scroleable .ps-scrollbar-x-rail .ps-scrollbar-x {
   background: #ff671b;
   display: none;
 }
 
-/* line 570, scss/_dashboard.scss */
+/* line 568, scss/_dashboard.scss */
 .dashboard-student .units h1 {
   font-size: 36px;
   font-family: HelveticaLt;
   margin: 40px 0;
 }
 
-/* line 575, scss/_dashboard.scss */
+/* line 573, scss/_dashboard.scss */
 .dashboard-student .units .reference {
   width: 300px;
   margin: 0 auto 0 auto;
@@ -4910,19 +4908,19 @@ ul.lv-lvlone {
   bottom: 20px;
 }
 
-/* line 582, scss/_dashboard.scss */
+/* line 580, scss/_dashboard.scss */
 .dashboard-student .units .reference li {
   display: inline-block;
   margin-right: 5px;
 }
 
-/* line 585, scss/_dashboard.scss */
+/* line 583, scss/_dashboard.scss */
 .dashboard-student .units .reference i {
   border: 1px solid #999;
   border-radius: 20px;
 }
 
-/* line 588, scss/_dashboard.scss */
+/* line 586, scss/_dashboard.scss */
 .dashboard-student .units .circle-left {
   width: 48px;
   height: 39px;
@@ -4932,14 +4930,14 @@ ul.lv-lvlone {
   bottom: 140px;
 }
 
-/* line 595, scss/_dashboard.scss */
+/* line 593, scss/_dashboard.scss */
 .dashboard-student .units .circle-right {
   width: 80px;
   height: 80px;
   background-position: -254px -217px;
 }
 
-/* line 600, scss/_dashboard.scss */
+/* line 598, scss/_dashboard.scss */
 .dashboard-student .units .circle-right span {
   width: 80px;
   font-size: 12px;
@@ -4950,12 +4948,12 @@ ul.lv-lvlone {
   line-height: 15px;
 }
 
-/* line 608, scss/_dashboard.scss */
+/* line 606, scss/_dashboard.scss */
 .dashboard-student .units .circle-right span strong {
   color: #636363;
 }
 
-/* line 610, scss/_dashboard.scss */
+/* line 608, scss/_dashboard.scss */
 .dashboard-student .units .line {
   height: 3px;
   position: absolute;
@@ -4965,7 +4963,7 @@ ul.lv-lvlone {
   right: 0px;
 }
 
-/* line 619, scss/_dashboard.scss */
+/* line 617, scss/_dashboard.scss */
 .dashboard-student .units .content {
   width: 100%;
   height: 300px;
@@ -4973,7 +4971,7 @@ ul.lv-lvlone {
   overflow: hidden;
 }
 
-/* line 624, scss/_dashboard.scss */
+/* line 622, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box {
   width: 175px;
   height: 120px;
@@ -4983,7 +4981,7 @@ ul.lv-lvlone {
   margin-right: 10px;
 }
 
-/* line 631, scss/_dashboard.scss */
+/* line 629, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .bubble {
   width: 38px;
   height: 38px;
@@ -4997,7 +4995,7 @@ ul.lv-lvlone {
   border-radius: 38px;
 }
 
-/* line 642, scss/_dashboard.scss */
+/* line 640, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .bubble i {
   position: absolute;
   top: 50%;
@@ -5005,7 +5003,7 @@ ul.lv-lvlone {
   margin: -6px 0 0 -7px;
 }
 
-/* line 647, scss/_dashboard.scss */
+/* line 645, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble {
   width: 175px;
   height: auto;
@@ -5016,14 +5014,14 @@ ul.lv-lvlone {
   display: none;
 }
 
-/* line 655, scss/_dashboard.scss */
+/* line 653, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .ficha-dashboard {
   height: auto;
   border: 0;
   display: block;
 }
 
-/* line 659, scss/_dashboard.scss */
+/* line 657, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .ficha-dashboard .grafica {
   width: 122px;
   height: 122px;
@@ -5031,7 +5029,7 @@ ul.lv-lvlone {
   margin-right: auto;
 }
 
-/* line 664, scss/_dashboard.scss */
+/* line 662, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .ficha-dashboard .grafica hgroup {
   width: 120px;
   height: 90px;
@@ -5040,125 +5038,125 @@ ul.lv-lvlone {
   top: 8px;
 }
 
-/* line 671, scss/_dashboard.scss */
+/* line 669, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .ficha-dashboard .grafica hgroup h3 {
   font-family: HelveticaLt;
   font-size: 12px;
   color: #c2c2c2;
 }
 
-/* line 675, scss/_dashboard.scss */
+/* line 673, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .ficha-dashboard .grafica hgroup h3 small {
   font-size: 10px;
 }
 
-/* line 677, scss/_dashboard.scss */
+/* line 675, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .ficha-dashboard .grafica hgroup h4 {
   font-family: HelveticaMd;
   font-size: 25px;
   color: #8c8c8c;
 }
 
-/* line 681, scss/_dashboard.scss */
+/* line 679, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica1, .dashboard-student .units .content .wrap-box .big-bubble .grafica2, .dashboard-student .units .content .wrap-box .big-bubble .grafica3 {
   background: url(../../img/sprite-ficha-2.png);
   position: absolute;
 }
 
-/* line 684, scss/_dashboard.scss */
+/* line 682, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica1 {
   width: 56px;
   height: 88px;
 }
 
-/* line 687, scss/_dashboard.scss */
+/* line 685, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica1.one {
   background-position: 0 1px;
 }
 
-/* line 689, scss/_dashboard.scss */
+/* line 687, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica1.two {
   background-position: -55px 0;
 }
 
-/* line 691, scss/_dashboard.scss */
+/* line 689, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica1.three {
   background-position: -111px 0;
 }
 
-/* line 693, scss/_dashboard.scss */
+/* line 691, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica1.four {
   background-position: -167px 0;
 }
 
-/* line 695, scss/_dashboard.scss */
+/* line 693, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica1.five {
   background-position: -223px 0;
 }
 
-/* line 697, scss/_dashboard.scss */
+/* line 695, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica2 {
   width: 59px;
   height: 88px;
 }
 
-/* line 700, scss/_dashboard.scss */
+/* line 698, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica2.one {
   background-position: -9px -129px;
 }
 
-/* line 702, scss/_dashboard.scss */
+/* line 700, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica2.two {
   background-position: -68px -130px;
 }
 
-/* line 704, scss/_dashboard.scss */
+/* line 702, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica2.three {
   background-position: -128px -130px;
 }
 
-/* line 706, scss/_dashboard.scss */
+/* line 704, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica2.four {
   background-position: -188px -130px;
 }
 
-/* line 708, scss/_dashboard.scss */
+/* line 706, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica2.five {
   background-position: -248px -130px;
 }
 
-/* line 710, scss/_dashboard.scss */
+/* line 708, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica3 {
   width: 100px;
   height: 35px;
 }
 
-/* line 713, scss/_dashboard.scss */
+/* line 711, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica3.one {
   background-position: 0 -94px;
 }
 
-/* line 715, scss/_dashboard.scss */
+/* line 713, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica3.two {
   background-position: -100px -94px;
 }
 
-/* line 717, scss/_dashboard.scss */
+/* line 715, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica3.three {
   background-position: -200px -94px;
 }
 
-/* line 719, scss/_dashboard.scss */
+/* line 717, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica3.four {
   background-position: -300px -94px;
 }
 
-/* line 721, scss/_dashboard.scss */
+/* line 719, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .grafica3.five {
   background-position: -400px -94px;
 }
 
-/* line 723, scss/_dashboard.scss */
+/* line 721, scss/_dashboard.scss */
 .dashboard-student .units .content .wrap-box .big-bubble .back {
   width: 110px;
   height: 20px;
@@ -5168,7 +5166,7 @@ ul.lv-lvlone {
   left: 9px;
 }
 
-/* line 730, scss/_dashboard.scss */
+/* line 728, scss/_dashboard.scss */
 .dashboard-student .units .content .box {
   width: 175px;
   background: #f5f5f5;
@@ -5183,21 +5181,21 @@ ul.lv-lvlone {
   top: 0;
 }
 
-/* line 742, scss/_dashboard.scss */
+/* line 740, scss/_dashboard.scss */
 .dashboard-student .units .content .box p:first-child {
   color: #999;
   font-size: 13px;
   line-height: 15px;
 }
 
-/* line 746, scss/_dashboard.scss */
+/* line 744, scss/_dashboard.scss */
 .dashboard-student .units .content .box p:last-child {
   color: #c1c1c1;
   font-size: 11px;
   margin: 0;
 }
 
-/* line 750, scss/_dashboard.scss */
+/* line 748, scss/_dashboard.scss */
 .dashboard-student .units .content .box:before {
   content: "";
   display: block;
@@ -5212,7 +5210,7 @@ ul.lv-lvlone {
   margin-left: -10px;
 }
 
-/* line 762, scss/_dashboard.scss */
+/* line 760, scss/_dashboard.scss */
 .dashboard-student .units .column-left, .dashboard-student .units .column-right {
   position: absolute;
   z-index: 999;
@@ -5220,48 +5218,48 @@ ul.lv-lvlone {
   background-color: #fff;
 }
 
-/* line 767, scss/_dashboard.scss */
+/* line 765, scss/_dashboard.scss */
 .dashboard-student .units .column-left {
   width: 68px;
   left: 0;
   display: none;
 }
 
-/* line 771, scss/_dashboard.scss */
+/* line 769, scss/_dashboard.scss */
 .dashboard-student .units .column-right {
   width: 83px;
   right: 0;
 }
 
-/* line 775, scss/_dashboard.scss */
+/* line 773, scss/_dashboard.scss */
 .dashboard-student .units .ico-ficha1 {
   top: 29px;
   left: 0;
 }
 
-/* line 778, scss/_dashboard.scss */
+/* line 776, scss/_dashboard.scss */
 .dashboard-student .units .ico-ficha2 {
   top: 27px;
   right: 2px;
 }
 
-/* line 781, scss/_dashboard.scss */
+/* line 779, scss/_dashboard.scss */
 .dashboard-student .units .ico-ficha3 {
   left: 54px;
   bottom: -5px;
 }
 
-/* line 784, scss/_dashboard.scss */
+/* line 782, scss/_dashboard.scss */
 .dashboard-student .graphics {
   margin-top: 60px;
 }
 
-/* line 786, scss/_dashboard.scss */
+/* line 784, scss/_dashboard.scss */
 .dashboard-student .graphics .left {
   width: 450px;
 }
 
-/* line 788, scss/_dashboard.scss */
+/* line 786, scss/_dashboard.scss */
 .dashboard-student .graphics .gr {
   width: 130px;
   color: #999;
@@ -5270,7 +5268,7 @@ ul.lv-lvlone {
   margin-right: 20px;
 }
 
-/* line 794, scss/_dashboard.scss */
+/* line 792, scss/_dashboard.scss */
 .dashboard-student .graphics .gr hgroup {
   padding: 10px;
   position: absolute;
@@ -5278,25 +5276,25 @@ ul.lv-lvlone {
   text-align: center;
 }
 
-/* line 799, scss/_dashboard.scss */
+/* line 797, scss/_dashboard.scss */
 .dashboard-student .graphics .gr h3 {
   font-size: 30px;
   margin: 0;
 }
 
-/* line 802, scss/_dashboard.scss */
+/* line 800, scss/_dashboard.scss */
 .dashboard-student .graphics .gr h3 small {
   font-size: 14px;
 }
 
-/* line 804, scss/_dashboard.scss */
+/* line 802, scss/_dashboard.scss */
 .dashboard-student .graphics .gr h4 {
   font-size: 12px;
   font-family: HelveticaMd;
   margin: 0;
 }
 
-/* line 808, scss/_dashboard.scss */
+/* line 806, scss/_dashboard.scss */
 .dashboard-student .graphics .grafica3 {
   width: 150px;
   position: relative;
@@ -5304,17 +5302,17 @@ ul.lv-lvlone {
   float: left;
 }
 
-/* line 813, scss/_dashboard.scss */
+/* line 811, scss/_dashboard.scss */
 .dashboard-student .graphics .graf-small {
   position: relative;
 }
 
-/* line 815, scss/_dashboard.scss */
+/* line 813, scss/_dashboard.scss */
 .dashboard-student .graphics .graf-small:first-child {
   margin-bottom: 5px;
 }
 
-/* line 817, scss/_dashboard.scss */
+/* line 815, scss/_dashboard.scss */
 .dashboard-student .graphics .graf-small .inside {
   width: 60px;
   position: absolute;
@@ -5325,7 +5323,7 @@ ul.lv-lvlone {
   font-family: HelveticaHv;
 }
 
-/* line 825, scss/_dashboard.scss */
+/* line 823, scss/_dashboard.scss */
 .dashboard-student .graphics .graf-small .outside {
   position: absolute;
   top: 10px;
@@ -5334,25 +5332,25 @@ ul.lv-lvlone {
   line-height: 15px;
 }
 
-/* line 831, scss/_dashboard.scss */
+/* line 829, scss/_dashboard.scss */
 .dashboard-student .data {
   height: 160px;
 }
 
-/* line 834, scss/_dashboard.scss */
+/* line 832, scss/_dashboard.scss */
 .dashboard-student .chart {
   clear: both;
   margin-top: 20px;
 }
 
-/* line 837, scss/_dashboard.scss */
+/* line 835, scss/_dashboard.scss */
 .dashboard-student .chart h3 {
   font-size: 18px;
   padding: 20px 0;
   border-top: 1px solid #e9e9eb;
 }
 
-/* line 842, scss/_dashboard.scss */
+/* line 840, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar {
   width: 450px;
   height: 400px;
@@ -5361,19 +5359,19 @@ ul.lv-lvlone {
   padding-top: 40px;
 }
 
-/* line 848, scss/_dashboard.scss */
+/* line 846, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar canvas {
   margin-left: 55px;
 }
 
-/* line 850, scss/_dashboard.scss */
+/* line 848, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar div {
   position: absolute;
   font-size: 12px;
   color: #999;
 }
 
-/* line 854, scss/_dashboard.scss */
+/* line 852, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar div span {
   display: block;
   text-align: center;
@@ -5382,40 +5380,40 @@ ul.lv-lvlone {
   font-weight: bold;
 }
 
-/* line 860, scss/_dashboard.scss */
+/* line 858, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar .legend-top {
   top: 0;
   left: 50%;
   margin-left: -45px;
 }
 
-/* line 864, scss/_dashboard.scss */
+/* line 862, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar .legend-right {
   top: 50%;
   margin-top: -30px;
   right: 40px;
 }
 
-/* line 868, scss/_dashboard.scss */
+/* line 866, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar .legend-bottom {
   bottom: 25px;
   left: 50%;
   margin-left: -45px;
 }
 
-/* line 872, scss/_dashboard.scss */
+/* line 870, scss/_dashboard.scss */
 .dashboard-student .chart .wrap-radar .legend-left {
   left: 0;
   top: 50%;
   margin-top: -30px;
 }
 
-/* line 876, scss/_dashboard.scss */
+/* line 874, scss/_dashboard.scss */
 .dashboard-student .right {
   width: 530px;
 }
 
-/* line 878, scss/_dashboard.scss */
+/* line 876, scss/_dashboard.scss */
 .dashboard-student .box-list header .title {
   font-size: 14px;
   font-weight: bold;
@@ -5425,17 +5423,17 @@ ul.lv-lvlone {
   color: #4d4d4d;
 }
 
-/* line 885, scss/_dashboard.scss */
+/* line 883, scss/_dashboard.scss */
 .dashboard-student .box-list header ul li:first-child {
   border-top: 1px solid #ccc;
 }
 
-/* line 887, scss/_dashboard.scss */
+/* line 885, scss/_dashboard.scss */
 .dashboard-student .box-list ul li > div:last-child {
   background: #fff;
 }
 
-/* line 889, scss/_dashboard.scss */
+/* line 887, scss/_dashboard.scss */
 .dashboard-student .box-list ul li {
   width: 100%;
   border-left: 0;
@@ -5443,35 +5441,35 @@ ul.lv-lvlone {
   border-bottom: 0;
 }
 
-/* line 894, scss/_dashboard.scss */
+/* line 892, scss/_dashboard.scss */
 .dashboard-student .box-list ul li:last-child {
   border-bottom: 1px solid #ccc;
 }
 
-/* line 896, scss/_dashboard.scss */
+/* line 894, scss/_dashboard.scss */
 .dashboard-student .box-list ul .generic {
   width: 60px;
 }
 
-/* line 898, scss/_dashboard.scss */
+/* line 896, scss/_dashboard.scss */
 .dashboard-student .box-list ul .resources {
   width: 70px;
 }
 
-/* line 900, scss/_dashboard.scss */
+/* line 898, scss/_dashboard.scss */
 .dashboard-student .box-list ul .title {
   width: 230px;
   padding-left: 40px;
   text-align: left;
 }
 
-/* line 904, scss/_dashboard.scss */
+/* line 902, scss/_dashboard.scss */
 .dashboard-student .box-list ul .sublesson {
   width: 498px;
   border: 0;
 }
 
-/* line 907, scss/_dashboard.scss */
+/* line 905, scss/_dashboard.scss */
 .dashboard-student .box-list ul .sublesson li:last-child {
   border-bottom: 0;
 }
