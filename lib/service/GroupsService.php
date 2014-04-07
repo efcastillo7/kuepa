@@ -14,13 +14,13 @@ class GroupsService {
         return Groups::getRepository()->find($id);
     }
 
-    public function getGroupsByAuthor($profile_id, $levels = 0){
+    public function getGroupsByAuthor($profile_id, $levels = null){
         $q = Groups::getRepository()->createQuery('g')
                 ->where('creator_id = ?',$profile_id);
 
         if(is_array($levels)){
             $q->andWhereIn('level', $levels);
-        }else{
+        }else if($levels){
             $q->andWhere('level = ?', $levels);
         }
 
