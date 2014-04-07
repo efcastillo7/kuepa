@@ -196,7 +196,7 @@ class ComponentService {
         try {
             $plp->setProfileId($user_id)
                 ->setComponentId($component_id)
-                ->setProfileLearningPathStatus(ProfileLearningPath::IN_PROGRESS)
+                ->setProfileLearningPathStatusId(ProfileLearningPath::IN_PROGRESS)
                 ->save();
         } catch (Exception $e) {
             
