@@ -88,7 +88,9 @@ class usersActions extends sfActions
       $this->message = $response['message'];
       $this->getUser()->setAttribute('success', $response['success']);
       $this->getUser()->setAttribute('errors', $response['errors']);
+      // echo var_dump($response);
     }
+
 
 
   }
