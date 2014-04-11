@@ -27,6 +27,7 @@ class Notification extends BaseNotification {
     	CacheHelper::getInstance()->delete('Notification_getUnread', array( $profile_id ));
         CacheHelper::getInstance()->delete('Notification_getUnreadCount', array( $profile_id ));
         CacheHelper::getInstance()->delete('Notification_getAll', array( $profile_id ));
+        CacheHelper::getInstance()->delete('Notification_getAll', array( $profile_id, 10, null ));
     }
 
 }
