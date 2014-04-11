@@ -125,7 +125,7 @@ function onVideoSessionAddClicked(e){
     } else {
         //hide url
         $("[for='video_session_url']",$modal).hide();
-        $("[name='video_session[url]']",$modal).hide();
+        $("[name='video_session\[url]']",$modal).hide();
     }
 }
 
