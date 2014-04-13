@@ -69,11 +69,13 @@
 
 </head>
 <body>
+  <div id="wrap">
+    <?php include_component('layout', 'navigationV2') ?>
+    <?php echo $sf_content ?>
+    <div id="push"></div>
+  </div>
 
-  <?php include_component('layout', 'navigationV2') ?>
-  <?php echo $sf_content ?>
-
-  <footer>
+  <footer id="footer">
     <div class="container">
       <div class="ft-logo">kuepa</div>
       <p class="ft-copy">Copyright &copy; Kuepa 2014</p>

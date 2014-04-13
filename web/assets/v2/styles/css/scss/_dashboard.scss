@@ -1,6 +1,5 @@
 /*DASHBOARD*/
 .dashboard-left {
-  width: 560px;
   float: left;
   margin-top: 30px; }
   .dashboard-left .nav-dashboard {
@@ -24,9 +23,9 @@
     margin-top: -10px; }
 
 .dashboard-right {
-  width: 400px;
   float: right;
-  margin-top: 20px; }
+  margin-top: 100px;
+  background-color:#fff; }
   .dashboard-right nav a {
     width: 115px;
     height: 40px;
@@ -906,3 +905,87 @@
     border: 0; }
     .dashboard-student .box-list ul .sublesson li:last-child {
       border-bottom: 0; }
+
+
+
+/* Full Table */
+
+
+
+.tbdata {
+  position:relative;
+  margin:199px 0 100px;
+  font-size:13px;
+  table {
+    margin:0px;
+    > thead, tbody {
+      > tr {
+        height:50px;
+        > td {
+          min-width:150px;
+          vertical-align:middle;
+          padding:0px 15px;
+          line-height:1.2;
+        }
+      }
+    }
+  }    
+}
+
+.tbdata-corner {
+  background-color: #fff;
+  position: fixed;
+  width: 201px;
+  height: 101px;
+  left: 0px;
+  z-index:510;
+  padding:10px;
+  border-right:1px solid #c0c0c0;
+  border-bottom:1px solid #c0c0c0;
+  border-top:1px solid #c0c0c0;
+  margin-top:-100px;
+}
+
+.tbdata-hd {
+  background-color: #f5f5f5;
+  position: absolute;
+  height: 101px;
+  left: 200px;
+  top: -100px;
+  border-bottom:1px solid #c0c0c0;
+  border-top:1px solid #c0c0c0;
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow:hidden;
+  z-index:500;
+}
+
+.tbdata-left {
+  background-color: #f5f5f5;
+  position: absolute;
+  width: 201px;
+  border-right:1px solid #c0c0c0;
+  font-family: HelveticaMd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  z-index:500;
+  border-bottom:1px solid #c0c0c0;
+}
+
+.tbdata-info {
+  background-color: #fff;
+  margin: 100px 0 0 200px;
+}
+
+.tbdata-title-hd {
+  position:fixed;
+  top:50px;
+  left:0px;
+  right:0px;
+  background-color:#fff;
+  z-index:550;
+  padding:10px 30px;
+  border-bottom:1px solid #c0c0c0;
+  height:100px;
+}
+
+
+
+

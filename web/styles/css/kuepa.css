@@ -169,6 +169,7 @@ h6, .title6 {font-size:16px;}
 /* Accent colors */
 .orange {color:#FF671B;}
 .cyan {color:#2568FA;}
+.green {color:#81CC47;}
 .darkblue {color:#162230;}
 
 /* --------------------------------------------------
@@ -346,9 +347,45 @@ top:0%;
 	margin-left:-1px;
 }
 
+
+/* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
 /* --------------------------------------------------
 // Header
 -------------------------------------------------- */
+
 .header {
 	margin-top:70px;
 	margin-bottom:60px;
