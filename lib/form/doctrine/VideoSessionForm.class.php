@@ -29,8 +29,8 @@ class VideoSessionForm extends BaseVideoSessionForm {
                 "choices"   => $this->getCoursesForChoiceWidget() )
             ),
             'chapter_id'    => new sfWidgetFormChoice(array("choices" => array())),
-            'title'         => new sfWidgetFormInputText(),
-            'description'   => new sfWidgetFormTextarea(),
+            'title'         => new sfWidgetFormInputText(array(),array('class' => 'input-big')),
+            'description'   => new sfWidgetFormTextarea(array(),array('class' => 'input-big')),
             'visibility'    => new sfWidgetFormChoice(array(
                 "choices"   => array(
                     "public"    => "Público",
@@ -43,7 +43,7 @@ class VideoSessionForm extends BaseVideoSessionForm {
                     "culture" => sfContext::getInstance()->getUser()->getCulture(),
                     "date"  =>
                         array(
-                            "format"    => '%day%/%month%/%year%',
+                            "format"    => '%day% %month% %year%',
                             'years'     => array_combine($anios, $anios)
                     )
                 )
@@ -53,7 +53,7 @@ class VideoSessionForm extends BaseVideoSessionForm {
                     "culture" => sfContext::getInstance()->getUser()->getCulture(),
                     "date"  =>
                         array(
-                            "format"    => '%day%/%month%/%year%',
+                            "format"    => '%day% %month% %year% ',
                             'years'     => array_combine($anios, $anios)
                         )
                 )
@@ -117,10 +117,10 @@ class VideoSessionForm extends BaseVideoSessionForm {
 
         //Url is shown only for modification OR IF PLATFORM_EXTERNAL
         //if(!$this->isNew()){
-            $this->setWidget('url', new sfWidgetFormInputText() );
+            $this->setWidget('url', new sfWidgetFormInputText(array(),array('class' => 'input-big')) );
             $this->setValidator('url', new sfValidatorPass() );
             $this->widgetSchema->setLabel('url', 'Url');
-            //$this->getWidget("url")->setHidden(true);
+            // $this->getWidget("url")->setHidden(true);
         //}
 
         $this->getWidgetSchema()->setIdFormat('%s' . ($this->isNew() ? "" : "-" . $this->getObject()->getId()));
@@ -134,7 +134,9 @@ class VideoSessionForm extends BaseVideoSessionForm {
         
         #hide url if hangouts
         if($taintedValues["platform"] == VideoSessionService::PLATFORM_HANGOUTS) {
-            $this->getWidget("url")->setAttribute("style", "display:none;");
+            // $this->getWidget("url")->setAttribute("style", "display:none;");
+            // $this->widgetSchema->setLabel('url', '');
+            $this->getWidget("url")->setHidden(true);
         }
     }
 

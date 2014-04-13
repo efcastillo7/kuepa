@@ -2,14 +2,18 @@ tr.warning td {
   background: #fcf8e3 !important;
   text-align: center; }
 
-[name^='video_session[scheduled_'],
-[name^='video_session[scheduled_'],
-[name^='video_session[scheduled_'],
-[name^='video_session[scheduled_'] {
-  width: 65px; }
+label[for="video_session_scheduled_end"], label[for="video_session_scheduled_for"] { 
+  display: block !important; clear: both;
+}
+
+[name $='hour\]']{
+  margin-left: 20px
+}
 
 [name^='video_session[scheduled_'] {
-  width: 80px; }
+  width: 80px; 
+  float: left;
+}
 
 .text-red {
   color: #CC131F; }

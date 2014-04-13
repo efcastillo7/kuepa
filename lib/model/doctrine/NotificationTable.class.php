@@ -25,21 +25,22 @@ class NotificationTable extends Doctrine_Table
                     ->where('n.clicked_at IS NULL')
                     ->andWhere("n.seen !=1")
                     ->andWhere("p.id = ?", $profile_id )
-                    ->orderBy('n.created_at desc');
-                    // ->useResultCache(true, null, CacheHelper::getInstance()->genKey('Notification_getUnread', array($profile_id)) );
+                    ->orderBy('n.created_at desc')
+                    ->useResultCache(true, null, CacheHelper::getInstance()->genKey('Notification_getUnread', array($profile_id)) );
 
         return $query->execute();
     }
 
     public function getUnreadNotificationsCountForUser($profile_id){
         $query = $this->createQuery('n')
+                    ->select('count(*)')
                     ->innerJoin("n.Profile p")
                     ->andWhere("n.seen IS NULL")
                     ->andWhere("p.id = ?", $profile_id )
-                    ->orderBy('n.created_at desc');
-                    // ->useResultCache(true, null, CacheHelper::getInstance()->genKey('Notification_getUnreadCount', array($profile_id)) );
+                    ->orderBy('n.created_at desc')
+                    ->useResultCache(true, null, CacheHelper::getInstance()->genKey('Notification_getUnreadCount', array($profile_id)) );
 
-        return $query->count();
+        return $query->execute( array(), doctrine::HYDRATE_SINGLE_SCALAR );
     }
 
     public function getNotificationsForUser($profile_id,$limit=null,$last_id=null){
@@ -47,8 +48,8 @@ class NotificationTable extends Doctrine_Table
                     ->innerJoin("n.Profile p")
                     ->innerJoin("n.NotificationAction na")
                     ->leftJoin("na.Profile p2")
-                    ->where("p.id = ?", $profile_id );
-                    // ->useResultCache(true, null, CacheHelper::getInstance()->genKey('Notification_getAll', array($profile_id,$limit,$last_id)) );;
+                    ->where("p.id = ?", $profile_id )
+                    ->useResultCache(true, null, CacheHelper::getInstance()->genKey('Notification_getAll', array($profile_id,$limit,$last_id)) );;
 
         if($limit){
             $query->limit($limit);

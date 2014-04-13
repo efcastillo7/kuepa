@@ -1,7 +1,7 @@
 <!-- Content -->
 <?php $resourceData = $resource->getResourceData()->getFirst();
       $exercise = $resourceData->getExercise();
-      $questions = $exercise->getQuestions();
+      $questions = $exercise->getQuestionsByLevel();
 ?>
 
 <form action="<?php echo url_for("exercise/validate") ?>" method="post" id="exercise_form">
@@ -25,16 +25,7 @@
     </div>
 
     <div class="content questions">
-      <?php for ($i=0; $i < $questions->count(); $i++): ?>
-        <div class="question-item">
-          <h4 id="ex-question-<?php echo $i+1?>">
-            <i class="dot8 orange"></i> Pregunta <?php echo $i+1 ?>
-          </h4>
-          <?php include_partial("type_" . $questions[$i]->getType(), array('exercise' => $exercise, 'question' => $questions[$i]))?>
-        </div>
-      <?php endfor ?>
-
-
+      <?php include_partial("content_questions", array('questions' => $questions, 'exercise' => $exercise)) ?>
       <button type="submit" class="btn btn-large btn-orange">Enviar respuestas y corregir</button>
 
     </div>

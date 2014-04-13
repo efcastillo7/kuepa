@@ -127,6 +127,14 @@ class ProfileService {
               ->setGroupId($type)
               ->save();
 
+        $opt_params = array('country', 'district', 'institution', 'local_id_type', 'local_id', 'phone', 'mobile_phone');
+
+        foreach ($opt_params as $opt_param) {
+          if(isset($params[$opt_param])){
+            $profile->{$opt_param} = $params[$opt_param];
+          }
+        }
+
         //save!
         $profile->save();
 
@@ -173,7 +181,7 @@ class ProfileService {
     }
 
     public function generateUsername($first_name, $last_name = "", $counter = 0){
-        $username = strtolower(preg_replace('[^a-zA-Z]', '', substr($first_name, 0, 3).substr($last_name, 0, 4))) . rand(0,999);
+        $username = preg_replace('[\ ]', '', strtolower(preg_replace('[^a-zA-Z]', '', substr($first_name, 0, 3).substr($last_name, 0, 4))) . rand(0,999));
         while ( $this->findProfileByUsername($username)   ){
             $counter++;
             $username = $this->generateUsername($first_name, $last_name.$counter, $counter);
@@ -183,7 +191,7 @@ class ProfileService {
     }
 
     public function generatedPassword($length = 8){
-        $characters = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        $characters = 'abcdefghijkmnopqrstuvwxyz123456789';
         $password = '';
 
         for ($i = 0; $i < $length; $i ++)
@@ -194,7 +202,7 @@ class ProfileService {
     }
 
     public function generateMailAddress($first_name, $last_name = ""){
-        return($first_name.'.'.$last_name.'@testmail.com');
+        return($first_name.'.'.$last_name.'@bogota.co');
     }
 
 
@@ -207,28 +215,45 @@ class ProfileService {
       $array_errors = array();
       $array_ok = array();
 
+      $fields = array(
+        'firstname',
+        'lastname',
+        'email',
+        'country',
+        'district',
+        'institution',
+        'local_id_type',
+        'local_id',
+        'username',
+        'password',
+        'groups'
+      );
+
+      $fields = array_flip($fields);
+
       foreach ($lines as $key => $user) {
             if ( $skip_first_line == 1 && $key == 0){ 
               next($lines);
             }else if ( trim($user) != "" ){
              $user = explode("$separator",$user);
              if ( count($user) > 1 ){
-               $firstname = $user[0];
-               $lastname = $user[1];
-               $email = trim($user[2]);
-               $username = $user[3];
-               $password = $user[4];
+               $firstname = $user[$fields['firstname']];
+               $lastname = $user[$fields['lastname']];
+               $email = trim($user[$fields['email']]);
+               $username = isset($user[$fields['username']]) ? $user[$fields['username']] : "";
+               $password = isset($user[$fields['password']]) ? $user[$fields['password']] : "";
 
                // Si no esta el username (login) en el archivo se crea
                if ( trim($username) == "" ){
-                  $username = $this->generateUsername($firstname, $lastname);
+                  $username = $this->generateUsername($firstname, $lastname) . "@bogota.co";
+                // $username = $email;
                }
 
                if ( trim($password) == "" ){
                 $password = $this->generatedPassword();
                }
 
-               if ( $email == "" ){
+               if ( trim($email) == "" ){
                  $email = $this -> generateMailAddress($firstname, $lastname);
                }
 
@@ -238,7 +263,7 @@ class ProfileService {
                $array_errors[] = "Error en linea $key, el campo Apellidos esta vacio";
              } else if ( $this->findProfileByUsername($username) ){
                $array_errors[] = "Error en linea $key, el Login $username ya existe";
-             } else if ($email != "" && $this->findProfileByEmail($email)->getFirst() ){
+             } else if (trim($email) != "" && $this->findProfileByEmail($email)->getFirst() ){
                $array_errors[] = "Error en linea $key, el email $email ya existe";
              } else {
 
@@ -253,10 +278,36 @@ class ProfileService {
                                 'code' => '',
                                 'sex' => '');
 
+                $opt_params = array('country', 'district', 'institution', 'local_id_type', 'local_id');
+                foreach($opt_params as $opt_param){
+                  if(isset($user[$fields[$opt_param]])){
+                    $attrs[$opt_param] = $user[$fields[$opt_param]];
+                  }
+                }
+
                 $profile = $this->addNewUser($attrs, $group_id);
                 $array_ok[] = array($firstname,$lastname,$email,$username,$password);
                 if( (int)$college_id > 0 ){
                   CollegeService::getInstance()->addProfileToCollege($profile->getId(), $college_id);
+                }
+
+                //get groups
+                if(isset($user[$fields['groups']])){
+                  $groups = explode(";", $user[$fields['groups']]);
+
+                  foreach ($groups as $group_name) {
+                    $group_name = trim($group_name);
+                    $oGroup = GroupsService::getInstance()->getByNameAndAuthor($group_name, sfContext::getInstance()->getUser()->getProfile()->getId());
+                    if(!$oGroup){
+                      $oGroup = GroupsService::getInstance()->save(array(
+                        'name' => $group_name,
+                        'description' => $group_name,
+                        'level' => '0',
+                        'creator_id' => sfContext::getInstance()->getUser()->getProfile()->getId()
+                      ));
+                    }
+                    GroupsService::getInstance()->addProfileToGroup($oGroup->getId(), $profile->getId());
+                  }
                 }
 
              } // else insert

@@ -12,9 +12,24 @@ class usersActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->sf_guard_users = Doctrine_Core::getTable('sfGuardUser')
-      ->createQuery('a')
-      ->execute();
+
+    $this->pager = new sfDoctrinePager(
+      'Users',
+      50
+    );
+
+    $query = Doctrine_Core::getTable('sfGuardUser')
+      ->createQuery('a');
+
+
+    $form = $this->searchForm = new sfGuardUserFormFilter();
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+
+    // echo $form['first_name']->getValue();
+
+    $this->pager->setQuery($form->getQuery());
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
   }
 
   public function executeNew(sfWebRequest $request)
@@ -88,7 +103,9 @@ class usersActions extends sfActions
       $this->message = $response['message'];
       $this->getUser()->setAttribute('success', $response['success']);
       $this->getUser()->setAttribute('errors', $response['errors']);
+      // echo var_dump($response);
     }
+
 
 
   }
