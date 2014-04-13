@@ -18,10 +18,16 @@ class usersActions extends sfActions
       50
     );
 
-    $sf_guard_users = Doctrine_Core::getTable('sfGuardUser')
+    $query = Doctrine_Core::getTable('sfGuardUser')
       ->createQuery('a');
 
-    $this->pager->setQuery($sf_guard_users);
+
+    $form = $this->searchForm = new sfGuardUserFormFilter();
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+
+    // echo $form['first_name']->getValue();
+
+    $this->pager->setQuery($form->getQuery());
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
   }
