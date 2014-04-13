@@ -14,6 +14,12 @@ class GroupsService {
         return Groups::getRepository()->find($id);
     }
 
+    public function getByNameAndAuthor($name, $author_id){
+        return Groups::getRepository()->createQuery('g')
+                    ->where('name like ? and creator_id = ?', array($name, $author_id))
+                    ->fetchOne();
+    }
+
     public function getGroupsByAuthor($profile_id, $levels = null){
         $q = Groups::getRepository()->createQuery('g')
                 ->where('creator_id = ?',$profile_id);
@@ -45,7 +51,7 @@ class GroupsService {
 
     public function save($values = array()) {
       // group
-       if( (int)$values['id'] > 0 ) {
+       if( isset($values['id']) && (int)$values['id'] > 0 ) {
          $group = self::getInstance()->find($values['id']);
        }else{
          $group = new Groups();

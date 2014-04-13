@@ -225,7 +225,8 @@ class ProfileService {
         'local_id_type',
         'local_id',
         'username',
-        'password'
+        'password',
+        'groups'
       );
 
       $fields = array_flip($fields);
@@ -288,6 +289,25 @@ class ProfileService {
                 $array_ok[] = array($firstname,$lastname,$email,$username,$password);
                 if( (int)$college_id > 0 ){
                   CollegeService::getInstance()->addProfileToCollege($profile->getId(), $college_id);
+                }
+
+                //get groups
+                if(isset($user[$fields['groups']])){
+                  $groups = explode(";", $user[$fields['groups']]);
+
+                  foreach ($groups as $group_name) {
+                    $group_name = trim($group_name);
+                    $oGroup = GroupsService::getInstance()->getByNameAndAuthor($group_name, sfContext::getInstance()->getUser()->getProfile()->getId());
+                    if(!$oGroup){
+                      $oGroup = GroupsService::getInstance()->save(array(
+                        'name' => $group_name,
+                        'description' => $group_name,
+                        'level' => '0',
+                        'creator_id' => sfContext::getInstance()->getUser()->getProfile()->getId()
+                      ));
+                    }
+                    GroupsService::getInstance()->addProfileToGroup($oGroup->getId(), $profile->getId());
+                  }
                 }
 
              } // else insert

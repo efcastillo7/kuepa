@@ -17,4 +17,4 @@ default:
   javascripts:    [uno/layout.js, uno/stash.js]
 
   has_layout:     true
-  layout:         layout
+  layout:         layout_v2
