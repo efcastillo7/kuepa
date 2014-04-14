@@ -71,6 +71,11 @@ class ExerciseService {
             //Learning path
             $lp = new LearningPath();
             $lp->setParentId($lesson_id)->setChildId($resource->getId())->setPosition(1)->save();
+        }else{
+            $resource = $resourceData->getFirst()->getResource();
+            $resource->setName($exercise->getTitle())
+                    ->setDescription($exercise->getDescription())
+                    ->save();
         }
 
     }

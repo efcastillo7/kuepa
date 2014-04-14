@@ -83,14 +83,14 @@ class ExerciseForm extends BaseExerciseForm {
             'max_attemps'    => new sfValidatorPass(),
             'start_time' => new sfValidatorDateTime(
                 array(
-                    'required'  => true,
+                    'required'  => false,
                 ),
                 array(
                     'required'  => "Ingrese la fecha y hora de inicio de la ejercitación",
                 )),
             'end_time' => new sfValidatorDateTime(
                 array(
-                    'required'  => true,
+                    'required'  => false,
                 ),
                 array(
                     'required'  => "Ingrese la fecha y hora de inicio de la ejercitación",
