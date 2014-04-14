@@ -6,6 +6,8 @@ homepage:
   url:   /
   param: { module: home, action: index }
 
+# lessons routing
+
 lesson_view:
   url: /lesson/view/:course_id/:chapter_id/:lesson_id
   param: { module: lesson, action: index}
@@ -13,6 +15,8 @@ lesson_view:
 lesson_view_resource:
   url: /lesson/view/:course_id/:chapter_id/:lesson_id/:resource_id
   param: { module: lesson, action: index}
+
+# exercise routing
 
 exercise_list:
   url: /course/:course_id/exercises
@@ -26,13 +30,25 @@ exercise_edit:
   url: /exercises/:exercise_id
   param: { module: exercise, action: edit }
 
-sf_guard_signin:
-  url:   /login
-  param: { module: sfGuardAuth, action: signin }
+# tutorials routing
 
 video_session:
   url: /tutorias
   param: { module: video_session, action: index }
+
+# messages
+
+messages:
+  url: /messages
+  param: { module: message, action: index }
+
+
+# login/logout/register routing
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
 
 sf_guard_signout:
   url:   /logout
@@ -60,9 +76,6 @@ account_expired:
   url:  /account/expired
   param: { module: public, action: accountexpired }
 
-messages:
-  url: /messages
-  param: { module: message, action: index }
 
 # generic rules
 # please, remove them by adding more specific rules

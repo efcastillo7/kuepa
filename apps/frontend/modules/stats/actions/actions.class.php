@@ -117,6 +117,7 @@ class statsActions extends kuepaActions
   public function executeClass(sfWebRequest $request){
     $course_id = $request->getParameter("course_id");
     $group_id = $request->getParameter("group");
+    $type = $request->getParameter("type", "list");
 
     $this->course = Course::getRepository()->getById($course_id);
     $this->group = null;
@@ -146,6 +147,8 @@ class statsActions extends kuepaActions
 
     $profiles_ids = $this->students->getPrimaryKeys();
     $this->status = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($component_ids, $profiles_ids);
+
+    $this->setTemplate("class-$type");
 
     // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
   }

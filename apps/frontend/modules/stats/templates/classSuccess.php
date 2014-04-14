@@ -19,7 +19,7 @@
 	<h3 class="HelveticaLt">Reportes: <span class="HelveticaMd"><?php echo $course->getName() ?></span></h3>
 </div>
 
-<div class="tbdata none">
+<div class="tbdata">
 	<div id="table-corner" class="tbdata-corner">
 		<?php if ($groups->count() > 0): ?>
 			<div class="btn-group">
@@ -486,7 +486,7 @@
 <!-- //////////// DASHBOARD B /////////////// -->
 
 
-<div class="container clearpadding">
+<div class="container clearpadding none">
 	<div class="row">
 		<div class="col-xs-7">
 
