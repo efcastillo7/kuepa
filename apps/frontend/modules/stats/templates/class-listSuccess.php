@@ -81,26 +81,26 @@
 		<table class="table table-hover table-bordered">
 			<tbody>
 				<?php foreach ($students as $student): ?>
+				<?php $sstatus = isset($status[$student->getId()]) ? $status[$student->getId()][$course->getId()] : 0; ?>
 				<tr>
 					<td>
 						<div class="progress">
-							<?php if ($student->getComponentStatus($course->getId()) < 35): ?>
-							<div class="progress-bar progress-bar-danger" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>	
-							<?php elseif ($student->getComponentStatus($course->getId()) < 70): ?>
-							<div class="progress-bar progress-bar-warning" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>
+							<?php if ($sstatus < 35): ?>
+							<div class="progress-bar progress-bar-danger" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>	
+							<?php elseif ($sstatus < 70): ?>
+							<div class="progress-bar progress-bar-warning" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>
 							<?php else: ?>
-							<div class="progress-bar progress-bar-success" style="width: <?php echo $student->getComponentStatus($course->getId())?>%;"><?php echo $student->getComponentStatus($course->getId())?>%</div>
+							<div class="progress-bar progress-bar-success" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>
 							<?php endif ?>
 						</div>
 					</td>
 					<td>
 						<span class="glyphicon glyphicon-time"></span>
-						<?php 
-							$time_course = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId()));
-						if($time_course == 0):?>
-						-
-						<?php else: ?>
+						<?php $time_course = isset($courseTimes[$student->getId()]) ? $courseTimes[$student->getId()][$course->getId()] : 0;
+						if($time_course > 0):?>
 						<?php echo gmdate("H:i:s", $time_course) ?>
+						<?php else: ?>
+						-
 						<?php endif; ?>
 					</td>
 					<td>
@@ -113,13 +113,13 @@
 					</td>
 					<td>
 						<span class="glyphicon glyphicon-ok-circle green"></span>
-						<?php echo ProfileComponentCompletedStatusService::getInstance()->getCompletedChilds($course->getId(), $student->getId()) ?>
+						<?php echo isset($chapterAproved[$student->getId()]) ? $chapterAproved[$student->getId()] : 0; ?>
 						/
 						<?php echo $course->getChapters()->count() ?>
 					</td>
 
 					<!-- por unidad -->
-					<?php foreach ($course->getChapters() as $chapter): $get_status = ($time_course > 0);?>
+					<?php $get_status = ($time_course > 0); foreach ($course->getChapters() as $chapter):?>
 					<td>
 						<?php if (!isset($status[$student->getId()]) || !isset($status[$student->getId()][$chapter->getId()])): ?>
 						<?php $get_status = false; ?>
@@ -129,14 +129,10 @@
 						<?php endif ?>
 					</td>
 					<td>
-						<?php if ($get_status){
-							$time = LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId(), 'chapter_id' => $chapter->getId())); 
-						}else{ $time = 0;} ?>
-						<?php 
-						if($time == 0):?>
-						-
+						<?php if ($get_status && isset($chapterTimes[$student->getId()][$course->getId()][$chapter->getId()])):?>
+						<?php echo gmdate("H:i:s", $chapterTimes[$student->getId()][$course->getId()][$chapter->getId()]) ?>
 						<?php else: ?>
-						<?php echo gmdate("H:i:s", $time) ?>
+						-
 						<?php endif; ?>
 					</td>
 					<?php endforeach ?>

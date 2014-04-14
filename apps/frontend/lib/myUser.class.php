@@ -7,6 +7,7 @@ class myUser extends sfGuardSecurityUser {
     const USER_COURSES_ENABLED  = 'UserCoursesEnabled';
     const USER_COURSES  = 'UserCourses';
     const LAYOUT_STYLE  = 'CollegeLayoutStyle';
+    const USER_COLLEGES = 'UserColleges';
     const CULTURE_LANG = 'UserCultureLang';
     const CULTURE_TIMEZONE = 'UserCultureTimezone';
     
@@ -32,6 +33,7 @@ class myUser extends sfGuardSecurityUser {
         parent::signIn($user, $remember, $con);
 
         $this->setUser($user);
+        $this->setCollegesIds($user);
         $this->setCourses($this);
         $this->setStyle($user);
         $this->setI18N();
@@ -101,12 +103,23 @@ class myUser extends sfGuardSecurityUser {
         }
     }
 
+    protected function setCollegesIds($user){
+        $colleges = $user->getProfile()->getColleges();
+
+        $this->setAttribute(self::USER_COLLEGES, $colleges->getPrimaryKeys());
+    }
+
+    public function getCollegeIds(){
+        return $this->getAttribute(self::USER_COLLEGES);
+    }
+
     protected function setStyle($user){
         $style = "";
 
         $colleges = $user->getProfile()->getColleges();
 
         if($colleges->count()){
+            //first college
             $style = $colleges->getFirst()->getStyle();
         }
 

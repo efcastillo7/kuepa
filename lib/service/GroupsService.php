@@ -117,8 +117,9 @@ class GroupsService {
         //$users = $group->getProfiles();
 
         $q = Profile::getRepository()->createQuery('p')
-                ->select('p.*')
+                // ->select('p.*')
                 ->innerJoin('p.GroupProfile gp')
+                ->innerJoin('p.sfGuardUser sfg')
                 ->where('gp.group_id ='.$group_id.'');
        /* $pager = new sfDoctrinePager('Profile', 50);
         $pager->setQuery($q);

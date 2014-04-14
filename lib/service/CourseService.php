@@ -47,12 +47,19 @@ class CourseService {
         return ComponentService::getInstance()->removeUserFromComponent($course_id, $student_id);
     }
 
-    public function getStudentsList($course_id){
+    public function getStudentsList($course_id, $colleges_ids = null){
         //colleges that has that course
-        $colleges = College::getRepository()->createQuery('c')
-                        ->innerJoin("c.Components co")
-                        ->where('co.id = ?', $course_id)
-                        ->execute();
+
+        if(!$colleges_ids){
+            $colleges = College::getRepository()->createQuery('c')
+                            ->innerJoin("c.Components co")
+                            ->where('co.id = ?', $course_id)
+                            ->execute();
+
+            $colleges_ids = $colleges->getPrimaryKeys();
+        }
+
+        $max = 250;
 
         //direct users
         $q1 = Profile::getRepository()->createQuery('p')
@@ -63,22 +70,30 @@ class CourseService {
                 ->innerJoin('sgug.Group sgg')
                 ->andWhere('sgg.name = ?', 'estudiantes')
                 ->andWhere('sgu.is_active = true')
+                ->limit($max)
                 ->execute();
 
         //users from college
-        $q2 = Profile::getRepository()->createQuery('p')
-                ->innerJoin('p.sfGuardUser sgu')
-                ->innerJoin('sgu.sfGuardUserGroup sgug')
-                ->innerJoin('sgug.Group sgg')
-                ->andWhere('sgg.name = ?', 'estudiantes')
-                ->innerJoin("p.ProfileCollege pc")
-                // ->innerJoin("pc.College c")
-                // ->innerJoin("c.CollegeLearningPath clp")
-                ->andWhere('sgu.is_active = true')
-                ->whereIn("pc.college_id", $colleges->getPrimaryKeys())
-                ->execute();
+        if(count($colleges_ids)){
+            $q2 = Profile::getRepository()->createQuery('p')
+                    ->innerJoin('p.sfGuardUser sgu')
+                    ->innerJoin('sgu.sfGuardUserGroup sgug')
+                    ->innerJoin('sgug.Group sgg')
+                    ->andWhere('sgg.name = ?', 'estudiantes')
+                    ->innerJoin("p.ProfileCollege pc")
+                    // ->innerJoin("pc.College c")
+                    // ->innerJoin("c.CollegeLearningPath clp")
+                    ->andWhere('sgu.is_active = true')
+                    ->limit($max)
+                    ->whereIn("pc.college_id", $colleges_ids)
+                    ->execute();
 
-        return $users = $q1->merge($q2);
+            // return $q2;
+            return $users = $q1->merge($q2);
+        }
+
+        return $q1;
+
 
         // $q = Profile::getRepository()->createQuery('p')
         //         ->innerJoin('p.ProfileLearningPath plp')

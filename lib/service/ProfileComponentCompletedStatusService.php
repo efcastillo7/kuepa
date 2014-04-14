@@ -161,7 +161,7 @@ class ProfileComponentCompletedStatusService {
 
 
     public function getCompletedChilds($component_id, $profile_id){
-        $component = Component::getRepository()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         if($component){
             $childrens = $component->getChildren();
@@ -184,6 +184,23 @@ class ProfileComponentCompletedStatusService {
         }
 
         return 0;
+    }
+
+    public function getCompletedChildsArray($profiles_ids, $component_ids){
+        $q = ProfileComponentCompletedStatus::getRepository()->createQuery('pccs');
+
+        if(is_array($profiles_ids)){
+            $q->whereIn("profile_id", $profiles_ids);
+        }else{
+            $q->where("profile_id = ?", $profiles_ids);
+        }
+
+        $q->andWhereIn('component_id', $component_ids)
+          ->andWhere('completed_status >= ?', 70);
+
+        return $q->select("profile_id, count(component_id) as total")
+                         ->groupBy("profile_id")
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );           
     }
 
     //TODO: armar para que permita 1 solo profile_id
@@ -213,11 +230,17 @@ class ProfileComponentCompletedStatusService {
         if(isset($route['resource_id'])){
             $q->andWhere('resource_id = ?', $route['resource_id']);
         }
-        
+
         $params = count($route);
         switch ($params) {
+            case 1:
+                return $q->select("profile_id, course_id, sum(updated_at - created_at) as total")
+                         ->groupBy("profile_id, course_id")
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_TRIO' );   
+                break;
             case 2:
                 return $q->select("profile_id, course_id, chapter_id, sum(updated_at - created_at) as total")
+                         ->groupBy("profile_id, course_id, chapter_id")
                          ->execute( array(), 'HYDRATE_KEY_VALUE_QUAD' );   
                 break;
             
