@@ -30,6 +30,8 @@ class usersActions extends sfActions
     $this->pager->setQuery($form->getQuery());
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
+
+    $this->setLayout("layout_v2");
   }
 
   public function executeNew(sfWebRequest $request)
