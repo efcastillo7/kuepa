@@ -66,6 +66,23 @@ function onAddAnswerClicked(e) {
                 modified = true;
             });
 
+            tinymce.init({
+                selector: '[name=answer-text-' + answer_id + ']',
+                width: $(".create-exerice-form :text:first").width(),
+                mode: "none",
+                plugins: [
+                    "advlist autolink lists link image charmap anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste jbimages"
+                ],
+                relative_urls: false,
+                convert_urls: false,
+                remove_script_host : false,
+                menubar: "edit insert format view table",
+                toolbar1: "undo redo | styleselect | bold italic | link image media | code | fullscreen",
+                toolbar2: "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+            });
+
         } else {
             alert("Se produjo un error al crear la respuesta");
         }
