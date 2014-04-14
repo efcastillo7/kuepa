@@ -105,7 +105,11 @@
 					</td>
 					<td>
 						<span class="glyphicon glyphicon-log-in cyan"></span>
-						<?php echo utcToLocalDate($student->getLastAccess(), "dd/M/yyyy H:mm") ?>
+						<?php if ($student->getLastAccess()): ?>
+							<?php echo stdDates::day_diff($student->getLastAccess(),strtotime("now")) ?> dias
+						<?php else: ?>
+							-
+						<?php endif ?>
 					</td>
 					<td>
 						<span class="glyphicon glyphicon-ok-circle green"></span>

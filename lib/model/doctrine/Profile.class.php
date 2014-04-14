@@ -32,7 +32,7 @@ class Profile extends BaseProfile
 
     public function getLastAccess(){
         if(!$this->_last_access){
-            $this->_last_access = LogService::getInstance()->getLastAccess($this->getId());
+            $this->_last_access = $this->getSfGuardUser()->getLastLogin();
         }
 
         return $this->_last_access;
