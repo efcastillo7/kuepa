@@ -75,8 +75,8 @@ class ProfileComponentCompletedStatusService {
                 $pccs->setCompletedStatus( $status );
                 sfContext::getInstance()->getUser()->setCompletedStatus($component->getId(), $status);
 
-                //generate stats if lesson and approved
-                if($completed_status > sfConfig::get("app_approval_percentage") && ($component->getType() == Lesson::TYPE || $component->getType() == Chapter::TYPE ) ){
+                //generate stats if lesson approved and only for chapter and course
+                if($completed_status > sfConfig::get("app_approval_percentage") && ($component->getType() == Chapter::TYPE || $component->getType() == Course::TYPE ) ){
                     $completitudIndex = StatsService::getInstance()->getCompletitudIndex($profile->getId(), $component->getId());
                     $pccs->setCompletitudIndex($completitudIndex);
 
