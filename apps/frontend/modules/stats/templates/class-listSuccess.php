@@ -14,7 +14,7 @@
 
 <!-- //////////// DASHBOARD C REDESIGN /////////////// -->
 
-<div class="tbdata-title-hd none">
+<div class="tbdata-title-hd">
 	<h3 class="HelveticaLt">Reportes: <span class="HelveticaMd"><?php echo $course->getName() ?></span></h3>
 </div>
 
@@ -38,11 +38,11 @@
 			  </ul>
 			</div>
 		<?php endif ?>
-			<div class="btn-group">
+			<!-- <div class="btn-group">
 		  		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 					Todos 
 			  </button>
-			</div>
+			</div> -->
 	</div>
 	<div id="table-hd" class="tbdata-hd">
 		<table class="table table-hover">
