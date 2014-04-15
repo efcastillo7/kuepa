@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url(../assets/img/logo-338x91.png) center center no-repeat #333333; }
+
+.aviso {
+  background: #E5E689;
+  font-size: 16px;
+  padding: 10px;
+  text-align: center;
+  color: #808333;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  margin-top: 86px;
+  text-transform: uppercase;
+  display: none; }
+
+#registrando {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 3px;
+  background: #F5A769;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #444;
+  display: none; }

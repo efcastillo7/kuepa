@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="Kuepa">
+    <Require feature="rpc"/>
+    <Require feature="views"/>
+  </ModulePrefs>
+  <Content type="html">
+    <![CDATA[
+	<html>
+            <head>
+                <script src="//hangoutsapi.talkgadget.google.com/hangouts/_/api/hangout.js?v=1.4"></script>
+                <script src="http://plataforma.kuepa.com/hangout/js/jquery.min.js"></script>
+                <link rel="stylesheet" type="text/css" media="screen" href="http://plataforma.kuepa.com/hangout/css/kuepa.css?v4">
+            </head>
+            <body>
+                <!-- Class -->
+                <div class='aviso tutor'>Esperando al tutor....</div>
+                <div class='aviso primeraVezClase'>Creando Hangout por primera vez...</div>
+                <div class='aviso listoClase'>
+                    <b>Hangout actualizado</b> Los alumnos ya pueden acceder desde la plataforma.
+                </div>
+                <div class='aviso error'>No se pudo inicializar la aplicación</div>
+                <div id="registrando">Registrando asistencia...</div>
+
+                <!-- Support -->
+                <div class='aviso soporte'>Esperando al agente de soporte...</div>
+                <div class='aviso primeraVezSoporte'>Registrando llamada de soporte...</div>
+                <script src="http://plataforma.kuepa.com/hangout/js/kuepa.js?v14"></script>
+            </body>
+	</html>
+
+    ]]>
+  </Content>
+</Module>
