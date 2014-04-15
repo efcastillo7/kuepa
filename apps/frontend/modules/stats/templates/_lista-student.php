@@ -97,7 +97,7 @@
 				<?php foreach ($course->getChapters() as $chapter): ?>
 				<?php 
 					$chapterTime = isset($chapterTimes[$student->getId()]) && isset($chapterTimes[$student->getId()][$course->getId()]) && isset($chapterTimes[$student->getId()][$course->getId()][$chapter->getId()]) ? $chapterTimes[$student->getId()][$course->getId()][$chapter->getId()] : 0;
-					$cstatus = isset($status[$student->getId()]) ? $status[$student->getId()][$chapter->getId()] : 0;
+					$cstatus = isset($status[$student->getId()]) && isset($status[$student->getId()][$chapter->getId()]) ? $status[$student->getId()][$chapter->getId()] : 0;
 				?>
 				<li class="level1" data-toggle="collapse" data-target="#sublesson<?php echo $chapter->getId() ?>">
 					<div class="lp-bar-post"></div>

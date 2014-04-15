@@ -4751,12 +4751,13 @@ ul.lv-lvlone {
 
 /* line 474, scss/_dashboard.scss */
 .ficha-dashboard p.text {
-  margin-left: 20px;
+  /* margin-left: 20px; */
   line-height: 20px;
   margin-top: 10px;
   line-height: 15px;
   font-family: HelveticaMd;
   font-size: 13px;
+  text-align: center;
 }
 
 /* line 481, scss/_dashboard.scss */

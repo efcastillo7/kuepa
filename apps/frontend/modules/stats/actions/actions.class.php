@@ -114,10 +114,65 @@ class statsActions extends kuepaActions
     }
   }
 
+  public function executeGetstudentstats(sfWebRequest $request){
+    $course_id = $request->getParameter("course_id");
+    $group_id = $request->getParameter("group");
+    $type = $request->getParameter("type", "comparativa");
+    $profile_id = $request->getParameter("profile");
+
+    $this->course = Course::getRepository()->getById($course_id);
+    $this->group = null;
+    
+    $this->groups = GroupsService::getInstance()->getGroupsByAuthor($this->getUser()->getProfile()->getId());
+
+    if($group_id){
+      //check user has that group
+      $this->forward404Unless(in_array($group_id, $this->groups->getPrimaryKeys()));
+
+      //get Group
+      $this->group = GroupsService::getInstance()->find($group_id);
+      $this->forward404Unless($this->group);
+    }
+
+    $this->students = Profile::getRepository()->createQuery('p')->whereIn("id", array($profile_id))->execute();
+
+    $this->chapters = $this->course->getChapters();
+    $chapter_ids = $component_ids = $this->chapters->getPrimaryKeys();
+    $component_ids[] = $course_id;
+
+    $lesson_ids = array();
+
+    foreach($this->chapters as $chapter){
+      foreach ($chapter->getLessons() as $lesson) {
+        $component_ids[] = $lesson->getId();
+        $lesson_ids[] = $lesson->getId();
+      }
+    }
+
+
+    $profiles_ids = $this->students->getPrimaryKeys();
+    $this->status = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($component_ids, $profiles_ids);
+
+    $this->courseTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id));
+    $this->chapterTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
+    $this->chapterAproved = ProfileComponentCompletedStatusService::getInstance()->getCompletedChildsArray($profiles_ids, $chapter_ids);
+
+    return $this->renderPartial('lista-student', array(
+      'student' => $this->students->getFirst(),
+      'courseTimes' => $this->courseTimes,
+      'chapterTimes' => $this->chapterTimes,
+      'chapterAproved' => $this->chapterAproved,
+      'status' => $this->status,
+      'course' => $this->course
+    ));
+
+
+  }
+
   public function executeClass(sfWebRequest $request){
     $course_id = $request->getParameter("course_id");
     $group_id = $request->getParameter("group");
-    $type = $request->getParameter("type", "list");
+    $type = $request->getParameter("type", "comparativa");
 
     $this->course = Course::getRepository()->getById($course_id);
     $this->group = null;
