@@ -9,12 +9,12 @@
 	<html>
             <head>
                 <script src="//hangoutsapi.talkgadget.google.com/hangouts/_/api/hangout.js?v=1.4"></script>
-                <script src="http://plataforma.kuepa.com/hangout/js/jquery.min.js"></script>
-                <link rel="stylesheet" type="text/css" media="screen" href="http://plataforma.kuepa.com/hangout/css/kuepa.css?v4">
+                <script src="https://apps.cristalmedia.net/kuepa/js/jquery.min.js"></script>
+                <link rel="stylesheet" type="text/css" media="screen" href="https://apps.cristalmedia.net/kuepa/css/kuepa.css?v4">
             </head>
             <body>
                 <!-- Class -->
-                <div class='aviso tutor'>Esperando al tutor....</div>
+                <div class='aviso tutor'>Esperando al Tutor...</div>
                 <div class='aviso primeraVezClase'>Creando Hangout por primera vez...</div>
                 <div class='aviso listoClase'>
                     <b>Hangout actualizado</b> Los alumnos ya pueden acceder desde la plataforma.
@@ -25,7 +25,7 @@
                 <!-- Support -->
                 <div class='aviso soporte'>Esperando al agente de soporte...</div>
                 <div class='aviso primeraVezSoporte'>Registrando llamada de soporte...</div>
-                <script src="http://plataforma.kuepa.com/hangout/js/kuepa.js?v14"></script>
+                <script src="https://apps.cristalmedia.net/kuepa/js/kuepa.js?v14"></script>
             </body>
 	</html>
 
