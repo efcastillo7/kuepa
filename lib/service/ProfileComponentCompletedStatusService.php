@@ -11,6 +11,12 @@ class ProfileComponentCompletedStatusService {
 
         return self::$instance;
     }
+
+    public function getStaticsForUser($profile_id, $component_id){
+        return ProfileComponentCompletedStatus::getRepository()->createQuery('pccs')
+                    ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
+                    ->fetchOne();
+    }
     
     public function add($profile, $resource, $lesson, $chapter, $course ) {
                                 
