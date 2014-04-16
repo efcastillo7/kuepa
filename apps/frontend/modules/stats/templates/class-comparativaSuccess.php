@@ -10,12 +10,55 @@
 	.bl { border-left: 1px solid #ddd;}
 	.br { border-right: 1px solid #ddd;}
 	.bt { border-top: 1px solid #ddd !important;}
+	.menu-list{
+		position: absolute;
+		left: 320px;
+		top: 10px;
+	}
 </style>
 
 <!-- //////////// DASHBOARD C REDESIGN /////////////// -->
 
 <div class="tbdata-title-hd">
 	<h3 class="HelveticaLt">Reportes: <span class="HelveticaMd"><?php echo $course->getName() ?></span></h3>
+
+	<div class="container clearpadding menu-list">
+		<div class="row">
+			<div class="col-xs-7">
+			    <div class="dashboard-left">
+			        <nav class="nav-dashboard">
+			            <ul>
+							<li><a href="<?php echo url_for("stats/class?type=lista&course_id=" . $course->getId()) ?>">Lista</a></li>
+							<li><a href="<?php echo url_for("stats/class?type=ficha&course_id=" . $course->getId()) ?>">Fichas</a></li>
+							<li><a href="<?php echo url_for("stats/class?type=comparativa&course_id=" . $course->getId()) ?>">Comparativa</a></li>
+						</ul>
+			        </nav>
+
+			        <div class="order">
+						<?php if ($groups->count() > 0): ?>
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								<?php if ($group): ?>
+								<?php echo $group->getName() ?>
+							<?php else: ?>
+							Todos 
+							<?php endif; ?> 
+							<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="?">Todos</a></li>
+								<li class="divider"></li>
+								<?php foreach ($groups as $group): ?>
+								<li><a href="?group=<?php echo $group->getId() ?>"><?php echo $group->getName() ?></a></li>
+								<?php endforeach ?>
+							</ul>
+						</div>
+						<?php endif ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="tbdata">
