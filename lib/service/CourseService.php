@@ -81,8 +81,6 @@ class CourseService {
                     ->innerJoin('sgug.Group sgg')
                     ->andWhere('sgg.name = ?', 'estudiantes')
                     ->innerJoin("p.ProfileCollege pc")
-                    // ->innerJoin("pc.College c")
-                    // ->innerJoin("c.CollegeLearningPath clp")
                     ->andWhere('sgu.is_active = true')
                     ->limit($max)
                     ->whereIn("pc.college_id", $colleges_ids)
@@ -93,17 +91,44 @@ class CourseService {
         }
 
         return $q1;
+    }
 
+    public function getStudentsListQuery($course_id, $college_id){
 
-        // $q = Profile::getRepository()->createQuery('p')
-        //         ->innerJoin('p.ProfileLearningPath plp')
-        //         ->innerJoin('p.sfGuardUser sgu')
-        //         ->innerJoin('sgu.sfGuardUserGroup sgug')
-        //         ->innerJoin('sgug.Group sgg')
-        //         ->where('plp.component_id = ?', $course_id)
-        //         ->andWhere('sgg.name = ?', 'estudiantes');
+        if($college_id){
+            $college = College::getRepository()->find($college_id);
 
-        // return $q->execute();
+            $show_status = explode(",", $college->getShowStatus());
+
+            //if college shows all courses
+            if(!count($show_status) || in_array(ProfileLearningPath::ALL, $show_status)){
+                $query = Profile::getRepository()->createQuery('p')
+                    ->innerJoin('p.sfGuardUser sgu')
+                    ->innerJoin('sgu.sfGuardUserGroup sgug')
+                    ->innerJoin('sgug.Group sgg')
+                    ->andWhere('sgg.name = ?', 'estudiantes')
+                    ->innerJoin("p.ProfileCollege pc")
+                    ->andWhere('sgu.is_active = true')
+                    ->whereIn("pc.college_id", $college_id);
+
+            }else if(in_array(ProfileLearningPath::IN_PROGRESS, $show_status)){
+                //show only current students
+
+                $query = Profile::getRepository()->createQuery('p')
+                    ->innerJoin('p.sfGuardUser sgu')
+                    ->innerJoin('sgu.sfGuardUserGroup sgug')
+                    ->innerJoin('sgug.Group sgg')
+                    ->andWhere('sgg.name = ?', 'estudiantes')
+                    ->innerJoin("p.ProfileCollege pc")
+                    ->andWhere('sgu.is_active = true')
+                    ->whereIn("pc.college_id", $college_id);
+
+            }
+
+            return $query;
+        }
+
+        return null;
     }
 
     public function getTeachersList($course_id){

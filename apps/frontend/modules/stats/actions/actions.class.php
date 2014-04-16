@@ -173,6 +173,7 @@ class statsActions extends kuepaActions
     $course_id = $request->getParameter("course_id");
     $group_id = $request->getParameter("group");
     $type = $request->getParameter("type", "comparativa");
+    $count_per_page = $request->getParameter("count", 9);
 
     $this->course = Course::getRepository()->getById($course_id);
     $this->group = null;
@@ -188,13 +189,26 @@ class statsActions extends kuepaActions
       $this->forward404Unless($this->group);
     }
 
+    //set pager
+    $this->pager = new sfDoctrinePager('Students', $count_per_page);
+
     if($this->group){
       $this->students = GroupsService::getInstance()->getProfilesInGroup($group_id);
     }else{
       $colleges_ids = $this->getUser()->getCollegeIds();
-      $this->students = CourseService::getInstance()->getStudentsList($course_id, $colleges_ids);
+      //get student for first college
+      //TODO: EXPAND FOR MULTIPLE COLLEGES
+      $query = CourseService::getInstance()->getStudentsListQuery($course_id, $colleges_ids[0]);
+
+      $this->pager->setQuery($query);
     }
 
+    // init pager
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    // set students
+    $this->students = $this->pager->getResults();
 
     $this->chapters = $this->course->getChapters();
     $chapter_ids = $component_ids = $this->chapters->getPrimaryKeys();

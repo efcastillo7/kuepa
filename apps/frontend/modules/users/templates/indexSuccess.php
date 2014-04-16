@@ -97,13 +97,11 @@
           <li><a href="<?php echo url_for('users/index') ?>?page=<?php echo $pager->getNextPage() ?>">&raquo;</a></li>
           <li><a href="<?php echo url_for('users/index') ?>?page=<?php echo $pager->getLastPage() ?>">&raquo;</a></li>
         </ul>
-      <?php endif; ?>
 
-      <div class="pagination_desc">
-        <?php if ($pager->haveToPaginate()): ?>
-        Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
-        <?php endif; ?>
-      </div>
+        <div class="pagination_desc">
+          Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>

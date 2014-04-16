@@ -142,7 +142,33 @@
 			</tbody>
 		</table>
 	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<?php if ($pager->haveToPaginate()): ?>
+			<ul class="pagination">
+			  <li><a href="?page=1">&laquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getPreviousPage() ?>">&laquo;</a></li>
+			  <?php foreach ($pager->getLinks() as $page): ?>
+			    <?php if ($page == $pager->getPage()): ?>
+			      <li class="active"><a href="#"><?php echo $page ?></a></li>
+			    <?php else: ?>
+			      <li><a href="?page=<?php echo $page ?>"><?php echo $page ?></a></li>
+			    <?php endif; ?>
+			  <?php endforeach; ?>
+			  
+			  <li><a href="?page=<?php echo $pager->getNextPage() ?>">&raquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getLastPage() ?>">&raquo;</a></li>
+			</ul>
+
+			<div class="pagination_desc">
+			  Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
+			</div>
+			<?php endif; ?>
+		</div>
+	</div>
 </div>
+
 
 
 <script>

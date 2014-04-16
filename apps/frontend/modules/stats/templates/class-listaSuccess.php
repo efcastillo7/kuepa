@@ -27,15 +27,15 @@ $(window).scroll(function(){
 });
 $(document).ready(function(){
 	$(".student").click(function(){
-	    var id = $(this).data("profile");
-	    var obj = $("#info-data");
+		var id = $(this).data("profile");
+		var obj = $("#info-data");
 
-	    obj.hide();
+		obj.hide();
 
-	    $.ajax("/stats/getstudentstats",{
-	    	dataType: 'html',
-	    	data: {course_id: '<?php echo $course->getId() ?>', profile: id},
-	    	success: function(data){
+		$.ajax("/stats/getstudentstats",{
+			dataType: 'html',
+			data: {course_id: '<?php echo $course->getId() ?>', profile: id},
+			success: function(data){
 	    		// var obj = $("#info-data");
 
 	    		obj.html(data);
@@ -66,12 +66,12 @@ $(document).ready(function(){
 					<?php if ($groups->count() > 0): ?>
 					<div class="btn-group">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							<?php if ($group): ?>
+						<?php if ($group): ?>
 							<?php echo $group->getName() ?>
 						<?php else: ?>
-						Todos 
+							Todos 
 						<?php endif; ?> 
-						<span class="caret"></span>
+							<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="<?php echo url_for("stats/class?course_id=" . $course->getId()) ?>">Todos</a></li>
@@ -83,45 +83,68 @@ $(document).ready(function(){
 					</div>
 					<?php endif ?>
 				</div>
-<div class="clearfix"></div>
-<div class="table-dashboard">
-	<header>
-		<ul>
-			<li>
-				<div>Progreso</div>
-				<div>Ultima conexión</div>
-				<div>Lecciones completadas</div>
-				<div>Nota promedio</div>
-			</li>
-		</ul>
-	</header>
-	<ul class="body">
-		<?php foreach ($students as $student): ?>
-		<?php $sstatus = isset($status[$student->getId()]) ? $status[$student->getId()][$course->getId()] : 0; ?>
-		<li rel="tooltip" class="student" data-placement="top" title="<?php echo $sstatus?>% completado" data-profile="<?php echo $student->getId() ?>">
-			<div class="indicator" style="width: <?php echo $sstatus?>%;"></div>
-			<span class="name"><span class="triangle <?php echo getStatusColor($sstatus)?>"></span><?php echo $student->getFullName() ?></span>
-			<span><?php echo $sstatus?>%</span>
-			<span><?php echo stdDates::day_diff($student->getLastAccess(),strtotime("now")) ?> <small>Dias</small></span>
-			<span><?php echo isset($chapterAproved[$student->getId()]) ? $chapterAproved[$student->getId()] : 0; ?>
-				/
-				<?php echo $course->getChapters()->count() ?></span>
-				<span>3.1</span>
-			</li>
-		<?php endforeach; ?>
-	</ul>
-</div>
-</div><!-- /dashboard-left -->
-</div>
 
-<?php 
-$oneStudent = $students->getFirst(); 
-?>
+				<div class="clearfix"></div>
 
-	<div id="info-data">
-	<?php include_partial("lista-student", array('student' => $oneStudent, 'status' => $status, 'course' => $course, 'chapterTimes' => $chapterTimes, 'courseTimes' => $courseTimes)) ?>
+				<div class="table-dashboard">
+					<header>
+						<ul>
+							<li>
+								<div>Progreso</div>
+								<div>Ultima conexión</div>
+								<div>Lecciones completadas</div>
+								<div>Nota promedio</div>
+							</li>
+						</ul>
+					</header>
+					<ul class="body">
+						<?php foreach ($students as $student): ?>
+						<?php $sstatus = isset($status[$student->getId()]) ? $status[$student->getId()][$course->getId()] : 0; ?>
+						<li rel="tooltip" class="student" data-placement="top" title="<?php echo $sstatus?>% completado" data-profile="<?php echo $student->getId() ?>">
+							<div class="indicator" style="width: <?php echo $sstatus?>%;"></div>
+							<span class="name"><span class="triangle <?php echo getStatusColor($sstatus)?>"></span><?php echo $student->getFullName() ?></span>
+							<span><?php echo $sstatus?>%</span>
+							<span><?php echo stdDates::day_diff($student->getLastAccess(),strtotime("now")) ?> <small>Dias</small></span>
+							<span><?php echo isset($chapterAproved[$student->getId()]) ? $chapterAproved[$student->getId()] : 0; ?>
+								/
+								<?php echo $course->getChapters()->count() ?></span>
+								<span>3.1</span>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			</div><!-- /dashboard-left -->
+
+			<!-- Paginator -->
+			<?php if ($pager->haveToPaginate()): ?>
+				<ul class="pagination">
+					<li><a href="?page=1">&laquo;</a></li>
+					<li><a href="?page=<?php echo $pager->getPreviousPage() ?>">&laquo;</a></li>
+					<?php foreach ($pager->getLinks() as $page): ?>
+						<?php if ($page == $pager->getPage()): ?>
+						<li class="active"><a href="#"><?php echo $page ?></a></li>
+						<?php else: ?>
+						<li><a href="?page=<?php echo $page ?>"><?php echo $page ?></a></li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+
+					<li><a href="?page=<?php echo $pager->getNextPage() ?>">&raquo;</a></li>
+					<li><a href="?page=<?php echo $pager->getLastPage() ?>">&raquo;</a></li>
+				</ul>
+
+				<div class="pagination_desc">
+					Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
+				</div>
+			<?php endif; ?>
+		</div>
+
+		<?php 
+		$oneStudent = $students->getFirst(); 
+		?>
+
+		<div id="info-data">
+			<?php include_partial("lista-student", array('student' => $oneStudent, 'status' => $status, 'course' => $course, 'chapterTimes' => $chapterTimes, 'courseTimes' => $courseTimes)) ?>
+		</div>
 	</div>
-</div>
-
 </div> <!-- /container -->
 <script src="/js/dashboard.js"></script>

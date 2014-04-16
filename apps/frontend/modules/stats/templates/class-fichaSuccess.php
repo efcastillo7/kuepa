@@ -86,7 +86,7 @@
 
 		        <div class="clearfix margintop60"></div>
 
-		      <?php for($i=0;$i<$students->count();$i++){?>
+		      <?php for($i=0;$i<$students->count();$i++):?>
 
 		        <article class="student ficha-dashboard <?php if( ($i+2)%3 == 0 ){echo "middle";} ?>" data-profile="<?php echo $students[$i]->getId() ?>">
 
@@ -122,10 +122,32 @@
 		          </section>
 
 		        </article>
-		      <?php } ?>
+		      <?php endfor; ?>
 
 
 		    </div><!-- /dashboard-left -->
+
+		    <!-- Paginator -->
+			<?php if ($pager->haveToPaginate()): ?>
+				<ul class="pagination">
+					<li><a href="?page=1">&laquo;</a></li>
+					<li><a href="?page=<?php echo $pager->getPreviousPage() ?>">&laquo;</a></li>
+					<?php foreach ($pager->getLinks() as $page): ?>
+						<?php if ($page == $pager->getPage()): ?>
+						<li class="active"><a href="#"><?php echo $page ?></a></li>
+						<?php else: ?>
+						<li><a href="?page=<?php echo $page ?>"><?php echo $page ?></a></li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+
+					<li><a href="?page=<?php echo $pager->getNextPage() ?>">&raquo;</a></li>
+					<li><a href="?page=<?php echo $pager->getLastPage() ?>">&raquo;</a></li>
+				</ul>
+
+				<div class="pagination_desc">
+					Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
+				</div>
+			<?php endif; ?>
 		</div>
 		
 		
