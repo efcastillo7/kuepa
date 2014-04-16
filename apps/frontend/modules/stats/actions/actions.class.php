@@ -173,7 +173,14 @@ class statsActions extends kuepaActions
     $course_id = $request->getParameter("course_id");
     $group_id = $request->getParameter("group");
     $type = $request->getParameter("type", "comparativa");
-    $count_per_page = $request->getParameter("count", 9);
+
+    if ($type == "ficha") {
+      $default = 9;
+    }else{
+      $default = 50;
+    }
+
+    $count_per_page = $request->getParameter("count", $default);
 
     $this->course = Course::getRepository()->getById($course_id);
     $this->group = null;
