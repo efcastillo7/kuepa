@@ -67,31 +67,6 @@
 </div>
 
 <div class="tbdata">
-	<div id="table-corner" class="tbdata-corner">
-		<?php if ($groups->count() > 0): ?>
-			<div class="btn-group">
-		  		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		    	<?php if ($group): ?>
-					<?php echo $group->getName() ?>
-	  		  	<?php else: ?>
-					Todos 
-				<?php endif; ?> <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" role="menu">
-			  	<li><a href="<?php echo url_for("stats/class?course_id=" . $course->getId()) ?>">Todos</a></li>
-			    <li class="divider"></li>
-				<?php foreach ($groups as $group): ?>
-					<li><a href="<?php echo url_for("stats/class?course_id=" . $course->getId() ."&group=" . $group->getId()) ?>"><?php echo $group->getName() ?></a></li>
-				<?php endforeach ?>
-			  </ul>
-			</div>
-		<?php endif ?>
-			<!-- <div class="btn-group">
-		  		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					Todos 
-			  </button>
-			</div> -->
-	</div>
 	<div id="table-hd" class="tbdata-hd">
 		<table class="table table-hover">
 			<thead>
