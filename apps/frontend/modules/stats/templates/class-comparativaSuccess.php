@@ -67,6 +67,9 @@
 </div>
 
 <div class="tbdata">
+	<div id="table-corner" class="tbdata-corner">
+		
+	</div>
 	<div id="table-hd" class="tbdata-hd">
 		<table class="table table-hover">
 			<thead>
