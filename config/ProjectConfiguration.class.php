@@ -33,7 +33,9 @@ class ProjectConfiguration extends sfProjectConfiguration
     // Registro de Customs Hydrators
     $manager->registerHydrator('HYDRATE_KEY_VALUE_UNIQUE', 'KeyValueUniqueHydrator');
     $manager->registerHydrator('HYDRATE_KEY_VALUE_PAIR', 'KeyValuePairHydrator');
+    $manager->registerHydrator('HYDRATE_KEY_VALUE_PAIR_MULTIPLE', 'KeyValuePairMultipleHydrator');
     $manager->registerHydrator('HYDRATE_KEY_VALUE_TRIO', 'KeyValueTrioHydrator');
+    $manager->registerHydrator('HYDRATE_KEY_VALUE_TRIO_MULTIPLE', 'KeyValueTrioMultipleHydrator');
     $manager->registerHydrator('HYDRATE_KEY_VALUE_QUAD', 'KeyValueQuadHydrator');
     
     

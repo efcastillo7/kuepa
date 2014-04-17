@@ -1,6 +1,7 @@
+<?php use_helper("LocalDate") ?>
 <?php 
 	$courseTime = isset($courseTimes[$student->getId()]) ? $courseTimes[$student->getId()][$course->getId()] : 0;
-	$hs = gmdate("H", $courseTime);
+	$hs = floor($courseTime/3600);
 	$statics = ProfileComponentCompletedStatusService::getInstance()->getStaticsForUser($student->getId(), $course->getId());
 ?>
 <div class="col-xs-5">
@@ -28,10 +29,10 @@
 				<div class="right">
 					<?php if ($statics && $statics->getSkillIndex()): ?>
 					<hgroup>
-						<h3><?php echo $statics->getSkillIndex()*100 ?><small>%</small></h3>
+						<h3><?php echo $statics->getLearningIndex()*100 ?><small>%</small></h3>
 						<h4>Indice de aprendizaje</h4>
 					</hgroup>
-					<input class="knob" value="<?php echo $statics->getSkillIndex()*100 ?>" data-fgColor="#ff6700" data-bgColor="#e9e9eb" data-width="150" data-thickness=".15" data-readOnly=true data-displayInput=false >
+					<input class="knob" value="<?php echo $statics->getLearningIndex()*100 ?>" data-fgColor="#ff6700" data-bgColor="#e9e9eb" data-width="150" data-thickness=".15" data-readOnly=true data-displayInput=false >
 					<?php else: ?>
 					<hgroup>
 						<h3>-<small>%</small></h3>
@@ -111,9 +112,9 @@
 					<div class="text"><?php echo $chapter->getName() ?></div>
 					<div class="percent"><?php echo $cstatus ?>%</div>
 					<div class="time"><?php echo gmdate("H:i",$chapterTime) ?>hs</div>
-					<div class="date">-</div>
-					<div class="note"><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$chapter->getId()]) ? $notes[$student->getId()][$chapter->getId()] : "-" ?></div>
-					<div class="note">-</div>
+					<div class="date"><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$chapter->getId()]) && !empty($notes[$student->getId()][$chapter->getId()][3]) ? utcToLocalDate($notes[$student->getId()][$chapter->getId()][3], "dd/M/yyyy") : "-" ?></div>
+					<div class="note"><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$chapter->getId()]) && !empty($notes[$student->getId()][$chapter->getId()][0]) ? $notes[$student->getId()][$chapter->getId()][0] : "-" ?></div>
+					<div class="note"><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$chapter->getId()]) && !empty($notes[$student->getId()][$chapter->getId()][1]) ? $notes[$student->getId()][$chapter->getId()][1] : "-" ?></div>
 				</li>
 				<!-- lessons -->
 				<div id="sublesson<?php echo $chapter->getId() ?>" class="collapse sublesson">
@@ -130,9 +131,9 @@
 						<div class="text"><?php echo $lesson->getName() ?></div>
 						<div class="percent"><?php echo $lstatus?> %</div>
 						<div class="time"><?php echo gmdate("H:i",LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId(), 'chapter' => $chapter->getId(), 'lesson_id' => $lesson->getId()))) ?>hs</div>
-						<div class="date">-</div>
-						<div class="note"><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$lesson->getId()]) ? $notes[$student->getId()][$lesson->getId()] : "-" ?></div>
-						<div class="note">-</div>
+						<div class="date"><?php echo isset($notes[$lesson->getId()]) && isset($notes[$student->getId()][$lesson->getId()]) && !empty($notes[$student->getId()][$lesson->getId()][3]) ? utcToLocalDate($notes[$student->getId()][$lesson->getId()][3], "dd/M/yyyy") : "-" ?></div>
+						<div class="note"><?php echo isset($notes[$lesson->getId()]) && isset($notes[$student->getId()][$lesson->getId()]) && !empty($notes[$student->getId()][$lesson->getId()][0]) ? $notes[$student->getId()][$lesson->getId()][0] : "-" ?></div>
+						<div class="note"><?php echo isset($notes[$lesson->getId()]) && isset($notes[$student->getId()][$lesson->getId()]) && !empty($notes[$student->getId()][$lesson->getId()][1]) ? $notes[$student->getId()][$lesson->getId()][1] : "-" ?></div>
 					</li>
 					<?php endforeach ?>
 				</div>

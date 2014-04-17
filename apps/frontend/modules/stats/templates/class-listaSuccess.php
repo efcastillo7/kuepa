@@ -128,12 +128,17 @@ $(document).ready(function(){
 							<div class="indicator" style="width: <?php echo $sstatus?>%;"></div>
 							<span class="name"><span class="triangle <?php echo getStatusColor($sstatus)?>"></span><?php echo $student->getFullName() ?></span>
 							<span><?php echo $sstatus?>%</span>
-							<span><?php echo stdDates::day_diff($student->getLastAccess(),strtotime("now")) ?> <small>Dias</small></span>
+							<span><?php if ($student->getLastAccess()): ?>
+								<?php echo stdDates::day_diff($student->getLastAccess(),strtotime("now")) ?> <small>Dias</small>
+								<?php else: ?>
+								-
+								<?php endif ?>
+							</span>
 							<span><?php echo isset($chapterAproved[$student->getId()]) ? $chapterAproved[$student->getId()] : 0; ?>
 								/
 								<?php echo $course->getChapters()->count() ?></span>
-								<span>3.1</span>
-							</li>
+							<span><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$course->getId()]) ? $notes[$student->getId()][$course->getId()][0] : "-" ?></span>
+						</li>
 						<?php endforeach; ?>
 					</ul>
 				</div>
@@ -180,7 +185,7 @@ $(document).ready(function(){
 		?>
 
 		<div id="info-data">
-			<?php include_partial("lista-student", array('student' => $oneStudent, 'status' => $status, 'course' => $course, 'chapterTimes' => $chapterTimes, 'courseTimes' => $courseTimes)) ?>
+			<?php include_partial("lista-student", array('student' => $oneStudent, 'status' => $status, 'course' => $course, 'chapterTimes' => $chapterTimes, 'courseTimes' => $courseTimes, 'notes' => $notes)) ?>
 		</div>
 	</div>
 </div> <!-- /container -->

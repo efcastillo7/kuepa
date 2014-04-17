@@ -36,3 +36,8 @@ function localDateToUtc($originedatetime, $format = 'g')
     }
     return $originedatetime;
 }
+
+function format_time($t,$f=':') // t = seconds, f = separator 
+{
+  return sprintf("%02d%s%02d%s%02d", floor($t/3600), $f, ($t/60)%60, $f, $t%60);
+}

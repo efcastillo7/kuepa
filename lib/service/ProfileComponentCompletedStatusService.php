@@ -140,21 +140,32 @@ class ProfileComponentCompletedStatusService {
                     ->execute();
 
         foreach ($pccs as $pcs) {
+            $attemps = 0;
+
             if ($note = $pcs->getAvgNote()) {
                 $attemps = $pcs->getAttemps();
+                $max_note = $pcs->getNote();
 
                 //update average
                 $newnote = ($attemps*$note + $value) / ++$attemps;
-
-                $pcs->setAvgNote($newnote)
-                    ->setAttemps($attemps)
-                    ->save();
+                if($value > $max_note){
+                    $max_note = $value;
+                }
             }else{
-                //first attemp
-                $pcs->setAvgNote($value)
-                    ->setAttemps(1)
-                    ->save();
+                $newnote = $value;
+                $attemps = 1;
+                $max_note = $value;
             }
+
+            if(!$pcs->getApprovedDate() && $max_note > sfConfig::get("app_approval_percentage")){
+                $pcs->setApprovedDate(date("Y-m-d"));
+            }
+            
+
+            $pcs->setAvgNote($newnote)
+                ->setAttemps($attemps)
+                ->setNote($max_note)
+                ->save();
         }
 
         return ;
@@ -218,14 +229,36 @@ class ProfileComponentCompletedStatusService {
                         ->andWhereIn("pccs.component_id", $component_ids);
                         
         if(is_array($profile_id)){
-            return $query->select('pccs.profile_id, pccs.component_id, pccs.avg_note, pccs.attemps')
+            return $query->select('pccs.profile_id, pccs.component_id, pccs.note, pccs.avg_note, pccs.attemps, pccs.approved_date')
                          ->andWhereIn("pccs.profile_id", $profile_id)
-                         ->execute( array(), 'HYDRATE_KEY_VALUE_TRIO' ); 
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_TRIO_MULTIPLE' ); 
         }
 
-        return $query->select('pccs.component_id, pccs.avg_note, pccs.attemps')
+        return $query->select('pccs.component_id, pccs.note, pccs.avg_note, pccs.attemps, pccs.approved_date')
                      ->andWhere("pccs.profile_id = ?", $profile_id)
-                     ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' ); 
+                     ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR_MULTIPLE' ); 
+    }
+
+    public function getArrayAll($component_ids, $profile_id, $fields = null) {
+        $query = ProfileComponentCompletedStatus::getRepository()
+                        ->createQuery("pccs")
+                        ->andWhereIn("pccs.component_id", $component_ids);
+
+        if(!$fields){
+            $fields = array("completed_status", "velocity_index", "completitud_index", 
+                        "skill_index", "persistence_index", "effort_index", 
+                        "learning_index", "time_remaining", "time_view");
+        }
+                        
+        if(is_array($profile_id)){
+            return $query->select("profile_id, pccs.component_id, " . implode(",", $fields))
+                         ->andWhereIn("pccs.profile_id", $profile_id)
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_TRIO_MULTIPLE' ); 
+        }
+
+        return $query->select("pccs.component_id, " . implode(",", $fields))
+                     ->andWhere("pccs.profile_id = ?", $profile_id)
+                     ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR_MULTIPLE' ); 
     }
 
     public function getCompletedChilds($component_id, $profile_id){
@@ -239,7 +272,7 @@ class ProfileComponentCompletedStatusService {
                 $q = ProfileComponentCompletedStatus::getRepository()->createQuery('pccs')
                     ->select('count(component_id) as total')
                     ->where('profile_id = ?', $profile_id)
-                    ->andWhere('completed_status >= ?', 70)
+                    ->andWhere('completed_status >= ?', sfConfig::get("app_approval_percentage"))
                     ->andWhereIn('component_id', $childs_ids)
                     ->fetchOne();
 

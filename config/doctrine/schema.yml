@@ -688,6 +688,7 @@ ProfileComponentCompletedStatus:
     time_remaining: integer
     time_view: integer
     avg_note: float
+    note: float
     attemps: integer
     approved_date: date
     

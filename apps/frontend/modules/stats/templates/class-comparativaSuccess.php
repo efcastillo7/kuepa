@@ -146,7 +146,7 @@
 						<span class="glyphicon glyphicon-time"></span>
 						<?php $time_course = isset($courseTimes[$student->getId()]) ? $courseTimes[$student->getId()][$course->getId()] : 0;
 						if($time_course > 0):?>
-						<?php echo gmdate("H:i:s", $time_course) ?>
+						<?php echo format_time($time_course) ?>
 						<?php else: ?>
 						-
 						<?php endif; ?>
@@ -178,7 +178,7 @@
 					</td>
 					<td>
 						<?php if ($get_status && isset($chapterTimes[$student->getId()][$course->getId()][$chapter->getId()])):?>
-						<?php echo gmdate("H:i:s", $chapterTimes[$student->getId()][$course->getId()][$chapter->getId()]) ?>
+						<?php echo format_time($chapterTimes[$student->getId()][$course->getId()][$chapter->getId()]) ?>
 						<?php else: ?>
 						-
 						<?php endif; ?>

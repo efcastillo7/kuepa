@@ -1,5 +1,7 @@
 <?php use_helper("Date") ?>
 <?php use_helper("LocalDate") ?>
+<?php use_helper("Stats") ?>
+
 <style>
 /*table{table-layout: fixed;}*/
 /*table td{overflow: hidden;}*/
@@ -108,10 +110,9 @@ $(document).ready(function(){
 				<?php for($i=0;$i<$students->count();$i++):?>
 				<article class="student ficha-dashboard <?php if( ($i+2)%3 == 0 ){echo "middle";} ?>" data-profile="<?php echo $students[$i]->getId() ?>">
 					<div class="grafica">
-						<div class="grafica1 one"></div>
-						<div class="grafica2 two"></div>
-						<div class="grafica3 five"></div>
-
+						<div class="grafica1 <?php echo isset($statics[$students[$i]->getId()]) && isset($statics[$students[$i]->getId()][$course->getId()]) ? getProgressNumber($statics[$students[$i]->getId()][$course->getId()][1]) : "one" ?>"></div>
+						<div class="grafica2 <?php echo isset($statics[$students[$i]->getId()]) && isset($statics[$students[$i]->getId()][$course->getId()]) ? getProgressNumber($statics[$students[$i]->getId()][$course->getId()][6]) : "one" ?>"></div>
+						<div class="grafica3 <?php echo isset($statics[$students[$i]->getId()]) && isset($statics[$students[$i]->getId()][$course->getId()]) ? getProgressNumber($statics[$students[$i]->getId()][$course->getId()][0]/100) : "one" ?>"></div>
 						<i class="spr ico-ficha1"></i>
 						<i class="spr ico-ficha2"></i>
 						<i class="spr ico-ficha3"></i>
@@ -124,7 +125,13 @@ $(document).ready(function(){
 					<section>
 						<div>
 							<p>Ultima conexión</p>
-							<p><?php echo stdDates::day_diff($students[$i]->getLastAccess(),strtotime("now")) ?> <small>Dias</small></p>
+							<p>
+								<?php if ($students[$i]->getLastAccess()): ?>
+								<?php echo stdDates::day_diff($students[$i]->getLastAccess(),strtotime("now")) ?> <small>Dias</small>
+								<?php else: ?>
+								-
+								<?php endif ?>
+							</p>
 						</div>
 						<div class="middle">
 							<p>Lecciones Completas</p>
@@ -134,7 +141,7 @@ $(document).ready(function(){
 						</div>
 						<div>
 							<p>Nota Promedio</p>
-							<p><?php echo isset($notes[$students[$i]->getId()]) && isset($notes[$students[$i]->getId()][$course->getId()]) ? $notes[$students[$i]->getId()][$course->getId()] : "-" ?></p>
+							<p><?php echo isset($notes[$students[$i]->getId()]) && isset($notes[$students[$i]->getId()][$course->getId()]) ? $notes[$students[$i]->getId()][$course->getId()][0] : "-" ?></p>
 						</div>
 					</section>
 				</article>
