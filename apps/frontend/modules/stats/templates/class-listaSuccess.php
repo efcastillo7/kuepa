@@ -14,10 +14,15 @@ table td{ min-width: 100px;}
 .br { border-right: 1px solid #ddd;}
 .bt { border-top: 1px solid #ddd !important;}
 .student{ cursor: hand; cursor:pointer;}
-.menu-list{
+	.menu-list{
 		position: absolute;
-		left: 320px;
-		top: 10px;
+		left: 30px;
+		top: 55px;
+	}
+	.count-results{
+		position: relative;
+		top: -33px;
+		left: 10px;
 	}
 </style>
 
@@ -98,7 +103,7 @@ $(document).ready(function(){
 	</div>
 </div>
 
-<div class="container clearpadding margintop100">
+<div class="container clearpadding margintop140">
 	<div class="row">
 		<div class="col-xs-7">
 			<div class="dashboard-left">
@@ -136,24 +141,37 @@ $(document).ready(function(){
 
 			<!-- Paginator -->
 			<?php if ($pager->haveToPaginate()): ?>
-				<ul class="pagination">
-					<li><a href="?page=1">&laquo;</a></li>
-					<li><a href="?page=<?php echo $pager->getPreviousPage() ?>">&laquo;</a></li>
-					<?php foreach ($pager->getLinks() as $page): ?>
-						<?php if ($page == $pager->getPage()): ?>
-						<li class="active"><a href="#"><?php echo $page ?></a></li>
-						<?php else: ?>
-						<li><a href="?page=<?php echo $page ?>"><?php echo $page ?></a></li>
-						<?php endif; ?>
-					<?php endforeach; ?>
+			<ul class="pagination">
+			  <li><a href="?page=1&count=<?php echo $count_per_page ?>">&laquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getPreviousPage() ?>&count=<?php echo $count_per_page ?>">&laquo;</a></li>
+			  <?php foreach ($pager->getLinks() as $page): ?>
+			    <?php if ($page == $pager->getPage()): ?>
+			      <li class="active"><a href="#"><?php echo $page ?></a></li>
+			    <?php else: ?>
+			      <li><a href="?page=<?php echo $page ?>&count=<?php echo $count_per_page ?>"><?php echo $page ?></a></li>
+			    <?php endif; ?>
+			  <?php endforeach; ?>
+			  
+			  <li><a href="?page=<?php echo $pager->getNextPage() ?>&count=<?php echo $count_per_page ?>">&raquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getLastPage() ?>&count=<?php echo $count_per_page ?>">&raquo;</a></li>
+			</ul>
 
-					<li><a href="?page=<?php echo $pager->getNextPage() ?>">&raquo;</a></li>
-					<li><a href="?page=<?php echo $pager->getLastPage() ?>">&raquo;</a></li>
+
+			<div class="btn-group count-results">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+					<?php echo $count_per_page ?>
+				<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<?php foreach ($count_per_page_options as $cant): ?>
+					<li><a href="?count=<?php echo $cant ?>"><?php echo $cant ?></a></li>
+					<?php endforeach ?>
 				</ul>
+			</div>
 
-				<div class="pagination_desc">
-					Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
-				</div>
+			<div class="pagination_desc">
+			  Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
+			</div>
 			<?php endif; ?>
 		</div>
 

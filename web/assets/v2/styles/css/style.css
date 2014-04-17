@@ -3517,6 +3517,10 @@ div[type*=button] {
   margin-top: 100px;
 }
 
+.margintop140 {
+  margin-top: 140px;
+}
+
 /* line 442, scss/_homegrid.scss */
 .lv-container {
   margin: 0;
@@ -3942,7 +3946,8 @@ ul.lv-lvlone {
 .dashboard-left .order {
   width: 230px;
   float: right;
-  margin-top: -10px;
+  margin-top: -11px;
+  margin-left: 10px;
 }
 
 /* line 25, scss/_dashboard.scss */
@@ -5498,7 +5503,7 @@ ul.lv-lvlone {
 /* line 915, scss/_dashboard.scss */
 .tbdata {
   position: relative;
-  margin: 199px 0 100px;
+  margin: 229px 0 100px;
   font-size: 13px;
 }
 /* line 919, scss/_dashboard.scss */
@@ -5573,7 +5578,7 @@ ul.lv-lvlone {
   z-index: 550;
   padding: 10px 30px;
   border-bottom: 1px solid #c0c0c0;
-  height: 100px;
+  height: 130px;
 }
 
 @font-face {

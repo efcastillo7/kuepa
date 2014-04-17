@@ -176,11 +176,13 @@ class statsActions extends kuepaActions
 
     if ($type == "ficha") {
       $default = 9;
+      $this->count_per_page_options = range(9, 99, 9);
     }else{
       $default = 50;
+      $this->count_per_page_options = range(50, 100, 25);
     }
 
-    $count_per_page = $request->getParameter("count", $default);
+    $this->count_per_page = $request->getParameter("count", $default);
 
     $this->course = Course::getRepository()->getById($course_id);
     $this->group = null;
@@ -197,20 +199,20 @@ class statsActions extends kuepaActions
     }
 
     //set pager
-    $this->pager = new sfDoctrinePager('Students', $count_per_page);
+    $this->pager = new sfDoctrinePager('Students', $this->count_per_page);
 
     if($this->group){
-      $this->students = GroupsService::getInstance()->getProfilesInGroup($group_id);
+      $query = GroupsService::getInstance()->getProfilesInGroupsQuery(array($group_id));
     }else{
       $colleges_ids = $this->getUser()->getCollegeIds();
       //get student for first college
       //TODO: EXPAND FOR MULTIPLE COLLEGES
       $query = CourseService::getInstance()->getStudentsListQuery($course_id, $colleges_ids[0]);
 
-      $this->pager->setQuery($query);
     }
 
     // init pager
+    $this->pager->setQuery($query);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 

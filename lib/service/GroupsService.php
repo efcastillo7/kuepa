@@ -112,6 +112,28 @@ class GroupsService {
         
     } 
 
+    public function getProfilesInGroupsQuery($groups_id, $filters = array()){
+        //$group = self::getInstance()->find($group_id);
+        //$users = $group->getProfiles();
+
+        $q = Profile::getRepository()->createQuery('p')
+                // ->select('p.*')
+                ->innerJoin('p.GroupProfile gp')
+                ->innerJoin('p.sfGuardUser sfg')
+                ->whereIn('gp.group_id',$groups_id);
+
+        if ( count($filters) > 0 ){
+            // "key"       => value
+            //i.e: p.firstname => 'Pedro'
+            //i.e: p.firstname = ? OR p.lastname = ? => array('Pedro','Pedro')
+            foreach ($filters as $key => $filter) {
+                $q->andWhere($filter['cond'], $filter['value']);
+            }
+        }
+
+        return $q;
+    }
+
     public function getProfilesInGroup($group_id, $filters = array()){
         //$group = self::getInstance()->find($group_id);
         //$users = $group->getProfiles();

@@ -12,8 +12,13 @@
 	.bt { border-top: 1px solid #ddd !important;}
 	.menu-list{
 		position: absolute;
-		left: 320px;
-		top: 10px;
+		left: 30px;
+		top: 55px;
+	}
+	.count-results{
+		position: relative;
+		top: -33px;
+		left: 10px;
 	}
 </style>
 
@@ -38,7 +43,7 @@
 						<?php if ($groups->count() > 0): ?>
 						<div class="btn-group">
 							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-								<?php if ($group): ?>
+							<?php if ($group): ?>
 								<?php echo $group->getName() ?>
 							<?php else: ?>
 							Todos 
@@ -190,19 +195,32 @@
 		<div class="col-lg-12">
 			<?php if ($pager->haveToPaginate()): ?>
 			<ul class="pagination">
-			  <li><a href="?page=1">&laquo;</a></li>
-			  <li><a href="?page=<?php echo $pager->getPreviousPage() ?>">&laquo;</a></li>
+			  <li><a href="?page=1&count=<?php echo $count_per_page ?>">&laquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getPreviousPage() ?>&count=<?php echo $count_per_page ?>">&laquo;</a></li>
 			  <?php foreach ($pager->getLinks() as $page): ?>
 			    <?php if ($page == $pager->getPage()): ?>
 			      <li class="active"><a href="#"><?php echo $page ?></a></li>
 			    <?php else: ?>
-			      <li><a href="?page=<?php echo $page ?>"><?php echo $page ?></a></li>
+			      <li><a href="?page=<?php echo $page ?>&count=<?php echo $count_per_page ?>"><?php echo $page ?></a></li>
 			    <?php endif; ?>
 			  <?php endforeach; ?>
 			  
-			  <li><a href="?page=<?php echo $pager->getNextPage() ?>">&raquo;</a></li>
-			  <li><a href="?page=<?php echo $pager->getLastPage() ?>">&raquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getNextPage() ?>&count=<?php echo $count_per_page ?>">&raquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getLastPage() ?>&count=<?php echo $count_per_page ?>">&raquo;</a></li>
 			</ul>
+
+
+			<div class="btn-group count-results">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+					<?php echo $count_per_page ?>
+				<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<?php foreach ($count_per_page_options as $cant): ?>
+					<li><a href="?count=<?php echo $cant ?>"><?php echo $cant ?></a></li>
+					<?php endforeach ?>
+				</ul>
+			</div>
 
 			<div class="pagination_desc">
 			  Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
