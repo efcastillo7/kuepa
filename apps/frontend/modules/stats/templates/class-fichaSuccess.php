@@ -134,7 +134,7 @@ $(document).ready(function(){
 						</div>
 						<div>
 							<p>Nota Promedio</p>
-							<p>3.1</p>
+							<p><?php echo isset($notes[$students[$i]->getId()]) && isset($notes[$students[$i]->getId()][$course->getId()]) ? $notes[$students[$i]->getId()][$course->getId()] : "-" ?></p>
 						</div>
 					</section>
 				</article>
@@ -179,7 +179,7 @@ $(document).ready(function(){
 		<?php $oneStudent = $students->getFirst(); ?>
 
 		<div id="info-data">
-			<?php include_partial("lista-student", array('student' => $oneStudent, 'status' => $status, 'course' => $course, 'chapterTimes' => $chapterTimes, 'courseTimes' => $courseTimes)) ?>
+			<?php include_partial("lista-student", array('student' => $oneStudent, 'status' => $status, 'course' => $course, 'chapterTimes' => $chapterTimes, 'courseTimes' => $courseTimes, 'notes' => $notes)) ?>
 		</div>
 	</div>
 </div> <!-- /container -->

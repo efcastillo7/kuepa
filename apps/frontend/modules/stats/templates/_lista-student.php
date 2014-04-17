@@ -112,7 +112,7 @@
 					<div class="percent"><?php echo $cstatus ?>%</div>
 					<div class="time"><?php echo gmdate("H:i",$chapterTime) ?>hs</div>
 					<div class="date">-</div>
-					<div class="note">-</div>
+					<div class="note"><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$chapter->getId()]) ? $notes[$student->getId()][$chapter->getId()] : "-" ?></div>
 					<div class="note">-</div>
 				</li>
 				<!-- lessons -->
@@ -131,7 +131,7 @@
 						<div class="percent"><?php echo $lstatus?> %</div>
 						<div class="time"><?php echo gmdate("H:i",LogService::getInstance()->getTotalTimeByRoute($student->getId(), array('course_id' => $course->getId(), 'chapter' => $chapter->getId(), 'lesson_id' => $lesson->getId()))) ?>hs</div>
 						<div class="date">-</div>
-						<div class="note">-</div>
+						<div class="note"><?php echo isset($notes[$student->getId()]) && isset($notes[$student->getId()][$lesson->getId()]) ? $notes[$student->getId()][$lesson->getId()] : "-" ?></div>
 						<div class="note">-</div>
 					</li>
 					<?php endforeach ?>

@@ -156,6 +156,7 @@ class statsActions extends kuepaActions
     $this->courseTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id));
     $this->chapterTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
     $this->chapterAproved = ProfileComponentCompletedStatusService::getInstance()->getCompletedChildsArray($profiles_ids, $chapter_ids);
+    $this->notes = ProfileComponentCompletedStatusService::getInstance()->getArrayNotes($component_ids, $profiles_ids);
 
     return $this->renderPartial('lista-student', array(
       'student' => $this->students->getFirst(),
@@ -163,7 +164,8 @@ class statsActions extends kuepaActions
       'chapterTimes' => $this->chapterTimes,
       'chapterAproved' => $this->chapterAproved,
       'status' => $this->status,
-      'course' => $this->course
+      'course' => $this->course,
+      'notes'  => $this->notes,
     ));
 
 
@@ -239,6 +241,7 @@ class statsActions extends kuepaActions
     $this->courseTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id));
     $this->chapterTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
     $this->chapterAproved = ProfileComponentCompletedStatusService::getInstance()->getCompletedChildsArray($profiles_ids, $chapter_ids);
+    $this->notes = ProfileComponentCompletedStatusService::getInstance()->getArrayNotes($component_ids, $profiles_ids);
 
     $this->setTemplate("class-$type");
     // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));

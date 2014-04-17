@@ -479,4 +479,13 @@ class ExerciseService {
         }
     }
 
+    public function getResourceIdsArray($exercise_id){
+        $query = ResourceData::getRepository()->createQuery('rd')
+                    ->select("rd.resource_id")
+                    ->where('type = ?', 'Exercise')
+                    ->andWhere('content = ?', $exercise_id);
+
+        return $query->execute( array(), 'HYDRATE_KEY_VALUE_UNIQUE' );
+    }
+
 }

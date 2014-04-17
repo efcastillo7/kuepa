@@ -687,6 +687,9 @@ ProfileComponentCompletedStatus:
     learning_index: float
     time_remaining: integer
     time_view: integer
+    avg_note: float
+    attemps: integer
+    approved_date: date
     
   relations:
     Component:

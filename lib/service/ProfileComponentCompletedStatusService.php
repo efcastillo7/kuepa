@@ -113,6 +113,53 @@ class ProfileComponentCompletedStatusService {
             $pccs->save();
     }
 
+    public function addExerciseAttemp($profile_id, $resource_ids, $value){
+        //get ids for components to update
+        $component_ids = array();
+
+        $resources = Resource::getRepository()->createQuery('q')->whereIn('id', $resource_ids)->execute();
+
+        foreach ($resources as $resource) {
+            $component_ids[] = $resource->getId();
+            $lessons = $resource->getParents();
+
+            foreach ($lessons as $lesson) {
+                $component_ids[] = $lesson->getId();
+
+                foreach ($lesson->getParents() as $chapter) {
+                    $component_ids[] = $chapter->getId();
+                    $courses = $chapter->getParents();
+                    $component_ids = array_merge($component_ids, $courses->getPrimaryKeys());
+                }
+            }
+        }
+
+        $pccs = ProfileComponentCompletedStatus::getRepository()->createQuery('pccs')
+                    ->where('profile_id = ?', $profile_id)
+                    ->andWhereIn('component_id', $component_ids)
+                    ->execute();
+
+        foreach ($pccs as $pcs) {
+            if ($note = $pcs->getAvgNote()) {
+                $attemps = $pcs->getAttemps();
+
+                //update average
+                $newnote = ($attemps*$note + $value) / ++$attemps;
+
+                $pcs->setAvgNote($newnote)
+                    ->setAttemps($attemps)
+                    ->save();
+            }else{
+                //first attemp
+                $pcs->setAvgNote($value)
+                    ->setAttemps(1)
+                    ->save();
+            }
+        }
+
+        return ;
+    }
+
 
     public function getCompletedStatus($profile_id, $component_id) {
         
@@ -165,6 +212,21 @@ class ProfileComponentCompletedStatusService {
                         ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
     }
 
+    public function getArrayNotes($component_ids, $profile_id) {
+        $query = ProfileComponentCompletedStatus::getRepository()
+                        ->createQuery("pccs")
+                        ->andWhereIn("pccs.component_id", $component_ids);
+                        
+        if(is_array($profile_id)){
+            return $query->select('pccs.profile_id, pccs.component_id, pccs.avg_note, pccs.attemps')
+                         ->andWhereIn("pccs.profile_id", $profile_id)
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_TRIO' ); 
+        }
+
+        return $query->select('pccs.component_id, pccs.avg_note, pccs.attemps')
+                     ->andWhere("pccs.profile_id = ?", $profile_id)
+                     ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' ); 
+    }
 
     public function getCompletedChilds($component_id, $profile_id){
         $component = Component::getRepository()->getById($component_id);

@@ -357,6 +357,10 @@ class exerciseActions extends sfActions {
         //save response
         ExerciseService::getInstance()->saveAttemp($user_id, $exercise_id, 0, $correct_values['score'], $values);
 
+        //update stats
+        $resource_ids = ExerciseService::getInstance()->getResourceIdsArray($exercise_id);
+        ProfileComponentCompletedStatusService::getInstance()->addExerciseAttemp($user_id, $resource_ids, $correct_values['score']);
+
         //get attemps
         $attemps = ExerciseService::getInstance()->getAttemps($user_id, $exercise_id);
 

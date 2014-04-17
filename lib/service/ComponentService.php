@@ -269,6 +269,36 @@ class ComponentService {
         return 0;
     }
 
+    public function getParents($component_id, $type = null, $orderBy = 'asc', $onlyEnabled = false) {
+                        
+        $orderBy = DQLHelper::getInstance()->parseOrderBy($orderBy);
+
+        $q = Component::getRepository()->createQuery('c')
+                ->select('c.*, lp.*')
+                ->innerJoin('c.LearningPath lp ON c.id = lp.parent_id')
+                ->where('lp.child_id = ?', $component_id)
+                ->orderBy("lp.position $orderBy");
+
+        if ($type) {
+            $q->andWhere('c.type = ? ', $type);
+        }
+        
+        if ($onlyEnabled) {
+            $q->andWhere("lp.enabled = true");
+        }
+        
+        // Gestion de Cache
+        $cacheParams = array();
+        $cacheParams[] = $component_id;
+        $cacheParams[] = (string ) $type;
+        $cacheParams[] = $orderBy;
+        $cacheParams[] = (int) $onlyEnabled;
+        
+        $q->useResultCache(true, null, cacheHelper::getInstance()->genKey('Component_getParents', $cacheParams ) );
+        
+        return $q->execute();
+    }
+
     public function getChilds($component_id, $type = null, $orderBy = 'asc', $onlyEnabled = false) {
                         
         $orderBy = DQLHelper::getInstance()->parseOrderBy($orderBy);
@@ -424,16 +454,16 @@ class ComponentService {
 
     }    
 
-    public function getParents($component_id, $orderBy = 'asc'){
+    // public function getParents($component_id, $orderBy = 'asc'){
 
-        $q = Component::getRepository()->createQuery('parent')
-                ->select('parent.*')
-                ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
-                ->where('lp.child_id = ?', $component_id)
-                ->orderBy("lp.position $orderBy");
-        $parents = $q->execute();
-        return $parents;
-    }
+    //     $q = Component::getRepository()->createQuery('parent')
+    //             ->select('parent.*')
+    //             ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
+    //             ->where('lp.child_id = ?', $component_id)
+    //             ->orderBy("lp.position $orderBy");
+    //     $parents = $q->execute();
+    //     return $parents;
+    // }
 
     public function calculateTime($component_id){
        /* SELECT SUM(c.duration)
