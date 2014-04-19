@@ -1,14 +1,15 @@
 <?php
 
 class myUser extends sfGuardSecurityUser {
-
-    
     const SFGUARD_USER_ATTR = 'sfGuarUser';
     const PROFILE_ATTR = 'profile';
     const COMPONENT_COMPLETED_STATUS  = 'CacheComponentCompleteStatus';
     const USER_COURSES_ENABLED  = 'UserCoursesEnabled';
+    const USER_COURSES  = 'UserCourses';
     const LAYOUT_STYLE  = 'CollegeLayoutStyle';
-    const USER_PROFILE  = 'UserProfile';
+    const USER_COLLEGES = 'UserColleges';
+    const CULTURE_LANG = 'UserCultureLang';
+    const CULTURE_TIMEZONE = 'UserCultureTimezone';
     
     public function isValidAccount() {
         //check if account is enabled - TODO: Add field
@@ -32,13 +33,15 @@ class myUser extends sfGuardSecurityUser {
         parent::signIn($user, $remember, $con);
 
         $this->setUser($user);
+        $this->setCollegesIds($user);
         $this->setCourses($this);
         $this->setStyle($user);
+        $this->setI18N();
     }
     
     public function signOut() {
-        parent::signOut();
         $this->clearCurrentUser();
+        parent::signOut();
     }
     
     protected function setUser($user)
@@ -52,20 +55,62 @@ class myUser extends sfGuardSecurityUser {
 
     protected function setCourses($user){
         $courses = ComponentService::getInstance()->getCoursesForUser( $user->getProfile() );
+        $enabled_courses = ComponentService::getInstance()->getEnabledCoursesForUser( $user->getProfile() );
 
-        //fetch ids
-        $components_ids = array();
-        foreach( $courses as $component )
-        {
-            $components_ids[] = $component->getId();
+        if($enabled_courses->count() == 0){
+            $enabled_courses = $courses;
         }
 
-        //set completed status for courses
-        $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $user->getProfile()->getId());
-        $user->setCompletedStatus($components_ids, $values);
+        //cache all courses
+        if(count($courses)){
+            $user->setAllCourses($courses->getPrimaryKeys());
+        }else{
+            $user->setAllCourses(array());
+        }
 
-        // cache courses
-        $user->setEnabledCourses($components_ids);
+        if($enabled_courses && $enabled_courses->count()){
+            //get ids
+            $components_ids = $enabled_courses->getPrimaryKeys();
+
+            //set completed status for courses
+            $values = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $user->getProfile()->getId());
+            $user->setCompletedStatus($components_ids, $values);
+
+            // cache courses
+            $user->setEnabledCourses($components_ids);
+
+            // add credentials for user
+            foreach ($components_ids as $course_id) {
+                $this->addCredential("course_" . $course_id);
+            }
+        }else{
+            $user->setEnabledCourses(array());            
+        }
+    }
+
+    protected function setI18N($profile = null){
+        if($profile == null){
+            $profile = $this->getProfile();
+        }
+
+        if($profile->getCulture()){
+            $this->setAttribute(self::CULTURE_LANG, $profile->getCulture());
+            $this->setCulture($profile->getCulture());
+        }
+
+        if($profile->getTimezone()){
+            $this->setAttribute(self::CULTURE_TIMEZONE, $profile->getTimezone());
+        }
+    }
+
+    protected function setCollegesIds($user){
+        $colleges = $user->getProfile()->getColleges();
+
+        $this->setAttribute(self::USER_COLLEGES, $colleges->getPrimaryKeys());
+    }
+
+    public function getCollegeIds(){
+        return $this->getAttribute(self::USER_COLLEGES);
     }
 
     protected function setStyle($user){
@@ -74,10 +119,19 @@ class myUser extends sfGuardSecurityUser {
         $colleges = $user->getProfile()->getColleges();
 
         if($colleges->count()){
+            //first college
             $style = $colleges->getFirst()->getStyle();
         }
 
         $this->setAttribute(self::LAYOUT_STYLE, $style);
+    }
+
+    public function getTimezone(){
+        return $this->getAttribute(self::CULTURE_TIMEZONE);
+    }
+
+    public function resetCulture($profile){
+        $this->setI18N($profile);
     }
 
     public function getStyle(){
@@ -100,7 +154,10 @@ class myUser extends sfGuardSecurityUser {
         $this->setAttribute(self::PROFILE_ATTR, null);
         $this->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
         $this->setAttribute(self::USER_COURSES_ENABLED, null);
+        $this->setAttribute(self::USER_COURSES, null);
         $this->setAttribute(self::LAYOUT_STYLE, null);
+        $this->setAttribute(self::CULTURE_LANG, null);
+        $this->setAttribute(self::CULTURE_TIMEZONE, null);
     }
 
 
@@ -109,22 +166,51 @@ class myUser extends sfGuardSecurityUser {
         return sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED);
     }
 
+    public function getAllCourses(){
+        return sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES);
+    }
+
+    public function getDisplayCourses(){
+        $all_courses = $this->getAllCourses();
+        $enabled_courses = $this->getEnabledCourses();
+
+        return array_diff($all_courses, $enabled_courses);
+    }
+
     public function setEnabledCourses($course_id){
         $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED, array());
 
-        if(is_array($course_id)){
-            foreach ($course_id as $key => $course) {
-                if(!in_array($course, $_courses)){
-                    $_courses[] = $course;
-                }
-            }
-        }else{
-            if(!in_array($course_id, $_courses)){
-                $_courses[] = $course_id;
-            }
+        if(!is_array($course_id)){
+            $course_id = array($course_id);
         }
 
+        $_courses = array_unique (array_merge($_courses, $course_id));
+
         return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, $_courses);
+    }
+
+    public function addEnabledCourses($courses_id){
+        if(!is_array($courses_id)){
+            $courses_id = array($courses_id);
+        }
+
+        $this->setEnabledCourses($courses_id);
+
+        foreach ($courses_id as $course_id) {
+            $this->addCredential("course_" . $course_id);
+        }
+    }
+
+    public function setAllCourses($course_id){
+        $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES, array());
+
+        if(!is_array($course_id)){
+            $course_id = array($course_id);
+        }
+
+        $_courses = array_unique(array_merge($_courses, $course_id));
+
+        return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES, $_courses);
     }
 
 

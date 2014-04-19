@@ -55,4 +55,77 @@ class registerActions extends sfActions
 
   	return;
   }
+
+  public function executeBogota(sfWebRequest $request){
+    header('Access-Control-Allow-Origin: *');
+
+    $values = $request->getParameter("register"); 
+    $response = array(
+      'status' => 'error',
+      'message' => 'User not found',
+    );
+
+
+    $firstname_full = isset($values['firstname']) ? trim($values['firstname']) : "";
+    $lastname_full = isset($values['lastname']) ? trim($values['lastname']) : "";
+    $dni = isset($values['document']) ? trim($values['document']) : "";
+
+    if(empty($firstname_full) || empty($lastname_full) || empty($dni) ){
+      return $this->renderText(json_encode($response));
+    }
+
+    $firstnames = explode(" ", $firstname_full);
+    $lastnames = explode(" ", $lastname_full);
+
+    //search for user
+    $query = Profile::getRepository()->createQuery('p')
+              ->innerJoin("p.sfGuardUser sfu")
+              ->where("sfu.email_address like '%@bogota.co'");
+              // ->where("levenshtein( ?, first_name) < 5")
+
+    //search fullfields
+    $query->andWhere("first_name like ? and last_name like ? and local_id like ?", 
+      array('%' . $firstname_full . '%', 
+            '%' . $lastname_full . '%',
+            '%' . $dni . '%'));
+
+    $results = $query->execute();
+
+    if ($results->count() == 1) {
+      $response['status'] = 'ok';
+      $response['message'] = 'User found';
+      $response['username'] = $results[0]->getNickname();
+      $response['password'] = $results[0]->getLocalId();
+    }else{
+      $response['status'] = 'filter';
+    }
+
+    return $this->renderText(json_encode($response));
+
+  }
+
+  public function executeLogin(sfWebRequest $request)
+  {
+    header('Access-Control-Allow-Origin: *');
+    
+    $username = trim($request->getPostParameter("username", ""));
+    $password = trim($request->getPostParameter("password", ""));
+
+    if (!empty($username) && !empty($password) && $request->isMethod('post')){
+        $user = ProfileService::getInstance()->isValidUser($username,$password);
+        if($user)
+          {
+            $this->getUser()->signin($user);
+            $this->getResponse()->setStatusCode(200);
+            
+            return $this->renderText(json_encode(array('status' => 'ok')));
+          }
+        }
+      }
+
+      $this->getResponse()->setHeaderOnly(true);
+      $this->getResponse()->setStatusCode(401);
+
+      return sfView::NONE;
+    }
 }

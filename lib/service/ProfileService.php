@@ -327,5 +327,17 @@ class ProfileService {
       return($response);
     }
 
+    public function isValidUser($username, $password){
+      $user = Doctrine::getTable('sfGuardUser')->retrieveByUsername($username);
+      if($user)
+        {
+          // password is ok?
+          if ($user->getIsActive() && $user->checkPassword($password))
+          {
+              return $user;
+          }
+      }
 
+      return false;
+    }
 }
