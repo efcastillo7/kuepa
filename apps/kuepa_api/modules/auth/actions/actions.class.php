@@ -24,19 +24,17 @@ class authActions extends sfActions
 
     if (!empty($username) && !empty($password) && $request->isMethod('post')){
         $user = ProfileService::getInstance()->isValidUser($username,$password);
-        if($user)
-          {
-            $this->getUser()->signin($user);
-            $this->getResponse()->setStatusCode(200);
+        if($user){
+    	    $this->getUser()->signin($user);
+        	$this->getResponse()->setStatusCode(200);
             
             return $this->renderText(json_encode(array('status' => 'ok')));
-          }
         }
-      }
-
-      $this->getResponse()->setHeaderOnly(true);
-      $this->getResponse()->setStatusCode(401);
-
-      return sfView::NONE;
     }
+
+    $this->getResponse()->setHeaderOnly(true);
+    $this->getResponse()->setStatusCode(401);
+
+    return sfView::NONE;
+  }
 }
