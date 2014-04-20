@@ -15,7 +15,7 @@ class authActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeLogin(sfWebRequest $request)
+  public function executeLogintoken(sfWebRequest $request)
   {
     header('Access-Control-Allow-Origin: *');
     
@@ -23,13 +23,14 @@ class authActions extends sfActions
     $password = trim($request->getPostParameter("password", ""));
 
     if (!empty($username) && !empty($password) && $request->isMethod('post')){
-        $user = ProfileService::getInstance()->isValidUser($username,$password);
-        if($user){
-    	    $this->getUser()->signin($user);
-        	$this->getResponse()->setStatusCode(200);
-            
-            return $this->renderText(json_encode(array('status' => 'ok')));
-        }
+      $user = ProfileService::getInstance()->isValidUser($username,$password);
+      if($user){
+        // $this->getUser()->signin($user);
+        $token = ProfileService::getInstance()->generateLoginToken($user->getProfile());
+        $this->getResponse()->setStatusCode(200);
+
+        return $this->renderText(json_encode(array('status' => 'ok', 'token' => $token)));
+      }
     }
 
     $this->getResponse()->setHeaderOnly(true);
