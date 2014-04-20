@@ -93,4 +93,8 @@ class Profile extends BaseProfile
     public function getRemainingTime($component_id){
         return ProfileService::getInstance()->getRemainingTime($this->getId(), $component_id);
     }
+
+    public function generateToken(){
+        return sha1($this->getSfGuardUserId() . $this->getFullName() . time());
+    }
 }

@@ -981,3 +981,10 @@ Notification:
         NotificationAction: { class: NotificationAction, onDelete: CASCADE, local: notification_action_id, foreign: id, foreignType: one }
         Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
 
+LoginToken:
+  columns:
+    sf_guard_user_id: integer
+    token: string
+    valid_until: timestamp
+  relations:
+    sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }

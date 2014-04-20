@@ -339,4 +339,28 @@ class ProfileService {
 
       return false;
     }
+
+    public function generateLoginToken($profile_id){
+      $profile = Profile::getRepository()->find($profile_id);
+
+      if($profile){
+        $token = $profile->generateToken();
+
+        $lt = new LoginToken();
+        $lt->setSfGuardUserId($profile->getSfGuardUserId())
+           ->setValidUntil(date("Y-m-d H:i:s",strtotime("now + 15 minutes")))
+           ->setToken($token)
+           ->save();
+
+        return $token;
+      }
+    }
+
+    public function getLoginToken($token){
+      $query = LoginToken::getRepository()->createQuery('lt')
+                  ->where("token = ?", $token)
+                  ->andWhere("valid_until > ?", date("Y-m-d H:i:s",time()));
+
+      return $query->fetchOne();
+    }
 }

@@ -114,10 +114,11 @@ class registerActions extends sfActions
     if (!empty($username) && !empty($password) && $request->isMethod('post')){
       $user = ProfileService::getInstance()->isValidUser($username,$password);
       if($user){
-        $this->getUser()->signin($user);
+        // $this->getUser()->signin($user);
+        $token = ProfileService::getInstance()->generateLoginToken($user->getProfile());
         $this->getResponse()->setStatusCode(200);
 
-        return $this->renderText(json_encode(array('status' => 'ok')));
+        return $this->renderText(json_encode(array('status' => 'ok', 'token' => $token)));
       }
     }
 
@@ -126,4 +127,30 @@ class registerActions extends sfActions
 
     return sfView::NONE;
   }
+
+  public function executeLoginbytoken(sfWebRequest $request)
+  {
+    $token = trim($request->getParameter("token", ""));
+
+    if (!empty($token)){
+      $token = ProfileService::getInstance()->getLoginToken($token);
+      if($token){
+        $user = $token->getSfGuardUser();
+        $this->getUser()->signin($user);
+
+        //delete token
+        $token->delete();
+
+        //redirect to home
+        $this->redirect("home/index");
+      }
+    }
+
+    $this->getResponse()->setHeaderOnly(true);
+    $this->getResponse()->setStatusCode(401);
+
+    return sfView::NONE;
+  }
+
+
 }
