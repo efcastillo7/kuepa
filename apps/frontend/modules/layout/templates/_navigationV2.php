@@ -17,7 +17,9 @@
     <ul class="nav navbar-nav nav-mainbtn">
       <li class="nmb-ins"><a href="<?php echo url_for("stats/index") ?>"><i></i>Reportes</a></li>
       <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
+      <?php if ($sf_user->hasCredential("access_video_sessions")): ?>
       <li class="nmb-tut"><a href="<?php echo url_for("@video_session") ?>"><i></i>Tutorias</a></li>
+      <?php endif; ?>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -48,8 +50,12 @@
 <?php if($profile):?>
   <div class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
     <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
+    <?php if ($sf_user->hasCredential("access_messages")): ?>
     <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <?php endif; ?>
+    <?php if ($sf_user->hasCredential("access_video_sessions")): ?>
     <a href="<?php echo url_for("@video_session") ?>" class="cbp-tsk"><i></i>Tutorias</a> 
+    <?php endif; ?>
     <a href="<?php echo url_for('user/index') ?>" class="cbp-usr"><i></i>Mi Perfil</a>
     <a href="<?php echo url_for('@sf_guard_signout') ?>" class="cbp-set"><i></i>Salir</a>
   </div>
