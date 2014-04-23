@@ -95,6 +95,7 @@ College:
     name: varchar(255)
     style: string
     show_status: string
+    logout_url: string
   relations:
     Components:
       class: Component

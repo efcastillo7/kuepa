@@ -10,6 +10,7 @@ class myUser extends sfGuardSecurityUser {
     const USER_COLLEGES = 'UserColleges';
     const CULTURE_LANG = 'UserCultureLang';
     const CULTURE_TIMEZONE = 'UserCultureTimezone';
+    const LOGOUT_URL = 'LogoutURL';
     
     public function isValidAccount() {
         //check if account is enabled - TODO: Add field
@@ -40,6 +41,11 @@ class myUser extends sfGuardSecurityUser {
     }
     
     public function signOut() {
+        //set logout url if needed
+        if($this->getLogoutURL() != ''){
+            sfConfig::set('app_sf_guard_plugin_success_signout_url', $this->getLogoutURL());
+        }
+
         $this->clearCurrentUser();
         parent::signOut();
     }
@@ -106,6 +112,12 @@ class myUser extends sfGuardSecurityUser {
     protected function setCollegesIds($user){
         $colleges = $user->getProfile()->getColleges();
 
+        foreach ($colleges as $college) {
+            if($college->getLogoutUrl()){
+                $this->setLogoutURL($college->getLogoutUrl());
+            }
+        }
+
         $this->setAttribute(self::USER_COLLEGES, $colleges->getPrimaryKeys());
     }
 
@@ -158,6 +170,15 @@ class myUser extends sfGuardSecurityUser {
         $this->setAttribute(self::LAYOUT_STYLE, null);
         $this->setAttribute(self::CULTURE_LANG, null);
         $this->setAttribute(self::CULTURE_TIMEZONE, null);
+        $this->setAttribute(self::LOGOUT_URL, null);
+    }
+
+    public function setLogoutURL($url = null){
+        $this->setAttribute(self::LOGOUT_URL, $url);
+    }
+
+    public function getLogoutURL(){
+        return $this->getAttribute(self::LOGOUT_URL);
     }
 
 
