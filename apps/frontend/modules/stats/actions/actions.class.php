@@ -207,6 +207,8 @@ class statsActions extends kuepaActions
       $query = GroupsService::getInstance()->getProfilesInGroupsQuery(array($group_id));
     }else{
       $colleges_ids = $this->getUser()->getCollegeIds();
+
+      $this->forward404Unless(count($colleges_ids), "No tiene colegios asignados");
       //get student for first college
       //TODO: EXPAND FOR MULTIPLE COLLEGES
       $query = CourseService::getInstance()->getStudentsListQuery($course_id, $colleges_ids[0]);
