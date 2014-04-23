@@ -68,7 +68,7 @@ class CourseService {
                 ->innerJoin('p.sfGuardUser sgu')
                 ->innerJoin('sgu.sfGuardUserGroup sgug')
                 ->innerJoin('sgug.Group sgg')
-                ->andWhere('sgg.name = ?', 'estudiantes')
+                ->andWhere('sgg.name like ?', 'estudiante%')
                 ->andWhere('sgu.is_active = true')
                 ->limit($max)
                 ->execute();
@@ -79,7 +79,7 @@ class CourseService {
                     ->innerJoin('p.sfGuardUser sgu')
                     ->innerJoin('sgu.sfGuardUserGroup sgug')
                     ->innerJoin('sgug.Group sgg')
-                    ->andWhere('sgg.name = ?', 'estudiantes')
+                    ->andWhere('sgg.name like ?', 'estudiante%')
                     ->innerJoin("p.ProfileCollege pc")
                     ->andWhere('sgu.is_active = true')
                     ->limit($max)
@@ -106,7 +106,7 @@ class CourseService {
                     ->innerJoin('p.sfGuardUser sgu')
                     ->innerJoin('sgu.sfGuardUserGroup sgug')
                     ->innerJoin('sgug.Group sgg')
-                    ->andWhere('sgg.name = ?', 'estudiantes')
+                    ->andWhere('sgg.name like ?', 'estudiante%')
                     ->innerJoin("p.ProfileCollege pc")
                     ->andWhere('sgu.is_active = true')
                     ->whereIn("pc.college_id", $college_id);
@@ -118,7 +118,7 @@ class CourseService {
                     ->innerJoin('p.sfGuardUser sgu')
                     ->innerJoin('sgu.sfGuardUserGroup sgug')
                     ->innerJoin('sgug.Group sgg')
-                    ->andWhere('sgg.name = ?', 'estudiantes')
+                    ->andWhere('sgg.name like ?', 'estudiante%')
                     ->innerJoin("p.ProfileCollege pc")
                     ->andWhere('sgu.is_active = true')
                     ->whereIn("pc.college_id", $college_id);
