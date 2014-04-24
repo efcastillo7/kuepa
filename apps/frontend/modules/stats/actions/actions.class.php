@@ -196,10 +196,8 @@ class statsActions extends kuepaActions
     //get only enabled groups
     $this->groups_ids = $groups_id = array_intersect($this->groups->getPrimaryKeys(), $groups_id);
 
-    if(count($groups_id)){
-      //check user has that groups
-      $this->intersect = $request->getParameter("intersect", "false") == "true";
-    }
+    //check user has that groups
+    $this->intersect = $request->getParameter("intersect", "false") == "true";
 
     //set pager
     $this->pager = new sfDoctrinePager('Students', $this->count_per_page);

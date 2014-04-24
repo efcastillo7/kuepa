@@ -34,12 +34,12 @@ class layoutComponents extends kuepaComponents {
             $this->profile = $this->getProfile();
 
             //get the first message
-            $this->messages = FlashMessageService::getInstance()->getMessagesForUser($this->profile->getId(), 1);
+            $this->messages = FlashMessageService::getInstance()->getMessagesForUser($this->profile->getId(), $this->profile->getCurrentRoute(), 1);
 
             //set message as viewed
             if($this->messages->count() > 0){
                 $message = $this->messages->getFirst();
-                FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
+                // FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
             }
         }   
     }

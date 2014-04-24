@@ -1,4 +1,5 @@
-  <script>
+<?php include_component('layout', 'messages') ?>
+<script>
     var course_id = <?php echo $course->getId() ?>;
     var chapter_id = <?php echo $chapter->getId() ?>;
     var lesson_id = <?php echo $lesson->getId() ?>;

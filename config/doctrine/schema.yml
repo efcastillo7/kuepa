@@ -920,6 +920,7 @@ FlashMessage:
     active: {type: boolean, default: false}
     valid_from: date
     valid_until: date
+    route: string
 
 ProfileViewFlashMessage:
   actAs:

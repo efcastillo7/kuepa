@@ -97,4 +97,8 @@ class Profile extends BaseProfile
     public function generateToken(){
         return sha1($this->getSfGuardUserId() . $this->getFullName() . time());
     }
+
+    public function getCurrentRoute(){
+        return $this->getCurrentModule() . "/" . $this->getCurrentAction();
+    }
 }
