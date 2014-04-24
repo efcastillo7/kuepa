@@ -915,12 +915,19 @@ FlashMessage:
         disabled: true
   columns:
     id: {type: integer, primary: true, autoincrement: true}
+    college_id: integer
     type: string
     name: string
     active: {type: boolean, default: false}
     valid_from: date
     valid_until: date
     route: string
+    position: integer
+  relations:
+    College:
+      type: one
+      local: college_id
+      foreign: id
 
 ProfileViewFlashMessage:
   actAs:
