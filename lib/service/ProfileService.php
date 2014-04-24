@@ -127,7 +127,7 @@ class ProfileService {
               ->setGroupId($type)
               ->save();
 
-        $opt_params = array('country', 'district', 'institution', 'local_id_type', 'local_id', 'phone', 'mobile_phone');
+        $opt_params = array('culture', 'timezone', 'country', 'district', 'institution', 'local_id_type', 'local_id', 'phone', 'mobile_phone');
 
         foreach ($opt_params as $opt_param) {
           if(isset($params[$opt_param])){
@@ -138,7 +138,7 @@ class ProfileService {
         //save!
         $profile->save();
 
-        if($params['code']){
+        if(isset($params['code'])){
             $code = RegisterCode::getRepository()->find($params['code']);
 
             //if exists and is valid

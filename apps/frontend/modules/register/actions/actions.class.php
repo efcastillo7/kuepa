@@ -28,6 +28,47 @@ class registerActions extends sfActions
      $this->setLayout("layout_v2");
   }
 
+  public function executeBogotadocente(sfWebRequest $request)
+  {
+    $code = $request->getParameter("code", "" );
+
+    $this->form = new sfRegisterDocenteBogotaUserForm(array('code' => $code), array('validate-code' => false));
+
+    if($request->isMethod("POST")){
+      $this->registedDobogota($request);
+     }
+
+     $this->setLayout("layout_v2");
+  }
+
+  protected function registedDobogota(sfWebRequest $request){
+    $params = $request->getParameter($this->form->getName());
+
+    $this->form->bind($params);
+    if($this->form->isValid()){
+        $params['nickname'] = $params['email_address'];
+        $params['sex'] = 'M';
+        $params['timezone'] = 'America/Bogota';
+        $params['culture'] = 'es_CO';
+        
+        $profile = ProfileService::getInstance()->addNewUser($params, 8);
+
+        CollegeService::getInstance()->addProfileToCollege($profile->getId(), 11);
+
+        //signin
+        $this->getUser()->signIn($profile->getSfGuardUser());
+
+        //set flash
+        $this->getUser()->setFlash('notice', "Ya puedes ingresar con tu usuario y contraseña!");
+
+        //goto homepage
+        $this->redirect("@homepage");
+
+    }
+
+    return;
+  }
+
   protected function registedDo(sfWebRequest $request){
   	$params = $request->getParameter($this->form->getName());
 
