@@ -41,23 +41,29 @@
 
 			        <div class="order">
 						<?php if ($groups->count() > 0): ?>
-						<div class="btn-group">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							<?php if ($group): ?>
-								<?php echo $group->getName() ?>
-							<?php else: ?>
-							Todos 
-							<?php endif; ?> 
-							<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="?">Todos</a></li>
-								<li class="divider"></li>
-								<?php foreach ($groups as $group): ?>
-								<li><a href="?group=<?php echo $group->getId() ?>"><?php echo $group->getName() ?></a></li>
-								<?php endforeach ?>
-							</ul>
-						</div>
+						<form action="">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								<?php if ($group): ?>
+									<?php echo $group->getName() ?>
+								<?php else: ?>
+								Grupos 
+								<?php endif; ?> 
+								<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="?">Todos</a></li>
+									<li class="divider"></li>
+									<?php foreach ($groups as $group): ?>
+									<li><a href="#"><input type="checkbox" name="groups[]" value="<?php echo $group->getId() ?>" <?php echo in_array($group->getId(), $sf_data->getRaw('groups_ids')) ? "checked" : "" ?>> <?php echo $group->getName() ?></a></li>
+									<?php endforeach ?>
+									<li class="divider"></li>
+									<li><a href="#"><input type="checkbox" name="intersect" value="true" <?php echo $intersect ? "checked" : "" ?>> Intersección</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><input type="submit" class="btn btn-primary btn-xs" value="Actualizar"></a></li>
+								</ul>
+							</div>
+						</form>
 						<?php endif ?>
 					</div>
 				</div>

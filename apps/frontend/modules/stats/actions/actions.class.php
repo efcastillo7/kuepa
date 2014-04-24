@@ -173,8 +173,10 @@ class statsActions extends kuepaActions
 
   public function executeClass(sfWebRequest $request){
     $course_id = $request->getParameter("course_id");
-    $group_id = $request->getParameter("group");
+    $groups_id = $request->getParameter("groups", array());
     $type = $request->getParameter("type", "comparativa");
+
+    // echo var_dump($groups_id);
 
     if ($type == "ficha") {
       $default = 9;
@@ -191,20 +193,19 @@ class statsActions extends kuepaActions
     
     $this->groups = GroupsService::getInstance()->getGroupsByAuthor($this->getUser()->getProfile()->getId());
 
-    if($group_id){
-      //check user has that group
-      $this->forward404Unless(in_array($group_id, $this->groups->getPrimaryKeys()));
+    //get only enabled groups
+    $this->groups_ids = $groups_id = array_intersect($this->groups->getPrimaryKeys(), $groups_id);
 
-      //get Group
-      $this->group = GroupsService::getInstance()->find($group_id);
-      $this->forward404Unless($this->group);
+    if(count($groups_id)){
+      //check user has that groups
+      $this->intersect = $request->getParameter("intersect", "false") == "true";
     }
 
     //set pager
     $this->pager = new sfDoctrinePager('Students', $this->count_per_page);
 
-    if($this->group){
-      $query = GroupsService::getInstance()->getProfilesInGroupsQuery(array($group_id));
+    if(count($groups_id)){
+      $query = GroupsService::getInstance()->getProfilesInGroupsQuery($groups_id, array(), $this->intersect);
     }else{
       $colleges_ids = $this->getUser()->getCollegeIds();
 

@@ -112,7 +112,7 @@ class GroupsService {
         
     } 
 
-    public function getProfilesInGroupsQuery($groups_id, $filters = array()){
+    public function getProfilesInGroupsQuery($groups_id, $filters = array(), $intersect = false){
         //$group = self::getInstance()->find($group_id);
         //$users = $group->getProfiles();
 
@@ -121,6 +121,11 @@ class GroupsService {
                 ->innerJoin('p.GroupProfile gp')
                 ->innerJoin('p.sfGuardUser sfg')
                 ->whereIn('gp.group_id',$groups_id);
+
+        if($intersect && (count($groups_id) > 1)){
+            $q->groupBy('p.id')
+              ->having("count(*) = ?", count($groups_id));
+        }
 
         if ( count($filters) > 0 ){
             // "key"       => value
