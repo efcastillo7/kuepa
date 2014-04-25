@@ -2,7 +2,7 @@
     <div class="row head-calendar">
       <div class="col-md-12">
         <h2 class="primary">
-          Arranca hoy mismo a estudiar completando el siguiente formulario
+          Registrate cómo Docente del Proyecto de Fortalecimiento de Compentencias 2014 desde Ahora
         </h2>
       </div>
 

@@ -38,6 +38,8 @@ class registerActions extends sfActions
       $this->registedDobogota($request);
      }
 
+     $this->getResponse()->addStylesheet("/styles/css/bogota.css", 'last');
+
      $this->setLayout("layout_v2");
   }
 
