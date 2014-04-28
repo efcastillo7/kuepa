@@ -113,13 +113,14 @@ class CourseService {
 
             }else if(in_array(ProfileLearningPath::IN_PROGRESS, $show_status)){
                 //show only current students
-
                 $query = Profile::getRepository()->createQuery('p')
                     ->innerJoin('p.sfGuardUser sgu')
                     ->innerJoin('sgu.sfGuardUserGroup sgug')
                     ->innerJoin('sgug.Group sgg')
                     ->andWhere('sgg.name like ?', 'estudiante%')
                     ->innerJoin("p.ProfileCollege pc")
+                    ->innerJoin("p.ProfileLearningPath plp")
+                    ->andWhere("plp.component_id = ?", $course_id)
                     ->andWhere('sgu.is_active = true')
                     ->whereIn("pc.college_id", $college_id);
 
