@@ -12,7 +12,7 @@ class FlashMessageService {
         return self::$instance;
     }
 
-    public function getMessagesForUser($profile_id, $colleges_ids = array(), $route = null, $count = null){
+    public function getMessagesForUser($profile_id, $colleges_ids = array(), $route = null, $count = null, $group_ids = array()){
         //get all messages 
         $q = FlashMessage::getRepository()->createQuery('fm')
                 ->where('fm.id not in (select flash_message_id from profile_view_flash_message pvfm where profile_id = ?)', $profile_id)
@@ -21,6 +21,10 @@ class FlashMessageService {
 
         if(count($colleges_ids)){
             $q->andWhereIn('fm.college_id', $colleges_ids);
+        }
+
+        if(count($group_ids)){
+            $q->andWhereIn('sf_guard_group_id', $group_ids);
         }
 
         if($route){

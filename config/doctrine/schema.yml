@@ -965,10 +965,15 @@ FlashMessage:
     valid_until: date
     route: string
     position: integer
+    sf_guard_group_id: integer
   relations:
     College:
       type: one
       local: college_id
+      foreign: id
+    SfGuardGroup:
+      type: one
+      local: sf_guard_group_id
       foreign: id
 
 ProfileViewFlashMessage:
