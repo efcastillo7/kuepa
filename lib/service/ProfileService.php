@@ -261,8 +261,30 @@ class ProfileService {
                $array_errors[] = "Error en linea $key, el campo Nombres esta vacio";
              } else if ($lastname == ""){
                $array_errors[] = "Error en linea $key, el campo Apellidos esta vacio";
-             } else if ( $this->findProfileByUsername($username) ){
+             } else if ( $profile = $this->findProfileByUsername($username) ){
                $array_errors[] = "Error en linea $key, el Login $username ya existe";
+
+               //get groups
+                if(isset($user[$fields['groups']])){
+                  $groups = explode(";", $user[$fields['groups']]);
+
+                  foreach ($groups as $group_name) {
+                    $group_name = trim($group_name);
+                    if($group_name != ""){
+                      $oGroup = GroupsService::getInstance()->getByNameAndAuthor($group_name, sfContext::getInstance()->getUser()->getProfile()->getId());
+                      if(!$oGroup){
+                        $oGroup = GroupsService::getInstance()->save(array(
+                          'name' => $group_name,
+                          'description' => $group_name,
+                          'level' => '0',
+                          'creator_id' => sfContext::getInstance()->getUser()->getProfile()->getId()
+                        ));
+                      }
+                      GroupsService::getInstance()->addProfileToGroup($oGroup->getId(), $profile->getId());
+                    }
+                  }
+                }
+
              } else if (trim($email) != "" && $this->findProfileByEmail($email)->getFirst() ){
                $array_errors[] = "Error en linea $key, el email $email ya existe";
              } else {

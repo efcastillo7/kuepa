@@ -128,11 +128,16 @@ class GroupsService {
 
         
     public function addProfileToGroup($group_id, $profile_id){
-        $gp = new GroupProfile();
-        $gp -> setGroupId($group_id);
-        $gp -> setProfileId($profile_id);
-        $gp->save();
-        return($gp);
+        try{
+            $gp = new GroupProfile();
+            $gp -> setGroupId($group_id);
+            $gp -> setProfileId($profile_id);
+            $gp->save();
+            return($gp);
+        }catch(Exception $e){
+            //already exists
+            return true;
+        }
     }
 
     public function removeProfileFromGroup($group_id, $profile_id){
