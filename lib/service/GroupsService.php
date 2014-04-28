@@ -33,6 +33,20 @@ class GroupsService {
         return $q->execute();
     }
 
+    public function getGroupsByProfile($profile_id, $levels = null){
+        $q = Groups::getRepository()->createQuery('g')
+                ->innerJoin('g.ProfileHasGroup gp')
+                ->where('gp.profile_id = ?',$profile_id);
+
+        if(is_array($levels)){
+            $q->andWhereIn('level', $levels);
+        }else if($levels){
+            $q->andWhere('level = ?', $levels);
+        }
+
+        return $q->execute();
+    }
+
     public function getGroupsByLevel($level = 0){
         /* TODO: all infinite tree in on query
             SELECT gsg.parent_id AS level1, gsg.child_id AS level2, gsg1.child_id AS level3
@@ -62,6 +76,14 @@ class GroupsService {
               ->setLevel($values['level'])
               ->setCreatorId($values['creator_id'])
               ->save();
+
+
+        //add profile to that group
+        $phg = new ProfileHasGroup();
+        $phg->setGroupId($group->getId())
+            ->setProfileId($values['creator_id'])
+            ->save();
+
         return $group;
     }
 

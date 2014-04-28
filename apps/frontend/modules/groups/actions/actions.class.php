@@ -13,7 +13,7 @@ class groupsActions extends kuepaActions
   public function executeIndex(sfWebRequest $request)
   {
     // $this->groups = Groups::getRepository()->createQuery('g')->execute();
-     $this->groups = GroupsService::getInstance()->getGroupsByAuthor($this->getUser()->getProfile()->getId(), 0);;
+     $this->groups = GroupsService::getInstance()->getGroupsByProfile($this->getUser()->getProfile()->getId(), 0);;
      $this->profile =  $this->getProfile();
   }
 

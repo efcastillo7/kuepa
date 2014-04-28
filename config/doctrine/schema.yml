@@ -25,8 +25,7 @@ Profile:
     local_id:                  varchar(50)
     phone:                     varchar(50)
     mobile_phone:              varchar(50)
-
-
+    master_group_id:           integer
   relations:
     sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
@@ -38,7 +37,7 @@ Profile:
       foreignAlias: Profiles
     Groups:
       class: Groups
-      refClass: GroupProfile
+      refClass: ProfileHasGroup
       type: many
       local: profile_id
       foreign: group_id
@@ -56,6 +55,11 @@ Profile:
       local: id
       foreign: profile_id
       type: many
+    MasterGroup:
+      class: Groups
+      local: master_group_id
+      foreign: id
+      type: one
 
 ProfileLearningPath:
   columns:
@@ -692,7 +696,6 @@ ProfileComponentCompletedStatus:
     note: float
     attemps: integer
     approved_date: date
-    
   relations:
     Component:
       local: component_id
@@ -788,6 +791,20 @@ RegisterCodeHasCourse:
     register_code: {type: string(50), primary: true}
     course_id: {type: integer, primary: true}
 
+ProfileHasGroup:
+  columns:
+    profile_id: {type: integer, primary: true}
+    group_id: {type: integer, primary: true}
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    Groups:
+      local: group_id
+      foreign: id
+      type: one
+
 Groups:
   actAs:
     Timestampable: ~
@@ -842,6 +859,15 @@ GroupProfile:
   columns:
     group_id: {type: integer, primary: true}
     profile_id: {type: integer, primary: true}
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    Groups:
+      local: group_id
+      foreign: id
+      type: one
 
 MailMessage:
   actAs: { Timestampable: ~ }
