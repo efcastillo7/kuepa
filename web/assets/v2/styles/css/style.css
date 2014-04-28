@@ -3944,7 +3944,7 @@ ul.lv-lvlone {
 
 /* line 20, scss/_dashboard.scss */
 .dashboard-left .order {
-  width: 230px;
+  /* width: 230px; */
   float: right;
   margin-top: -11px;
   margin-left: 10px;

@@ -40,31 +40,24 @@
 			        </nav>
 
 			        <div class="order">
-						<?php if ($groups->count() > 0): ?>
 						<form action="">
 							<div class="btn-group">
+							<?php foreach($group_categories as $category): ?>
+							<div class="btn-group">
 								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-								<?php if ($group): ?>
-									<?php echo $group->getName() ?>
-								<?php else: ?>
-								Grupos 
-								<?php endif; ?> 
+								<?php echo $category ?>
 								<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="?">Todos</a></li>
-									<li class="divider"></li>
-									<?php foreach ($groups as $group): ?>
+									<?php foreach ($category->getGroups() as $group): ?>
 									<li><a href="#"><input type="checkbox" name="groups[]" value="<?php echo $group->getId() ?>" <?php echo in_array($group->getId(), $sf_data->getRaw('groups_ids')) ? "checked" : "" ?>> <?php echo $group->getName() ?></a></li>
 									<?php endforeach ?>
-									<li class="divider"></li>
-									<li><a href="#"><input type="checkbox" name="intersect" value="true" <?php echo $intersect ? "checked" : "" ?>> Intersección</a></li>
-									<li class="divider"></li>
-									<li><a href="#"><input type="submit" class="btn btn-primary btn-xs" value="Actualizar"></a></li>
 								</ul>
 							</div>
+							<?php endforeach; ?>
+							<input type="submit" class="btn btn-primary btn-xs" value="Actualizar">
+							</div>
 						</form>
-						<?php endif ?>
 					</div>
 				</div>
 			</div>

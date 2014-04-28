@@ -813,6 +813,7 @@ Groups:
     description: string
     level: integer
     creator_id: {type: integer, notnull: true}
+    group_category_id: integer
   relations:
     Parents:
       class: Groups
@@ -837,6 +838,11 @@ Groups:
       class: Profile
       type: one
       local: creator_id
+      foreign: id
+    Categories:
+      class: Category
+      type: one
+      local: group_category_id
       foreign: id
 
 GroupSubGroup:
@@ -868,6 +874,16 @@ GroupProfile:
       local: group_id
       foreign: id
       type: one
+
+GroupCategory:
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    name: string
+  relations:
+    Groups:
+      type: many
+      local: id
+      foreign: group_category_id
 
 MailMessage:
   actAs: { Timestampable: ~ }

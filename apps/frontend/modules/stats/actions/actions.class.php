@@ -196,7 +196,11 @@ class statsActions extends kuepaActions
     //get only enabled groups
     $this->groups_ids = $groups_id = array_intersect($this->groups->getPrimaryKeys(), $groups_id);
 
-    $this->intersect = $request->getParameter("intersect", "false") == "true";
+    // $this->intersect = $request->getParameter("intersect", "false") == "true";
+    //allways intersec
+    $this->intersect = true;
+
+    $this->group_categories = GroupsService::getInstance()->getCategories($this->getProfile()->getId());
 
     //get master group if enabled
     if($this->getUser()->getProfile()->getMasterGroupId()){

@@ -9,6 +9,15 @@ class GroupsService {
         
         return self::$instance;
     }
+
+    public function getCategories($profile_id){
+        $q = GroupCategory::getRepository()->createQuery('gc')
+                ->innerJoin("gc.Groups g")
+                ->innerJoin('g.ProfileHasGroup gp')
+                ->where('gp.profile_id = ?',$profile_id);
+
+        return $q->execute();
+    }
     
     public function find($id){
         return Groups::getRepository()->find($id);
