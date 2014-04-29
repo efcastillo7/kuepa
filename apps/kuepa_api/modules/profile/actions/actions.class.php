@@ -99,9 +99,48 @@ class profileActions extends sfActions
      * @param sfRequest $request A request object
      */
     public function executeAdd(sfWebRequest $request) {
-    	
+    	$id = $request->getParameter("id");
+        $data = $request->getParameter("profile");
+        $reponse_status = false;
+
+        $profile = $this->getUser()->getProfile();
+
+        //TODO: check if is user for direct changes
+        //if not directive then avoid id
+
+        if(isset($data['phone']) && !empty($data['phone'])){
+            $profile->setPhone($data['phone']);
+            $reponse_status = true;
+        }
+
+        if(isset($data['celphone']) && !empty($data['celphone'])){
+            $profile->setMobilePhone($data['celphone']);
+            $reponse_status = true;
+        }
+
+        $profile->save();
+
+        $response = array('status' => "ok");
+
+        if(!$reponse_status){
+            $this->getResponse()->setStatusCode(406);
+            $response = 'Campos Invalidos';
+        }
+
 
         return $this->renderText(json_encode($response));
+    }
+
+    public function executeFlashmessage(sfWebRequest $request) {
+        //check if post
+        $this->forward404Unless($request->isMethod('POST'));
+
+        $id = $request->getParameter('id');
+        $profile = $this->getUser()->getProfile();
+
+        FlashMessageService::getInstance()->setMessagesAsViewed($profile->getId(), $id);
+
+        return $this->renderText(json_encode(array('status' => 'ok')));
     }
 
     /**

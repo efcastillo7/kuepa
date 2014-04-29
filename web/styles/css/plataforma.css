@@ -23,9 +23,9 @@
     font-size: 22px;
     position: relative;
     z-index: 9999;
-    width: 400px;
+    width: 550px;
     text-align: center;
-    margin: 280px auto 0;
+    margin: 150px auto 0;
   }
   
 .slide-title {
@@ -34,7 +34,7 @@
   line-height: 1.1;
   margin: 20px 0;
 }
-.slide-main {
+.slide-main, .slide-main form {
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.4;
@@ -543,10 +543,3 @@ h1,h2,h3,h4, .title1, .title2, .title3, .title4
   padding: 15px 0 10px;
   border-bottom: 1px dashed #aaa;
 }
-
-
-
-
-
-
-

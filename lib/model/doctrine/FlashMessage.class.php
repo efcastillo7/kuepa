@@ -19,4 +19,8 @@ class FlashMessage extends BaseFlashMessage
     public static function getRepository() {
         return Doctrine_Core::getTable('FlashMessage');
     }
+
+    public function isMandatory(){
+    	return $this->getMandatory();
+    }
 }

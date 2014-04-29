@@ -39,9 +39,12 @@ class layoutComponents extends kuepaComponents {
             $this->messages = FlashMessageService::getInstance()->getMessagesForUser($this->profile->getId(), $this->getUser()->getCollegeIds(), $this->profile->getCurrentRoute(), 1, $user_groups);
 
             //set message as viewed
-            if($this->messages->count() > 0){
-                $message = $this->messages->getFirst();
-                FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
+            if($this->messages->count() > 0 ){
+                foreach ($this->messages as $message) {
+                    if(!$message->isMandatory()){
+                        FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
+                    }
+                }
             }
         }   
     }

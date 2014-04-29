@@ -966,6 +966,7 @@ FlashMessage:
     route: string
     position: integer
     sf_guard_group_id: integer
+    mandatory: boolean
   relations:
     College:
       type: one
