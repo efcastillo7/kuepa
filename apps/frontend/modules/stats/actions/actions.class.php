@@ -191,7 +191,7 @@ class statsActions extends kuepaActions
     $this->course = Course::getRepository()->getById($course_id);
     $this->group = null;
     
-    $this->groups = GroupsService::getInstance()->getGroupsByAuthor($this->getUser()->getProfile()->getId());
+    $this->groups = GroupsService::getInstance()->getGroupsByProfile($this->getUser()->getProfile()->getId());
 
     //get only enabled groups
     $this->groups_ids = $groups_id = array_intersect($this->groups->getPrimaryKeys(), $groups_id);

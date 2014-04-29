@@ -205,6 +205,59 @@ class ProfileService {
         return($first_name.'.'.$last_name.'@bogota.co');
     }
 
+    public function addUserToGroupsFromFile($file_path, $params){
+      $lines = file($file_path, FILE_SKIP_EMPTY_LINES);
+      $college_id = $params['college_id'];
+      $separator = $params['separator'];
+      $skip_first_line = $params['skip_first_line'];
+      $group_id = $params['group_id'];
+      $array_errors = array();
+      $array_ok = array();
+
+      $fields = array(
+        'username',
+        'groups'
+      );
+
+      $fields = array_flip($fields);
+
+      foreach ($lines as $key => $user) {
+        if ( $skip_first_line == 1 && $key == 0){ 
+          next($lines);
+        }else if ( trim($user) != "" ){
+          $user = explode("$separator",$user);
+          $username = isset($user[$fields['username']]) ? $user[$fields['username']] : "";
+          // echo $username;
+          // die();
+
+          if($profile = $this->findProfileByUsername($username)){
+            if(isset($user[$fields['groups']])){
+              $groups = explode(";", $user[$fields['groups']]);
+
+              foreach ($groups as $group_name) {
+                $group_name = trim($group_name);
+                if($group_name != ""){
+                  $oGroup = GroupsService::getInstance()->getByNameAndAuthor($group_name, sfContext::getInstance()->getUser()->getProfile()->getId());
+                  if(!$oGroup){
+                    $oGroup = GroupsService::getInstance()->save(array(
+                      'name' => $group_name,
+                      'description' => $group_name,
+                      'level' => '0',
+                      'creator_id' => sfContext::getInstance()->getUser()->getProfile()->getId()
+                    ));
+                  }
+                  GroupsService::getInstance()->addProfileToGroup($oGroup->getId(), $profile->getId());
+                }
+              }
+            }
+          }
+        }
+      }
+
+      echo "termino";
+      die();
+    }
+
 
     public function importFromFile($file_path, $params){
       $lines = file($file_path, FILE_SKIP_EMPTY_LINES);
@@ -263,6 +316,8 @@ class ProfileService {
                $array_errors[] = "Error en linea $key, el campo Apellidos esta vacio";
              } else if ( $profile = $this->findProfileByUsername($username) ){
                $array_errors[] = "Error en linea $key, el Login $username ya existe";
+               echo "Error en linea $key, el Login $username ya existe";
+               flush();
 
                //get groups
                 if(isset($user[$fields['groups']])){

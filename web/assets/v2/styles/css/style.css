@@ -3944,10 +3944,10 @@ ul.lv-lvlone {
 
 /* line 20, scss/_dashboard.scss */
 .dashboard-left .order {
-  /* width: 230px; */
-  float: right;
-  margin-top: -11px;
-  margin-left: 10px;
+  width: 700px;
+  position: absolute;
+  top: 19px;
+  left: 270px;
 }
 
 /* line 25, scss/_dashboard.scss */

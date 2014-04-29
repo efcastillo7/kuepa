@@ -20,6 +20,9 @@
       <?php if ($sf_user->hasCredential("access_video_sessions")): ?>
       <li class="nmb-tut"><a href="<?php echo url_for("@video_session") ?>"><i></i>Tutorias</a></li>
       <?php endif; ?>
+      <?php if ($sf_user->hasCredential("directivo")): ?>
+      <li class="nmb-ins"><a href="<?php echo url_for("users/index") ?>"><i></i>Usuarios</a></li>
+      <?php endif; ?>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
