@@ -49,6 +49,7 @@
 								<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
+									<li><a href=""><input type="text"></a></li>
 									<?php foreach ($category->getGroups() as $group): ?>
 									<li><a href="#"><input type="checkbox" name="groups[]" value="<?php echo $group->getId() ?>" <?php echo in_array($group->getId(), $sf_data->getRaw('groups_ids')) ? "checked" : "" ?>> <?php echo $group->getName() ?></a></li>
 									<?php endforeach ?>
