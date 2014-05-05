@@ -152,15 +152,44 @@ class GroupsService {
         //$group = self::getInstance()->find($group_id);
         //$users = $group->getProfiles();
 
+
         $q = Profile::getRepository()->createQuery('p')
                 // ->select('p.*')
-                ->innerJoin('p.GroupProfile gp')
-                ->innerJoin('p.sfGuardUser sfg')
-                ->whereIn('gp.group_id',$groups_id);
+                // ->innerJoin('p.GroupProfile gp')
+                ->innerJoin('p.sfGuardUser sfg');
 
-        if($intersect && (count($groups_id) > 1)){
-            $q->groupBy('p.id')
-              ->having("count(*) = ?", count($groups_id));
+        // $count_groups = 0;
+        // if(is_array($groups_id)){
+        //     $subgroups = array();
+        //     foreach ($groups_id as $key => $subgroup) {
+        //         $subgroups[$key] = "";
+        //         for($i=0; $i<count($subgroup)-1;$i++){
+        //             $subgroups[$key] .= "gp.group_id = " . $subgroup[$i] . " OR ";
+        //         }
+        //         $subgroups[$key] .= "gp.group_id = " . $subgroup[$i];
+        //         $count_groups += count($subgroup);
+        //     }
+        //     $where_groups = "(" . implode(") OR (", $subgroups) . ")";
+        //     $q->andWhere($where_groups);
+        //     $q->groupBy('p.id')
+        //       ->having("count(*) >= ?", $where_groups);
+        // }else{
+        //     $q->innerJoin('p.GroupProfile gp')
+        //       ->whereIn('gp.group_id',$groups_id);
+        // }
+
+        // if($intersect){
+        // }
+
+        if(is_array($groups_id)){
+            foreach ($groups_id as $key => $value) {
+                // $subquery = "(select profile_id from group_profile where group_id in (" . implode(',', $value). "))";
+                // $q->andWhere("p.id in $subquery");
+                $q->innerJoin("p.GroupProfile gp$key")
+                  ->whereIn("gp$key.group_id", $groups_id[$key]);
+            }
+            // for($i=0;$i<count($groups_id);$i++){
+            // }
         }
 
         if ( count($filters) > 0 ){

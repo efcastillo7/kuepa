@@ -13,6 +13,11 @@
     John Doe Styles
 -------------------------------------------------- */
 
+.dashboard-left .open > .dropdown-menu{
+  max-height: 400px;
+  overflow-y: auto;
+}
+
 .subject-item.blocked{
   opacity: 0.5;
 }

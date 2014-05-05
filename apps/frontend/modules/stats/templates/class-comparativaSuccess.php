@@ -1,5 +1,9 @@
 <?php use_helper("Date") ?>
 <?php use_helper("LocalDate") ?>
+<?php 
+	$groups = $sf_data->getRaw('groups_ids'); 
+	$params = $sf_data->getRaw('params'); 
+?>
 <style>
 	/*table{table-layout: fixed;}*/
 	/*table td{overflow: hidden;}*/
@@ -39,6 +43,7 @@
 						</ul>
 			        </nav>
 
+					<?php if(count($group_categories)): ?>
 			        <div class="order">
 						<form action="">
 							<div class="btn-group">
@@ -49,9 +54,9 @@
 								<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href=""><input type="text"></a></li>
+									<!-- <li><a href=""><input type="text"></a></li> -->
 									<?php foreach ($category->getGroups() as $group): ?>
-									<li><a href="#"><input type="checkbox" name="groups[]" value="<?php echo $group->getId() ?>" <?php echo in_array($group->getId(), $sf_data->getRaw('groups_ids')) ? "checked" : "" ?>> <?php echo $group->getName() ?></a></li>
+									<li><a href="#"><input type="checkbox" name="groups[<?php echo $category->getId() ?>][]" value="<?php echo $group->getId() ?>" <?php echo isset($groups[$category->getId()]) && in_array($group->getId(), $groups[$category->getId()]) ? "checked" : "" ?>> <?php echo $group->getName() ?></a></li>
 									<?php endforeach ?>
 								</ul>
 							</div>
@@ -60,6 +65,7 @@
 							</div>
 						</form>
 					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
@@ -173,18 +179,18 @@
 		<div class="col-lg-12">
 			<?php if ($pager->haveToPaginate()): ?>
 			<ul class="pagination">
-			  <li><a href="?page=1&count=<?php echo $count_per_page ?>">&laquo;</a></li>
-			  <li><a href="?page=<?php echo $pager->getPreviousPage() ?>&count=<?php echo $count_per_page ?>">&laquo;</a></li>
+			  <li><a href="?page=1&<?php echo http_build_query($params) ?>">&laquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getPreviousPage() ?>&<?php echo http_build_query($params) ?>">&laquo;</a></li>
 			  <?php foreach ($pager->getLinks() as $page): ?>
 			    <?php if ($page == $pager->getPage()): ?>
 			      <li class="active"><a href="#"><?php echo $page ?></a></li>
 			    <?php else: ?>
-			      <li><a href="?page=<?php echo $page ?>&count=<?php echo $count_per_page ?>"><?php echo $page ?></a></li>
+			      <li><a href="?page=<?php echo $page ?>&<?php echo http_build_query($params) ?>"><?php echo $page ?></a></li>
 			    <?php endif; ?>
 			  <?php endforeach; ?>
 			  
-			  <li><a href="?page=<?php echo $pager->getNextPage() ?>&count=<?php echo $count_per_page ?>">&raquo;</a></li>
-			  <li><a href="?page=<?php echo $pager->getLastPage() ?>&count=<?php echo $count_per_page ?>">&raquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getNextPage() ?>&<?php echo http_build_query($params) ?>">&raquo;</a></li>
+			  <li><a href="?page=<?php echo $pager->getLastPage() ?>&<?php echo http_build_query($params) ?>">&raquo;</a></li>
 			</ul>
 
 
@@ -195,7 +201,7 @@
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<?php foreach ($count_per_page_options as $cant): ?>
-					<li><a href="?count=<?php echo $cant ?>"><?php echo $cant ?></a></li>
+					<li><a href="?count=<?php echo $cant ?>&<?php echo http_build_query(array('groups' => $params['groups'])) ?>"><?php echo $cant ?></a></li>
 					<?php endforeach ?>
 				</ul>
 			</div>

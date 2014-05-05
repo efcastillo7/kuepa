@@ -189,18 +189,23 @@ class statsActions extends kuepaActions
     $this->count_per_page = $request->getParameter("count", $default);
 
     $this->course = Course::getRepository()->getById($course_id);
-    $this->group = null;
-    
     $this->groups = GroupsService::getInstance()->getGroupsByProfile($this->getUser()->getProfile()->getId());
+    $this->group_categories = GroupsService::getInstance()->getCategories($this->getProfile()->getId());
 
     //get only enabled groups
-    $this->groups_ids = $groups_id = array_intersect($this->groups->getPrimaryKeys(), $groups_id);
+    // if(!count($groups_id)){
+    //   $groups_id = $this->group_categories->getPrimaryKeys();
+    //   foreach($this->group_categories as $category){
+    //     $groups_id[$category->getId()] = $category->getGroups()->getPrimaryKeys();
+    //   }
+    // }
+    $this->groups_ids = $groups_id =  $groups_id;
+    // $this->groups_ids = $groups_id = array_intersect($this->groups->getPrimaryKeys(), $groups_id);
 
     // $this->intersect = $request->getParameter("intersect", "false") == "true";
     //allways intersec
     $this->intersect = true;
 
-    $this->group_categories = GroupsService::getInstance()->getCategories($this->getProfile()->getId());
 
     //get master group if enabled
     if($this->getUser()->getProfile()->getMasterGroupId()){
@@ -213,6 +218,8 @@ class statsActions extends kuepaActions
     //set pager
     $this->pager = new sfDoctrinePager('Students', $this->count_per_page);
 
+    // $groups_id = array(array(1,2), array(3,4), array(4));
+
     if(count($groups_id)){
       $query = GroupsService::getInstance()->getProfilesInGroupsQuery($groups_id, array(), $this->intersect);
     }else{
@@ -222,8 +229,9 @@ class statsActions extends kuepaActions
       //get student for first college
       //TODO: EXPAND FOR MULTIPLE COLLEGES
       $query = CourseService::getInstance()->getStudentsListQuery($course_id, $colleges_ids[0]);
-
     }
+
+    $this->params = array("groups" => $groups_id, "count" => $this->count_per_page);
 
     // init pager
     $this->pager->setQuery($query);
