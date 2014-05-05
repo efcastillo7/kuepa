@@ -18,16 +18,27 @@ class usersActions extends sfActions
       50
     );
 
-    $query = Doctrine_Core::getTable('sfGuardUser')
-      ->createQuery('a');
+    // $query = Doctrine_Core::getTable('sfGuardUser')
+    //   ->createQuery('s');
+
 
 
     $form = $this->searchForm = new sfGuardUserFormFilter();
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
     // echo $form['first_name']->getValue();
+    $query = $form->getQuery();
+    // echo $query->getSqlQuery();
+    // die();
+    $query->getRootAlias();
 
-    $this->pager->setQuery($form->getQuery());
+    if($this->getUser()->getProfile()->getMasterGroupId()){
+      $query->innerJoin("r.Profile p")
+            ->innerJoin("p.GroupProfile gp")
+            ->where("gp.group_id = ?", $this->getUser()->getProfile()->getMasterGroupId());
+    }
+
+    $this->pager->setQuery($query);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
