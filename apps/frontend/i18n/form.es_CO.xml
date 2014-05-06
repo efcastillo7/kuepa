@@ -3,6 +3,10 @@
   <file original="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit>
+        <source>District</source>
+        <target>Localidad</target>
+      </trans-unit>
+      <trans-unit>
         <source>Nickname</source>
         <target>Nombre de Usuario</target>
       </trans-unit>

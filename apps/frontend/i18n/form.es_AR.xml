@@ -58,6 +58,10 @@
         <source>Culture</source>
         <target>Cultura</target>
       </trans-unit>
+      <trans-unit>
+        <source>District</source>
+        <target>Localidad</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

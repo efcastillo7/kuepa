@@ -1,13 +1,26 @@
 <?php use_javascript("/assets/magnific-popup/jquery.magnific-popup.min.js") ?>
 <?php use_stylesheet("/assets/magnific-popup/magnific-popup.css") ?>
 
+<style>
+	.slide.slide2{
+		margin: 100px 0 0 200px;
+		position: absolute;
+		left: 130px;
+		top: 10px;
+	}
+
+	.menu-container > section{
+		z-index: 9999;
+	}
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		var magnificPopup = $.magnificPopup.instance; 
 
 		var slides = [];
 		slides[1] = function(){
-			// ads
+			// $(".menu-container > section").css("z-index","9999");
 		};
 
 		magnificPopup.open({
@@ -20,6 +33,12 @@
 		});
 
 		$(".slide:first").show();
+
+		slides[1]();
+
+		setTimeout(function(){
+			$(".arrow-hover-left.navigation-menu").click();
+		}, 3000);
 
 		$(".slide").click(function(){
 			var actual = $(this).data('slide'),
@@ -51,14 +70,15 @@
 	<div id="popup">
 		<div class="container">
 			<div class="row">
-				<div class="slide" data-slide="1">
-				  	<p class="slide-title">
-				  		¡Hola <?php echo $profile->getFirstName() ?>! 
+				<div class="slide slide2 slide-small" data-slide="1">
+					<div class="arrow"></div>
+					<p class="slide-title">
+				  		3. Viaja de lección en lección
 				  	</p>
 				  	<p class="slide-main">
-				  		Ahora estás mirando la pantalla de lecciones :)
+				  		Dentro de las lecciones podrás ver los pasos que has tomado y que te faltan a tu izquierda.
 				  	</p>
-				  	<a href="javascript:void(0)" id="goto-home" class="btn btn-primary btn-large">¡Bien! Última...</a>
+				  	<a href="javascript:void(0)" class="btn btn-primary" id="goto-home">¡Listo! Próxima...</a>
 				</div>
 			</div>
 		</div>

@@ -59,8 +59,9 @@
 				  	<p class="slide-main">
 				  		Y listo, basta de historias, ya puedes comenzar. 
 				  	</p>
-				  	<div><a href="" id="goto-sim" class="btn btn-primary btn-large">Comienza tu camino de aprendizaje</a></div>
-				  	<div class="margintop"><a href="javascript:void(0)" class="btn btn-large">Navega libremente</a></div>
+				  	<!-- <div><a href="" id="goto-sim" class="btn btn-primary btn-large">Comienza tu camino de aprendizaje</a></div> -->
+				  	<div><a href="" class="btn btn-primary btn-large">Navega libremente</a></div>
+				  	<!-- <div class="margintop"><a href="javascript:void(0)" class="btn btn-large">Navega libremente</a></div> -->
 				</div>
 			</div>
 		</div>	
