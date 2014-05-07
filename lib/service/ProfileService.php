@@ -316,8 +316,8 @@ class ProfileService {
                $array_errors[] = "Error en linea $key, el campo Apellidos esta vacio";
              } else if ( $profile = $this->findProfileByUsername($username) ){
                $array_errors[] = "Error en linea $key, el Login $username ya existe";
-               echo "Error en linea $key, el Login $username ya existe";
-               flush();
+               // echo "Error en linea $key, el Login $username ya existe";
+               // flush();
 
                //get groups
                 if(isset($user[$fields['groups']])){

@@ -112,7 +112,7 @@ class usersActions extends sfActions
     if ( $request->isMethod(sfRequest::POST) ){
       $form  = $request->getParameter('form');
       $file = $_FILES['import_file']['tmp_name'];
-      $response = ProfileService::getInstance() -> addUserToGroupsFromFile($file, $form);
+      $response = ProfileService::getInstance() -> importFromFile($file, $form);
       $this->message = $response['message'];
       $this->getUser()->setAttribute('success', $response['success']);
       $this->getUser()->setAttribute('errors', $response['errors']);
