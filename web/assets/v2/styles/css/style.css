@@ -7231,7 +7231,8 @@ aside p {
 .full-back-messages .container-messages .chat .body-message .cont-scroll {
   width: 100%;
   height: 98%;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   position: absolute;
 }
 /* line 1366, scss/style.scss */
