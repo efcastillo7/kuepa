@@ -38,7 +38,7 @@ class profileActions extends sfActions
         
         foreach ($friends as $friend) {
             
-            $message_last = MessagingService::getInstance()->getLastMessagesFromUsers($profile->getId(),$friend->getId());
+            $message_last = MessagingService::getInstance()->getLastMessageFromUser($profile->getId(),$friend->getId());
             $last_message = array();
             if($message_last){
                 $last_message = array(

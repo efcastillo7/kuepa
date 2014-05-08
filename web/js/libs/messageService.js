@@ -1,3 +1,4 @@
+//messagingservice.js
 function MessageService(params){
 	var onError = function(e){
 		console.log(e);
@@ -45,7 +46,18 @@ function MessageService(params){
 			error: values.onError
 		});
 	}
-
+        /*
+        this.getFirstsMessages = function(values){
+            $.ajax({
+                url: '/kuepa_api.php/message/getFirstsMessages/',
+                data:{from_time: values.from_time, id:values.id},
+                type: 'GET',
+                dataType: 'json',
+                success: values.onSuccess,
+                error: values.onError
+            });
+        }
+*/
 	this.removeRecipients = function(values){
 		$.ajax({
 			url: '/kuepa_api.php/message/' + values.message_id,

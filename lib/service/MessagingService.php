@@ -12,15 +12,15 @@ class MessagingService {
         return self::$instance;
     }
     
-    public function getLastMessagesFromUsers($remitente_id, $destinatario_id){
+    public function getLastMessageFromUser($profile_id, $friend_id){
+
         $query = Message::getRepository()->createQuery('m')
-                    ->innerJoin("m.Recipients mr ON m.parent_id = mr.message_id ")
-                    ->where("(mr.recipient_id = ? and m.author_id = ?)", array($destinatario_id, $remitente_id))
-                    ->orWhere("(mr.recipient_id = ? and m.author_id = ?)", array($remitente_id, $destinatario_id))
-                    ->orderBy("m.updated_at desc");
+            ->leftJoin("m.Recipients mr ON  m.id = mr.message_id")
+            ->addWhere("((m.parent_id IS NULL AND ((mr.recipient_id = ? AND m.author_id = ?) OR (mr.recipient_id = ?  AND m.author_id = ?)) ) OR (m.parent_id = (SELECT m2.id FROM Message m2 INNER JOIN m2.Recipients mr2 ON  m2.id = mr2.message_id WHERE (mr2.recipient_id = ?  AND m2.author_id = ?) OR (mr2.recipient_id = ?  AND m2.author_id = ?))))", array($profile_id, $friend_id, $friend_id, $profile_id, $profile_id, $friend_id, $friend_id, $profile_id))              
+            ->orderBy("m.updated_at desc");
         return $query->fetchOne();
     }
-    
+   
     public function getMessagesFromUsers(Array $profile_ids){
         $query = Message::getRepository()->createQuery('m')
                     ->innerJoin("m.Recipients mr")

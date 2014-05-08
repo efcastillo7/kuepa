@@ -1,3 +1,4 @@
+//mesage.js
 //MessageService init
 var ms = new MessageService();
 var chat_id = "";
@@ -57,10 +58,10 @@ setInterval(function(){
 }, 3000);
 
   $('form#send-message').submit (function() { 
-   if(typeof chat_id !== "undefined"){
-         replyMessage();
+   if(typeof chat_id == "undefined" || chat_id == ""){
+        sendMessage();
       }else{
-         sendMessage();
+        replyMessage();
       }
       $("#send-message .input-send-message").val("");
     return false; 
@@ -90,7 +91,7 @@ setInterval(function(){
     
     last_message = null;
     if(typeof chat_id === "undefined"){
-      active_user = $(this).data("user");;
+      active_user = $(this).data("user");
       //new message
       $(".loading").fadeOut(200);
     }
@@ -122,14 +123,13 @@ function sendMessage(){
     subject: "",
     content: text,
     //if ok add to screen
-    onSuccess: function(messages, b, c){
-      
-      message = messages[0];
+    onSuccess: function(message, b, c){
+        
       $("#" + active_user).attr("data-chat", message.id);
       $("#" + active_user + " .cont-chat.cont-ico i").removeClass('hidden');
       $("#" + active_user + " .cont-text .abstract").text(message.content);
       
-      addMessagesToScreen(messages);
+      addMessageToScreen(message);
 
       //set active chat
       chat_id = message.id;
@@ -147,9 +147,7 @@ function replyMessage(){
     content: text,
     //if ok add to screen
     onSuccess: function(data, b, c){
-        
       $("a[data-chat='" + chat_id + "'] .cont-text .abstract").text(data.content);
-
       last_message = data.created_at;
       addMessageToScreen(data);
     },
@@ -179,13 +177,15 @@ function setContactAsUnread(message){
 
 function addContacts(contacts){
   //clear inboxes
-  $(".cont-inboxes").html("");
-  // CARGO TODOS LOS CONTACTOS
-  $(".cont-inboxes").append(new EJS({url: "/js/templates/messages/contacts.ejs"}).render({contacts: contacts}));
+  if(contacts.length > 0){
+    $(".cont-inboxes").html("");
+    // CARGO TODOS LOS CONTACTOS
+    $(".cont-inboxes").append(new EJS({url: "/js/templates/messages/contacts.ejs"}).render({contacts: contacts}));
+  }
 }
 
 function addMessageToScreen(message)
-{
+{   
     $(".inbox[data-name='" + message.author.toLowerCase() + "'] .cont-text .abstract").text(message.content);
     $(".load-data").append(new EJS({url: "/js/templates/messages/message.ejs"}).render({message: message}));
     $('.cont-scroll').scrollTop($('.load-data').height());
@@ -193,14 +193,18 @@ function addMessageToScreen(message)
 
 function addMessagesToScreen(messages)
 {
-  
-  if(messages.length > 0){
+  if( messages.length > 0 ){
+     
+    $("#" + messages[messages.length-1].id).remove();
+        
     //update time
     $(".inbox[data-name='" + messages[messages.length-1].author.toLowerCase() + "'] .cont-text .abstract").text(messages[messages.length-1].content);
+    
     last_message = messages[messages.length-1].created_at;
     $(".load-data").append(new EJS({url: "/js/templates/messages/messages.ejs"}).render({messages: messages}));
     $('.cont-scroll').scrollTop($('.load-data').height());
   }
+  
   //hide loading
   $(".loading").fadeOut(200);
 }
