@@ -38,6 +38,9 @@ class myUser extends sfGuardSecurityUser {
         $this->setCourses($this);
         $this->setStyle($user);
         $this->setI18N();
+
+        //log access
+        LogService::getInstance()->access($this->getProfile()->getId());
     }
     
     public function signOut() {
