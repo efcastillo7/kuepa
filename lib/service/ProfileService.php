@@ -55,6 +55,18 @@ class ProfileService {
     }
 
     public function getFriends(Profile $profile){
+        $college_ids = $profile->getColleges()->getPrimaryKeys();
+
+        if(count($college_ids)){
+          $first = $college_ids[0];
+
+          $query = CollegeService::getInstance()->getProfilesListQuery($first);
+
+          return $query->execute();
+        }
+
+
+
         //fetch all users that are in any course with him
         $sql_college = "";
         

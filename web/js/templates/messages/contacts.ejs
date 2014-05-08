@@ -6,7 +6,7 @@
       <span class="cont-text">
         <span class="name">
             <span>
-                <%= contacts[i].nickname %>
+                <%= contacts[i].firstname + " " + contacts[i].lastname %>
             </span>
         </span>
         <span class="abstract">
@@ -14,7 +14,7 @@
                 <%= contacts[i].last_message.content %>
             <% } %>
         </span>
-        <span class="time">-</span>
+        <span class="time"><%= contacts[i].role %></span>
       </span>
     </a>
 <% } %>
