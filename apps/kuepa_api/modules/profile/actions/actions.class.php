@@ -35,14 +35,13 @@ class profileActions extends sfActions
         //TODO: OPTIMIZE!
 
         foreach ($friends as $friend) {
-            
             $message_last = MessagingService::getInstance()->getLastMessageFromUser($profile->getId(),$friend->getId());
             $last_message = array();
             if($message_last){
                 $last_message = array(
                     'date' =>  date("d/m/Y h:m:s", strtotime($message_last->getUpdatedAt())),
                     'content' => $message_last->getContent(),
-                    'id' => $message_last->getParentId(),
+                    'id' => $message_last->getParentId() ? $message_last->getParentId() : $message_last->getId(),
                     'created_at' => $message_last->getCreatedAt()
                 );
             }
