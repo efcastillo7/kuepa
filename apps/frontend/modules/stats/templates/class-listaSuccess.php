@@ -1,7 +1,10 @@
 <?php use_helper("Date") ?>
 <?php use_helper("LocalDate") ?>
 <?php use_helper("Stats") ?>
-
+<?php 
+	$groups = $sf_data->getRaw('groups_ids'); 
+	$params = $sf_data->getRaw('params'); 
+?>
 
 <style>
 /*table{table-layout: fixed;}*/
@@ -76,27 +79,29 @@ $(document).ready(function(){
 						</ul>
 			        </nav>
 
+			        <?php if(count($group_categories)): ?>
 			        <div class="order">
-						<?php if ($groups->count() > 0): ?>
-						<div class="btn-group">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-								<?php if ($group): ?>
-								<?php echo $group->getName() ?>
-							<?php else: ?>
-							Todos 
-							<?php endif; ?> 
-							<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="?">Todos</a></li>
-								<li class="divider"></li>
-								<?php foreach ($groups as $group): ?>
-								<li><a href="?group=<?php echo $group->getId() ?>"><?php echo $group->getName() ?></a></li>
-								<?php endforeach ?>
-							</ul>
-						</div>
-						<?php endif ?>
+						<form action="">
+							<div class="btn-group">
+							<?php foreach($group_categories as $category): ?>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								<?php echo $category ?>
+								<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<!-- <li><a href=""><input type="text"></a></li> -->
+									<?php foreach ($category->getGroups() as $group): ?>
+									<li><a href="#"><input type="checkbox" name="groups[<?php echo $category->getId() ?>][]" value="<?php echo $group->getId() ?>" <?php echo isset($groups[$category->getId()]) && in_array($group->getId(), $groups[$category->getId()]) ? "checked" : "" ?>> <?php echo $group->getName() ?></a></li>
+									<?php endforeach ?>
+								</ul>
+							</div>
+							<?php endforeach; ?>
+							<input type="submit" class="btn btn-primary btn-xs" value="Actualizar">
+							</div>
+						</form>
 					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
