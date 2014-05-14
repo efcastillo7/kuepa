@@ -23,6 +23,10 @@ class GroupsService {
         return Groups::getRepository()->find($id);
     }
 
+    public function findByName($name){
+        return Groups::getRepository()->createQuery("g")->where("name like ?", "%$name%")->fetchOne();
+    }
+
     public function getByNameAndAuthor($name, $author_id){
         return Groups::getRepository()->createQuery('g')
                     ->where('name like ? and creator_id = ?', array($name, $author_id))

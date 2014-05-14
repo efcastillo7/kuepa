@@ -57,6 +57,13 @@ class registerActions extends sfActions
 
         CollegeService::getInstance()->addProfileToCollege($profile->getId(), 11);
 
+        //asign master group id
+        $master_group = GroupsService::getInstance()->findByName($params['institution']);
+        if($master_group){
+          $profile->setMasterGroup($master_group);
+          $profile->save();
+        }
+
         //signin
         $this->getUser()->signIn($profile->getSfGuardUser());
 

@@ -85,7 +85,7 @@ function refreshNotifications() {
                 $notifticationCount.text("").hide();
             }
 
-            int_notifications = setTimeout(refreshNotifications,10000);
+            // int_notifications = setTimeout(refreshNotifications,10000);
         }
     });
 }
