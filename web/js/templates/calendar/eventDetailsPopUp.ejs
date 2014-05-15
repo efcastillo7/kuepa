@@ -1,0 +1,29 @@
+<section id="popup_<%= event.id %>" class="event-description <%= event.className %>" style="display:none;">
+  <h1><%= event.subject %></h1>
+  <h2><%= $.datepicker.formatDate("DD d 'de' MM",event.start) %>, <%= $.fullCalendar.formatDate( event.start, "HH:mm" ) %> <% if(event.end){ %> - <%= $.fullCalendar.formatDate( event.end, "HH:mm") %> <% } %></h2>
+  <table>
+    <% if( event.address ){ %>
+    <tr>
+      <td class="gray">Donde:</td>
+      <td><span class="place"><%= event.address %></span></td>
+      <td></td>
+    </tr>
+    <% } %>
+    <tr>
+      <td colspan="3" class="gray">Materia/Calendario:
+        <span class="subject"><%= event.subject %></span>
+      </td>
+    </tr>
+  <% if( event.tipo_ref != "CLASS" ){ %>
+  <div class="separator"></div>
+
+  <div class="left">
+    <a id="btn-remove-event" class="cursor"><i class="spr trash"></i><span id="texto">Quitar evento</span></a>
+  </div>
+
+  <div class="right">
+    <a class="orange" href="/calendar/editEvent?id=<%= event.id %>" id="btn-edit-event">Editar »</a>
+  </div>
+  <% } %>
+  <div class="clearfix"></div>
+</section>

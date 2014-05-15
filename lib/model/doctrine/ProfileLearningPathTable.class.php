@@ -16,4 +16,13 @@ class ProfileLearningPathTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('ProfileLearningPath');
     }
+    
+    public function getCoursesArrayByIdProfile($idProfile)
+    {
+        $q = $this->createQuery('plp')
+             ->select('plp.component_id')
+             ->where('plp.profile_id = ?', $idProfile);
+        
+        return $q->execute(array(),Doctrine::HYDRATE_SCALAR);
+    }
 }

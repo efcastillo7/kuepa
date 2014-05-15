@@ -1,0 +1,6 @@
+indexSuccess:
+  javascripts: [ "fullcalendar.js", "calendar.js", "perfect-scrollbar.js", "jquery.cluetip.js", "jquery.datepicker-es.js", "bootstrap-select.js", "libs/ejs/ejs_production.js", "libs/jQuery/cookie/cookie.js" ]
+  stylesheets: [ "fullcalendar.css", "calendar.css", "bootstrap-select.css" ]
+editEventSuccess:
+  javascripts: [ "perfect-scrollbar.js", "jquery.cluetip.js", "jquery.datepicker-es.js", "bootstrap-select.js", "calendar-save-event.js" ]
+  stylesheets: [ "jquery.cluetip.css", "bootstrap-select.css", "calendar.css" ]

@@ -78,7 +78,31 @@ class video_sessionActions extends sfActions {
                 VideoSessionService::getInstance()->updateParticipants($video_session->getId(), $a_students);
 
             }
-
+            if($id){
+                
+                $calendarEvent = CalendarEventTable::getInstance()->findEventByVideoSessionId($id);
+                
+                if($calendarEvent){
+                    $calendarEvent[0]->setRefId($video_session->getId());
+                    $calendarEvent[0]->setTitle($video_session->getTitle());
+                    $calendarEvent[0]->setDescription($video_session->getDescription());
+                    $calendarEvent[0]->setTipoRef("CLASS");
+                    $calendarEvent[0]->setStart($video_session->getScheduledFor());
+                    $calendarEvent[0]->setEnd($video_session->getScheduledEnd());
+                    $calendarEvent[0]->setComponentId($video_session->getCourseId());
+                    $calendarEvent[0]->save();
+                }
+            }else{
+                $calendarEvent = new CalendarEvent();
+                $calendarEvent->setRefId($video_session->getId());
+                $calendarEvent->setTipoRef("CLASS");
+                $calendarEvent->setTitle($video_session->getTitle());
+                $calendarEvent->setDescription($video_session->getDescription());
+                $calendarEvent->setStart($video_session->getScheduledFor());
+                $calendarEvent->setEnd($video_session->getScheduledEnd());
+                $calendarEvent->setComponentId($video_session->getCourseId());
+                $calendarEvent->save();
+            }
             //Generates the notifications
             NotificationsService::getInstance()->addVideoSessionNotification($video_session->getId());
 
@@ -103,7 +127,6 @@ class video_sessionActions extends sfActions {
      * @return type
      */
     public function executeUpdate(sfWebRequest $request){
-
         header('Access-Control-Allow-Origin: *');
 
         //Gets the parameters from the request
@@ -130,7 +153,8 @@ class video_sessionActions extends sfActions {
                 "host_person_id"    => $gId,
                 "type"              => $video_session->getType()
             )));
-
+            
+            
             $video_session->setUrl($url.$appId.$dataPa);
             $video_session->setStatus("started");
             $video_session->save();
@@ -225,8 +249,13 @@ class video_sessionActions extends sfActions {
         );
 
         $video_session  = VideoSession::getRepository()->find($id);
-
+        
         if($video_session){
+            
+            $calendarEvent = CalendarEventTable::getInstance()->findEventByVideoSessionId($video_session->getId());
+            if($calendarEvent){
+                $calendarEvent->delete();
+            }
             $video_session->setStatus("ended");
             $video_session->save();
 

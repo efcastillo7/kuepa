@@ -12,7 +12,7 @@
  */
 class CalendarEvent extends BaseCalendarEvent
 {
-	 /**
+    /**
      * 
      * @return CalendarEventTable
      */

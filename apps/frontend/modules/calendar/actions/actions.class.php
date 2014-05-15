@@ -9,63 +9,64 @@
  */
 class calendarActions extends kuepaActions {
 
+    public function preExecute()
+    {
+      parent::preExecute();
+
+      $this->setLayout("layout_v2");
+    }
+
     /**
      * Executes index action
      *
      * @param sfRequest $request A request object
      */
-    public function executeIndex(sfWebRequest $request) {  
-    	
+    public function executeIndex(sfWebRequest $request) 
+    {
+        $this->form = new CalendarEventForm();        
     }
-
-    /**
-     * Executes getEvents action
-     *
-     * @param sfRequest $request A request object
-     */
-    public function executeGetEvents(sfWebRequest $request){
-    	$events = CalendarService::getInstance()->getUserEvents($this->getUser()->getGuardUser()->getProfile()->getId());
-
-    	// Initializes a container array for all of the calendar events
-		$jsonArray = array();
-    	foreach ($events as $event) {
-			$buildjson = array( 'id' => $event->id,
-								'title' => $event->title, 
-								'description' => $event->description,
-								'start' => $event->start, 
-								'end' => $event->end, 
-								'allday' => false,
-								'backgroundColor' => '#GGFDEE');
-			array_push($jsonArray, $buildjson);
-    	}
-
-   		return $this->renderText(json_encode($jsonArray));
+    
+    public function executeEditEvent(sfWebRequest $request)
+    {   
+        
+        $this->id = $request->getParameter('id');
+        $title = $request->getParameter('title');
+        $public = $request->getParameter('public') == "true" ? true : false;
+        $subject = $request->getParameter('subject');
+        $start = $request->getParameter('start');
+        $end = $request->getParameter('end');
+        
+        if( $this->id ){   
+            
+            $event = CalendarEventTable::getInstance()->findOneById($request->getParameter('id'));
+            
+            $this->form = new CalendarEventForm($event);
+            
+            $startDateTime = new DateTime($event->getStart());
+            
+            $this->form->setDefault('start_date',$startDateTime->format("d/m/Y"));
+            $this->form->setDefault('start_time',$startDateTime->format("H:i"));
+            
+            $endDateTime = new DateTime($event->getEnd());
+            
+            $this->form->setDefault('end_date',$endDateTime->format("d/m/Y"));
+            $this->form->setDefault('end_time',$endDateTime->format("H:i"));
+            
+            $this->form->setDefault('component_id',$event->getComponentId());
+            $this->form->setDefault('public',$event->getTipoRef() == "PROFI" ? false : true);
+            
+        }else{
+            $this->form = new CalendarEventForm();
+        }
+        
+        //Si ya cargo datos el el pop-up de evento se los paso.
+        if($title){$this->form->setDefault('title',$title);}
+        if($public){$this->form->setDefault('public',$public);}
+        if($subject){$this->form->setDefault('component_id',$subject);}
+        if($start){$this->form->setDefault('start_date',$start);}
+        if($start){$this->form->setDefault('start_hours',$start);}
+        if($end){$this->form->setDefault('end_date',$end);}
+        if($start){$this->form->setDefault('end_hours',$start);}
+        
     }
-
-    /**
-     * Executes getCoursesEvents action
-     *
-     * @param sfRequest $request A request object
-     */
-    public function executeGetCoursesEvents(sfWebRequest $request){
-
-    	$events = CalendarService::getInstance()->getUserCoursesEvents( $this->getProfile() );
-
-    	// Initializes a container array for all of the calendar events
-		$jsonArray = array();
-    	foreach ($events as $event) {
-			$buildjson = array( 'id' => $event->id,
-								'title' => $event->title, 
-								'description' => $event->description,
-								'start' => $event->start, 
-								'end' => $event->end, 
-								'allday' => false,
-								'backgroundColor' => '#33GG66');
-			array_push($jsonArray, $buildjson);
-    	}
-
-   		return $this->renderText(json_encode($jsonArray));
-
-    }
-
 }

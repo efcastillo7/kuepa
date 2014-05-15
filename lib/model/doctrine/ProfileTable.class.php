@@ -16,4 +16,15 @@ class ProfileTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Profile');
     }
+    public function listComponents(){
+        /*
+        $idProfile = sfContext::getInstance()->getUser()->getProfile()->getId();
+        $q = $this->createQuery('p')
+             ->leftJoin('p.Component c')
+             ->select('p.*, c.*')
+             ->where('p.profile_id = ?', $idProfile);
+        return $q->execute();
+         * 
+         */
+    }
 }
