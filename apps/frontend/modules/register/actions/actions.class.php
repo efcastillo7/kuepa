@@ -168,14 +168,14 @@ class registerActions extends sfActions
         $token = ProfileService::getInstance()->generateLoginToken($user->getProfile());
         $this->getResponse()->setStatusCode(200);
 
-        return $this->renderText(json_encode(array('status' => 'ok', 'token' => $token)));
+        return $this->renderText(json_encode(array('status' => 'ok', 'status_code' => 200, 'token' => $token)));
       }
     }
 
-    $this->getResponse()->setHeaderOnly(true);
-    $this->getResponse()->setStatusCode(401);
+    // $this->getResponse()->setHeaderOnly(true);
+    $this->getResponse()->setStatusCode(400);
 
-    return sfView::NONE;
+    return $this->renderText(json_encode(array('status' => 'error', 'status_code' => 401, 'token' => $token)));
   }
 
   public function executeLoginbytoken(sfWebRequest $request)
@@ -197,10 +197,80 @@ class registerActions extends sfActions
     }
 
     $this->getResponse()->setHeaderOnly(true);
-    $this->getResponse()->setStatusCode(401);
+    $this->getResponse()->setStatusCode(400);
 
     return sfView::NONE;
   }
 
+  public function executeRegister(sfWebRequest $request)
+  {
+    header('Access-Control-Allow-Origin: *');
 
+    $parameters = array("external_id", "first_name", "last_name", "email_address", "username", "password");
+
+    $values = $request->getContent();
+    $errors = array();
+
+    // echo json_encode(array('first_name' => 'asd', 'lastname' => 'asd'));
+    // echo var_dump($values);
+    $data = json_decode($values, true);
+
+    //if is not json then
+    if(!is_array($data)){
+      $data = array();
+      foreach ($parameters as $param) {
+        $data[$param] = $request->getPostParameter($param);
+      }
+    }
+
+
+    //check data
+    //email address
+    try { 
+      $validator = new sfValidatorEmail(array('required' => true));
+      $validator->clean($data["email_address"]);
+    } catch (Exception $e) { 
+      $errors['email_address'] = $e->getMessage();
+    };
+
+    //strings
+    foreach (array('first_name', 'last_name', 'username', 'password') as $key) {
+      if(!isset($data[$key])){
+        $errors[$key] = "Required.";
+      }else{
+        try { 
+          $validator = new sfValidatorString(array('required' => true));
+          $validator->clean($data[$key]);
+        } catch (Exception $e) { 
+          $errors[$key] = $e->getMessage();
+        };
+      }
+    }
+
+    if(count($errors) || !$request->isMethod('POST')){
+      $this->getResponse()->setStatusCode(400);
+      return $this->renderText(json_encode(array('status' => 'error', 'status_code' => 400, 'errors' => $errors)));
+    }
+
+    try{
+      $data['nickname'] = $data['username'];
+      $data['sex'] = 'M';
+      $user = ProfileService::getInstance()->addNewUser($data);
+      if($user){
+        $token = ProfileService::getInstance()->generateLoginToken($user);
+        $this->getResponse()->setStatusCode(201);
+
+        return $this->renderText(json_encode(array('status' => 'ok', 'status_code' => 201, 'token' => $token, 'errors' => array())));
+      }
+    } catch (Exception $e) {
+      $errors[] = $e->getMessage();
+      $this->getResponse()->setStatusCode(402);
+      return $this->renderText(json_encode(array('status' => 'error', 'status_code' => 400, 'errors' => $errors)));
+    }
+
+    $this->getResponse()->setHeaderOnly(true);
+    $this->getResponse()->setStatusCode(401);
+
+    return sfView::NONE;
+  }  
 }

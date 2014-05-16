@@ -14,7 +14,8 @@ class GroupsService {
         $q = GroupCategory::getRepository()->createQuery('gc')
                 ->innerJoin("gc.Groups g")
                 ->innerJoin('g.ProfileHasGroup gp')
-                ->where('gp.profile_id = ?',$profile_id);
+                ->where('gp.profile_id = ?',$profile_id)
+                ->orderBy('g.name asc');
 
         return $q->execute();
     }
@@ -30,6 +31,7 @@ class GroupsService {
     public function getByNameAndAuthor($name, $author_id){
         return Groups::getRepository()->createQuery('g')
                     ->where('name like ? and creator_id = ?', array($name, $author_id))
+                    ->orderBy('name asc')
                     ->fetchOne();
     }
 

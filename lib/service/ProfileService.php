@@ -155,6 +155,7 @@ class ProfileService {
         $sfUser->setFirstName($params['first_name'])
                ->setLastName($params['last_name'])
                ->setEmailAddress($params['email_address'])
+               //please change!!!
                ->setUsername($params['nickname'])
                ->setPassword($params['password']);
         $sfUser->save();
