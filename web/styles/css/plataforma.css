@@ -13,6 +13,10 @@
     John Doe Styles
 -------------------------------------------------- */
 
+.bogota-social{
+  display: none;
+}
+
 .dashboard-left .open > .dropdown-menu{
   max-height: 400px;
   overflow-y: auto;

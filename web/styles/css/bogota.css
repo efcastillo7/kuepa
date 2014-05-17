@@ -30,4 +30,27 @@ footer {
 footer .container {
 		background: url("../../img/humana-ft.png") no-repeat scroll 0px 0px transparent;
 		height: 90px;
+		position: relative;
+}
+
+.bogota-social{
+  display: block !important;
+  left: 980px;
+  position: absolute;
+  top: 20px;
+}
+
+.bogota-social .fb{
+	position: absolute;
+	left: 0px;
+	height: 40px;
+	width: 40px;
+	top: -8px;
+}
+.bogota-social .tw{
+	position: absolute;
+	left: 40px;
+	height: 40px;
+	width: 40px;
+	top: -8px;
 }

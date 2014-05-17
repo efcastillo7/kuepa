@@ -79,6 +79,10 @@
     <div class="container">
       <div class="ft-logo">kuepa</div>
       <p class="ft-copy">Copyright &copy; Kuepa 2014</p>
+      <div class="bogota-social">
+        <a href="https://www.facebook.com/Fortalecimientoestandaresdecompetencias" target="_blank" class="fb"></a>
+        <a href="https://twitter.com/@FCompetencias" target="_blank" class="tw"></a>
+      </div>
     </div>
   </footer>
 
