@@ -161,6 +161,24 @@ class registerActions extends sfActions
     $username = trim($request->getPostParameter("username", ""));
     $password = trim($request->getPostParameter("password", ""));
 
+    $parameters = array("username", "password");
+
+    $values = $request->getContent();
+    $errors = array();
+
+    $data = json_decode($values, true);
+
+    //if is not json then
+    if(!is_array($data)){
+      $data = array();
+      foreach ($parameters as $param) {
+        $data[$param] = trim($request->getPostParameter($param));
+      }
+    }
+
+    $username = $data["username"];
+    $password = $data["password"];
+
     if (!empty($username) && !empty($password) && $request->isMethod('post')){
       $user = ProfileService::getInstance()->isValidUser($username,$password);
       if($user){
@@ -175,12 +193,27 @@ class registerActions extends sfActions
     // $this->getResponse()->setHeaderOnly(true);
     $this->getResponse()->setStatusCode(400);
 
-    return $this->renderText(json_encode(array('status' => 'error', 'status_code' => 401, 'token' => $token)));
+    return $this->renderText(json_encode(array('status' => 'error', 'status_code' => 401, 'token' => "")));
   }
 
   public function executeLoginbytoken(sfWebRequest $request)
   {
-    $token = trim($request->getParameter("token", ""));
+    $parameters = array("token");
+
+    $values = $request->getContent();
+    $errors = array();
+
+    $data = json_decode($values, true);
+
+    //if is not json then
+    if(!is_array($data)){
+      $data = array();
+      foreach ($parameters as $param) {
+        $data[$param] = $request->getParameter($param);
+      }
+    }
+
+    $token = $data["token"];
 
     if (!empty($token)){
       $token = ProfileService::getInstance()->getLoginToken($token);
@@ -222,7 +255,6 @@ class registerActions extends sfActions
         $data[$param] = $request->getPostParameter($param);
       }
     }
-
 
     //check data
     //email address
