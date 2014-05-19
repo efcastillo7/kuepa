@@ -15,4 +15,28 @@ class GroupCategory extends BaseGroupCategory
 	public static function getRepository() {
         return Doctrine_Core::getTable('GroupCategory');
     }
+
+
+    public function getCategoryGroups($groups_ids = array() ){
+
+    		// Extrae los grupos relacionados a los groups_ids
+        if ( count($groups_ids) > 0  ){
+            $q = Groups::getRepository()->createQuery('g')
+                    ->select('g.*')
+                    ->innerJoin('g.GroupSubGroup gsg ON g.id=gsg.child_id')
+                    ->whereIn('gsg.parent_id', $groups_ids)
+                    ->orderBy('g.name');
+            return($q->execute());
+        }else{
+            return($this->getGroupsOrderedByName());
+        }	
+    }
+
+    public function getGroupsOrderedByName(){
+    	$q = Groups::getRepository()->createQuery('g')
+    			 ->where('g.group_category_id = ?', $this->getId() )
+    			 ->orderBy('g.name ASC');
+    	return($q->execute());
+    }
+   
 }

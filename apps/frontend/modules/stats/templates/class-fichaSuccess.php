@@ -62,7 +62,7 @@ $(document).ready(function(){
 });
 </script>
 
-<script src="js/dashboard.js"></script>
+<script src="/js/dashboard.js"></script>
 
 <div class="tbdata-title-hd">
 	<h3 class="HelveticaLt">Reportes: <span class="HelveticaMd"><?php echo $course->getName() ?></span></h3>
@@ -81,20 +81,20 @@ $(document).ready(function(){
 
 					<?php if(count($group_categories)): ?>
 			        <div class="order">
-						<form action="">
+						<form action="" id="form_categories">
 							<div class="btn-group">
 							<?php foreach($group_categories as $category): ?>
-							<div class="btn-group">
+							<div class="btn-group <?php echo strtolower($category) ?>">
 								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 								<?php echo $category ?>
 								<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu" role="menu">
-									<!-- <li><a href=""><input type="text"></a></li> -->
-									<?php foreach ($category->getGroups() as $group): ?>
-									<li><a href="#"><input type="checkbox" name="groups[<?php echo $category->getId() ?>][]" value="<?php echo $group->getId() ?>" <?php echo isset($groups[$category->getId()]) && in_array($group->getId(), $groups[$category->getId()]) ? "checked" : "" ?>> <?php echo $group->getName() ?></a></li>
-									<?php endforeach ?>
-								</ul>
+								<?php
+									$c_id = $category->getId();
+									$filters = ( $c_id == 2 && isset( $groups[1] ) ) ? $groups[1] : array();
+									$groups_to_show = $category->getCategoryGroups($filters);
+									include_partial('groups_category', array('groups_to_show' => $groups_to_show, 'preselected_groups' => $groups, 'category_id' => $c_id )); 
+								?>
 							</div>
 							<?php endforeach; ?>
 							<input type="submit" class="btn btn-primary btn-xs" value="Actualizar">

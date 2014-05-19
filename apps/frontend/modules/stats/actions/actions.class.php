@@ -268,7 +268,24 @@ class statsActions extends kuepaActions
     // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
   }
 
-  public function executeTest(sfWebRequest $request){
+
+  public function executeReloadCategoryGroups(sfWebRequest $sfWebRequest){
+    $groups = $sfWebRequest->getParameter('groups');
+    $category_id = $sfWebRequest->getParameter('category_id');
+    $category = GroupCategory::getRepository()->find($category_id);
+    $groups_to_show = $category->getCategoryGroups($groups[1]);
+
+    $response = Array(
+        'status' => 'success',
+        'template' => $this->getPartial('groups_category', array('groups_to_show' => $groups_to_show, 'category_id' => $category_id))
+    );
+    return $this->renderText(json_encode($response));
+
+  }
+
+
+
+  public function executeTest(sfWebRequest $sfWebRequest){
     $component_id = $request->getParameter('id');
     $stats = StatsService::getInstance();
 
