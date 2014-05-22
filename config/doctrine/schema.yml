@@ -655,16 +655,14 @@ CalendarEvent:
     Timestampable: ~
   columns:
     id: {type: integer, primary: true, autoincrement: true}
-    profile_id: integer
+    tipo_ref: char(5)
+    ref_id: integer
     component_id: {type: integer}
     title: {type: string(255)}
     description: {type: string}
     start: {type: timestamp}
     end: {type: timestamp}
-  relations:
-    Profile:
-      local: profile_id
-      foreign: id
+    address: {type: string(255)}
 
 RegisterCode:
   columns:

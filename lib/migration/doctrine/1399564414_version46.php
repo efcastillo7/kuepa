@@ -6,14 +6,28 @@ class Version46 extends Doctrine_Migration_Base
 {
     public function up()
     {
-        $this->addColumn('calendar_event', 'tipo_ref', 'char', '5', array(
+        $this->dropForeignKey('calendar_event', 'calendar_event_profile_id_profile_id');
+        $this->removeIndex('calendar_event', 'calendar_event_profile_id', array(
+             'fields' => 
+             array(
+              0 => 'profile_id',
+             ),
              ));
-        $this->renameColumn( 'calendar_event', 'profile_id', 'ref_id' );
     }
 
     public function down()
     {
-        $this->removeColumn('calendar_event', 'tipo_ref');
-        $this->renameColumn( 'calendar_event', 'ref_id', 'profile_id' );
+        $this->createForeignKey('calendar_event', 'calendar_event_profile_id_profile_id', array(
+             'name' => 'calendar_event_profile_id_profile_id',
+             'local' => 'profile_id',
+             'foreign' => 'id',
+             'foreignTable' => 'profile',
+             ));
+        $this->addIndex('calendar_event', 'calendar_event_profile_id', array(
+             'fields' => 
+             array(
+              0 => 'profile_id',
+             ),
+             ));
     }
 }

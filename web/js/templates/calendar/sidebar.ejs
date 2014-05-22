@@ -7,6 +7,7 @@
       <ul>
         <% for(var i=0; i < sideBar["subjects"].length; i++){ %>
         <li>
+          <% console.log("subjects") %>
           <input <% if( $.cookie("subjects").indexOf( sideBar["subjects"][i].ce_component_id ) >= 0 ){ %> checked <% } %> data-filter="<%= sideBar["subjects"][i].ce_component_id %>" id="box_<%= sideBar["subjects"][i].ce_component_id %>" class="checkbox fc-<%= sideBar["subjects"][i].c_color %>" rel="<%= sideBar["subjects"][i].ce_component_id %>" type="checkbox"/>
           <label for="box_<%= sideBar["subjects"][i].ce_component_id %>" name="lbl_<%= sideBar["subjects"][i].ce_component_id %>" class="chk-label fc-<%= sideBar["subjects"][i].c_color %>"><%= sideBar["subjects"][i].c_name %></label>
         </li>
@@ -24,6 +25,7 @@
       <div class="cont-tutorias">
         <ul>
           <li>
+            <% console.log("tutorias") %>
             <input <% if( $.cookie("tutorias") === null || $.cookie("tutorias") == "CLASS" ){ %> checked <% } %> data-filter="CLASS" id="box_live" class="checkbox fc-violet" rel="live" type="checkbox"/>
             <label for="box_live" name="lbl_live" class="chk-label fc-violet">Clases en vivo</label>
           </li>
