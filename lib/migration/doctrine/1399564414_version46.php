@@ -6,8 +6,7 @@ class Version46 extends Doctrine_Migration_Base
 {
     public function up()
     {
-        $this->dropForeignKey('calendar_event', 'calendar_event_profile_id_profile_id');
-        $this->removeIndex('calendar_event', 'calendar_event_profile_id', array(
+        $this->removeIndex('calendar_event', 'profile_id', array(
              'fields' => 
              array(
               0 => 'profile_id',
@@ -17,13 +16,7 @@ class Version46 extends Doctrine_Migration_Base
 
     public function down()
     {
-        $this->createForeignKey('calendar_event', 'calendar_event_profile_id_profile_id', array(
-             'name' => 'calendar_event_profile_id_profile_id',
-             'local' => 'profile_id',
-             'foreign' => 'id',
-             'foreignTable' => 'profile',
-             ));
-        $this->addIndex('calendar_event', 'calendar_event_profile_id', array(
+        $this->addIndex('calendar_event', 'profile_id', array(
              'fields' => 
              array(
               0 => 'profile_id',
