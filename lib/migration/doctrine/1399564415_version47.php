@@ -9,12 +9,12 @@ class Version47 extends Doctrine_Migration_Base
     {
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
         
-        $query = "UPDATE kuepa.calendar_event as ce SET ce.ref_id = ce.profile_id;";
+        $query = "UPDATE calendar_event as ce SET ce.ref_id = ce.profile_id;";
         $q->execute($query);
         
         $this->removeColumn('calendar_event', 'profile_id');
         
-        $query = 'UPDATE kuepa.calendar_event as ce SET ce.tipo_ref = "PROFI";';
+        $query = 'UPDATE calendar_event as ce SET ce.tipo_ref = "PROFI";';
         $q->execute($query);
         
     }
@@ -24,12 +24,12 @@ class Version47 extends Doctrine_Migration_Base
         
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
         
-        $query = "UPDATE kuepa.calendar_event as ce SET ce.profile_id = ce.ref_id;";
+        $query = "UPDATE calendar_event as ce SET ce.profile_id = ce.ref_id;";
         $q->execute($query);
         
         $this->removeColumn('calendar_event', 'ref_id');
         
-        $query = 'UPDATE kuepa.calendar_event as ce SET ce.tipo_ref = "PROFI";';
+        $query = 'UPDATE calendar_event as ce SET ce.tipo_ref = "PROFI";';
         $q->execute($query);
         
     }

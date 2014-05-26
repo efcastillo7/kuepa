@@ -103,16 +103,17 @@ class calendarActions extends kuepaActions {
         $event_subject = ComponentTable::getInstance()->findOneById($subject);
         
             $response = array(
-                id            => $event->getId(),
-                title         => $event->getTitle(),
-                start         => $event->getStart(),
-                end           => $event->getEnd(),
-                className     => 'c-' . $event_subject->getColor(),
-                subject       => $event_subject->getName(),
-                allDay        => false,
-                address       => $event->getAddress(),
-                description   => $event->getDescription(),
-                tipo_ref      => $event->getTipoRef()
+                'id'            => $event->getId(),
+                'title'         => $event->getTitle(),
+                'start'         => $event->getStart(),
+                'end'           => $event->getEnd(),
+                'className'     => 'c-' . $event_subject->getColor(),
+                'subject'       => $event_subject->getName(),
+            	'subject_id'    => $event_subject->getId(),
+                'allDay'        => false,
+                'address'       => $event->getAddress(),
+                'description'   => $event->getDescription(),
+                'tipo_ref'      => $event->getTipoRef()
             );
         return $this->renderText(json_encode($response));
         
@@ -210,6 +211,9 @@ class calendarActions extends kuepaActions {
         $filterCourse    = $request->getGetParameter("filterCourse");
         $filterTutorias  = $request->getGetParameter("filterTutorias");
 
+        $start = $start - (86400 * 7);
+        $end = $end + (86400 * 7);
+        
         $unformatted_events = CalendarEventTable::getInstance()->getUserEventsByMonth($start, $end, $filterCourse, $filterTutorias);
         
         if(!count($unformatted_events)){

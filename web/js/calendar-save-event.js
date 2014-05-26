@@ -129,8 +129,30 @@ var calenderSaveEvent = function()
                 $(this).removeClass('input-alert');
             }
         });
-                
-        $(".datepicker").change(function(){$(this).blur();});
+           
+        $("#start_date").change(function(){
+            $(this).blur();
+            $('#end_date').val( $('#start_date').val() );
+            
+            var now = new Date();
+            var hour = now.getHours() + 1;
+            var startHour = ( hour <= 9 ) ? '0' + hour + ':00' : hour + ':00';
+            hour++;
+            var endHour = ( hour <= 9 ) ? '0' + hour + ':00' : hour + ':00';
+            $('#start_time').val( startHour );
+            $('#end_time').val( endHour );
+        });
+        
+        $("#end_date").change(function(){
+            $(this).blur();
+            
+            var now = new Date();
+            var hour = now.getHours() + 2;
+            hour = ( hour <= 9 ) ? '0' + hour + ':00' : hour + ':00';
+            $('#end_time').val( hour );
+        });        
+        
+        
         $(".hour").change(function(){$(this).blur();});
         
     }; 

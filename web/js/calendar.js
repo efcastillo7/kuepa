@@ -55,7 +55,7 @@ var calendario = function()
                     data:function() {
                         return {
                            filterCourse: $(".cont-subjects input[type=checkbox]:checked").map(thisClass.idSelector).get(),
-                           filterTutorias: $(".cont-tutorias input[type=checkbox]:checked").map(thisClass.idSelector).get()
+                           filterTutorias: $(".cont-tutorias input[type=checkbox]:checked").map(thisClass.idSelector).get()                            
                         };
                     },
                     error: function(e) {}
@@ -190,7 +190,8 @@ var calendario = function()
                             $('#calendar').fullCalendar('unselect');
                             $(".add-event").hide();
                             $("#title").val("");
-                            $("#materia").val("");
+                            $("#materia").val("");                            
+                            $.cookie('subjects', $.cookie('subjects') + ',' + data.subject_id );                            
                             thisClass.loadSidebar();
                         },
                         error: function(){
