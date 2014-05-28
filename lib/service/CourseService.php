@@ -120,9 +120,14 @@ class CourseService {
                     ->andWhere('sgg.name like ?', 'estudiante%')
                     ->innerJoin("p.ProfileCollege pc")
                     ->innerJoin("p.ProfileLearningPath plp")
-                    ->andWhere("plp.component_id = ?", $course_id)
                     ->andWhere('sgu.is_active = true')
                     ->whereIn("pc.college_id", $college_id);
+
+                if(is_array($course_id)){
+                    $query->andWhereIn("plp.component_id", $course_id);
+                }else{
+                    $query->andWhere("plp.component_id = ?", $course_id);
+                }
 
             }
 
