@@ -487,4 +487,59 @@ class ProfileService {
 
       return $query->fetchOne();
     }
+
+
+  public function importLWFromFile($file_path, $params){
+      $lines = file($file_path, FILE_SKIP_EMPTY_LINES);
+      $separator = $params['separator'];
+      $skip_first_line = isset($params['skip_first_line']) ? $params['skip_first_line'] : 0;
+      $array_errors = array();
+      $array_ok = array();
+
+      $fields = array(
+        'username',
+        'learningwaysids',
+      );
+
+      $fields = array_flip($fields);
+
+      foreach ($lines as $key => $user) {
+            if ( $skip_first_line == 1 && $key == 0){ 
+              next($lines);
+            }else if ( trim($user) != "" ){
+             $user = explode("$separator",$user);
+             if ( count($user) > 1 ){
+               $username = trim($user[$fields['username']]);
+               $lws = explode(";", $user[$fields['learningwaysids']]);
+
+               if($username != ""){
+                $user = $this->findProfileByUsername($username);
+                if($user){
+                  LearningPathService::getInstance()->addLearningWaysToProfile($user->getId(), $lws);
+                }else{
+                  $array_errors[] = "Usuario '$username' no existe";  
+                }
+
+               }else{
+                $array_errors[] = "Usuario no existe";
+               }
+
+                          
+            } else{ // end if count($user) > 1
+               $array_errors[] = "El Separador de campo seleccionado $separator  no coincide con el archivo ";
+            } 
+            
+          } // trim user
+        } // foreach
+
+      $message = 'El archivo ha sido importado';
+
+      $response = array('message' => $message,
+                        'success' => $array_ok,
+                        'errors' => $array_errors);
+
+      echo var_dump($response);
+      die();
+      return($response);
+    }
 }

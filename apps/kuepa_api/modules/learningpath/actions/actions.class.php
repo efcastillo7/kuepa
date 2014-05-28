@@ -90,14 +90,37 @@ class learningpathActions extends sfActions
 
         $ret = array();
 
+        //personal lp
         foreach ($list as $plp) {
+            //use memcached!
+            $course = Course::getRepository()->getById($plp->getCourseId());
+            $chapter = Chapter::getRepository()->getById($plp->getChapterId());
+            $lesson = Lesson::getRepository()->getById($plp->getLessonId());
+
         	$ret[] = array(
         		'id' => $plp->getId(),
         		'position' => $plp->getPosition(),
-        		'course' => array('id' => $plp->getCourse()->getId(), 'name' => $plp->getCourse()->getName(), 'color' => $plp->getCourse()->getColor(), 'image' => $plp->getCourse()->getThumbnailPath()),
-        		'chapter' => array('id' => $plp->getChapter()->getId(),'name' =>  $plp->getChapter()->getName()),
-        		'lesson' => array('id' => $plp->getLesson()->getId(),'name' =>  $plp->getLesson()->getName()),
+        		'course' => array('id' => $course->getId(), 'name' => $course->getName(), 'color' => $course->getColor(), 'image' => $course->getThumbnailPath()),
+        		'chapter' => array('id' => $chapter->getId(),'name' =>  $chapter->getName()),
+        		'lesson' => array('id' => $lesson->getId(),'name' =>  $lesson->getName()),
     		);
+        }
+
+        //append default ones
+        $list = LearningPathService::getInstance()->getLearningWayNodes($profile_id);
+         foreach ($list as $plp) {
+            //use memcached!
+            $course = Course::getRepository()->getById($plp->getCourseId());
+            $chapter = Chapter::getRepository()->getById($plp->getChapterId());
+            $lesson = Lesson::getRepository()->getById($plp->getLessonId());
+
+            $ret[] = array(
+                'id' => $plp->getId(),
+                'position' => $plp->getPosition(),
+                'course' => array('id' => $course->getId(), 'name' => $course->getName(), 'color' => $course->getColor(), 'image' => $course->getThumbnailPath()),
+                'chapter' => array('id' => $chapter->getId(),'name' =>  $chapter->getName()),
+                'lesson' => array('id' => $lesson->getId(),'name' =>  $lesson->getName()),
+            );
         }
 
         return $this->renderText(json_encode($ret));
