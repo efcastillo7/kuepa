@@ -60,6 +60,12 @@ Profile:
       local: master_group_id
       foreign: id
       type: one
+    LearningWay:
+      alias: LearningWays
+      refClass: ProfileHasLearningWay
+      local: learning_way_id
+      foreign: profile_id
+      type: many
 
 ProfileLearningPath:
   columns:
@@ -300,6 +306,74 @@ PredictiveLearningPath:
   indexes:
     plp_unique_user_path_item:
       fields: [profile_id, course_id, chapter_id, lesson_id]
+      type: unique
+
+ProfileHasLearningWay:
+  columns:
+    learning_way_id: integer
+    profile_id: integer
+  relations:
+    Profile:
+      type: one
+      local: profile_id
+      foreign: id
+    LearningWay:
+      type: one
+      local: learning_way_id
+      foreign: id
+  indexes:
+    plw_unique_user_learning_way:
+      fields: [profile_id, learning_way_id]
+      type: unique
+
+LearningWay:
+  actAs:
+    Timestampable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    name: { type: string }
+    description: {type: string}
+  relations:
+    Profile:
+      alias: Profiles
+      refClass: ProfileHasLearningWay
+      local: learning_way_id
+      foreign: profile_id
+      type: many
+    ProfileHasLearningWay:
+      local: id
+      foreign: learning_way_id
+      type: one
+
+LearningWayItem:
+  actAs:
+    Timestampable: ~
+  columns:
+    learning_way_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    position: integer
+  relations:
+    LearningWay:
+      local: learning_way_id
+      foreign: id
+      type: one
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+  indexes:
+    dplp_unique_learning_path_item:
+      fields: [learning_way_id, course_id, chapter_id, lesson_id]
       type: unique
 
 DependencyPath:

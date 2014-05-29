@@ -118,9 +118,6 @@ class usersActions extends sfActions
       $this->getUser()->setAttribute('errors', $response['errors']);
       // echo var_dump($response);
     }
-
-
-
   }
 
   public function executeDownloadImportFileExample(){
@@ -168,6 +165,19 @@ class usersActions extends sfActions
 
     return sfView::NONE;
 
+  }
+
+  public function executeCreateLearningWays(sfWebRequest $request){
+    $this->message = '';
+    if ( $request->isMethod(sfRequest::POST) ){
+      $form  = $request->getParameter('form');
+      $file = $_FILES['import_file']['tmp_name'];
+      $response = ProfileService::getInstance() -> importLWFromFile($file, $form);
+      $this->message = $response['message'];
+      $this->getUser()->setAttribute('success', $response['success']);
+      $this->getUser()->setAttribute('errors', $response['errors']);
+      // echo var_dump($response);
+    }
   }
 
 

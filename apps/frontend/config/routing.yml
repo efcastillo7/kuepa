@@ -76,6 +76,18 @@ account_expired:
   url:  /account/expired
   param: { module: public, action: accountexpired }
 
+api_auth_register:
+  url:  /auth/register
+  param: { module: register, action: register }
+
+api_auth_get_token:
+  url:  /auth/gettoken
+  param: { module: register, action: login }
+
+api_auth_login:
+  url:  /auth/loginbytoken
+  param: { module: register, action: loginbytoken }
+
 
 # generic rules
 # please, remove them by adding more specific rules
