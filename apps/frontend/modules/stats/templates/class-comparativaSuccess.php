@@ -210,6 +210,7 @@
 			  Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
 			</div>
 			<?php endif; ?>
+			<a href="?format=xls&<?php echo http_build_query(array('groups' => $params['groups'])) ?>">Exportar todo a Excel</a>
 		</div>
 	</div>
 </div>

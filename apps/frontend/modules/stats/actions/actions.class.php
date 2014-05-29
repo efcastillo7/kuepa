@@ -175,6 +175,7 @@ class statsActions extends kuepaActions
     $course_id = $request->getParameter("course_id");
     $groups_id = $request->getParameter("groups", array());
     $type = $request->getParameter("type", "comparativa");
+    $format = $request->getParameter("format");
 
     // echo var_dump($groups_id);
 
@@ -185,6 +186,11 @@ class statsActions extends kuepaActions
       $default = 50;
       $this->count_per_page_options = range(50, 100, 25);
     }
+
+    if( $format != "" && $format == "xls"){
+      $default = 9999; // no limit exporting to excel
+    }
+
 
     $this->count_per_page = $request->getParameter("count", $default);
 
@@ -254,7 +260,6 @@ class statsActions extends kuepaActions
     //   }
     // }
 
-
     $profiles_ids = $this->students->getPrimaryKeys();
     $this->status = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($component_ids, $profiles_ids);
 
@@ -264,7 +269,19 @@ class statsActions extends kuepaActions
     $this->notes = ProfileComponentCompletedStatusService::getInstance()->getArrayNotes($component_ids, $profiles_ids);
     $this->statics = ProfileComponentCompletedStatusService::getInstance()->getArrayAll(array($course_id), $profiles_ids);
 
-    $this->setTemplate("class-$type");
+    if ( $format != "" && $format == "xls"){
+      $this->setLayout(false);
+      $this->setTemplate("class-$type-$format");
+      $this->getResponse()->clearHttpHeaders();
+      $this->getResponse()->setHttpHeader("Pragma", "no-cache");
+      $this->getResponse()->setContentType('x-msdownload');
+      $this->getResponse()->setHttpHeader('Content-Disposition',
+                            'attachment; filename=export.xls');
+      $this->getResponse()->sendHttpHeaders();
+    } else {
+      $this->setTemplate("class-$type");  
+    }
+
     // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
   }
 
