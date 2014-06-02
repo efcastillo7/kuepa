@@ -15,7 +15,11 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav nav-mainbtn">
+      <?php if ($sf_user->hasCredential("directivo") || $sf_user->hasCredential("docente") || $sf_user->hasCredential("docente_bogota")): ?>
+      <li class="nmb-ins"><a href="<?php echo url_for("stats/class2") ?>"><i></i>Reportes</a></li>
+      <?php else: ?>
       <li class="nmb-ins"><a href="<?php echo url_for("stats/index") ?>"><i></i>Reportes</a></li>
+      <?php endif; ?>
       <li class="nmb-mat"><a href="<?php echo url_for("stats/timeline") ?>"><i></i>Aprendizaje</a></li>
       <?php if ($sf_user->hasCredential("access_video_sessions")): ?>
       <li class="nmb-tut"><a href="<?php echo url_for("@video_session") ?>"><i></i>Tutorias</a></li>

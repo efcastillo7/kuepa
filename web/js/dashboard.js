@@ -73,4 +73,32 @@ $(document).ready(function(){
 $(document).ready(function ($) {
     "use strict";
     $('.scroleable').perfectScrollbar({suppressScrollY: true,wheelPropagation:true});
+
+    $(document.body).on("click","#form_categories .dropdown-menu > li > a > input" , function(event) {
+        var ckhbx = jQuery(this);
+        ckhbx.prop('checked', !ckhbx.is(':checked') );
+    });
+
+    $(document.body).on("click","#form_categories .dropdown-menu > li"  , function(e) {
+        var ckhbx = jQuery(this).find("input[type=checkbox]");
+        ckhbx.prop('checked', !ckhbx.is(':checked') );
+        if ( jQuery(this).parent().parent().hasClass("localidad") ){
+          reload_college_groups();  
+        };
+        e.stopPropagation();
+    });
+
+/*      $( "#form_categories .btn-group.localidad .dropdown-menu > li" ).on("click", function(e) {
+      reload_college_groups();
+    });*/
+
 });
+
+function reload_college_groups(){
+  var params = jQuery("[name*='groups[1]']").serialize()+"&category_id=2";
+
+  jQuery.get("/stats/ReloadCategoryGroups",params,function(data){
+    jQuery("#form_categories .btn-group.colegio ul.dropdown-menu").replaceWith(data.template);
+  },'json');
+
+}

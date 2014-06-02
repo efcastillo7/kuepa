@@ -82,6 +82,8 @@ class LearningPathService {
                 ->orderBy('position asc')
                 ->execute();
 
+
+
         return $plp;
     }
 
@@ -115,5 +117,33 @@ class LearningPathService {
         }
 
         return($q->execute());
+    }
+
+    public function getLearningWayNodes($profile_id){
+        $q = LearningWayItem::getRepository()->createQuery('lwi')
+                ->innerJoin("lwi.LearningWay lw")
+                ->innerJoin("lw.ProfileHasLearningWay phlw")
+                ->where("phlw.profile_id = ?", $profile_id)
+                ->orderBy('lwi.position asc');
+                
+        return $q->execute();
+
+    }
+
+    public function addLearningWaysToProfile($profile_id, $learning_ways = array()){
+        if(count($learning_ways)){
+            try{
+                foreach ($learning_ways as $lwid) {
+                    $lw = new ProfileHasLearningWay();
+                    $lw->setProfileId($profile_id)
+                       ->setLearningWayId($lwid)
+                       ->save();
+                }
+            }catch(Exception $e){
+                //exception only occurs if user already has that learning way
+            }
+        }
+
+        return true;
     }
 }

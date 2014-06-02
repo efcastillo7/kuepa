@@ -306,7 +306,7 @@ class ProfileComponentCompletedStatusService {
 
     //TODO: armar para que permita 1 solo profile_id
 
-    public function getArrayCompletedTimesM($profiles_id, $route) {
+    public function getArrayCompletedTimesM($profiles_id, $route = array()) {
         $q = LogViewComponent::getRepository()->createQuery('lvc')
                 ->select("profile_id, sum(updated_at - created_at) as total");
                 
@@ -317,7 +317,11 @@ class ProfileComponentCompletedStatusService {
         }
 
         if(isset($route['course_id'])){
-            $q->andWhere('course_id = ?', $route['course_id']);
+            if(is_array($route['course_id'])){
+                $q->andWhereIn('course_id', $route['course_id']);
+            }else{
+                $q->andWhere('course_id = ?', $route['course_id']);
+            }
         }
 
         if(isset($route['chapter_id'])){
@@ -345,8 +349,13 @@ class ProfileComponentCompletedStatusService {
                          ->execute( array(), 'HYDRATE_KEY_VALUE_QUAD' );   
                 break;
             
+            case 0:
+                return $q->select("profile_id, sum(updated_at - created_at) as total")
+                         ->groupBy("profile_id")
+                         ->execute( array(), 'HYDRATE_KEY_VALUE_PAIR' );   
+                break;
+
             default:
-                # code...
                 break;
         }
     }

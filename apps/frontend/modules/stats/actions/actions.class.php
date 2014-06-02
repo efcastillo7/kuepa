@@ -175,6 +175,7 @@ class statsActions extends kuepaActions
     $course_id = $request->getParameter("course_id");
     $groups_id = $request->getParameter("groups", array());
     $type = $request->getParameter("type", "comparativa");
+    $format = $request->getParameter("format");
 
     // echo var_dump($groups_id);
 
@@ -185,6 +186,11 @@ class statsActions extends kuepaActions
       $default = 50;
       $this->count_per_page_options = range(50, 100, 25);
     }
+
+    if( $format != "" && $format == "xls"){
+      $default = 9999; // no limit exporting to excel
+    }
+
 
     $this->count_per_page = $request->getParameter("count", $default);
 
@@ -254,7 +260,6 @@ class statsActions extends kuepaActions
     //   }
     // }
 
-
     $profiles_ids = $this->students->getPrimaryKeys();
     $this->status = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($component_ids, $profiles_ids);
 
@@ -264,11 +269,115 @@ class statsActions extends kuepaActions
     $this->notes = ProfileComponentCompletedStatusService::getInstance()->getArrayNotes($component_ids, $profiles_ids);
     $this->statics = ProfileComponentCompletedStatusService::getInstance()->getArrayAll(array($course_id), $profiles_ids);
 
+    if ( $format != "" && $format == "xls"){
+      $this->setLayout(false);
+      $this->setTemplate("class-$type-$format");
+      $this->getResponse()->clearHttpHeaders();
+      $this->getResponse()->setHttpHeader("Pragma", "no-cache");
+      $this->getResponse()->setContentType('x-msdownload');
+      $this->getResponse()->setHttpHeader('Content-Disposition',
+                            'attachment; filename=export.xls');
+      $this->getResponse()->sendHttpHeaders();
+    } else {
+      $this->setTemplate("class-$type");  
+    }
+
+    // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
+  }
+
+
+  public function executeClass2(sfWebRequest $request){
+    $groups_id = $request->getParameter("groups", array());
+    $this->text_filters = $text_filters = $request->getParameter("data", array());
+    $type = $request->getParameter("type", "comparativa2");
+
+    if ($type == "ficha") {
+      $default = 9;
+      $this->count_per_page_options = range(9, 99, 9);
+    }else{
+      $default = 50;
+      $this->count_per_page_options = range(50, 100, 25);
+    }
+
+    $this->count_per_page = $request->getParameter("count", $default);
+
+    $courses_ids = $this->getUser()->getEnabledCourses();
+
+    $this->courses = CourseService::getInstance()->getCourses($courses_ids);
+
+    $this->groups = GroupsService::getInstance()->getGroupsByProfile($this->getUser()->getProfile()->getId());
+    $this->group_categories = GroupsService::getInstance()->getCategories($this->getProfile()->getId());
+
+    //get only enabled groups
+    $this->groups_ids = $groups_id =  $groups_id;
+    $this->intersect = true;
+
+    //get master group if enabled
+    if($this->getUser()->getProfile()->getMasterGroupId()){
+      $groups_id[] = $this->getUser()->getProfile()->getMasterGroupId();
+      $this->intersect = true;
+    }
+
+    //check user has that groups
+    //set pager
+    $this->pager = new sfDoctrinePager('Students', $this->count_per_page);
+
+    if(count($groups_id)){
+      $query = GroupsService::getInstance()->getProfilesInGroupsQuery($groups_id, array(), $this->intersect);
+    }else{
+      $colleges_ids = $this->getUser()->getCollegeIds();
+
+      $this->forward404Unless(count($colleges_ids), "No tiene colegios asignados");
+      //get student for first college
+      //TODO: EXPAND FOR MULTIPLE COLLEGES
+      $query = CourseService::getInstance()->getStudentsListQuery($courses_ids, $colleges_ids[0]);
+    }
+
+    $this->params = array("groups" => $groups_id, "count" => $this->count_per_page);
+
+    //text params
+    if(isset($text_filters['name'])){
+      $query->andWhere("(p.first_name like ? or p.last_name like ?)", array("%" .$text_filters['name'] . "%", "%" .$text_filters['name'] . "%"));
+    }
+
+    // init pager
+    $this->pager->setQuery($query);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    // set students
+    $this->students = $this->pager->getResults();
+
+    $profiles_ids = $this->students->getPrimaryKeys();
+    $this->status = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($courses_ids, $profiles_ids);
+
+    $this->profileTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids);
+    $this->courseTimes = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $courses_ids));
+    $this->notes = ProfileComponentCompletedStatusService::getInstance()->getArrayNotes($courses_ids, $profiles_ids);
+    $this->statics = ProfileComponentCompletedStatusService::getInstance()->getArrayAll($courses_ids, $profiles_ids);
+
     $this->setTemplate("class-$type");
     // $this->totalTimesByRoute = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedTimesM($profiles_ids, array('course_id' => $course_id, 'chapter_id' => $component_ids));
   }
 
-  public function executeTest(sfWebRequest $request){
+
+  public function executeReloadCategoryGroups(sfWebRequest $sfWebRequest){
+    $groups = $sfWebRequest->getParameter('groups');
+    $category_id = $sfWebRequest->getParameter('category_id');
+    $category = GroupCategory::getRepository()->find($category_id);
+    $groups_to_show = $category->getCategoryGroups($groups[1]);
+
+    $response = Array(
+        'status' => 'success',
+        'template' => $this->getPartial('groups_category', array('groups_to_show' => $groups_to_show, 'category_id' => $category_id))
+    );
+    return $this->renderText(json_encode($response));
+
+  }
+
+
+
+  public function executeTest(sfWebRequest $sfWebRequest){
     $component_id = $request->getParameter('id');
     $stats = StatsService::getInstance();
 

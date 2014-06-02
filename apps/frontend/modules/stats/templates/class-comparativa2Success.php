@@ -29,20 +29,12 @@
 <!-- //////////// DASHBOARD C REDESIGN /////////////// -->
 
 <div class="tbdata-title-hd">
-	<h3 class="HelveticaLt">Reportes: <span class="HelveticaMd"><?php echo $course->getName() ?></span></h3>
+	<h3 class="HelveticaLt">Reportes: <span class="HelveticaMd">Cursos</span></h3>
 
 	<div class="container clearpadding menu-list">
 		<div class="row">
 			<div class="col-xs-7">
 			    <div class="dashboard-left">
-			        <nav class="nav-dashboard">
-			            <ul>
-							<li><a href="<?php echo url_for("stats/class?type=lista&course_id=" . $course->getId()) ?>">Lista</a></li>
-							<li><a href="<?php echo url_for("stats/class?type=ficha&course_id=" . $course->getId()) ?>">Fichas</a></li>
-							<li><a href="<?php echo url_for("stats/class?type=comparativa&course_id=" . $course->getId()) ?>">Comparativa</a></li>
-						</ul>
-			        </nav>
-
 					<?php if(count($group_categories)): ?>
 			        <div class="order">
 						<form action="" id="form_categories">
@@ -61,6 +53,19 @@
 								?>
 							</div>
 							<?php endforeach; ?>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									Nombre
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li data-stopPropagation="true">
+										<a href="#">
+											<input type="text" name="data[name]" id="" value="<?php echo isset($text_filters['name']) ? $text_filters['name'] : "" ?>">
+										</a>
+								    </li>
+								</ul>
+							</div>
 							<input type="submit" class="btn btn-primary btn-xs" value="Actualizar">
 							</div>
 						</form>
@@ -80,18 +85,16 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<td colspan="4">General</td>
-					<?php foreach ($course->getChapters() as $chapter): ?>
-					<td colspan="2" class="bl"><?php echo $chapter->getName() ?></td>
+					<td colspan="2">General</td>
+					<?php foreach ($courses as $course): ?>
+					<td colspan="2" class="bl"><?php echo $course->getName() ?></td>
 					<?php endforeach ?>
 				</tr>
 				<tr>
-					<td>Progreso</td>
 					<td>Tiempo dedicado</td>
 					<td>Última Conexión</td>
-					<td>Unidades Completadas</td>
 					<!-- por unidad -->
-					<?php foreach ($course->getChapters() as $chapter): ?>
+					<?php foreach ($courses as $course): ?>
 					<td class="bl">Progreso</td>
 					<td>Tiempo Dedicado</td>
 					<?php endforeach ?>
@@ -113,22 +116,10 @@
 		<table class="table table-hover table-bordered">
 			<tbody>
 				<?php foreach ($students as $student): ?>
-				<?php $sstatus = isset($status[$student->getId()]) ? $status[$student->getId()][$course->getId()] : 0; ?>
 				<tr>
 					<td>
-						<div class="progress">
-							<?php if ($sstatus < 35): ?>
-							<div class="progress-bar progress-bar-danger" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>	
-							<?php elseif ($sstatus < 70): ?>
-							<div class="progress-bar progress-bar-warning" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>
-							<?php else: ?>
-							<div class="progress-bar progress-bar-success" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>
-							<?php endif ?>
-						</div>
-					</td>
-					<td>
 						<span class="glyphicon glyphicon-time"></span>
-						<?php $time_course = isset($courseTimes[$student->getId()]) ? $courseTimes[$student->getId()][$course->getId()] : 0;
+						<?php $time_course = isset($profileTimes[$student->getId()]) ? $profileTimes[$student->getId()] : 0;
 						if($time_course > 0):?>
 						<?php echo format_time($time_course) ?>
 						<?php else: ?>
@@ -143,26 +134,27 @@
 							-
 						<?php endif ?>
 					</td>
-					<td>
-						<span class="glyphicon glyphicon-ok-circle green"></span>
-						<?php echo isset($chapterAproved[$student->getId()]) ? $chapterAproved[$student->getId()] : 0; ?>
-						/
-						<?php echo $course->getChapters()->count() ?>
-					</td>
 
-					<!-- por unidad -->
-					<?php $get_status = ($time_course > 0); foreach ($course->getChapters() as $chapter):?>
+					<!-- por curso -->
+					<?php $get_status = ($time_course > 0); foreach ($courses as $course): ?>
 					<td>
-						<?php if (!isset($status[$student->getId()]) || !isset($status[$student->getId()][$chapter->getId()])): ?>
-						<?php $get_status = false; ?>
+						<?php if (!isset($status[$student->getId()]) || !isset($status[$student->getId()][$course->getId()]) || !isset($courseTimes[$student->getId()][$course->getId()]) || $courseTimes[$student->getId()][$course->getId()] == 0): ?>
 						-
-						<?php else: ?>
-						<?php echo $status[$student->getId()][$chapter->getId()] ?> %
+						<?php else: $sstatus = $status[$student->getId()][$course->getId()];?>
+						<div class="progress">
+							<?php if ($sstatus < 35): ?>
+							<div class="progress-bar progress-bar-danger" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>	
+							<?php elseif ($sstatus < 70): ?>
+							<div class="progress-bar progress-bar-warning" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>
+							<?php else: ?>
+							<div class="progress-bar progress-bar-success" style="width: <?php echo $sstatus?>%;"><?php echo $sstatus?>%</div>
+							<?php endif ?>
+						</div>
 						<?php endif ?>
 					</td>
 					<td>
-						<?php if ($get_status && isset($chapterTimes[$student->getId()][$course->getId()][$chapter->getId()])):?>
-						<?php echo format_time($chapterTimes[$student->getId()][$course->getId()][$chapter->getId()]) ?>
+						<?php if ($get_status && isset($courseTimes[$student->getId()][$course->getId()]) && $courseTimes[$student->getId()][$course->getId()] > 0):?>
+						<?php echo format_time($courseTimes[$student->getId()][$course->getId()]) ?>
 						<?php else: ?>
 						-
 						<?php endif; ?>
@@ -210,7 +202,6 @@
 			  Página <span class="badge"><?php echo $pager->getPage() ?></span> de <span class="badge"><?php echo $pager->getLastPage() ?></span>
 			</div>
 			<?php endif; ?>
-			<a href="?format=xls&<?php echo http_build_query(array('groups' => $params['groups'])) ?>">Exportar todo a Excel</a>
 		</div>
 	</div>
 </div>
