@@ -5637,7 +5637,7 @@ html, body {
 body {
   font-family: HelveticaRoman, "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding-top: 50px;
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
   line-height: 20px;
 }
 
