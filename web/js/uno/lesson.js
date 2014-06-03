@@ -385,7 +385,7 @@ function check(){
   if((timeMouse < 300000) || (timeScroll < 300000)){
     save();
   }
-}// END check
+}//END check
 
 //log
 function save(){
@@ -394,7 +394,7 @@ function save(){
         dataType: 'json',
         type: 'POST',
         success: function(data) {
-            console.log(data);
+            //console.log(data);
         }
     });
 }//END log
