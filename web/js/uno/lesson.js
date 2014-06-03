@@ -362,18 +362,42 @@ $(document).ready(function() {
 
     // $( "#tabs" ).tabs();
 
-    //log interval
-    setInterval(function(){
-        $.ajax('/log/resource', {
-            data: {resource_id: resource_id, course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id},
-            dataType: 'json',
-            type: 'POST',
-            success: function(data) {
-                // console.log(data);
-            }
-        });
-    }, timer_resource_log);
+    
+    //Interval log
+    setInterval(check, timer_resource_log);
+
+    window.mouse = $.now();
+    window.scroll = $.now();
+
+    //Guardo timestamp cuando hay actividad
+    $(document).mousemove(function(){mouse = $.now();});
+    $(document).scroll(function(){scroll = $.now();});
+
 });
+
+
+function check(){
+  var now = $.now();
+  var timeMouse = (now - mouse);
+  var timeScroll = (now - scroll);
+
+  //Si hubo actividad en los ultimos 5 minutos -> guardo
+  if((timeMouse < 300000) || (timeScroll < 300000)){
+    save();
+  }
+}// END check
+
+//log
+function save(){
+    $.ajax('/log/resource', {
+        data: {resource_id: resource_id, course_id: course_id, lesson_id: lesson_id, chapter_id: chapter_id},
+        dataType: 'json',
+        type: 'POST',
+        success: function(data) {
+            console.log(data);
+        }
+    });
+}//END log
 
 $(window).load(function(){
     $("#add_to_learning_path").click(function(){
