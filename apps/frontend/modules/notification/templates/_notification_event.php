@@ -1,3 +1,5 @@
+<?php use_helper('Date'); ?>
+<?php use_helper('LocalDate') ?>
 <?php
 $stWildcards = $notification->getNotificationAction()->getWildcards();
 $dcWildcards = htmlspecialchars_decode($stWildcards);
@@ -15,6 +17,6 @@ $term = $notification->getNotificationAction()->getTermKey();
 <div class="">
 <a href="#">
   <span class="text"><?php echo $wildcards->title; ?></span>
-  <span class="time"><?php echo $notification->getCreatedAt()." ".__("scheduled_for","","notifications")." ".$wildcards->scheduled_for; ?></span>
+  <span class="time"><?php echo utcToLocalDate($notification->getCreatedAt(), 'HH:mm')."hs ".utcToLocalDate($notification->getCreatedAt(), 'dd-MM-yyyy')." ".__("scheduled_for","","notifications")." ".utcToLocalDate($wildcards->scheduled_for, 'HH:mm')."hs ".utcToLocalDate($wildcards->scheduled_for, 'dd-MM-yyyy')?></span>
 </a>
 </div>

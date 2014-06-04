@@ -2090,7 +2090,7 @@ label.radio-label {
 .navbar-nav.navbar-right > li > .dropdown-menu.notifications .cont-notifications {
   height: 220px;
   position: relative;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 /* line 151, scss/_navbar.scss */
 .navbar-nav.navbar-right > li > .dropdown-menu.notifications .item {
