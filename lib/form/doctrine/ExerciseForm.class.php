@@ -77,7 +77,8 @@ class ExerciseForm extends BaseExerciseForm {
 
         $this->setValidators(array(
             'title'         => new sfValidatorString(   array('required' => true),  array('required' => 'Ingrese un título.')),
-            'description'   => new sfValidatorString(   array('required' => true),  array('required' => 'Ingrese una descripción.')),
+            //'description'   => new sfValidatorString(   array('required' => true),  array('required' => 'Ingrese una descripción.')),
+            'description'   => new sfValidatorString(array('required' => false)),
             'course_id'    => new sfValidatorPass(),
             'type'          => new sfValidatorPass(),
             'max_attemps'    => new sfValidatorPass(),
