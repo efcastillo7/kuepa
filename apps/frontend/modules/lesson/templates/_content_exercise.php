@@ -78,8 +78,13 @@
                   exercise_id: exercise.id,
                   question_ids: question_ids,
                   onSuccess: function(item){
-                      alert('Listo, ya hemos armado tu camino de aprendizaje. Empieza a estudiar ahora!');
+                     // Cambiado mensaje a peticion de Jorge Garcia
+                     if ( item.length > 0 ){
+                      alert('Listo, hemos usado tus resultados para agregar algunas lecciones a tu camino de aprendizaje');
                       addItemsToPath(item);
+                     }else{
+                      alert('Muy bien, no es necesario agregar ninguna lección a tu camino por ahora');
+                     }
                   },
                   onError: function(data){
                       // alert('Ya tiene esa lección');
