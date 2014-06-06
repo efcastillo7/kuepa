@@ -23,4 +23,9 @@ class CalendarEvent extends BaseCalendarEvent
     public static function getRepository() {
         return Doctrine_Core::getTable('CalendarEvent');
     }
+    
+    public function isEditable($user) {
+        return CalendarEventTable::getInstance()->abledToEdit($user, $this->getComponentId(), $this->getTipoRef());
+    }
+    
 }

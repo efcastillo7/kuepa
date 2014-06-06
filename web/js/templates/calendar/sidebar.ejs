@@ -7,7 +7,7 @@
       <ul>
         <% for(var i=0; i < sideBar["subjects"].length; i++){ %>
         <li>
-          <input <% if( $.cookie("subjects") !== null && $.cookie("subjects").indexOf( sideBar["subjects"][i].ce_component_id ) >= 0 ){ %> checked <% } %> data-filter="<%= sideBar["subjects"][i].ce_component_id %>" id="box_<%= sideBar["subjects"][i].ce_component_id %>" class="checkbox fc-<%= sideBar["subjects"][i].c_color %>" rel="<%= sideBar["subjects"][i].ce_component_id %>" type="checkbox"/>
+          <input <% if($.cookie("subjects") === null || ($.cookie("subjects") !== null && $.cookie("subjects").indexOf( sideBar["subjects"][i].ce_component_id ) >= 0 ) ){ %> checked <% } %> data-filter="<%= sideBar["subjects"][i].ce_component_id %>" id="box_<%= sideBar["subjects"][i].ce_component_id %>" class="checkbox fc-<%= sideBar["subjects"][i].c_color %>" rel="<%= sideBar["subjects"][i].ce_component_id %>" type="checkbox"/>
           <label for="box_<%= sideBar["subjects"][i].ce_component_id %>" name="lbl_<%= sideBar["subjects"][i].ce_component_id %>" class="chk-label fc-<%= sideBar["subjects"][i].c_color %>"><%= sideBar["subjects"][i].c_name %></label>
         </li>
         <% } %>

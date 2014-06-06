@@ -61,7 +61,7 @@ class CalendarEventTable extends Doctrine_Table
         if($filterCourse){
             
             $cQ = $this->createQuery('ce')
-                ->addSelect('ce.id, ce.title, ce.start, ce.address, ce.end, ce.tipo_ref, c.color, c.name')
+                ->addSelect('ce.id, ce.component_id, ce.title, ce.start, ce.address, ce.end, ce.tipo_ref, c.color, c.name')
                 ->addFrom('component c')
                 ->Where('c.id = ce.component_id')
                 ->addWhere('ce.tipo_ref = "' . CalendarEvent::TIPO_REF_COURSE . '"')
@@ -72,12 +72,9 @@ class CalendarEventTable extends Doctrine_Table
             
             $courseEvents = $cQ->execute(array(), Doctrine::HYDRATE_SCALAR);
             
-        }
-        
-        if($filterCourse){
             
-           $pQ = $this->createQuery('ce')
-                ->addSelect('ce.id, ce.title, ce.start, ce.address, ce.end, ce.tipo_ref, c.color, c.name')
+            $pQ = $this->createQuery('ce')
+                ->addSelect('ce.id, ce.component_id, ce.title, ce.start, ce.address, ce.end, ce.tipo_ref, c.color, c.name')
                 ->addFrom('component c')
                 ->addWhere('c.id = ce.component_id')
                 ->andWhereIn('ce.component_id', $course)
@@ -92,7 +89,7 @@ class CalendarEventTable extends Doctrine_Table
         if($filterTutorials){
             
             $vQ = $this->createQuery('ce')
-                    ->addSelect('ce.id, ce.title, ce.start, ce.address, ce.end, ce.tipo_ref, c.color, c.name')
+                    ->addSelect('ce.id, ce.component_id, ce.title, ce.start, ce.address, ce.end, ce.tipo_ref, c.color, c.name')
                     ->addFrom('component c')
                     ->addWhere('c.id = ce.component_id')
                     ->addFrom('videoSession vs')
@@ -138,6 +135,18 @@ class CalendarEventTable extends Doctrine_Table
                   ->limit(1);
         
         return $q->execute();
+    }
+    
+    public function abledToEdit($user, $idComponent, $tipoRef) {
         
+        if ( $tipoRef == CalendarEvent::TIPO_REF_PROFILE ) {
+            return true;
+        }
+        else if ( $tipoRef == CalendarEvent::TIPO_REF_COURSE ) {
+            return $user->hasCredential("docente") && $user->hasCredential('course_' . $idComponent);
+        }
+        else if ( $tipoRef != CalendarEvent::TIPO_REF_TUTORIA ) {
+            return false;
+        }
     }
 }

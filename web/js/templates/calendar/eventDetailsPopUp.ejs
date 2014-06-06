@@ -14,9 +14,9 @@
         <span class="subject"><%= event.subject %></span>
       </td>
     </tr>
-  <% if( event.tipo_ref != "CLASS" ){ %>
+  <% if( event.editable ){ %>
   <div class="separator"></div>
-
+  
   <div class="left">
     <a id="btn-remove-event" class="cursor"><i class="spr trash"></i><span id="texto">Quitar evento</span></a>
   </div>

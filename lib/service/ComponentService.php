@@ -31,14 +31,14 @@ class ComponentService {
         return;
     }
 
-    public function getDeadlineForUser(Profile $profile, $component_id){
+    public function getDeadlineForUser($profile_id, $component_id){
         //check if user has college
         $deadline = null;
 
-        if($profile){
+        if($profile_id){
             //check if user has a deadline
             $plp = ProfileLearningPath::getRepository()->createQuery('plp')
-                        ->where('profile_id = ? and component_id = ?', array($profile->getId(), $component_id))
+                        ->where('profile_id = ? and component_id = ?', array($profile_id, $component_id))
                         ->fetchOne();
 
             if($plp){
@@ -47,7 +47,7 @@ class ComponentService {
 
             //if deadline is null
             if($deadline == null){
-                $college = $profile->getColleges()->getFirst();
+                $college = CollegeService::getInstance()->getByProfileId( $profile_id );
 
                 if($college){
                     $clp = CollegeLearningPath::getRepository()->createQuery('clp')
@@ -64,20 +64,62 @@ class ComponentService {
         return $deadline;
     }
 
-    public function getCoursesForUser($profile) {
-        
+    //mixed $components_ids
+    public function getComponents($components_ids){
+        $query = Component::getRepository()->createQuery('c');
+
+        if(is_array($components_ids) && count($components_ids)){
+            $query->whereIn('id', $components_ids);
+        }else{
+            $query->where('id = ?',$components_ids);
+        }
+
+        return $query->execute();
+    }
+
+    public function getArrayComponents($components_ids){
+        $query = Component::getRepository()->createQuery('c');
+
+        if(is_array($components_ids) && count($components_ids)){
+            $query->whereIn('id', $components_ids);
+        }else{
+            $query->where('id = ?',$components_ids);
+        }
+
+        return $query->fetchArray();
+    }
+
+    public function getEnabledCoursesForUser($profile){
         $courses = array();
 
         if($profile){
-            $college = $profile->getColleges()->getFirst();
+            //get Courses for that user
+            $colleges = null; //fetch all colleges
+            $get_status = array(ProfileLearningPath::IN_PROGRESS);
 
-            if($college){
-                $courses = Course::getRepository()->getCoursesForCollege($college->getId());
-            }else{
-                $courses = Course::getRepository()->getCoursesForUser($profile->getId());
+            $courses = Course::getRepository()->getCoursesForUser($profile->getId(), $colleges, $get_status);
+        }
+
+        return $courses;
+    }
+
+    public function getCoursesForUser($profile) {
+        $courses = array();
+
+        if($profile){
+            $colleges = $profile->getColleges();
+
+            //if it has colleges then add them
+            foreach ($colleges as $college) {
+                $show_status = explode(",", $college->getShowStatus());
+
+                //get Courses for that user if available
+                if(!count($show_status) || in_array(ProfileLearningPath::ALL, $show_status)){
+                    $courses = Course::getRepository()->getCoursesForCollege($college->getId());
+                }else if (count($show_status)){
+                    $courses = Course::getRepository()->getCoursesForUser($profile->getId(), $college->getId(), $show_status);
+                }
             }
-            
-            $this->addCompletedStatus($courses, $profile);
         }
 
         return $courses;
@@ -153,10 +195,11 @@ class ComponentService {
 
         try {
             $plp->setProfileId($user_id)
-                    ->setComponentId($component_id)
-                    ->save();
+                ->setComponentId($component_id)
+                ->setProfileLearningPathStatusId(ProfileLearningPath::IN_PROGRESS)
+                ->save();
         } catch (Exception $e) {
-            
+            die($e);
         }
 
         //exception?
@@ -224,6 +267,36 @@ class ComponentService {
         }        
 
         return 0;
+    }
+
+    public function getParents($component_id, $type = null, $orderBy = 'asc', $onlyEnabled = false) {
+                        
+        $orderBy = DQLHelper::getInstance()->parseOrderBy($orderBy);
+
+        $q = Component::getRepository()->createQuery('c')
+                ->select('c.*, lp.*')
+                ->innerJoin('c.LearningPath lp ON c.id = lp.parent_id')
+                ->where('lp.child_id = ?', $component_id)
+                ->orderBy("lp.position $orderBy");
+
+        if ($type) {
+            $q->andWhere('c.type = ? ', $type);
+        }
+        
+        if ($onlyEnabled) {
+            $q->andWhere("lp.enabled = true");
+        }
+        
+        // Gestion de Cache
+        $cacheParams = array();
+        $cacheParams[] = $component_id;
+        $cacheParams[] = (string ) $type;
+        $cacheParams[] = $orderBy;
+        $cacheParams[] = (int) $onlyEnabled;
+        
+        $q->useResultCache(true, null, cacheHelper::getInstance()->genKey('Component_getParents', $cacheParams ) );
+        
+        return $q->execute();
     }
 
     public function getChilds($component_id, $type = null, $orderBy = 'asc', $onlyEnabled = false) {
@@ -381,16 +454,16 @@ class ComponentService {
 
     }    
 
-    public function getParents($component_id, $orderBy = 'asc'){
+    // public function getParents($component_id, $orderBy = 'asc'){
 
-        $q = Component::getRepository()->createQuery('parent')
-                ->select('parent.*')
-                ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
-                ->where('lp.child_id = ?', $component_id)
-                ->orderBy("lp.position $orderBy");
-        $parents = $q->execute();
-        return $parents;
-    }
+    //     $q = Component::getRepository()->createQuery('parent')
+    //             ->select('parent.*')
+    //             ->innerJoin('parent.LearningPath lp ON parent.id = lp.parent_id')
+    //             ->where('lp.child_id = ?', $component_id)
+    //             ->orderBy("lp.position $orderBy");
+    //     $parents = $q->execute();
+    //     return $parents;
+    // }
 
     public function calculateTime($component_id){
        /* SELECT SUM(c.duration)
@@ -427,20 +500,20 @@ class ComponentService {
             foreach ($parents as $key => $parent) {                
                 ComponentService::getInstance()->updateDuration($parent->getId());
             }
-            
         } 
-
     }
     
-    public function addCompletedStatus($components, $profile = null)
+    public function addCompletedStatus($components, $profile = null, $completedStatusData = null)
     {
-        $components_ids = array();
-        foreach( $components as $component )
-        {
-            $components_ids[] = $component->getId();
-        }
+        if(!$completedStatusData){
+            $components_ids = array();
+            foreach( $components as $component )
+            {
+                $components_ids[] = $component->getId();
+            }
         
-        $completedStatusData = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $profile->getId());
+            $completedStatusData = ProfileComponentCompletedStatusService::getInstance()->getArrayCompletedStatus($components_ids, $profile->getId());
+        }
         
         foreach( $components as $component )
         {
@@ -455,7 +528,7 @@ class ComponentService {
     public function getCountResources($component_id){
         $q = ViewLearningPath::getRepository()->createQuery('vlp')
              ->select('COUNT(vlp.course_id) as total');
-        $component = ComponentService::getInstance()->find($component_id);
+        $component = Component::getRepository()->getById($component_id);
 
         switch ( $component->getType() ) {
              case Course::TYPE:

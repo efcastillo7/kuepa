@@ -36,9 +36,17 @@ class calendarActions extends kuepaActions {
         $start = $request->getParameter('start');
         $end = $request->getParameter('end');
         
+        
+        
         if( $this->id ){   
             
             $event = CalendarEventTable::getInstance()->findOneById($request->getParameter('id'));
+            
+            if ( !$event->isEditable( $this->getUser() ) )
+            {
+                echo "No tienes los permisos suficientes para ejecutar esta accion";
+                exit;
+            }
             
             $this->form = new CalendarEventForm($event);
             

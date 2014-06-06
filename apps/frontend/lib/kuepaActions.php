@@ -43,6 +43,14 @@ class kuepaActions extends sfActions {
                   ->setCurrentAction($action)
                   ->save();
         }
+        
+        //check for course credentials
+        $request = $this->getRequest();
+        
+        if(($course_id = $request->getParameter('course_id'))){
+            $this->forward404Unless($this->getUser()->hasCredential('course_' . $course_id));
+        }
 
       }
+      
 }

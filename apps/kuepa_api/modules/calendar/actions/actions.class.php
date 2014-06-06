@@ -210,7 +210,6 @@ class calendarActions extends kuepaActions {
         $end             = $request->getGetParameter("end");
         $filterCourse    = $request->getGetParameter("filterCourse");
         $filterTutorias  = $request->getGetParameter("filterTutorias");
-        $esDocente       = $this->getUser()->hasCredential("docente");
         
         $start = $start - (86400 * 7);
         $end = $end + (86400 * 7);
@@ -225,8 +224,8 @@ class calendarActions extends kuepaActions {
             
             $startDateTime = new DateTime($event["ce_start"]);
             $endDateTime   = new DateTime($event["ce_end"]);
-
-            $editable = $event["ce_tipo_ref"] != CalendarEvent::TIPO_REF_COURSE || $esDocente;
+            
+            $editable = CalendarEventTable::getInstance()->abledToEdit($this->getUser(), $event["ce_component_id"], $event["ce_tipo_ref"]);
            
             $tmp_event = array(
                 'id'          => $event["ce_id"],
