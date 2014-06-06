@@ -12,6 +12,10 @@
  */
 class CalendarEvent extends BaseCalendarEvent
 {
+    CONST TIPO_REF_PROFILE = 'PROFI';
+    CONST TIPO_REF_COURSE  = 'COURS';
+    CONST TIPO_REF_TUTORIA = 'CLASS';
+        
     /**
      * 
      * @return CalendarEventTable

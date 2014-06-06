@@ -83,10 +83,10 @@ class calendarActions extends kuepaActions {
 
         if( $this->getGuardUser()->hasGroup("docentes") && $publico == "true"){
             $event->setRefId($subject);
-            $event->setTipoRef("COURS");
+            $event->setTipoRef(CalendarEvent::TIPO_REF_COURSE);
         }else{
             $event->setRefId($this->getProfile()->getId());
-            $event->setTipoRef("PROFI");
+            $event->setTipoRef(CalendarEvent::TIPO_REF_PROFILE);
         }
 
         $event->setComponentId($subject);
@@ -172,10 +172,10 @@ class calendarActions extends kuepaActions {
         
         if ($event) {
             if( $publico == "true" ){
-                $event->setTipoRef("COURS");
+                $event->setTipoRef(CalendarEvent::TIPO_REF_COURSE);
                 $event->setRefId($subject);
             }else{
-                $event->setTipoRef("PROFI");
+                $event->setTipoRef(CalendarEvent::TIPO_REF_PROFILE);
                 $event->setRefId(sfContext::getInstance()->getUser()->getProfile()->getId());
             }
             if($title){$event->setTitle($title);}
@@ -210,10 +210,11 @@ class calendarActions extends kuepaActions {
         $end             = $request->getGetParameter("end");
         $filterCourse    = $request->getGetParameter("filterCourse");
         $filterTutorias  = $request->getGetParameter("filterTutorias");
-
+        $esDocente       = $this->getUser()->hasCredential("docente");
+        
         $start = $start - (86400 * 7);
         $end = $end + (86400 * 7);
-        
+                
         $unformatted_events = CalendarEventTable::getInstance()->getUserEventsByMonth($start, $end, $filterCourse, $filterTutorias);
         
         if(!count($unformatted_events)){
@@ -224,18 +225,21 @@ class calendarActions extends kuepaActions {
             
             $startDateTime = new DateTime($event["ce_start"]);
             $endDateTime   = new DateTime($event["ce_end"]);
-            
+
+            $editable = $event["ce_tipo_ref"] != CalendarEvent::TIPO_REF_COURSE || $esDocente;
+           
             $tmp_event = array(
-                id          => $event["ce_id"],
-                title       => $event["ce_title"],
-                start       => $startDateTime->format('Y-m-d H:i'),
-                end         => $endDateTime->format('Y-m-d H:i'),
-                className   => 'c-' . $event["c_color"],
-                subject     => $event["c_name"],
-                address     => $event["ce_address"],
-                description => $event["ce_description"],
-                allDay      => false,
-                tipo_ref    => $event["ce_tipo_ref"]
+                'id'          => $event["ce_id"],
+                'title'       => $event["ce_title"],
+                'start'       => $startDateTime->format('Y-m-d H:i'),
+                'end'         => $endDateTime->format('Y-m-d H:i'),
+                'className'   => 'c-' . $event["c_color"],
+                'subject'     => $event["c_name"],
+                'address'     => $event["ce_address"],
+                'description' => $event["ce_description"],
+                'allDay'      => false,
+                'editable'    => $editable,
+                'tipo_ref'    => $event["ce_tipo_ref"]
             );
             
             $events[] = $tmp_event;

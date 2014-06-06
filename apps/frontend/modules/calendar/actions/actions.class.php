@@ -53,7 +53,8 @@ class calendarActions extends kuepaActions {
             $this->form->setDefault('end_time',$endDateTime->format("H:i"));
             
             $this->form->setDefault('component_id',$event->getComponentId());
-            $this->form->setDefault('public',$event->getTipoRef() == "PROFI" ? false : true);
+                        
+            $this->form->setDefault('public',$event->getTipoRef() == CalendarEvent::TIPO_REF_PROFILE ? false : true);
             
         }else{
             $this->form = new CalendarEventForm();

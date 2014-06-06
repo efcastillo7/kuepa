@@ -25,14 +25,14 @@ class CalendarEventTable extends Doctrine_Table
             ->where('c.id = ce.component_id')
             ->andWhere('(
                             (
-                                ce.tipo_ref = "COURS" AND 
+                                ce.tipo_ref = "'. CalendarEvent::TIPO_REF_COURSE .'" AND 
                                 ce.ref_id IN ( 
                                     SELECT plp.component_id 
                                     FROM ProfileLearningPath AS plp 
                                     WHERE plp.profile_id = :profileId 
                                 )
                              OR (
-                                ce.tipo_ref = "PROFI" 
+                                ce.tipo_ref = "' . CalendarEvent::TIPO_REF_PROFILE . '" 
                                 AND ce.ref_id = :profileId
                                 ) 
                             )
@@ -64,7 +64,7 @@ class CalendarEventTable extends Doctrine_Table
                 ->addSelect('ce.id, ce.title, ce.start, ce.address, ce.end, ce.tipo_ref, c.color, c.name')
                 ->addFrom('component c')
                 ->Where('c.id = ce.component_id')
-                ->addWhere('ce.tipo_ref = "COURS"')
+                ->addWhere('ce.tipo_ref = "' . CalendarEvent::TIPO_REF_COURSE . '"')
                 ->andWhereIn('ce.component_id', $course)
                 ->addWhere('ce.start >= ?', date("Y-m-d H:i", $start))
                 ->addWhere('ce.end <= ?', date("Y-m-d H:i", $end))
@@ -81,7 +81,7 @@ class CalendarEventTable extends Doctrine_Table
                 ->addFrom('component c')
                 ->addWhere('c.id = ce.component_id')
                 ->andWhereIn('ce.component_id', $course)
-                ->addWhere('ce.tipo_ref = "PROFI" AND ce.ref_id = ?', $profileId)
+                ->addWhere('ce.tipo_ref = "' . CalendarEvent::TIPO_REF_PROFILE . '" AND ce.ref_id = ?', $profileId)
                 ->addWhere('ce.start >= ?', date("Y-m-d H:i", $start))
                 ->addWhere('ce.end <= ?', date("Y-m-d H:i", $end));
             $pQ->andWhereIn('ce.component_id', $filterCourse);
@@ -97,7 +97,7 @@ class CalendarEventTable extends Doctrine_Table
                     ->addWhere('c.id = ce.component_id')
                     ->addFrom('videoSession vs')
                     ->addWhere('vs.id = ce.ref_id')
-                    ->andWhereNotIn('ce.tipo_ref', array('COURS', 'PROFI'))
+                    ->andWhereNotIn('ce.tipo_ref', array(CalendarEvent::TIPO_REF_COURSE, CalendarEvent::TIPO_REF_PROFILE))
                     ->andWhereIn('ce.tipo_ref', $filterTutorials)
                     ->andWhereIn('ce.component_id', $course)
                     ->addWhere('ce.start >= ?', date("Y-m-d H:i", $start))
