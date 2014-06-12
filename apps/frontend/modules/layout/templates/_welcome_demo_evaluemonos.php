@@ -93,9 +93,10 @@
 			}
 		});
 
-		$("#goto-diag").click(function(){
-			location.href = "/course/details/id/18312";
+		$("#goto-lesson").click(function(){
+			location.href = "/lesson/view/18752/11871/15207";
 		});
+
 	});
 
 
@@ -144,49 +145,15 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="slide slide4 slide-small" data-slide="4">
-					<p class="slide-title">
-				  		3. Explora por ti mismo
-				  	</p>
-				  	<p class="slide-main">
-				  		Si quieres ver las lecciones disponibles y conocer todo el contenido de Kuepa ve a cada materia y navega libremente.
-				  	</p>
-				  	<a href="javascript:void(0)" class="btn btn-primary btn-large btn-orange">¡Bien! Y…</a>
-		</div>
-
-		<div class="container">
-			<div class="row">
-				<div class="slide slide5 slide-small" data-slide="5">
-					<div class="col-md-6">
-						<img src="img/lessons_left_nav.png" />
-					</div>
-					<div class="col-md-6">
-						<div class="arrow"></div>
-						<p class="slide-title">
-					  		4. Viaja de lección en lección
-					  	</p>
-					  	<p class="slide-main">
-					  		Dentro de las lecciones podrás ver los pasos que has tomado y que te faltan a tu izquierda.
-					  	</p>
-					  	<a href="javascript:void(0)" class="btn btn-primary btn-large btn-orange">Ehh… ¿ya?</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="container">
-			<div class="row">
-				<div class="slide" data-slide="6">
-					<p class="slide-title">
-				  		¡A estudiar!
-				  	</p>
-				  	<p class="slide-main">
-				  		Y listo, basta de historias, ya puedes comenzar.
-				  	</p>
-				  	<div><a href="" id="goto-diag" class="btn btn-primary btn-large btn-orange">Comienza con un diagnóstico</a></div>
-				  	<div class="margintop"><a href="javascript:void(0)" class="btn btn-large btn-primary">Navega libremente</a></div>
-				</div>
-			</div>
+			<p class="slide-title">
+		  		3. Explora por ti mismo
+		  	</p>
+		  	<p class="slide-main">
+		  		Si quieres ver las lecciones disponibles y conocer todo el contenido de Kuepa ve a cada materia y navega libremente.
+		  	</p>
+		  	<a id="goto-lesson" href="" class="btn btn-primary btn-large btn-orange">¡Bien! Y…</a>
 		</div>	
 
 	</div>
