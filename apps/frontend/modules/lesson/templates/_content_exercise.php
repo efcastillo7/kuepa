@@ -20,12 +20,12 @@
         </div>
         <span>Ejercitación</span>
         <i class="spr ico-arrow-breadcrum"></i>
-        <span>Contesta a continuación las preguntas 1 a <?php echo $exercise->getQuestions()->count() ?></span>
+        <span>Contesta a continuación las preguntas 1 a <?php echo ($exercise->getTotal()) ?></span>
       </section>
     </div>
 
     <div class="content questions">
-      <?php include_partial("content_questions", array('questions' => $questions, 'exercise' => $exercise)) ?>
+      <?php include_partial("content_questions", array('questions' => $questions, 'exercise' => $exercise, 'type' => "", 'numero' => 0)) ?>
       <button type="submit" class="btn btn-large btn-orange">Enviar respuestas y corregir</button>
 
     </div>

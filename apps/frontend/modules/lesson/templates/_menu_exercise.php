@@ -23,7 +23,7 @@
                 <div class="after active"></div>
 
                 <span>
-                  Preguntas 1 a <?php echo $exercise->getQuestions()->count() ?>
+                  Preguntas 1 a <?php echo $exercise->getTotal() ?>
                   <i class="spr ico-arrow-down-aside"></i>
                 </span>
               </a>
@@ -31,7 +31,7 @@
 
               <div id="node1-1" class="in">
                 <ul class="questions">
-                  <?php for($i=1; $i<=$exercise->getQuestions()->count();$i++): ?>
+                  <?php for($i=1; $i<=$exercise->getTotal();$i++): ?>
                   <li>
                     <a href="#ex-question-<?php echo $i ?>">
                       <span class="line"></span>
