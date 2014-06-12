@@ -32,6 +32,14 @@ $(function(){
         $(".video_session-tab_container:first").addClass("active");
     }
     
+    $(".btn-participants").click( showParticipants );
+    
+    $("#modal-participants .md-close").click( function(){
+        $("#modal-participants table").thfloat('destroy');
+    } );
+    
+    $(window).scroll( function(){ $("#modal-participants table").thfloat('refresh'); } );
+    
     //auto refresh sessions to see if there are newly availables
     setTimeout(refreshVideoSessions,5000);
 });
@@ -418,4 +426,48 @@ function refreshVideoSessions() {
             setTimeout(refreshVideoSessions,5000);
         }
     });
+}
+
+
+function showParticipants() {
+
+    var videoSessionId = $(this).attr("rel");
+    
+    //$("#modal-participants table").thfloat( {attachment : "#modal-participants-container"} );
+        
+    $.ajax('/kuepa_api.php/video_session/' + videoSessionId + '/participants',{
+        dataType: 'json',
+        type: 'get',
+        data: {},
+        success: function(participants){
+            $("#modal-participants-container").html(new EJS({url: "/js/templates/video_sessions/participants.ejs"}).render({participants: participants}));
+
+            var $modal  = $("#modal-participants");
+            
+            triggerModalSuccess({
+                id      : $modal.attr("id"),
+                effect  : "md-effect-17"
+            });
+                        
+            $("#modal-participants-container").scrollTop(0);
+            
+            $("#modal-participants table").thfloat( {attachment : "#modal-participants-container"} );
+            $(".thfloat").css('visibility', 'hidden');
+            $(".thfloat tr").css('visibility', 'hidden');
+            $(".thfloat th").css('visibility', 'hidden');
+            
+            setTimeout(
+                        function(){
+                            $("#modal-participants table").thfloat('refresh');
+                            $("#modal-participants table").thfloat( {attachment : "#modal-participants-container"} );
+                            $(".thfloat").css('visibility', 'visible');
+                            $(".thfloat tr").css('visibility', 'visible');
+                            $(".thfloat th").css('visibility', 'visible');
+                            },
+                        500
+            );
+            
+        } 
+    });
+    
 }

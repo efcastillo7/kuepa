@@ -58,6 +58,8 @@
   <script type="text/javascript" src="/assets/modernizr/classie.js"></script>
   <script type="text/javascript" src="/js/libs/learningPathService.js"></script>
   <script type="text/javascript" src="/js/libs/learningPath.js"></script>
+  <script type="text/javascript" src="/js/jquery.thfloat-0.7.2.min.js"></script>
+  <script type="text/javascript" src="/js/libs/ejs/ejs_production.js"></script>
 
   <?php include_http_metas() ?>
   <?php include_metas() ?>

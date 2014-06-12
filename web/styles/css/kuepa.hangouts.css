@@ -139,3 +139,24 @@ label[for="video_session_scheduled_end"], label[for="video_session_scheduled_for
 
 .btn img {
   margin-right: 5px; }
+
+
+#modal-participants-container {
+    max-height: 300px;
+    overflow: auto;
+    margin: 10px 0 30px 0;    
+}
+
+#modal-participants-container table {
+    width: 100%;
+}
+
+#modal-participants-container table th {
+    background: #E74C3C;
+}
+
+#modal-participants-container table td.no-participants {
+    text-align: center;
+    height: 150px;
+    vertical-align: middle;
+}

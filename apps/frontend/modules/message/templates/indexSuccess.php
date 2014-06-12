@@ -1,4 +1,3 @@
-<?php use_javascript("/js/libs/ejs/ejs_production.js"); ?>
 <?php use_javascript("/js/libs/messageService.js") ?>
 <?php use_javascript("/js/libs/datetime.js") ?>
 <?php use_javascript("/js/libs/message.js") ?>

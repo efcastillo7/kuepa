@@ -25,7 +25,7 @@
                 $storedColor    = $video_session->getCourse()->getColor();
                 $color          = empty($storedColor) ? "default" : $storedColor;
                 $chapter        = $video_session->getChapter()->getName();
-                $isOwner        = $video_session->getProfileId() == $pid;
+                $isOwner        = $video_session->getProfileId() == $pid;               
 
                 //Adds the profile_id to the url
                 $storedUrl      =  $video_session->getPlatform() == VideoSessionService::PLATFORM_HANGOUTS ? VideoSessionService::getInstance()->injectProfileId($storedUrl,$pid) : $storedUrl;
@@ -57,6 +57,15 @@
                             <?php endif; ?>
                         <?php else: ?>
                             <a target="_blank" class="access-button-<?php echo $video_session->getId() ?> btn btn-mini btn-success <?php echo ($video_session->getStatus() != "started" || empty($storedUrl)) ? "disabled" : "" ?>" href="<?php echo $storedUrl; ?>">Acceder</a>
+                        <?php endif; ?>
+                        </div>
+                    </td>
+                    <?php endif; ?>
+                    <?php if($type==="prev"): ?>
+                    <td>
+                        <div class="btn-group">
+                        <?php if ($sf_user->hasCredential("docente")): ?>
+                            <a class="btn btn-mini btn-success btn-participants" rel="<?php echo $video_session->getId() ?>">Ver Participantes</a>
                         <?php endif; ?>
                         </div>
                     </td>

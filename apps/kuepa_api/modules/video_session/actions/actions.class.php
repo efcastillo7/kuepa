@@ -143,5 +143,34 @@ class video_sessionActions extends sfActions {
      * @param sfRequest $request A request object
      */
     public function executeDelete(sfWebRequest $request) {}
+    
+    /**
+     * GET /video_session/{video_session_id}/participantes
+     * GET /video_session/{ids}
+     *
+     * @param sfRequest $request A request object
+     */
+    public function executeParticipants(sfWebRequest $request) {
+        $video_session_id  = $request->getParameter("video_session_id");
+        $participants = VideoSessionService::getInstance()->getParticipants($video_session_id);
+        
+        $data = array();
+        
+        foreach( $participants as $profile )
+        {          
+            $videoSessionParticipant = $profile->getVideoSessionParticipant();
+                          
+            $time = strtotime( $videoSessionParticipant->getUpdatedAt() ) - strtotime( $videoSessionParticipant->getCreatedAt() );
+            $time = ceil($time / 60);
+            
+            $data[] = array(
+                        'first_name' => $profile->getFirstName(),
+                        'last_name' => $profile->getLastName(),
+                        'time' => $time
+                      );
+        }
+                
+        return $this->renderText(json_encode($data));
+    }
 
 }
