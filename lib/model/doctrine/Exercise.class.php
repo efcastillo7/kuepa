@@ -63,38 +63,24 @@ class Exercise extends BaseExercise {
         return $q->execute();
     }
 
+   
     public function getTotal(){
-        $total = 0;
-        $questions = $this->getQuestionsByLevel();
 
-        for ($j = 0; $j < $questions->count(); $j++){
-            $sub_questions = $this->getQuestionsByLevel($questions[$j]->getId());
-            if($sub_questions->count()){
-                $total+=$sub_questions->count();
-                $d=$sub_questions->count();
-            }
-            else{
-                $total++;
-            }
-        }
+        /* Cantidad de preguntas en un ejercicio*/
+        $q = ExerciseHasExerciseQuestion::getRepository()->createQuery("q")
+        ->where('q.exercise_id = ?', $this->getId());
+        $q = $q->count();
 
-        // SELECT * FROM exercise_has_exercise_question e 
-        // WHERE e.exercise_id = '47' 
-        // AND e.exercise_question_id not in (
-        //     select d.exercise_parent_question_id 
-        //     from exercise_has_exercise_question d 
-        //     where d.exercise_id = 47 
-            // and d.exercise_parent_question_id is not null)
+        /* Cantidad de estimulos en un ejercicio*/
+        $query = "select distinct (exercise_parent_question_id)
+                    from exercise_has_exercise_question 
+                    where (exercise_id = ".$this->getId()." and exercise_parent_question_id is not null)";
 
-        // $q2 = ExerciseHasExerciseQuestion::getRepository()->createQuery("q")
-        // ->where('q.exercise_id = ?', $this->getId())
-        // ->andWhere('q.exercise_parent_question_id is not null');
+        $e = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($query);
+        $e= count($e);
 
-        // $q = ExerciseHasExerciseQuestion::getRepository()->createQuery("q")
-        //     ->where('q.exercise_id = ?', $this->getId())
-        //     ->andWhereNotIn('exercise_question_id', $q2);
-
-        return $total;
+        return ($q-$e);
+        
     }
 
     public function getQuestionValueByLevel($id=""){
