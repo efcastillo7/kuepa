@@ -42,10 +42,10 @@ class Exercise extends BaseExercise {
             ->innerJoin('eheq.ExerciseQuestion eq')
             ->innerJoin('eq.Answers ans')
             ->where('e.id = ?', $this->getId())
-            ->select("sum(ans.value) as total")
+            ->select("sum(ans.value) as totals")
             ->fetchOne();
 
-        return $q->getTotal();
+        return $q->getTotals();
     }
 
     public function getQuestionsByLevel($parent_id=""){
