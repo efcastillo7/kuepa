@@ -403,29 +403,32 @@ function refreshVideoSessions() {
        ids.push($(this).attr("data-id")); 
     });
 
+
     //post and process json response
-    $.ajax('/kuepa_api.php/video_session',{
-        dataType: 'json',
-        type: 'get',
-        data: {id: ids},
-        success: function(data){
-            for(var i in data){
-                var id = data[i].id;
-                var status = data[i].status;
-                var url = data[i].url;
-                
-                if( status !== "started" || url === null )
-                    $(".access-button-"+id).addClass("disabled");
-                else {
-                    $(".access-button-"+id).unbind("click");
-                    $(".access-button-"+id).removeClass("disabled");
-                    $(".access-button-"+id).attr("href", url);
-                }
-            }
+    if(ids.length){
+        $.ajax('/kuepa_api.php/video_session',{
+            dataType: 'json',
+            type: 'get',
+            data: {id: ids},
+            success: function(data){
+                for(var i in data){
+                    var id = data[i].id;
+                    var status = data[i].status;
+                    var url = data[i].url;
                     
-            setTimeout(refreshVideoSessions,5000);
-        }
-    });
+                    if( status !== "started" || url === null )
+                        $(".access-button-"+id).addClass("disabled");
+                    else {
+                        $(".access-button-"+id).unbind("click");
+                        $(".access-button-"+id).removeClass("disabled");
+                        $(".access-button-"+id).attr("href", url);
+                    }
+                }
+                        
+                setTimeout(refreshVideoSessions,5000);
+            }
+        });
+    }
 }
 
 
