@@ -6,6 +6,8 @@ homepage:
   url:   /
   param: { module: home, action: index }
 
+# lessons routing
+
 lesson_view:
   url: /lesson/view/:course_id/:chapter_id/:lesson_id
   param: { module: lesson, action: index}
@@ -14,13 +16,39 @@ lesson_view_resource:
   url: /lesson/view/:course_id/:chapter_id/:lesson_id/:resource_id
   param: { module: lesson, action: index}
 
-sf_guard_signin:
-  url:   /login
-  param: { module: sfGuardAuth, action: signin }
+# exercise routing
+
+exercise_list:
+  url: /course/:course_id/exercises
+  param: { module: exercise, action: list}
+
+exercise_new:
+  url: /lesson/:lesson_id/exercises/new
+  param: { module: exercise, action: edit }
+
+exercise_edit:
+  url: /exercises/:exercise_id
+  param: { module: exercise, action: edit }
+
+# tutorials routing
 
 video_session:
   url: /tutorias
   param: { module: video_session, action: index }
+  
+# messages
+
+messages:
+  url: /messages
+  param: { module: message, action: index }
+
+
+# login/logout/register routing
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+
 
 sf_guard_signout:
   url:   /logout
@@ -30,13 +58,36 @@ sf_guard_password:
   url:   /request_password
   param: { module: sfGuardAuth, action: password }
 
+sf_guard_forgot_password:
+  url:   /reestrablecer_cuenta
+  param: { module: sfGuardForgotPassword, action: index }
+
+sf_guard_forgot_password_change:
+  url:     /reestrablecer_cuenta/:unique_key
+  class:   sfDoctrineRoute
+  options:
+    model: sfGuardForgotPassword
+    type:  object
+  param:   { module: sfGuardForgotPassword, action: change }
+  requirements:
+    sf_method: [GET, POST]
+
 account_expired:
   url:  /account/expired
   param: { module: public, action: accountexpired }
 
-messages:
-  url: /messages
-  param: { module: message, action: index }
+api_auth_register:
+  url:  /auth/register
+  param: { module: register, action: register }
+
+api_auth_get_token:
+  url:  /auth/gettoken
+  param: { module: register, action: login }
+
+api_auth_login:
+  url:  /auth/loginbytoken
+  param: { module: register, action: loginbytoken }
+
 
 # generic rules
 # please, remove them by adding more specific rules

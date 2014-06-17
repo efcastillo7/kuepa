@@ -1,0 +1,3 @@
+  memcache:
+      ip: localhost
+      port: 11211

@@ -1,56 +1,40 @@
 <!-- Content -->
 <?php $resourceData = $resource->getResourceData()->getFirst();
       $exercise = $resourceData->getExercise();
-      $questions = $exercise->getQuestions();
+      $questions = $exercise->getQuestionsByLevel();
 ?>
 
 <form action="<?php echo url_for("exercise/validate") ?>" method="post" id="exercise_form">
   <section class="data-exercise two-columns clearpadding" data-spy="scroll" data-target="#navbar-scroll">
 
-    <div class="content">
-      <h2><?php echo $exercise->getTitle() ?></h2>
-
+    <div class="content margintop100">
+    <?php if ($sf_user->hasCredential("editor")): ?>
+    <a href="<?php echo url_for("@exercise_edit?exercise_id=" . $exercise->getId()) ?>" class="btn btn-primary btn-orange">Editar</a>
+    <?php endif; ?>
+      <h2>
+        <?php echo $exercise->getTitle() ?>
+      </h2>
       <section class="breadcrum gray">
         <div class="icon bg-<?php echo $course->getColor()?>-alt-1">
           <img src="<?php echo $course->getThumbnailPath() ?>">
         </div>
-
         <span>Ejercitación</span>
         <i class="spr ico-arrow-breadcrum"></i>
-
-        <span>Contesta a continuación las preguntas 1 a <?php echo $exercise->getQuestions()->count() ?></span>
+        <span>Contesta a continuación las preguntas 1 a <?php echo ($exercise->getTotal()) ?></span>
       </section>
     </div>
 
     <div class="content questions">
-      <?php for ($i=0; $i < $questions->count(); $i++): ?>
-      <h4 id="ex-question-<?php echo $i+1?>">
-        <i class="dot8 orange"></i> Pregunta <?php echo $i+1 ?>
-      </h4>
-      <?php include_partial("type_" . $questions[$i]->getType(), array('exercise' => $exercise, 'question' => $questions[$i]))?>
-      <?php endfor ?>
+      <?php include_partial("content_questions", array('questions' => $questions, 'exercise' => $exercise, 'type' => "", 'numero' => 0)) ?>
+      <button type="submit" class="btn btn-large btn-orange">Enviar respuestas y corregir</button>
 
-    </div><!-- /content questions -->
-
+    </div>
+    
   </section>
-
-
   <input type="hidden" name="exercise_id" value="<?php echo $exercise->getId() ?>">
-  <div class="row">
-    <section class="correct">
-      <div class="left">
-        <span class="subject"><?php echo $resource->getName() ?></span>
-      </div>
-      <div class="right">
-        <span class="send">Enviar respuestas y corregir</span>
-        <button type="submit" class="send-square blue">
-          <i class="spr ico-arrows-right"></i>
-          <i class="spr ico-arrows-right"></i>
-        </button>
-      </div>
-    </section>
-  </div>
+
 </form>
+<div class="clear"></div>
 
 <!-- Modals -->
 
@@ -59,15 +43,22 @@
     var options = {
         success: function(response, statusText, xhr, $form) {
             var exercise = response.data.exercise;
-            var answers = response.data.questions;
             var questions = response.data.questions;
             var total_time = new Date().getTime() - init_time;
             total_time = (total_time/60000).toFixed(1);
 
-            for (var key in answers){
-              var objs = $("span#answer_" + exercise.id + "_" + key);
-              for(var i=0;i<answers[key]['answers'].length;i++){
-                $(objs[i]).html("<img src='/images/icons/" + (answers[key]['answers'][i].correct ? "ok-icon.jpg" : "error-icon.png") + "'>");
+            for (var key in questions){
+              var objs = $("div#answer_" + exercise.id + "_" + key);
+              var span = $("span#answer_" + exercise.id + "_" + key);
+
+              $(objs).addClass(questions[key].correct ? "correct" : "incorrect");
+              $(objs).removeClass(!questions[key].correct ? "correct" : "incorrect");
+
+
+              //iterate answers for display (for types choose)
+              for(var i=0;i<span.length;i++){
+                $(span[i]).addClass(questions[key]['answers'][i].correct ? "correct" : "incorrect");
+                $(span[i]).removeClass(!questions[key]['answers'][i].correct ? "correct" : "incorrect");
               }
             }
 
@@ -87,8 +78,13 @@
                   exercise_id: exercise.id,
                   question_ids: question_ids,
                   onSuccess: function(item){
-                      alert('Listo, ya hemos armado tu camino de aprendizaje. Empieza a estudiar ahora!');
+                     // Cambiado mensaje a peticion de Jorge Garcia
+                     if ( item.length > 0 ){
+                      alert('Listo, hemos usado tus resultados para agregar algunas lecciones a tu camino de aprendizaje');
                       addItemsToPath(item);
+                     }else{
+                      alert('Muy bien, no es necesario agregar ninguna lección a tu camino por ahora');
+                     }
                   },
                   onError: function(data){
                       // alert('Ya tiene esa lección');
@@ -100,10 +96,4 @@
   };
 
   $("#exercise_form").ajaxForm(options);
-
-    $(document).ready(function(){
-        
-    });
-
-
 </script>

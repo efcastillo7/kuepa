@@ -1,7 +1,6 @@
 <?php
 
 class myUser extends sfGuardSecurityUser {
-
     const SFGUARD_USER_ATTR = 'sfGuarUser';
     const PROFILE_ATTR = 'profile';
     const COMPONENT_COMPLETED_STATUS  = 'CacheComponentCompleteStatus';
@@ -31,16 +30,27 @@ class myUser extends sfGuardSecurityUser {
         //entra cuando hay login succesfull
         //setear cultura de usuario, zona horaria, etc.
                 
-               
+        //log in        
         parent::signIn($user, $remember, $con);
 
         $this->setUser($user);
-	   $this->setCourses($this);
+        $this->setCollegesIds($user);
+        $this->setCourses($this);
+        $this->setStyle($user);
+        $this->setI18N();
+
+        //log access
+        LogService::getInstance()->access($this->getProfile()->getId());
     }
     
     public function signOut() {
-        parent::signOut();
+        //set logout url if needed
+        if($this->getLogoutURL() != ''){
+            sfConfig::set('app_sf_guard_plugin_success_signout_url', $this->getLogoutURL());
+        }
+
         $this->clearCurrentUser();
+        parent::signOut();
     }
     
     protected function setUser($user)
@@ -50,22 +60,6 @@ class myUser extends sfGuardSecurityUser {
         
         $user->setProfile( $profile );
         $this->setAttribute(self::SFGUARD_USER_ATTR, $user);
-    }
-    
-    public function getGuardUser()
-    {
-        return sfContext::getInstance()->getUser()->getAttribute(self::SFGUARD_USER_ATTR);
-    }
-
-    public function getProfile()
-    {
-        return sfContext::getInstance()->getUser()->getAttribute(self::PROFILE_ATTR);
-    }
-    
-    protected function clearCurrentUser()
-    {
-        return $this->setAttribute(self::SFGUARD_USER_ATTR, null);
-        return $this->setAttribute(self::PROFILE_ATTR, null);
     }
 
     protected function setCourses($user){
@@ -103,6 +97,134 @@ class myUser extends sfGuardSecurityUser {
         }
     }
 
+    protected function setI18N($profile = null){
+        if($profile == null){
+            $profile = $this->getProfile();
+        }
+
+        if($profile->getCulture()){
+            $this->setAttribute(self::CULTURE_LANG, $profile->getCulture());
+            $this->setCulture($profile->getCulture());
+        }
+
+        if($profile->getTimezone()){
+            $this->setAttribute(self::CULTURE_TIMEZONE, $profile->getTimezone());
+        }
+    }
+
+    protected function setCollegesIds($user){
+        $colleges = $user->getProfile()->getColleges();
+
+        foreach ($colleges as $college) {
+            if($college->getLogoutUrl()){
+                $this->setLogoutURL($college->getLogoutUrl());
+            }
+        }
+
+        $this->setAttribute(self::USER_COLLEGES, $colleges->getPrimaryKeys());
+    }
+
+    public function getCollegeIds(){
+        return $this->getAttribute(self::USER_COLLEGES);
+    }
+
+    protected function setStyle($user){
+        $style = "";
+
+        $colleges = $user->getProfile()->getColleges();
+
+        if($colleges->count()){
+            //first college
+            $style = $colleges->getFirst()->getStyle();
+        }
+
+        $this->setAttribute(self::LAYOUT_STYLE, $style);
+    }
+
+    public function getTimezone(){
+        return $this->getAttribute(self::CULTURE_TIMEZONE);
+    }
+
+    public function resetCulture($profile){
+        $this->setI18N($profile);
+    }
+
+    public function getStyle(){
+        return sfContext::getInstance()->getUser()->getAttribute(self::LAYOUT_STYLE);
+    }
+    
+    public function getGuardUser()
+    {
+        return sfContext::getInstance()->getUser()->getAttribute(self::SFGUARD_USER_ATTR);
+    }
+
+    public function getProfile()
+    {
+        return sfContext::getInstance()->getUser()->getAttribute(self::PROFILE_ATTR);
+    }
+    
+    protected function clearCurrentUser()
+    {
+        $this->setAttribute(self::SFGUARD_USER_ATTR, null);
+        $this->setAttribute(self::PROFILE_ATTR, null);
+        $this->setAttribute(self::COMPONENT_COMPLETED_STATUS, null);
+        $this->setAttribute(self::USER_COURSES_ENABLED, null);
+        $this->setAttribute(self::USER_COURSES, null);
+        $this->setAttribute(self::LAYOUT_STYLE, null);
+        $this->setAttribute(self::CULTURE_LANG, null);
+        $this->setAttribute(self::CULTURE_TIMEZONE, null);
+        $this->setAttribute(self::LOGOUT_URL, null);
+    }
+
+    public function setLogoutURL($url = null){
+        $this->setAttribute(self::LOGOUT_URL, $url);
+    }
+
+    public function getLogoutURL(){
+        return $this->getAttribute(self::LOGOUT_URL);
+    }
+
+
+    /* for cache */
+    public function getEnabledCourses(){
+        return sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED);
+    }
+
+    public function getAllCourses(){
+        return sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES);
+    }
+
+    public function getDisplayCourses(){
+        $all_courses = $this->getAllCourses();
+        $enabled_courses = $this->getEnabledCourses();
+
+        return array_diff($all_courses, $enabled_courses);
+    }
+
+    public function setEnabledCourses($course_id){
+        $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED, array());
+
+        if(!is_array($course_id)){
+            $course_id = array($course_id);
+        }
+
+        $_courses = array_unique (array_merge($_courses, $course_id));
+
+        return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, $_courses);
+    }
+
+    public function addEnabledCourses($courses_id){
+        if(!is_array($courses_id)){
+            $courses_id = array($courses_id);
+        }
+
+        $this->setEnabledCourses($courses_id);
+
+        foreach ($courses_id as $course_id) {
+            $this->addCredential("course_" . $course_id);
+        }
+    }
+
     public function setAllCourses($course_id){
         $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES, array());
 
@@ -131,18 +253,23 @@ class myUser extends sfGuardSecurityUser {
 
         return $value;
     }
-    
-    public function setEnabledCourses($course_id){
-        $_courses = sfContext::getInstance()->getUser()->getAttribute(self::USER_COURSES_ENABLED, array());
-    
-        if(!is_array($course_id)){
-            $course_id = array($course_id);
+
+    public function getCompletedStatus($component_id = null){
+        $_completed_status = $this->getAttribute(self::COMPONENT_COMPLETED_STATUS);
+
+        if($component_id == null){
+            return $_completed_status;
         }
-    
-        $_courses = array_unique (array_merge($_courses, $course_id));
-    
-        return sfContext::getInstance()->getUser()->setAttribute(self::USER_COURSES_ENABLED, $_courses);
+
+        if(isset($_completed_status[$component_id])){
+            return $_completed_status[$component_id];
+        }
+
+        //get from db
+        $pccs = ProfileComponentCompletedStatusService::getInstance()->getCompletedStatus($this->getProfile()->getId(), $component_id);
+        // $pccs = 0;
+
+        return $this->setCompletedStatus($component_id, $pccs);
     }
-    
 
 }

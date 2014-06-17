@@ -25,55 +25,38 @@ class profileActions extends sfActions
      * @param sfRequest $request A request object
      */
 	public function executeContacts(sfWebRequest $request) {
+        
         $profile = $this->getUser()->getProfile();
+        $messages = array();
 
-        $without_messages = array();
-        $with_messages = array();
-        foreach ($profile->getFriends() as $friend) {
-            $messages_q = MessagingService::getInstance()->getMessagesFromUsers(array($profile->getId(),$friend->getId()));
-            $i = $messages_q->count();
+        $friends = $profile->getFriends();
+
+        $friends_ids = $friends->getPrimaryKeys();
+        //TODO: OPTIMIZE!
+
+        foreach ($friends as $friend) {
+            $message_last = MessagingService::getInstance()->getLastMessageFromUser($profile->getId(),$friend->getId());
             $last_message = array();
-            $new_messages = false;
-
-            if($i){
+            if($message_last){
                 $last_message = array(
-                        'date' => $messages_q[$i-1]->getUpdatedAt(),
-                        'content' => $messages_q[$i-1]->getContent(),
-                        'id' => $messages_q[$i-1]->getId()
+                    'date' =>  date("d/m/Y h:m:s", strtotime($message_last->getUpdatedAt())),
+                    'content' => $message_last->getContent(),
+                    'id' => $message_last->getParentId() ? $message_last->getParentId() : $message_last->getId(),
+                    'created_at' => $message_last->getCreatedAt()
                 );
-
-                $new_messages = !$messages_q[$i-1]->getRecipients()->getFirst()->getIsRead();
             }
-
-            if($new_messages){
-                $with_messages[] = array(
-                    'id' => $friend->getId(),
-                    'first_name' => $friend->getFirstName(),
-                    'last_name' => $friend->getLastName(),
-                    'nickname' => $friend->getNickname(),
-                    'avatar' => '/uploads/avatars' . $friend->getAvatar(),
-                    'online' => false,
-                    'last_message' => $last_message,
-                    'new_messages' => $new_messages
-                );
-            }else{
-            	$without_messages[] = array(
-            		'id' => $friend->getId(),
-            		'first_name' => $friend->getFirstName(),
-            		'last_name' => $friend->getLastName(),
-            		'nickname' => $friend->getNickname(),
-                    'avatar' => '/uploads/avatars' . $friend->getAvatar(),
-            		'online' => false,
-            		'last_message' => $last_message,
-                    'new_messages' => $new_messages
-        		);
-            }
-
-
-
+            
+            $messages[] = array(
+                'id' => $friend->getId(),
+                'nickname' => $friend->getNickname(),
+                'firstname' => $friend->getFirstName(),
+                'lastname' => $friend->getLastName(),
+                'role' => $friend->getSfGuardUser()->getSfGuardUserGroup()->getFirst()->getGroup()->getDescription(),
+                'online' => false,
+                'last_message' => $last_message,
+            );
         }
-
-        return $this->renderText(json_encode(array_merge($with_messages, $without_messages)));
+        return $this->renderText(json_encode($messages));
 	}
 
 	/**
@@ -114,9 +97,48 @@ class profileActions extends sfActions
      * @param sfRequest $request A request object
      */
     public function executeAdd(sfWebRequest $request) {
-    	
+    	$id = $request->getParameter("id");
+        $data = $request->getParameter("profile");
+        $reponse_status = false;
+
+        $profile = $this->getUser()->getProfile();
+
+        //TODO: check if is user for direct changes
+        //if not directive then avoid id
+
+        if(isset($data['phone']) && !empty($data['phone'])){
+            $profile->setPhone($data['phone']);
+            $reponse_status = true;
+        }
+
+        if(isset($data['celphone']) && !empty($data['celphone'])){
+            $profile->setMobilePhone($data['celphone']);
+            $reponse_status = true;
+        }
+
+        $profile->save();
+
+        $response = array('status' => "ok");
+
+        if(!$reponse_status){
+            $this->getResponse()->setStatusCode(406);
+            $response = 'Campos Invalidos';
+        }
+
 
         return $this->renderText(json_encode($response));
+    }
+
+    public function executeFlashmessage(sfWebRequest $request) {
+        //check if post
+        $this->forward404Unless($request->isMethod('POST'));
+
+        $id = $request->getParameter('id');
+        $profile = $this->getUser()->getProfile();
+
+        FlashMessageService::getInstance()->setMessagesAsViewed($profile->getId(), $id);
+
+        return $this->renderText(json_encode(array('status' => 'ok')));
     }
 
     /**

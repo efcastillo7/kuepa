@@ -1,0 +1,25 @@
+<table>
+	<thead>
+    <tr>
+    	<th>Nombre</th>
+    	<th>Apellido</th>
+    	<th>Tiempo</th>
+    </tr>
+    </thead>
+    <tbody>
+<% if( participants.length > 0){ %>
+
+	<% for(var i=0; i < participants.length; i++){ %>
+    <tr>
+    	<td><%= participants[i].first_name %></td>
+    	<td><%= participants[i].last_name %></td>
+    	<td><%= participants[i].time %> minutos</td>
+    </tr>
+	<% } %>
+<% } else { %>
+	<tr>
+    	<td class="no-participants" colspan="3">No hay participantes</td>
+    </tr>
+<% } %>
+	</thead>
+</table>

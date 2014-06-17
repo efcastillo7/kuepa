@@ -6,10 +6,12 @@
         </div>
         <div class="data">
             <div><a class="eg-btn-see" href="<?php echo url_for("course/details?id=" . $course->getId()) ?>" rel="tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Ver detalle del curso"><i></i></a></div>
-            <?php if ($sf_user->hasCredential("docente")): ?>
+            <?php if ($sf_user->hasCredential("editor")): ?>
                 <div><a class="component_edit_link eg-btn-edt" target="modal-create-course-form-<?php echo $course->getId() ?>" rel="tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Editar"><i></i></a></div>
-                <div><a class="eg-btn-sts" href="<?php echo url_for("stats/class?course=" . $course->getId()) ?>" rel="tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Estadísticas"><i></i></a></div>
-            <?php endif; ?>    
+            <?php endif; ?>
+            <?php if ($sf_user->hasCredential("docente") || $sf_user->hasCredential("docente_bogota")): ?>
+                <div><a class="eg-btn-sts" href="<?php echo url_for("stats/class?course_id=" . $course->getId()) ?>" rel="tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Estadísticas"><i></i></a></div>
+            <?php endif; ?>
         </div>
         <div class="eg-details">
             <p class="title clearmargin"><a href="<?php echo url_for("course/details?id=" . $course->getId()) ?>"><?php echo $course->getName() ?></a></p>
@@ -25,6 +27,6 @@
         </div>
     </div>
 </div>
-<?php if ($sf_user->hasCredential("docente")): ?>
+<?php if ($sf_user->hasCredential("editor")): ?>
 <?php include_component('course', 'Modalform', array('id' => $course->getId())) ?>
 <?php endif; ?>

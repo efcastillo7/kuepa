@@ -54,7 +54,7 @@ a{
 <table width="670" border="0" cellpadding="0" cellspacing="0" align="center" style="font-family:Arial; font-size:14px; color:#8D8A6A;">
    <tr>
     <td>Cualquier sugerencia o petici&oacute;n no dudes en escribirnos, estaremos atentos. <br />
-        <b>Gracias por tu participaci&oacute;n.  &iexcl;Seguimos avanzado&#33; </b>
+        <b>Gracias por tu participaci&oacute;n!</b>
     </td>
   </tr>
   <tr><td>&nbsp;</td></tr>

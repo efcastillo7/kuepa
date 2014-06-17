@@ -80,4 +80,4 @@ var dp_defaults = {'course_id' : '<?php echo $course->getId(); ?>',
                 'lesson_id' : '<?php echo ($lesson) ? $lesson->getId() : ""; ?>'};
 
 </script>
- <script type="text/javascript" src="/js/uno/lesson_dependency.js"></script>
+<script type="text/javascript" src="/js/uno/lesson_dependency.js"></script>

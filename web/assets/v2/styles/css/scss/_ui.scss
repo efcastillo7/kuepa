@@ -9,6 +9,9 @@
   z-index: 500;
   right: 0;
   left: 0;
+  overflow:auto;
+  height:46px;
+  border-bottom:4px solid #22344a;
 
   .icon{
     width: 33px;
@@ -39,9 +42,11 @@
     background: $gray3;
     border-top:1px solid $input-disabled;
     border-bottom:1px solid $input-disabled;
+    height:49px;
     .ico-arrow-breadcrum{opacity: 1;}
   }
 }
+
 
 /* --------------------------------------------------
 // Title with icons
@@ -78,3 +83,50 @@
     }
   }
 }
+
+
+/* --------------------------------------------------
+// Tabs
+-------------------------------------------------- */
+
+.tabbable {
+  border-bottom: 1px solid #ddd;
+  .nav-tabs {
+    border:none;
+    >li {
+      font-family: HelveticaRegular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      >a {
+        padding:10px 5px 10px 5px;
+        margin-right:15px;
+        color:#787880;
+        border:none;
+        &:hover {
+          background-color:transparent;
+          border:none;
+          color:#404042;
+        }
+      }
+      &.active>a {
+        color:#ff671b;
+        border:none;
+        background-color:none;
+        font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        border-bottom:3px solid #ff671b;
+      }
+    }
+  }
+}
+
+
+.container-full {
+  padding:0;
+}
+
+
+.progress-bar {
+  min-width:26px;
+  line-height:19px;
+  font-family: HelveticaBd, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:10px;
+}
+

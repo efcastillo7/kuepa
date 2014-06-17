@@ -15,7 +15,6 @@ class ProfileLearningPath extends BaseProfileLearningPath
     const ALL = 0;
     const IN_PROGRESS = 1;
     const APPROVED = 2;
-    
 	/**
      * 
      * @return ProfileLearningPathTable

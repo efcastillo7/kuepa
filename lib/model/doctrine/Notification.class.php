@@ -14,4 +14,20 @@ class Notification extends BaseNotification {
     public static function getRepository() {
         return Doctrine_Core::getTable('Notification');
     }
+
+    public function preSave($event)   {
+        self::clearCache($this->getProfileId());
+    }
+    
+    public function preDelete($event) {
+        self::clearCache($this->getProfileId());
+    }
+
+    public static function clearCache($profile_id){
+    	CacheHelper::getInstance()->delete('Notification_getUnread', array( $profile_id ));
+        CacheHelper::getInstance()->delete('Notification_getUnreadCount', array( $profile_id ));
+        CacheHelper::getInstance()->delete('Notification_getAll', array( $profile_id ));
+        CacheHelper::getInstance()->delete('Notification_getAll', array( $profile_id, 10, null ));
+    }
+
 }

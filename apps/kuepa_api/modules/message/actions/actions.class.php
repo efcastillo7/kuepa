@@ -10,12 +10,12 @@
  */
 class messageActions extends sfActions
 {
- 	/**
-	 * POST /message
-	 *
-	 * @param sfRequest $request A request object
-	 */
-	public function executeCreate(sfWebRequest $request) {
+    /**
+     * POST /message
+     *
+     * @param sfRequest $request A request object
+     */
+    public function executeCreate(sfWebRequest $request) {
             $profile_id = $this->getUser()->getProfile()->getId();
 
             $recipients = $request->getPostParameter("recipients");
@@ -24,40 +24,68 @@ class messageActions extends sfActions
             $parent_id = $request->getPostParameter("thread_id");
             $send_notification = $request->getPostParameter("send_notification", "true");
 
-        if($content != ""){
-            $message = MessagingService::getInstance()->sendMessage($profile_id, $recipients, $subject, $content);
+            if($content != ""){
+                $message = MessagingService::getInstance()->sendMessage($profile_id, $recipients, $subject, $content);
 
-            if($send_notification == "true"){
-                NotificationsService::getInstance()->addMessageNotification($message->getId());
+                if($send_notification == "true"){
+                    NotificationsService::getInstance()->addMessageNotification($message->getId());
+                }
+
+                $response = array(
+                    'id' => $message->getId(),
+                    'subject' => $message->getSubject(),
+                    'content' => $message->getContent(),
+                    'author' => $message->getProfile()->getNickname(),
+                    'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
+                    'date' =>  date("d/m/Y h:m:s", strtotime($message->getCreatedAt())),
+                    'created_at' => strtotime($message->getCreatedAt()),
+                    'in' => $message->getAuthorId() == $profile_id ? false : true
+                );
             }
 
+            return $this->renderText(json_encode($response));
+        
+    }
+
+    public function executeGetFirstsMessages(sfWebRequest $request) {
+        
+        $remitente_id = $this->getUser()->getProfile()->getId();
+        $destinatario_id = $request->getGetParameter("id");
+        $from_time = $request->getGetParameter("from_time");
+
+        if($from_time == "null"){
+            $from_time = null;
+        }
+        
+        $messages = MessagingService::getInstance()->getLastMessagesFromUsers($remitente_id, $destinatario_id, $from_time);
+        
+        foreach($messages as $message){
             $response[] = array(
                 'id' => $message->getId(),
                 'subject' => $message->getSubject(),
                 'content' => $message->getContent(),
                 'author' => $message->getProfile()->getNickname(),
                 'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
-                'date' => $message->getCreatedAt(),
+                'date' =>  date("d/m/Y h:m:s", strtotime($message->getCreatedAt())),
                 'created_at' => strtotime($message->getCreatedAt()),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
             );
         }
-
+        
         return $this->renderText(json_encode($response));
-	}
-
-	/**
+        
+    }
+    /**
      * GET /message
      *
      * @param sfRequest $request A request object
      */
     public function executeList(sfWebRequest $request) {
-    	$profile_id = $this->getUser()->getProfile()->getId();
-
+        $profile_id = $this->getUser()->getProfile()->getId();
         $messages = MessagingService::getInstance()->getMessagesForUser($profile_id);
 
         //TODO: check for valid parameters
-
+        
         $response = array();
         foreach($messages as $message){
             $recipients = array();
@@ -67,18 +95,18 @@ class messageActions extends sfActions
                 }
             }
 
-        	$response[] = array(
-        		'id' => $message->getId(),
-        		'subject' => $message->getSubject(),
-        		'content' => $message->getContent(),
-        		'author' => $message->getProfile()->getNickname(),
+            $response[] = array(
+                'id' => $message->getId(),
+                'subject' => $message->getSubject(),
+                'content' => $message->getContent(),
+                'author' => $message->getProfile()->getNickname(),
                 'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
                 'recipients' => $recipients,
-                'date' => $message->getCreatedAt(),
+                'date' =>  date("d/m/Y h:m:s", strtotime($message->getCreatedAt())),
                 'created_at' => strtotime($message->getCreatedAt()),
-        		'last_update' => $message->getUpdatedAt(),
+                'last_update' => $message->getUpdatedAt(),
                 'read' => $message->getRecipients()->getFirst()->getIsRead()
-    		);
+            );
         }
 
         return $this->renderText(json_encode($response));
@@ -94,24 +122,27 @@ class messageActions extends sfActions
         $profile_id = $this->getUser()->getProfile()->getId();
         $from_time = $request->getParameter("from_time", null);
 
-        //TODO: check for valid parameters
+        if($from_time == "null"){
+            $from_time = null;
+        }
 
+        //TODO: check for valid parameters
         $messages = MessagingService::getInstance()->getThread($thread_id, $from_time);
         $response = array();
 
         foreach($messages as $message){
-        	$response[] = array(
-        		'id' => $message->getId(),
-        		'subject' => $message->getSubject(),
-        		'content' => $message->getContent(),
-        		'author' => $message->getProfile()->getNickname(),
+            $response[] = array(
+                'id' => $message->getId(),
+                'subject' => $message->getSubject(),
+                'content' => $message->getContent(),
+                'author' => $message->getProfile()->getNickname(),
                 'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
-        		'date' => $message->getCreatedAt(),
+                'date' =>  date("d/m/Y h:m:s", strtotime($message->getCreatedAt())),
                 'created_at' => strtotime($message->getCreatedAt()),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
-    		);
+            );
         }
-
+        
         //mark message
         MessagingService::getInstance()->markMessageAsRead($profile_id, $thread_id);
 
@@ -124,12 +155,12 @@ class messageActions extends sfActions
      * @param sfRequest $request A request object
      */
     public function executeAdd(sfWebRequest $request) {
-    	$profile_id = $this->getUser()->getProfile()->getId();
+        $profile_id = $this->getUser()->getProfile()->getId();
 
-    	//TODO: check for valid parameters
+        //TODO: check for valid parameters
 
-		$content = $request->getPostParameter("content");
-		$parent_id = $request->getParameter("id");
+        $content = $request->getPostParameter("content");
+        $parent_id = $request->getParameter("id");
         $send_notification = $request->getPostParameter("send_notification", "true");
         $response = null;
 
@@ -146,7 +177,7 @@ class messageActions extends sfActions
                 'content' => $message->getContent(),
                 'author' => $message->getProfile()->getNickname(),
                 'avatar' => $message->getProfile()->getAvatarPath() . $message->getProfile()->getAvatar(),
-                'date' => $message->getCreatedAt(),
+                'date' =>  date("d/m/Y h:m:s", strtotime($message->getCreatedAt())),
                 'created_at' => strtotime($message->getCreatedAt()),
                 'in' => $message->getAuthorId() == $profile_id ? false : true
             );
@@ -172,14 +203,14 @@ class messageActions extends sfActions
     public function executeUnreads(sfWebRequest $request) {
         $profile_id = $this->getUser()->getProfile()->getId();
 
-        $messages = MessagingService::getInstance()->getUnreadMessages($profile_id);
-
+        $message = MessagingService::getInstance()->getUnreadMessages($profile_id);
+        
         $ret = array();
-
-        foreach ($messages as $message) {
+        if($message){
             $ret[] = array(
                 'id' => $message->getId(),
-                'author_id' => $message->getAuthorId()
+                'author_id' => $message->getAuthorId(),
+                'content'   => $message->getContent(),
             );
         }
 

@@ -18,9 +18,9 @@ perspective effects (not including the modals and the overlay).
 	perspective: 600px;
 }
 
-.container {
+/*.container {
 	min-height: 100%;
-}
+}*/
 
 .md-modal {
 	display: none;
@@ -73,6 +73,10 @@ perspective effects (not including the modals and the overlay).
 	position: relative;
 	border-radius: 3px;
 	margin: 0 auto;
+}
+
+.md-content form input, .md-content form textarea{
+	color: black;
 }
 
 .md-content h3 {

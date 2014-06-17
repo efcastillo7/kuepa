@@ -170,6 +170,23 @@ class VideoSessionService {
 
         return implode(",", $ids);
     }
+    
+    
+    /**
+     *
+     * @param string $video_session_id
+     * @param Doctrine_Collection
+     */
+    public function getParticipants($video_session_id){
+
+        return Profile::getRepository()
+                ->createQuery('p')
+                ->addSelect('p.*')
+                ->addSelect('vsp.*')
+                ->innerJoin('p.VideoSessionParticipant vsp')
+                ->addWhere('vsp.video_session_id = ?', $video_session_id)
+                ->execute();
+    }
 
     /**
      *
@@ -215,11 +232,12 @@ class VideoSessionService {
      * @param type $profile
      * @return array of \VideoSession
      */
-    public function getNextVideoSessionsFromProfessor($profile) {
+    public function getNextVideoSessionsFromProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsFromProfessor(array(
             "next"    => true,
-            "profile" => $profile
+            "profile" => $profile,
+            "courses" => $courses
         ));
 
     }
@@ -230,11 +248,12 @@ class VideoSessionService {
      * @param type $profile
      * @return \VideoSession
      */
-    public function getPrevVideoSessionsFromProfessor($profile) {
+    public function getPrevVideoSessionsFromProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsFromProfessor(array(
             "prev"      => true,
-            "profile"   => $profile
+            "profile"   => $profile,
+            "courses" => $courses
         ));
     }
 
@@ -285,11 +304,12 @@ class VideoSessionService {
      * @param type $profile
      * @return array of \VideoSession
      */
-    public function getNextVideoSessionsForProfessor($profile) {
+    public function getNextVideoSessionsForProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsForProfessor(array(
             "next"       => true,
-            "profile"    => $profile
+            "profile"    => $profile,
+            "courses"    => $courses
         ));
 
     }
@@ -300,11 +320,12 @@ class VideoSessionService {
      * @param type $profile
      * @return \VideoSession
      */
-    public function getPrevVideoSessionsForProfessor($profile) {
+    public function getPrevVideoSessionsForProfessor($profile, $courses = null) {
 
         return $this->getVideoSessionsForProfessor(array(
             "prev"      => true,
-            "profile"   => $profile
+            "profile"   => $profile,
+            "courses"    => $courses
         ));
     }
 
@@ -314,11 +335,12 @@ class VideoSessionService {
      * @param type $profile
      * @return array of \VideoSession
      */
-    public function getNextVideoSessionsForUser($profile) {
+    public function getNextVideoSessionsForUser($profile, $courses = null) {
 
         return $this->getVideoSessionsForUser(array(
             "next"       => true,
-            "profile"    => $profile
+            "profile"    => $profile,
+            "courses"    => $courses
         ));
 
     }
@@ -329,11 +351,12 @@ class VideoSessionService {
      * @param type $profile
      * @return \VideoSession
      */
-    public function getPrevVideoSessionsForUser($profile) {
+    public function getPrevVideoSessionsForUser($profile, $courses = null) {
 
         return $this->getVideoSessionsForUser(array(
             "prev"       => true,
-            "profile"    => $profile
+            "profile"    => $profile,
+            "courses"    => $courses
         ));
     }
 
@@ -367,9 +390,13 @@ class VideoSessionService {
             throw new Exception("Profile not specified");
         }
 
-        $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        if(!isset($config["courses"]) || $config["courses"] == null){
+            $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        }else{
+            $courses = $config["courses"];
+        }
 
-        foreach($courses as $course){ $ids[] = $course->getId(); }
+        $ids = $courses->getPrimaryKeys();
 
 
         $q = VideoSession::getRepository()->createQuery("vs")
@@ -413,7 +440,12 @@ class VideoSessionService {
             throw new Exception("Profile not specified");
         }
 
-        $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        if(!isset($config["courses"]) || $config["courses"] == null){
+            $courses = ComponentService::getInstance()->getCoursesForUser($config["profile"]);
+        }else{
+            $courses = $config["courses"];
+        }
+
 
         foreach($courses as $course){ $courses_ids[]=$course->getId(); }
 

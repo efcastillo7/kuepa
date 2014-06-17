@@ -17,6 +17,40 @@ class resourceActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('default', 'module');
+  }
+
+  public function executeEdit(sfWebRequest $request){
+  	try {
+		$id = $request->getParameter("id");
+		$name = $request->getParameter("name", null);
+  		$resource = Resource::getRepository()->find($id);
+
+  		//get first resource (only available for now)
+  		$resource_data = $resource->getResourceData()->getFirst();
+
+  		//get content
+  		$content = $request->getParameter("content");
+
+  		//update content
+  		$resource_data->setContent($content)
+  					  ->save();
+
+  		//update title
+  		if($name){
+	  	    $resource->setName($name)
+	  	    		 ->save();
+  		}
+
+		return $this->renderText(json_encode($resource->toArray()));
+	} catch (ComponentNotFound $e) {
+		$this->getResponse()->setStatusCode(404);
+
+		return $this->renderText(json_encode(Array('status' => 'error')));
+	} catch (Exception $e) {
+		$this->getResponse()->setStatusCode(500);
+
+		return $this->renderText(json_encode(Array('status' => 'error')));
+	}
+
   }
 }

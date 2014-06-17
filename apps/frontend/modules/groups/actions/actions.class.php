@@ -13,7 +13,7 @@ class groupsActions extends kuepaActions
   public function executeIndex(sfWebRequest $request)
   {
     // $this->groups = Groups::getRepository()->createQuery('g')->execute();
-     $this->groups = GroupsService::getInstance()->getGroupsByLevel(0);
+     $this->groups = GroupsService::getInstance()->getGroupsByProfile($this->getUser()->getProfile()->getId(), 0);;
      $this->profile =  $this->getProfile();
   }
 
@@ -85,7 +85,12 @@ class groupsActions extends kuepaActions
   public function executeProfilesForm(sfWebRequest $request){
     $group_id = $request->getParameter('group_id');
     $group = GroupsService::getInstance()->find($group_id);
-    $profiles = GroupsService::getInstance()->getProfiles($group_id, "profiles");
+
+    $filters = array();
+    $access_group_ids = $this->getUser()->getProfile()->getFriends()->getPrimaryKeys();
+    $filters[] = array('cond' => "p.id in (" . implode(",", $access_group_ids) . ")", 'value' => "");
+
+    $profiles = GroupsService::getInstance()->getProfiles($group_id, "profiles", $filters);
 
     $locals = array('profiles' => $profiles,
                     'group' => $group );

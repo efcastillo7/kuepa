@@ -7,15 +7,25 @@ Profile:
   columns:
     sf_guard_user_id:          integer
     google_id: varchar(45)
-    nickname:                  varchar(20)
-    first_name:                varchar(20)
-    last_name:                 varchar(20)
+    nickname:                  varchar(60)
+    first_name:                varchar(60)
+    last_name:                 varchar(60)
     birthdate:                 date
     sex:                       { type: enum, values: [male, female] }
     valid_until:               date
     avatar:                    varchar(100)
     current_module:            varchar(50)
     current_action:            varchar(50)
+    culture:                   varchar(20)
+    timezone:                  varchar(50)
+    country:                   varchar(20)
+    district:                  varchar(30)
+    institution:               varchar(50)
+    local_id_type:             varchar(20)
+    local_id:                  varchar(50)
+    phone:                     varchar(50)
+    mobile_phone:              varchar(50)
+    master_group_id:           integer
   relations:
     sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }
     Colleges:
@@ -27,7 +37,7 @@ Profile:
       foreignAlias: Profiles
     Groups:
       class: Groups
-      refClass: GroupProfile
+      refClass: ProfileHasGroup
       type: many
       local: profile_id
       foreign: group_id
@@ -45,6 +55,17 @@ Profile:
       local: id
       foreign: profile_id
       type: many
+    MasterGroup:
+      class: Groups
+      local: master_group_id
+      foreign: id
+      type: one
+    LearningWay:
+      alias: LearningWays
+      refClass: ProfileHasLearningWay
+      local: learning_way_id
+      foreign: profile_id
+      type: many
 
 ProfileLearningPath:
   columns:
@@ -52,6 +73,18 @@ ProfileLearningPath:
     component_id: {type: integer, primary: true}
     deadline: { type: date }
     position: { type: integer, default: 0 }
+    profile_learning_path_status_id: { type: integer, default: 1 }
+  relations:
+    Status:
+      class: ProfileLearningPathStatus
+      local: profile_learning_path_status_id
+      foreign: id
+      type: one
+
+ProfileLearningPathStatus:
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    name: varchar(100)
 
 ProfileCollege:
   columns:
@@ -71,6 +104,8 @@ College:
     id: { type: integer, primary: true, autoincrement: true }
     name: varchar(255)
     style: string
+    show_status: string
+    logout_url: string
   relations:
     Components:
       class: Component
@@ -147,17 +182,17 @@ Chapter:
     type: column_aggregation
     keyField: type
     keyValue: Chapter
-  relations:
-    Course:
-      refClass: ViewCourseHasChapter
-      local: chapter_id
-      foreign: course_id
-      type: many
-    Lesson:
-      refClass: ViewChapterHasLesson
-      local: chapter_id
-      foreign: lesson_id
-      type: many
+  # relations:
+  #   Course:
+  #     refClass: ViewCourseHasChapter
+  #     local: chapter_id
+  #     foreign: course_id
+  #     type: many
+  #   Lesson:
+  #     refClass: ViewChapterHasLesson
+  #     local: chapter_id
+  #     foreign: lesson_id
+  #     type: many
 
 Lesson:
   inheritance:
@@ -165,17 +200,17 @@ Lesson:
     type: column_aggregation
     keyField: type
     keyValue: Lesson
-  relations:
-    Resource:
-      refClass: ViewLessonHasResource
-      local: lesson_id
-      foreign: resource_id
-      type: many
-    Chapter:
-      refClass: ViewChapterHasLesson
-      local: chapter_id
-      foreign: lesson_id
-      type: many
+  # relations:
+  #   Resource:
+  #     refClass: ViewLessonHasResource
+  #     local: lesson_id
+  #     foreign: resource_id
+  #     type: many
+  #   Chapter:
+  #     refClass: ViewChapterHasLesson
+  #     local: chapter_id
+  #     foreign: lesson_id
+  #     type: many
 
 LearningPath:
   columns:
@@ -273,6 +308,74 @@ PredictiveLearningPath:
       fields: [profile_id, course_id, chapter_id, lesson_id]
       type: unique
 
+ProfileHasLearningWay:
+  columns:
+    learning_way_id: integer
+    profile_id: integer
+  relations:
+    Profile:
+      type: one
+      local: profile_id
+      foreign: id
+    LearningWay:
+      type: one
+      local: learning_way_id
+      foreign: id
+  indexes:
+    plw_unique_user_learning_way:
+      fields: [profile_id, learning_way_id]
+      type: unique
+
+LearningWay:
+  actAs:
+    Timestampable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    name: { type: string }
+    description: {type: string}
+  relations:
+    Profile:
+      alias: Profiles
+      refClass: ProfileHasLearningWay
+      local: learning_way_id
+      foreign: profile_id
+      type: many
+    ProfileHasLearningWay:
+      local: id
+      foreign: learning_way_id
+      type: one
+
+LearningWayItem:
+  actAs:
+    Timestampable: ~
+  columns:
+    learning_way_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    position: integer
+  relations:
+    LearningWay:
+      local: learning_way_id
+      foreign: id
+      type: one
+    Course:
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      local: lesson_id
+      foreign: id
+      type: one
+  indexes:
+    dplp_unique_learning_path_item:
+      fields: [learning_way_id, course_id, chapter_id, lesson_id]
+      type: unique
+
 DependencyPath:
   columns:
     course_id: integer
@@ -365,7 +468,7 @@ ResourceData:
     parent_id: { type: integer }
     duration: float
     level: { type: enum, values: [beginner, intermediate, advance]}
-    word_count: { type: integer },
+    word_count: { type: integer }
     reading_time: { type: integer, default: 0}
   relations:
     Author:
@@ -443,6 +546,8 @@ Exercise:
     random: integer
     results_disabled: boolean
   relations:
+    Chapter: { class: Component, onDelete: CASCADE, local: chapter_id, foreign: id, foreignType: one }
+    Course: { class: Component, onDelete: CASCADE, local: course_id, foreign: id, foreignType: one }
     Questions:
       class: ExerciseQuestion
       refClass: ExerciseHasExerciseQuestion
@@ -480,10 +585,35 @@ ExerciseAnswer:
       foreign: id
       type: one
 
+ExerciseAnswerItem:
+  actAs:
+    Timestampable: ~
+    SoftDelete: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    title: text
+    value: integer
+    exercise_answer_id: integer
+    exercise_question_id: integer
+  relations:
+    Answer:
+      class: ExerciseAnswer
+      local: exercise_answer_id
+      foreignAlias: Items
+      foreign: id
+      type: one
+    Question:
+      class: ExerciseQuestion
+      local: exercise_question_id
+      foreignAlias: Items
+      foreign: id
+      type: one
+
 ExerciseHasExerciseQuestion:
   columns:
     exercise_id: integer
     exercise_question_id: integer
+    exercise_parent_question_id: integer
     position: { type: integer, notnull: true, default: 1}
   relations:
     Exercise:
@@ -494,6 +624,7 @@ ExerciseHasExerciseQuestion:
       local: exercise_question_id
       foreign: id
       type: one
+    ExerciseParentQuestion: {class: ExerciseQuestion, local: exercise_parent_question_id, foreign: id, foreignType: one }
 
 ExerciseAttemp:
   actAs:
@@ -533,6 +664,41 @@ LogViewComponent:
     lesson_id: integer
     resource_id: integer
     type: string
+  relations:
+    Course:
+      class: Component
+      local: course_id
+      foreign: id
+      type: one
+    Chapter:
+      class: Component
+      local: chapter_id
+      foreign: id
+      type: one
+    Lesson:
+      class: Component
+      local: lesson_id
+      foreign: id
+      type: one
+    Resource:
+      class: Component
+      local: resource_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id
+
+TimeViewComponentByDay:
+  columns:
+    profile_id: integer
+    course_id: integer
+    chapter_id: integer
+    lesson_id: integer
+    resource_id: integer
+    type: string
+    day: date
+    time_view: integer
   relations:
     Course:
       class: Component
@@ -599,6 +765,11 @@ ProfileComponentCompletedStatus:
     efficiency_index: float
     learning_index: float
     time_remaining: integer
+    time_view: integer
+    avg_note: float
+    note: float
+    attemps: integer
+    approved_date: date
   relations:
     Component:
       local: component_id
@@ -692,6 +863,20 @@ RegisterCodeHasCourse:
     register_code: {type: string(50), primary: true}
     course_id: {type: integer, primary: true}
 
+ProfileHasGroup:
+  columns:
+    profile_id: {type: integer, primary: true}
+    group_id: {type: integer, primary: true}
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    Groups:
+      local: group_id
+      foreign: id
+      type: one
+
 Groups:
   actAs:
     Timestampable: ~
@@ -700,6 +885,7 @@ Groups:
     description: string
     level: integer
     creator_id: {type: integer, notnull: true}
+    group_category_id: integer
   relations:
     Parents:
       class: Groups
@@ -725,6 +911,11 @@ Groups:
       type: one
       local: creator_id
       foreign: id
+    Categories:
+      class: Category
+      type: one
+      local: group_category_id
+      foreign: id
 
 GroupSubGroup:
   columns:
@@ -746,6 +937,25 @@ GroupProfile:
   columns:
     group_id: {type: integer, primary: true}
     profile_id: {type: integer, primary: true}
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    Groups:
+      local: group_id
+      foreign: id
+      type: one
+
+GroupCategory:
+  columns:
+    id: {type: integer, primary: true, autoincrement: true}
+    name: string
+  relations:
+    Groups:
+      type: many
+      local: id
+      foreign: group_category_id
 
 MailMessage:
   actAs: { Timestampable: ~ }
@@ -819,11 +1029,25 @@ FlashMessage:
         disabled: true
   columns:
     id: {type: integer, primary: true, autoincrement: true}
+    college_id: integer
     type: string
     name: string
     active: {type: boolean, default: false}
     valid_from: date
     valid_until: date
+    route: string
+    position: integer
+    sf_guard_group_id: integer
+    mandatory: boolean
+  relations:
+    College:
+      type: one
+      local: college_id
+      foreign: id
+    SfGuardGroup:
+      type: one
+      local: sf_guard_group_id
+      foreign: id
 
 ProfileViewFlashMessage:
   actAs:
@@ -886,3 +1110,10 @@ Notification:
         NotificationAction: { class: NotificationAction, onDelete: CASCADE, local: notification_action_id, foreign: id, foreignType: one }
         Profile: { class: Profile, onDelete: CASCADE, local: profile_id, foreign: id, foreignType: one }
 
+LoginToken:
+  columns:
+    sf_guard_user_id: integer
+    token: string
+    valid_until: timestamp
+  relations:
+    sfGuardUser: { class: sfGuardUser, onDelete: CASCADE, local: sf_guard_user_id, foreign: id, foreignType: one }

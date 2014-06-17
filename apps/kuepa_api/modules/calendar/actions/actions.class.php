@@ -234,8 +234,8 @@ class calendarActions extends kuepaActions {
                 'end'         => $endDateTime->format('Y-m-d H:i'),
                 'className'   => 'c-' . $event["c_color"],
                 'subject'     => $event["c_name"],
-                'address'     => $event["ce_address"],
-                'description' => $event["ce_description"],
+                'address'     => isset($event["ce_address"]) ? $event["ce_address"] : "",
+                'description' => isset($event["ce_description"]) ? $event["ce_description"] : "",
                 'allDay'      => false,
                 'editable'    => $editable,
                 'tipo_ref'    => $event["ce_tipo_ref"]

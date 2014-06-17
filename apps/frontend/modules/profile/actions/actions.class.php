@@ -10,6 +10,21 @@
  */
 class profileActions extends sfActions
 {
+  public function executeGetCourses(sfWebRequest $request){
+    $college_id = $request->getParameter("college_id");
+
+    if($request->getParameter('id')){
+      $this->forward404Unless($profile = Doctrine_Core::getTable('profile')->find(array($request->getParameter('id'))), sprintf('Object profile does not exist (%s).', $request->getParameter('id')));
+      $form = new sfProfileCollegeForm($profile, array('college_id' => $college_id));
+
+      return $this->renderText($form['components_list']);
+    }
+
+    $form = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'expanded' => true, 'model' => 'Component', 'query' => CourseTable::getInstance()->getCoursesForCollegeQuery($college_id)));
+
+    return $this->renderText($form->render("profile[colleges_list]"));
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->profiles = Doctrine_Core::getTable('profile')
@@ -19,14 +34,14 @@ class profileActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new profileForm();
+    $this->form = new sfProfileCollegeForm();
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new profileForm();
+    $this->form = new sfProfileCollegeForm();
 
     $this->processForm($request, $this->form);
 
@@ -36,14 +51,14 @@ class profileActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($profile = Doctrine_Core::getTable('profile')->find(array($request->getParameter('id'))), sprintf('Object profile does not exist (%s).', $request->getParameter('id')));
-    $this->form = new profileForm($profile);
+    $this->form = new sfProfileCollegeForm($profile);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($profile = Doctrine_Core::getTable('profile')->find(array($request->getParameter('id'))), sprintf('Object profile does not exist (%s).', $request->getParameter('id')));
-    $this->form = new profileForm($profile);
+    $this->form = new sfProfileCollegeForm($profile);
 
     $this->processForm($request, $this->form);
 

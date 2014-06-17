@@ -12,9 +12,37 @@ class usersActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->sf_guard_users = Doctrine_Core::getTable('sfGuardUser')
-      ->createQuery('a')
-      ->execute();
+
+    $this->pager = new sfDoctrinePager(
+      'Users',
+      50
+    );
+
+    // $query = Doctrine_Core::getTable('sfGuardUser')
+    //   ->createQuery('s');
+
+
+
+    $form = $this->searchForm = new sfGuardUserFormFilter();
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+
+    // echo $form['first_name']->getValue();
+    $query = $form->getQuery();
+    // echo $query->getSqlQuery();
+    // die();
+    $query->getRootAlias();
+
+    if($this->getUser()->getProfile()->getMasterGroupId()){
+      $query->innerJoin("r.Profile p")
+            ->innerJoin("p.GroupProfile gp")
+            ->where("gp.group_id = ?", $this->getUser()->getProfile()->getMasterGroupId());
+    }
+
+    $this->pager->setQuery($query);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    $this->setLayout("layout_v2");
   }
 
   public function executeNew(sfWebRequest $request)
@@ -69,7 +97,7 @@ class usersActions extends sfActions
     {
       $sf_guard_user = $form->save();
 
-      $this->redirect('users/edit?id='.$sf_guard_user->getId());
+      $this->redirect('profile/edit?id='.$sf_guard_user->getProfile()->getId());
     }
   }
 
@@ -88,9 +116,8 @@ class usersActions extends sfActions
       $this->message = $response['message'];
       $this->getUser()->setAttribute('success', $response['success']);
       $this->getUser()->setAttribute('errors', $response['errors']);
+      // echo var_dump($response);
     }
-
-
   }
 
   public function executeDownloadImportFileExample(){
@@ -138,6 +165,19 @@ class usersActions extends sfActions
 
     return sfView::NONE;
 
+  }
+
+  public function executeCreateLearningWays(sfWebRequest $request){
+    $this->message = '';
+    if ( $request->isMethod(sfRequest::POST) ){
+      $form  = $request->getParameter('form');
+      $file = $_FILES['import_file']['tmp_name'];
+      $response = ProfileService::getInstance() -> importLWFromFile($file, $form);
+      $this->message = $response['message'];
+      $this->getUser()->setAttribute('success', $response['success']);
+      $this->getUser()->setAttribute('errors', $response['errors']);
+      // echo var_dump($response);
+    }
   }
 
 

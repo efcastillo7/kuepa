@@ -69,6 +69,8 @@
 }
 
 .relative {position: relative;}
+.none {display:none;}
+
 
 /* --------------------------------------------------
 // Added Font Styles
@@ -95,7 +97,7 @@ body {
 p {line-height:1.6;}
 h1,h2,h3,h4, .title1, .title2, .title3, .title4
 {line-height:1.2; font-family: AvantXLt, "Helvetica Neue", Helvetica, Arial, sans-serif;}
-h5,h6, .title5, .title6 {line-height:1.6;}
+h5,h6, .title5, .title6 {line-height:1.4;}
 
 .small1, .small2 {line-height:1.5;}
 h2, h3, h5, h6 {
@@ -114,7 +116,7 @@ h2, .title2 {font-size:42px;}
 h3, .title3 {font-size:30px;}
 h4, .title4 {font-size:22px;}
 h5, .title5 {font-size:18px;}
-h6, .title6 {font-size:15px;}
+h6, .title6 {font-size:16px;}
 
 .small1 {font-size: 12px;}
 .small2 {font-size: 11px;}
@@ -167,6 +169,7 @@ h6, .title6 {font-size:15px;}
 /* Accent colors */
 .orange {color:#FF671B;}
 .cyan {color:#2568FA;}
+.green {color:#81CC47;}
 .darkblue {color:#162230;}
 
 /* --------------------------------------------------
@@ -266,8 +269,6 @@ top:0%;
 }
 
 
-form select {margin-top:-4px}
-
 
 .btn-xlarge {
   padding: 12px 18px;
@@ -346,9 +347,45 @@ form select {margin-top:-4px}
 	margin-left:-1px;
 }
 
+
+/* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -60px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
 /* --------------------------------------------------
 // Header
 -------------------------------------------------- */
+
 .header {
 	margin-top:70px;
 	margin-bottom:60px;

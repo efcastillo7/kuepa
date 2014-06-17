@@ -14,6 +14,50 @@ class migrationActions extends sfActions
 		// return htmlentities($text);
 	}
 
+	public function parseImages($course, $text){
+			/** Parseo de imagenes */
+			$copy = true;
+			$texto = $text; //$rquestion['description'];
+			$regex = "/src=\"(.*?)\"/";
+			preg_match_all($regex, $texto, $match);
+			$urls = $match[1];
+			$base_path_relative =  "/uploads/resources/$course/images/";
+
+			//Cracion de directorios
+			$base_path =  sfConfig::get('sf_upload_dir') . "/resources";
+			if(!file_exists($base_path) && $copy){
+				mkdir($base_path);
+			}
+			$base_path .= "/$course";
+			if(!file_exists($base_path) && $copy){
+				mkdir($base_path);
+			}
+			//images path
+			if(!file_exists($base_path . "/images") && $copy){
+				mkdir($base_path . "/images");
+			}
+
+			foreach($urls as $url){
+				$pos = strrpos($url,"/");
+				$imgname = str_replace(
+					array(" ", "%", "/", "\""),
+					array("-", "-", "-", "-"), 
+					substr($url, $pos+1));
+
+				// Se reemplazan todas a excepcion las que sean imagenes o  links externos
+				// como las de las formulas http://latex.codecogs.com/  && strpos($url,"kuepa.com") !== false
+				if(strpos($url,"http") === false){
+					$texto = str_replace($url, $base_path_relative. $imgname, $texto);
+					$url = "http://www.kuepa.com" . $url;
+				}
+
+				if(!file_exists($base_path . "/images/" . $imgname) && $copy)
+					copy($url, $base_path . "/images/" . $imgname);
+			}
+
+			return($texto);
+	}
+
 	public function executeExercise(sfWebRequest $request){
 		$course = strtoupper($request->getParameter("course"));
 		$quiz = $request->getParameter("quiz");
@@ -46,50 +90,19 @@ class migrationActions extends sfActions
 				$answers = array();
 
 				while($ranswer = mysqli_fetch_array($ranswers)){
+
+					$text_answer = $this->parseImages( $course, $ranswer['answer'] );
+
 					$answers[] = array(
-						'title' => $ranswer['answer'],
+						'title' => $text_answer,
 						'correct' => $ranswer['correct'],
 						'comment' => $ranswer['comment'],
 						'ponderation' => $ranswer['ponderation'],
 					);
 				}
 
-				/** Parseo de imagenes */
-				$copy = true;
-				$texto = $rquestion['description'];
-				$regex = "/src=\"(.*?)\"/";
-				preg_match_all($regex, $texto, $match);
-				$urls = $match[1];
-				$base_path_relative =  "/uploads/resources/$course/images/";
+				$texto = $this->parseImages( $course, $rquestion['description'] );
 
-				//Cracion de directorios
-				$base_path =  sfConfig::get('sf_upload_dir') . "/resources";
-				if(!file_exists($base_path) && $copy){
-					mkdir($base_path);
-				}
-				$base_path .= "/$course";
-				if(!file_exists($base_path) && $copy){
-					mkdir($base_path);
-				}
-				//images path
-				if(!file_exists($base_path . "/images") && $copy){
-					mkdir($base_path . "/images");
-				}
-
-				foreach($urls as $url){
-					$pos = strrpos($url,"/");
-					$imgname = str_replace(
-						array(" ", "%", "/", "\""),
-						array("-", "-", "-", "-"), 
-						substr($url, $pos+1));
-					$texto = str_replace($url, $base_path_relative. $imgname, $texto);
-
-					if(strpos($url,"http") === false){
-						$url = "http://www.kuepa.com" . $url;
-					}
-					if(!file_exists($base_path . "/images/" . $imgname) && $copy)
-						copy($url, $base_path . "/images/" . $imgname);
-				}
 				$questions[] = array(
 					'title' => $rquestion['question'],
 					'description' => $texto,
@@ -103,10 +116,12 @@ class migrationActions extends sfActions
 
 			}
 
+				$text_exer = $this->parseImages( $course, $rexcercise['description'] );
+
     		//add to array
     		$exercises[] = array(
     			'title' => $rexcercise['title'],
-    			'description' => $rexcercise['description'],
+    			'description' => $text_exer,
     			'type' => $rexcercise['type'],
     			'max_attempt' => $rexcercise['max_attempt'],
     			'start_time' => $rexcercise['start_time'],
@@ -115,7 +130,7 @@ class migrationActions extends sfActions
     			'results_disabled' => $rexcercise['results_disabled'],
     			'expired_time' => $rexcercise['expired_time'],
     			'questions' => $questions
-			);
+			     );
     	}
 
     	$this->exercises = $exercises;
@@ -128,7 +143,8 @@ class migrationActions extends sfActions
 
     	$profile_id = $this->getUser()->getProfile()->getId();
 
-    	$lesson = Lesson::getRepository()->getById($lesson_id);
+    	//$lesson = Lesson::getRepository()->getById($lesson_id);
+    	$lesson = Lesson::getRepository()->find($lesson_id);
 
     	for($i=0;$i<count($exercises);$i++){
 
@@ -228,7 +244,7 @@ class migrationActions extends sfActions
   	$this->setTemplate("index2");
 
   	$persist = true;
-  	$copy = false;
+  	$copy = true;
   	$copy_video = false;
 
     $mysql_conn = mysqli_connect("70.32.82.167","remote","r3m0teUS45%2","110k_dokeos_main");
@@ -285,7 +301,7 @@ class migrationActions extends sfActions
 			$recurso_id = $trec['id'];
 
 			switch ($trec['TipoRecu']) {
-				case 3:
+				case 3: //Video
 					$query = "SELECT * FROM recurso where CodiRecu = $recurso_id";
 					$lectura = mysqli_query($mysql_conn,$query);
 					$lectura = mysqli_fetch_array($lectura);
@@ -303,7 +319,7 @@ class migrationActions extends sfActions
 
 					break;
 
-				case 9:
+				case 9: // Lectura
 					$query = "SELECT * FROM lectura where codirecu = $recurso_id and actual = 1";
 					$lectura = mysqli_query($mysql_conn,$query);
 					$lectura = mysqli_fetch_array($lectura);
@@ -334,7 +350,7 @@ class migrationActions extends sfActions
 					
 					break;
 
-				case '6':
+				case '6': // Consulta rapida	
 					$query = "SELECT * FROM consulta where codirecu = $recurso_id and actual = 1";
 					$lectura = mysqli_query($mysql_conn,$query);
 					$lectura = mysqli_fetch_array($lectura);
@@ -343,11 +359,13 @@ class migrationActions extends sfActions
 
 					$texto = "
 						<h4>Concepto</h4>
-						<p>{$lectura['Concepto']}</p>
+						<p>".stripslashes($lectura['Concepto'])."</p>
 						<h4>Definición</h4>
-						<p>{$lectura['Definici']}</p>
+						<p>".stripslashes($lectura['Definici'])."</p>
 						<h4>Fórmulas</h4>
-						<p>{$lectura['Formulas']}</p>";
+						<p>".stripslashes($lectura['Formulas'])."</p>
+						<h4>Consejos</h4>
+						<p>".stripslashes($lectura['Tips'])."</p>";
 
 					preg_match_all($regex, $texto, $match);
 					$data['links'] = $match[1];
@@ -368,6 +386,54 @@ class migrationActions extends sfActions
 						'titulo' => $this->replaceChars($lectura['Concepto']),
 						'texto' => $texto,
 						'cantidad_palabras' => $lectura['cantidad_palabras'],
+						'links' => $match[1]
+					);
+					break;
+
+				case '5': // Ejercicios Resueltos
+					$query = "SELECT * FROM enunejerresu where codirecu = $recurso_id and actual = 1";
+					$ejer_resu = mysqli_query($mysql_conn,$query);
+					$ejer_resu = mysqli_fetch_array($ejer_resu);
+
+					$regex = "/src=\"(.*?)\"/";
+
+					$texto = "
+						<h4>Enunciado</h4>
+						<p>".stripslashes($ejer_resu['enunciad'])."</p>";
+					// Ejercicios
+						$query2 = "SELECT * FROM soluejerresu where codirecu = $recurso_id and codiejer ='".$ejer_resu['codiejer']."'";
+						$r_sol_eje = mysqli_query($mysql_conn,$query2);
+						$ejer_counter = 1;
+						while($sol_eje = mysqli_fetch_array($r_sol_eje) ){
+							$texto .= "<h2>Paso No. $ejer_counter </h2>";
+							$texto .= "<p>".stripslashes($sol_eje['solucion'])."</p>";
+							if ( $sol_eje['explicacion'] != "" ){
+								$texto .= "<i>Explicación</i>";
+								$texto .= "<p>".stripslashes($sol_eje['explicacion'])."</p>";
+							}
+							$ejer_counter++;
+						}
+ 
+					preg_match_all($regex, $texto, $match);
+					$data['links'] = $match[1];
+					$base_path =  "/uploads/resources/$course_code/images/";
+					foreach($data['links'] as $link){
+						$pos = strrpos($link,"/");
+						$imgname = str_replace(
+							array(" ", "%", "/", "\""),
+							array("-", "-", "-", "-"), 
+							substr($link, $pos+1));
+						// if it has http, it could be a math formula
+						// like http://latex.codecogs.com/gif.latex?f(x)=x^{3}-3x^{2}-4x+12
+						if(strpos($link,"http") === false){
+							$texto = str_replace($link, $base_path . $imgname, $texto);
+						}
+					}
+
+					$data = array(
+						'titulo' => $this->replaceChars($ejer_resu['titulo']),
+						'texto' => $texto,
+						'cantidad_palabras' => $ejer_resu['cantidad_palabras'],
 						'links' => $match[1]
 					);
 					break;
@@ -447,6 +513,8 @@ class migrationActions extends sfActions
 
 		//add dummy user for testing
 		CourseService::getInstance()->addTeacher($course->getId(), $profile_id);
+		//add to session
+		$this->getUser()->addEnabledCourses($course->getId());
 		
 
 		foreach ($unidades as $unidad) {
@@ -479,6 +547,21 @@ class migrationActions extends sfActions
 
 					//set resource data
 					switch ($recurso['tipo']) {
+						case 5: 
+							foreach ($recurso['data']['links'] as $link) {
+								$pos = strrpos($link,"/");
+								$imgname = str_replace(
+									array(" ", "%", "/", "\""),
+									array("-", "-", "-", "-"), 
+									substr($link, $pos+1));
+
+								if(strpos($link,"http") === false){
+									$link = "http://www.kuepa.com" . $link;
+									if(!file_exists($base_path . "/images/" . $imgname) && $copy)
+										copy($link, $base_path . "/images/" . $imgname);
+								}
+							}
+
 						case 6:
 						case 9:
 							foreach ($recurso['data']['links'] as $link) {

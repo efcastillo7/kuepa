@@ -22,12 +22,7 @@ class layoutComponents extends kuepaComponents {
         $style = "";
 
         if($this->getUser()->isAuthenticated()) {
-            $profile = $this->getProfile();
-            $colleges = $profile->getColleges();
-
-            if($colleges->count()){
-                $style = $colleges->getFirst()->getStyle();
-            }
+            $style = $this->getUser()->getStyle();
         }
 
         $this->style = $style;
@@ -38,13 +33,18 @@ class layoutComponents extends kuepaComponents {
         if($this->getUser()->isAuthenticated()) {
             $this->profile = $this->getProfile();
 
+            $user_groups = $this->profile->getSfGuardUser()->getGroups()->getPrimaryKeys();
+            
             //get the first message
-            $this->messages = FlashMessageService::getInstance()->getMessagesForUser($this->profile->getId(), 1);
+            $this->messages = FlashMessageService::getInstance()->getMessagesForUser($this->profile->getId(), $this->getUser()->getCollegeIds(), $this->profile->getCurrentRoute(), 1, $user_groups);
 
             //set message as viewed
-            if($this->messages->count() > 0){
-                $message = $this->messages->getFirst();
-                FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
+            if($this->messages->count() > 0 ){
+                foreach ($this->messages as $message) {
+                    if(!$message->isMandatory()){
+                        FlashMessageService::getInstance()->setMessagesAsViewed($this->profile->getId(), $message->getId());                
+                    }
+                }
             }
         }   
     }

@@ -10,6 +10,13 @@
  */
 class homeActions extends kuepaActions {
 
+    public function preExecute()
+  {
+    parent::preExecute();
+    
+    $this->setLayout("layout_v2");
+  }
+
     /**
      * Executes index action
      *
@@ -20,8 +27,13 @@ class homeActions extends kuepaActions {
     	//check account status
     	$this->checkAccountStatus();
 
-        $this->profile = $this->getProfile();
-        
-        $this->courses = ComponentService::getInstance()->getCoursesForUser( $this->getProfile() );
+      //get user
+      $user = $this->getUser();
+
+      $this->profile = $this->getProfile();
+
+      //get courses for that user
+      $this->enabled_courses = CourseService::getInstance()->getCourses($user->getEnabledCourses());
+      $this->display_courses = CourseService::getInstance()->getCourses($user->getDisplayCourses());
     }
 }

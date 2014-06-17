@@ -9,9 +9,57 @@ class GroupsService {
         
         return self::$instance;
     }
+
+    public function getCategories($profile_id){
+        $q = GroupCategory::getRepository()->createQuery('gc')
+                ->innerJoin("gc.Groups g")
+                ->innerJoin('g.ProfileHasGroup gp')
+                ->where('gp.profile_id = ?',$profile_id)
+                ->orderBy('g.name asc');
+
+        return $q->execute();
+    }
     
     public function find($id){
         return Groups::getRepository()->find($id);
+    }
+
+    public function findByName($name){
+        return Groups::getRepository()->createQuery("g")->where("name like ?", "%$name%")->fetchOne();
+    }
+
+    public function getByNameAndAuthor($name, $author_id){
+        return Groups::getRepository()->createQuery('g')
+                    ->where('name like ? and creator_id = ?', array($name, $author_id))
+                    ->orderBy('name asc')
+                    ->fetchOne();
+    }
+
+    public function getGroupsByAuthor($profile_id, $levels = null){
+        $q = Groups::getRepository()->createQuery('g')
+                ->where('creator_id = ?',$profile_id);
+
+        if(is_array($levels)){
+            $q->andWhereIn('level', $levels);
+        }else if($levels){
+            $q->andWhere('level = ?', $levels);
+        }
+
+        return $q->execute();
+    }
+
+    public function getGroupsByProfile($profile_id, $levels = null){
+        $q = Groups::getRepository()->createQuery('g')
+                ->innerJoin('g.ProfileHasGroup gp')
+                ->where('gp.profile_id = ?',$profile_id);
+
+        if(is_array($levels)){
+            $q->andWhereIn('level', $levels);
+        }else if($levels){
+            $q->andWhere('level = ?', $levels);
+        }
+
+        return $q->execute();
     }
 
     public function getGroupsByLevel($level = 0){
@@ -32,7 +80,7 @@ class GroupsService {
 
     public function save($values = array()) {
       // group
-       if( (int)$values['id'] > 0 ) {
+       if( isset($values['id']) && (int)$values['id'] > 0 ) {
          $group = self::getInstance()->find($values['id']);
        }else{
          $group = new Groups();
@@ -43,6 +91,14 @@ class GroupsService {
               ->setLevel($values['level'])
               ->setCreatorId($values['creator_id'])
               ->save();
+
+
+        //add profile to that group
+        $phg = new ProfileHasGroup();
+        $phg->setGroupId($group->getId())
+            ->setProfileId($values['creator_id'])
+            ->save();
+
         return $group;
     }
 
@@ -78,11 +134,16 @@ class GroupsService {
 
         
     public function addProfileToGroup($group_id, $profile_id){
-        $gp = new GroupProfile();
-        $gp -> setGroupId($group_id);
-        $gp -> setProfileId($profile_id);
-        $gp->save();
-        return($gp);
+        try{
+            $gp = new GroupProfile();
+            $gp -> setGroupId($group_id);
+            $gp -> setProfileId($profile_id);
+            $gp->save();
+            return($gp);
+        }catch(Exception $e){
+            //already exists
+            return true;
+        }
     }
 
     public function removeProfileFromGroup($group_id, $profile_id){
@@ -93,13 +154,70 @@ class GroupsService {
         
     } 
 
+    public function getProfilesInGroupsQuery($groups_id, $filters = array(), $intersect = false){
+        //$group = self::getInstance()->find($group_id);
+        //$users = $group->getProfiles();
+
+
+        $q = Profile::getRepository()->createQuery('p')
+                // ->select('p.*')
+                // ->innerJoin('p.GroupProfile gp')
+                ->innerJoin('p.sfGuardUser sfg');
+
+        // $count_groups = 0;
+        // if(is_array($groups_id)){
+        //     $subgroups = array();
+        //     foreach ($groups_id as $key => $subgroup) {
+        //         $subgroups[$key] = "";
+        //         for($i=0; $i<count($subgroup)-1;$i++){
+        //             $subgroups[$key] .= "gp.group_id = " . $subgroup[$i] . " OR ";
+        //         }
+        //         $subgroups[$key] .= "gp.group_id = " . $subgroup[$i];
+        //         $count_groups += count($subgroup);
+        //     }
+        //     $where_groups = "(" . implode(") OR (", $subgroups) . ")";
+        //     $q->andWhere($where_groups);
+        //     $q->groupBy('p.id')
+        //       ->having("count(*) >= ?", $where_groups);
+        // }else{
+        //     $q->innerJoin('p.GroupProfile gp')
+        //       ->whereIn('gp.group_id',$groups_id);
+        // }
+
+        // if($intersect){
+        // }
+
+        if(is_array($groups_id)){
+            foreach ($groups_id as $key => $value) {
+                // $subquery = "(select profile_id from group_profile where group_id in (" . implode(',', $value). "))";
+                // $q->andWhere("p.id in $subquery");
+                $q->innerJoin("p.GroupProfile gp$key")
+                  ->whereIn("gp$key.group_id", $groups_id[$key]);
+            }
+            // for($i=0;$i<count($groups_id);$i++){
+            // }
+        }
+
+        if ( count($filters) > 0 ){
+            // "key"       => value
+            //i.e: p.firstname => 'Pedro'
+            //i.e: p.firstname = ? OR p.lastname = ? => array('Pedro','Pedro')
+            foreach ($filters as $key => $filter) {
+                $q->andWhere($filter['cond'], $filter['value']);
+            }
+        }
+
+        return $q;
+    }
+
     public function getProfilesInGroup($group_id, $filters = array()){
         //$group = self::getInstance()->find($group_id);
         //$users = $group->getProfiles();
 
         $q = Profile::getRepository()->createQuery('p')
-                ->select('p.*')
+                // ->select('p.*')
                 ->innerJoin('p.GroupProfile gp')
+                ->innerJoin('p.sfGuardUser sfg')
                 ->where('gp.group_id ='.$group_id.'');
        /* $pager = new sfDoctrinePager('Profile', 50);
         $pager->setQuery($q);
@@ -117,7 +235,7 @@ class GroupsService {
         }
         // TODO: Pagination
         // 
-        $q->limit(100);
+        // $q->limit(100);
 
         return($q->execute());
     }
@@ -139,7 +257,7 @@ class GroupsService {
             }
         }
         // TODO: Pagination
-        $q->limit(100);
+        // $q->limit(100);
 
         return $q->execute();
     }

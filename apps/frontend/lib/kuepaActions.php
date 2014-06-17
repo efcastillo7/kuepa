@@ -37,7 +37,7 @@ class kuepaActions extends sfActions {
         //get action name
         $action = $context->getActionName();
         
-        //update location
+        //update user location
         if($profile = $this->getProfile()){
           $profile->setCurrentModule($module)
                   ->setCurrentAction($action)
@@ -51,6 +51,5 @@ class kuepaActions extends sfActions {
             $this->forward404Unless($this->getUser()->hasCredential('course_' . $course_id));
         }
 
-      }
-      
+    }
 }

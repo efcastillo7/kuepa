@@ -1,5 +1,5 @@
 .input-big,.input-small,.select-big,.textarea-big{
-  padding:0 15px;
+  padding:0 10px;
   border:1px solid $input-border;
   color:$input-text;
 }
@@ -7,7 +7,7 @@
   padding:10px 15px;
 }
 .input-big:focus,.input-small:focus,.select-big:focus,.textarea-big:focus{
-  border:1px solid $input-border-active;
+  border:1px solid $orange;
 }
 
 .input-big::-moz-placeholder,
@@ -22,7 +22,13 @@
   color:$input-placeholder;
 }
 
-.input-big{height: 44px;}
+.input-big{
+  height: 44px;
+  width:100%;
+  display:block;
+  padding:10px 12px;
+  font-size:16px;
+}
 .input-small{height: 36px;}
 .input-small.orange{color:$orange;}
 
@@ -63,6 +69,24 @@
   }
 }
 
+select {
+  background: url("../../img/select_arrow.png") no-repeat right transparent;
+  width: 100%;
+  padding: 0px 46px 0px 12px;
+  font-size: 16px;
+  line-height: 1;
+  border: 1px solid #C7C7CC;
+  border-radius: 0;
+  height: 44px;
+  -webkit-appearance: none;
+  box-shadow: none;
+  color: #ff671b;
+  display:block;
+  &.select-sm{
+    display:inline-block;
+    width:auto;
+  }
+}
 .styled-select{
   width: 100%;
   height: 44px;
@@ -150,13 +174,14 @@
 .radio-default{display:none;}
 .radio-default + .radio-label{
   width:20px;
-  height:20px;
+  min-height:20px;
   color:$input-text;
   font-size:14px;
   cursor:pointer;
   background: url("../../img/radio1.png") no-repeat;
   padding: 5px 0 0 25px;
 }
+
 .radio-default:hover + .radio-label:hover {background: url("../../img/radio2.png")  no-repeat;}
 .radio-default:checked + .radio-label,
 .radio-default:checked:hover + .radio-label{background: url("../../img/radio3.png")  no-repeat;}
@@ -167,3 +192,4 @@
   color:$input-disabled;
   cursor: default;
 }
+label.radio-label {width:90% !important;}

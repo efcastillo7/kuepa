@@ -5,6 +5,8 @@
       <trans-unit>
         <source>video_session_added</source>
         <target>agregó una tutoría</target>
+      </trans-unit>
+      <trans-unit>
         <source>scheduled_for</source>
         <target>programada para</target>
       </trans-unit>

@@ -32,6 +32,14 @@ $(function(){
         $(".video_session-tab_container:first").addClass("active");
     }
     
+    $(".btn-participants").click( showParticipants );
+    
+    $("#modal-participants .md-close").click( function(){
+        $("#modal-participants table").thfloat('destroy');
+    } );
+    
+    $(window).scroll( function(){ $("#modal-participants table").thfloat('refresh'); } );
+    
     //auto refresh sessions to see if there are newly availables
     setTimeout(refreshVideoSessions,5000);
 });
@@ -125,7 +133,7 @@ function onVideoSessionAddClicked(e){
     } else {
         //hide url
         $("[for='video_session_url']",$modal).hide();
-        $("[name='video_session[url]']",$modal).hide();
+        $("[name='video_session\[url]']",$modal).hide();
     }
 }
 
@@ -389,30 +397,80 @@ function getCourseStudents(course_id,$cStudents,$form){
 function refreshVideoSessions() {
 
     var ids = Array();
-    $(".video-session-tr").each(function(){
+    
+    //get only next courses
+    $("#pane-own_video_sessions_next .video-session-tr, #pane-related_video_sessions_next .video-session-tr").each(function(){
        ids.push($(this).attr("data-id")); 
     });
 
+
     //post and process json response
-    $.ajax('/kuepa_api.php/video_session',{
+    if(ids.length){
+        $.ajax('/kuepa_api.php/video_session',{
+            dataType: 'json',
+            type: 'get',
+            data: {id: ids},
+            success: function(data){
+                for(var i in data){
+                    var id = data[i].id;
+                    var status = data[i].status;
+                    var url = data[i].url;
+                    
+                    if( status !== "started" || url === null )
+                        $(".access-button-"+id).addClass("disabled");
+                    else {
+                        $(".access-button-"+id).unbind("click");
+                        $(".access-button-"+id).removeClass("disabled");
+                        $(".access-button-"+id).attr("href", url);
+                    }
+                }
+                        
+                setTimeout(refreshVideoSessions,5000);
+            }
+        });
+    }
+}
+
+
+function showParticipants() {
+
+    var videoSessionId = $(this).attr("rel");
+    
+    //$("#modal-participants table").thfloat( {attachment : "#modal-participants-container"} );
+        
+    $.ajax('/kuepa_api.php/video_session/' + videoSessionId + '/participants',{
         dataType: 'json',
         type: 'get',
-        data: {id: ids},
-        success: function(data){
-            for(var i in data){
-                var id = data[i].id;
-                var status = data[i].status;
-                var url = data[i].url;
-                
-                if( status !== "started" || url === null )
-                    $(".access-button-"+id).addClass("disabled");
-                else {
-                    $(".access-button-"+id).removeClass("disabled");
-                    $(".access-button-"+id).attr("href", url);
-                }
-            }
-                    
-            setTimeout(refreshVideoSessions,5000);
-        }
+        data: {},
+        success: function(participants){
+            $("#modal-participants-container").html(new EJS({url: "/js/templates/video_sessions/participants.ejs"}).render({participants: participants}));
+
+            var $modal  = $("#modal-participants");
+            
+            triggerModalSuccess({
+                id      : $modal.attr("id"),
+                effect  : "md-effect-17"
+            });
+                        
+            $("#modal-participants-container").scrollTop(0);
+            
+            $("#modal-participants table").thfloat( {attachment : "#modal-participants-container"} );
+            $(".thfloat").css('visibility', 'hidden');
+            $(".thfloat tr").css('visibility', 'hidden');
+            $(".thfloat th").css('visibility', 'hidden');
+            
+            setTimeout(
+                        function(){
+                            $("#modal-participants table").thfloat('refresh');
+                            $("#modal-participants table").thfloat( {attachment : "#modal-participants-container"} );
+                            $(".thfloat").css('visibility', 'visible');
+                            $(".thfloat tr").css('visibility', 'visible');
+                            $(".thfloat th").css('visibility', 'visible');
+                            },
+                        500
+            );
+            
+        } 
     });
+    
 }

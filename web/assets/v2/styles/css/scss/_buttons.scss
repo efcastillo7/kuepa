@@ -1,4 +1,14 @@
-.btn-primary,.btn-small,.btn-large,.btn-tiny{
+.btn {
+  padding:9px 18px;
+  font-size:16px;
+  &:hover{color:#fff;}
+}
+
+.btn-primary {
+  border:none;
+}
+
+.btn-small,.btn-large,.btn-tiny{
   color:#fff;
   text-align: center;
   @include border-radius(5px);
@@ -7,11 +17,7 @@
   transition: all 0.1s  ease-in-out;
   outline: none;
 }
-.btn-primary{
-  height: 40px;
-  font-size: 16px;
-  line-height: 30px;
-}
+
 .btn-large{
   height: 52px;
   font-size: 20px;
