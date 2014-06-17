@@ -64,7 +64,7 @@
                     <?php if($type==="prev"): ?>
                     <td>
                         <div class="btn-group">
-                        <?php if ($sf_user->hasCredential("docente")): ?>
+                        <?php if ($sf_user->hasCredential("docente") && false): ?>
                             <a class="btn btn-mini btn-success btn-participants" rel="<?php echo $video_session->getId() ?>">Ver Participantes</a>
                         <?php endif; ?>
                         </div>
