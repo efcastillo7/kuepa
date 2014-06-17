@@ -121,7 +121,7 @@ $(document).ready(function(){
 							<li>
 								<div>Progreso</div>
 								<div>Ultima conexión</div>
-								<div>Lecciones completadas</div>
+								<div>Unidades</div>
 								<div>Nota promedio</div>
 							</li>
 						</ul>

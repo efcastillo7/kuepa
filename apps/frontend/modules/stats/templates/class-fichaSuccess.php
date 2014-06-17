@@ -140,7 +140,7 @@ $(document).ready(function(){
 							</p>
 						</div>
 						<div class="middle">
-							<p>Lecciones Completas</p>
+							<p>Unidades</p>
 							<p><?php echo isset($chapterAproved[$students[$i]->getId()]) ? $chapterAproved[$students[$i]->getId()] : 0; ?>
 								/
 								<?php echo $course->getChapters()->count() ?></p>
