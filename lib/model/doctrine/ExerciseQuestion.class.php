@@ -49,11 +49,17 @@ class ExerciseQuestion extends BaseExerciseQuestion {
                 foreach($this->getAnswers() as $position => $exercise_answer){
                     $hash = $exercise_answer->getHash();
                     //if is valid
-                    if($exercise_answer->getCorrect() == "1"){
-                        $is_correct = in_array($hash, $answer);
-                    }else{
-                        $is_correct = !in_array($hash, $answer);
+                    if($answer){
+                        if($exercise_answer->getCorrect() == "1"){
+                            $is_correct = in_array($hash, $answer);
+                        }else{
+                            $is_correct = !in_array($hash, $answer);
+                        }
                     }
+                    else{
+                        $is_correct = false;
+                    }
+                    
                     $score[] = array(
                         "answer_id" => $exercise_answer->getId(),
                         "correct" => $is_correct,
