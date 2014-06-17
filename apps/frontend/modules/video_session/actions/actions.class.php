@@ -329,5 +329,5 @@ class video_sessionActions extends sfActions {
 
         return $this->renderText(json_encode($response));
     }
-
+    
 }

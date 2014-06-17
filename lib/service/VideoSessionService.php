@@ -170,6 +170,23 @@ class VideoSessionService {
 
         return implode(",", $ids);
     }
+    
+    
+    /**
+     *
+     * @param string $video_session_id
+     * @param Doctrine_Collection
+     */
+    public function getParticipants($video_session_id){
+
+        return Profile::getRepository()
+                ->createQuery('p')
+                ->addSelect('p.*')
+                ->addSelect('vsp.*')
+                ->innerJoin('p.VideoSessionParticipant vsp')
+                ->addWhere('vsp.video_session_id = ?', $video_session_id)
+                ->execute();
+    }
 
     /**
      *

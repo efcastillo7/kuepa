@@ -35,7 +35,7 @@ exercise_edit:
 video_session:
   url: /tutorias
   param: { module: video_session, action: index }
-
+  
 # messages
 
 messages:
