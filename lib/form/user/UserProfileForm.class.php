@@ -12,9 +12,13 @@ class UserProfileForm extends ProfileForm
 {
   public function configure()
   {
-    unset($this['created_at'],$this['updated_at'],$this['deleted_at'],
-        $this['valid_until'], $this['colleges_list'], $this['components_list'],
-        $this['sf_guard_user_id'], $this['google_id']);
+    // unset($this['created_at'],$this['updated_at'],$this['deleted_at'],
+    //     $this['valid_until'], $this['colleges_list'], $this['components_list'],
+    //     $this['sf_guard_user_id'], $this['google_id'], 
+    //     $this['country'], $this['district'], $this['institution'], 
+    //     $this['local_id_type'], $this['local_id'], $this['phone']);
+
+    $this->useFields(array('nickname', 'first_name', 'last_name', 'sex', 'birthdate'));
 
     //set decorator
     $decorator = new sfWidgetFormSchemaFormatterLocal($this->getWidgetSchema(), $this->getValidatorSchema());
@@ -49,7 +53,7 @@ class UserProfileForm extends ProfileForm
     )));
 
     //date
-    $years = range(1900, 2000);
+    $years = range(1900, 2010);
     $this->setWidget('birthdate', new sfWidgetFormDate(array(
         'format' => '%day%/%month%/%year%',
         'years' => array_combine($years, $years)
