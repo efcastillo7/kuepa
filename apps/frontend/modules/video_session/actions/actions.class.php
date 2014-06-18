@@ -118,6 +118,12 @@ class video_sessionActions extends sfActions {
         $url    = $request->getParameter("url");
         $pId    = $request->getParameter("profile_id");
         $gId    = $request->getParameter("gid");
+        
+        $params = $_POST;
+        $timeLog = time();        
+        
+        $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . 'INICIO.', 'debug');
+        $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . json_encode($params), 'debug');        
 
         //Default response
         $response   = Array(
@@ -128,7 +134,7 @@ class video_sessionActions extends sfActions {
 
         //Searchs for the video_session
         $video_session  = VideoSession::getRepository()->find($id);
-
+        
         if($video_session){
 
             $appId  = strpos($url, "?") > -1 ? "&" : "?"."gid=".VideoSessionService::APP_ID_INT;
@@ -141,24 +147,45 @@ class video_sessionActions extends sfActions {
             $video_session->setUrl($url.$appId.$dataPa);
             $video_session->setStatus("started");
             $video_session->save();
+            
+            $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . 'Se actualizo la videosession.', 'debug');
 
             $response['template']   = "Ha grabado la url de la sesión de video satisfactoriamente";
             $response['status']     = "success";
+            
+            //Serchs for the video_session_participant record
+            $video_session_participant = VideoSessionParticipant::findByVideoSessionAndProfileId($id,$pId);
+            
+            if(!$video_session_participant){
+                $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . 'Se crea un nuevo participante en la videosession.', 'debug');
+                
+                $video_session_participant = new VideoSessionParticipant();
+                $video_session_participant->setVideoSessionId($id);
+                $video_session_participant->setProfileId($pId);
+            }
+            else
+            {
+                $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . 'El participante ya existia en la videosession.', 'debug');
+            }
+            
+            if ( !$video_session_participant->getFirstConection() ) 
+            {
+                $video_session_participant->setFirstConection(date("Y-m-d h:m:s"));
+            }
+            
+            $video_session_participant->setLastConnection(date("Y-m-d h:m:s"));
+            $video_session_participant->setInterruptions(0);
+            $video_session_participant->save();
+            
+            $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . 'Se actualiza correctamente al participante en la videosession.', 'debug');
+            
         }
-
-        //Serchs for the video_session_participant record
-        $video_session_participant = VideoSessionParticipant::findByVideoSessionAndProfileId($id,$pId);
-
-        if(!$video_session_participant){
-            $video_session_participant = new VideoSessionParticipant();
-            $video_session_participant->setVideoSessionId($id);
-            $video_session_participant->setProfileId($pId);
+        else
+        {
+            $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . 'No se encontro videosession en base de datos.', 'debug');
         }
-
-        $video_session_participant->setFirstConection(date("Y-m-d h:m:s"));
-        $video_session_participant->setLastConnection(date("Y-m-d h:m:s"));
-        $video_session_participant->setInterruptions(0);
-        $video_session_participant->save();
+        
+        $this->logMessage('VIDEO_SESSION_DEBUG_' . $timeLog . ' = ' . 'FIN.', 'debug');
 
         return $this->renderText(json_encode($response));
 
