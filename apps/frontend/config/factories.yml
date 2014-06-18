@@ -3,10 +3,8 @@
 
 prod:
   logger:
-    class:   sfNoLogger
     param:
-      level:   err
-      loggers: ~
+      level: debug
 
 test:
   storage:
