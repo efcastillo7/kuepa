@@ -50,6 +50,7 @@
  		<td>Localidad</td>
  		<td>Institucion</td>
  		<td>Grupos a los que pertenece</td>
+ 		<td>Query Fix</td>
  	</tr>
 
  	<?php foreach ($rs as $profile): ?>
@@ -63,9 +64,22 @@
  		<td><?php echo $profile['nickname'] ?></td>
  		<td><?php echo $profile['district'] ?></td>
  		<td><?php echo $profile['institution'] ?></td>
- 		<?php foreach ($groups as $group): ?>
+ 		<?php $district = ""; $college = ""; foreach ($groups as $group): ?>
 		<td><?php echo $group['grupo_name'] ?> (<?php echo $group['category'] ?> - <?php echo $group['category_id'] ?>)</td>
+		<?php 
+			switch ($group['category_id']) {
+				case '1':
+					$district = $group['grupo_name'];
+					break;
+				case '2':
+					$college = $group['grupo_name'];
+				default:
+					# code...
+					break;
+			}
+		 ?>
  		<?php endforeach ?>
+ 		<td>UPDATE profile set district = '<?php echo $district ?>', institution = '<?php echo $college ?>' WHERE id = <?php echo $profile['id'] ?>;</td>
  	</tr>
  	<?php endforeach ?>
  </table>
