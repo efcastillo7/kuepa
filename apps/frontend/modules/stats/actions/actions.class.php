@@ -477,4 +477,23 @@ class statsActions extends kuepaActions
     exit();
   }
 
+  public function executeBogota(sfWebRequest $request){
+    $this->groups = Doctrine::getTable("Groups")->createQuery('g')
+                      ->innerJoin("g.GroupCategory c")
+                      ->execute();
+
+    $this->date_from = $request->getParameter("from","2014-06-01");
+    $this->date_to = $request->getParameter("to","2014-06-18");
+
+
+    //profiles
+    //select p.id from profile p inner join sf_guard_user sfu on p.sf_guard_user_id = sfu.id inner join sf_guard_user_group sfg on sfu.id = sfg.user_id where sfg.group_id = 7;
+
+    //profiles actives
+    // $active_profiles_ids = "select p.id from profile p inner join sf_guard_user sfu on p.sf_guard_user_id = sfu.id inner join sf_guard_user_group sfg on sfu.id = sfg.user_id where sfg.group_id = 7 and p.id in (select profile_id from log_view_component where created_at > '$date_from' and created_at < '$date_to')";
+
+    // $this->profile_ids_query = $active_profiles;
+
+  }
+
 }
