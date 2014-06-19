@@ -7,7 +7,8 @@
 		<th>Nombre</th>
 		<th>Categoria</th>
 		<th>Usuarios</th>
-		<th>Usuarios Activos</th>
+		<th>Alumnos Activos</th>
+		<th>Docentes Activos</th>
 	</tr>
 
 	<?php foreach ($groups as $group): ?>
@@ -20,14 +21,27 @@
 						p.id in (select profile_id from log_view_component where created_at > '$date_from' and created_at < '$date_to') and
 						gp.group_id = $group_id
 				";
+			$active_doc = "select count(p.id) as total
+				from profile p inner join group_profile gp on gp.profile_id = p.id inner join sf_guard_user sfu on p.sf_guard_user_id = sfu.id inner join sf_guard_user_group sfg on sfu.id = sfg.user_id 
+				where   sfg.group_id = 8 and 
+						gp.group_id = $group_id
+				";
+
+			$active_doc2 = "select count(p.id) as total
+				from profile p inner join sf_guard_user sfu on p.sf_guard_user_id = sfu.id inner join sf_guard_user_group sfg on sfu.id = sfg.user_id 
+				where   sfg.group_id = 8 and 
+						p.master_group_id = $group_id
+				";
 
 			$rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($active_users);
+			$rs2 = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($active_doc2);
 		 ?>
 		<tr>
 			<td><?php echo $group->getDescription() ?></td>
 			<td><?php echo $group->getGroupCategory()->getName() ?></td>
 			<td><?php echo $users_in_group ?></td>
 			<td><?php echo $rs[0]['total'] ?></td>
+			<td><?php echo $rs2[0]['total'] ?></td>
 		</tr>
 	<?php endforeach ?>
 </table>
