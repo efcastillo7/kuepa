@@ -25,9 +25,14 @@ class logActions extends sfActions
     $time = LogService::getInstance()->viewResource($this->getUser()->getProfile()->getId(), 
       Resource::TYPE, $course_id, $chapter_id, $lesson_id, $resource_id);
 
-    $time_lapse = strtotime($time->getUpdatedAt()) - strtotime($time->getCreatedAt());
 
-    $response = array('status' => 'success', 'time_lapse' => $time_lapse);
+    //TODO: check why time could be null
+    if($time){
+      $time_lapse = strtotime($time->getUpdatedAt()) - strtotime($time->getCreatedAt());
+      $response = array('status' => 'success', 'time_lapse' => $time_lapse);
+    }else{
+      $response = array('status' => 'error', 'time_lapse' => 0);
+    }
 
     return $this->renderText(json_encode($response));
   }

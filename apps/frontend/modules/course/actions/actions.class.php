@@ -45,6 +45,9 @@ class courseActions extends kuepaActions {
 
         $this->profile = $this->getProfile();
         $course = Course::getRepository()->getById($id);
+
+        //redirect if course is null
+        $this->forward404Unless($course, "Inexistant course");
         
         $components = array();
         $components[] = $course; 
