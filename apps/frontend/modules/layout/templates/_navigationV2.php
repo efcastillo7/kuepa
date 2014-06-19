@@ -59,6 +59,7 @@
     <a href="<?php echo url_for("@homepage") ?>" class="cbp-hom"><i></i>Inicio</a>
     <?php if ($sf_user->hasCredential("access_messages")): ?>
     <a href="<?php echo url_for("@messages") ?>" class="cbp-msg"><i></i>Mensajes</a>
+    <a href="<?php echo url_for("calendar/index") ?>" class="cbp-cal"><i></i>Calendario</a>
     <?php endif; ?>
     <?php if ($sf_user->hasCredential("access_video_sessions")): ?>
     <a href="<?php echo url_for("@video_session") ?>" class="cbp-tsk"><i></i>Tutorias</a> 
