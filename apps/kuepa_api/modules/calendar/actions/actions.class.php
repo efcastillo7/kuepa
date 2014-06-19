@@ -13,7 +13,8 @@ class calendarActions extends kuepaActions {
     public function executeGetSidebarData(sfWebRequest $request) {
  
         $sideBar = array();
-        $sideBar["subjects"]    = CalendarEventTable::getInstance()->getCoursesWithEventsForUser( $this->getProfile()->getId() );
+
+        $sideBar["subjects"]    = CalendarEventTable::getInstance()->getCoursesWithEventsForUser( $this->getProfile()->getId(), $this->getUser()->getEnabledCourses() );
         $sideBar["hasTutorias"] = CalendarEventTable::getInstance()->getTutoriasByProfileId( $this->getProfile()->getId() );
         
         return $this->renderText(json_encode($sideBar));
@@ -145,7 +146,7 @@ class calendarActions extends kuepaActions {
         
         if($request->hasParameter("end")){
             try {
-                $validator = new sfValidatorString(array( 'required' => true ));
+                $validator = new sfValidatorString(array( 'required' => false ));
                 $end = $validator->clean($end);
             } catch (Exception $e){
                 $errores['end'] = $e->getMessage();

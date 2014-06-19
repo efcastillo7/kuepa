@@ -17,13 +17,29 @@ class CalendarEventTable extends Doctrine_Table
         return Doctrine_Core::getTable('CalendarEvent');
     }
     
-    public function getCoursesWithEventsForUser($profileId) {
+    public function getCoursesWithEventsForUser($profileId, $courses = array()) {
 
         $q = $this->createQuery('ce')
             ->select("DISTINCT ce.component_id, c.name, c.color ")
             ->addFrom('component c')
-            ->where('c.id = ce.component_id')
-            ->andWhere('(
+            ->where('c.id = ce.component_id');
+
+        if(count($courses)){
+            $q->andWhere('(
+                            (
+                                ce.tipo_ref = "'. CalendarEvent::TIPO_REF_COURSE .'" AND 
+                                ce.ref_id IN ( '
+                                    . implode(",", $courses) .   
+                                ')
+                             OR (
+                                ce.tipo_ref = "' . CalendarEvent::TIPO_REF_PROFILE . '" 
+                                AND ce.ref_id = :profileId
+                                ) 
+                            )
+                        )', array(":profileId" => $profileId));
+        }else{
+
+            $q->andWhere('(
                             (
                                 ce.tipo_ref = "'. CalendarEvent::TIPO_REF_COURSE .'" AND 
                                 ce.ref_id IN ( 
@@ -37,6 +53,7 @@ class CalendarEventTable extends Doctrine_Table
                                 ) 
                             )
                         )', array(":profileId" => $profileId));
+        }
         
         return $q->execute(array(), Doctrine::HYDRATE_SCALAR);
         
@@ -51,13 +68,10 @@ class CalendarEventTable extends Doctrine_Table
         $personalEvents = array();
         $videoSessionEvents = array();
         $profileId = sfContext::getInstance()->getUser()->getProfile()->getId();
-        $profileLearningPathCourses = ProfileLearningPathTable::getInstance()->getCoursesArrayByIdProfile($profileId);
-        
-        $course = array();
-        foreach($profileLearningPathCourses as $plp){
-            $course[] = $plp["plp_component_id"];
-        }
-        
+
+        //get courses by session        
+        $course = sfContext::getInstance()->getUser()->getEnabledCourses();
+
         if($filterCourse){
             
             $cQ = $this->createQuery('ce')
@@ -107,13 +121,8 @@ class CalendarEventTable extends Doctrine_Table
     
     public function getTutoriasByProfileId($profileId){
         
-        $profileLearningPathCourses = ProfileLearningPathTable::getInstance()->getCoursesArrayByIdProfile($profileId);
-        
-        $courses = "";
-        
-        foreach ($profileLearningPathCourses as $value) {
-            $courses[] = $value["plp_component_id"];
-        }
+        //get courses by session
+        $courses = sfContext::getInstance()->getUser()->getEnabledCourses();;
         
         $q = $this->createQuery('ce')
                 ->addFrom('videoSession vs')

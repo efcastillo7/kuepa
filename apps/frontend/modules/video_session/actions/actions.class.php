@@ -93,7 +93,7 @@ class video_sessionActions extends sfActions {
                     $calendarEvent[0]->setRefId($video_session->getId());
                     $calendarEvent[0]->setTitle($video_session->getTitle());
                     $calendarEvent[0]->setDescription($video_session->getDescription());
-                    $calendarEvent[0]->setTipoRef("CLASS");
+                    $calendarEvent[0]->setTipoRef(CalendarEvent::TIPO_REF_TUTORIA);
                     $calendarEvent[0]->setStart($video_session->getScheduledFor());
                     $calendarEvent[0]->setEnd($video_session->getScheduledEnd());
                     $calendarEvent[0]->setComponentId($video_session->getCourseId());
@@ -102,7 +102,7 @@ class video_sessionActions extends sfActions {
             }else{
                 $calendarEvent = new CalendarEvent();
                 $calendarEvent->setRefId($video_session->getId());
-                $calendarEvent->setTipoRef("CLASS");
+                $calendarEvent->setTipoRef(CalendarEvent::TIPO_REF_TUTORIA);
                 $calendarEvent->setTitle($video_session->getTitle());
                 $calendarEvent->setDescription($video_session->getDescription());
                 $calendarEvent->setStart($video_session->getScheduledFor());
